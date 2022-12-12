@@ -1,0 +1,7 @@
+.HeaderNav {
+  height: 40px;
+  background: #0C2E4E;
+
+  flex-shrink: 0;
+  flex-grow: 0;
+}

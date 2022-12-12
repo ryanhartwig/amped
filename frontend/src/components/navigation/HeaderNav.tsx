@@ -9,7 +9,7 @@ export const HeaderNav = () => {
 
 
   return (
-    <div>
+    <div className='HeaderNav'>
       
     </div>
   )

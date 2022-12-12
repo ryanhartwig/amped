@@ -9,7 +9,7 @@ export const BottomNav = () => {
 
 
   return (
-    <div>
+    <div className='BottomNav'>
       
     </div>
   )
