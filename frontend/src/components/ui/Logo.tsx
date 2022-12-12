@@ -1,5 +1,6 @@
 import './Logo.css';
 
+/* React Icons */
 import { IoIosFlash } from 'react-icons/io';
 
 // interface LogoProps {

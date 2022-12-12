@@ -2,6 +2,7 @@ import './HeaderNav.css';
 
 import { Logo } from '../ui/Logo';
 
+/* React Icons */
 import { FiSettings } from 'react-icons/fi';
 import { IoIosNotificationsOutline } from 'react-icons/io'
 import { ReactIconButton } from '../ui/ReactIconButton';
