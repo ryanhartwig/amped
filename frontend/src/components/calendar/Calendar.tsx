@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import './Calendar.css';
 import { Days } from './Days';
 
@@ -7,15 +6,18 @@ import { Days } from './Days';
 // }
 
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septempber', 'October', 'November', 'December'];
 
 export const Calendar = () => {
 
   const currentDate = new Date();
-  console.log(currentDate.getMonth())
+
+  const view = {
+    month: currentDate.getMonth(),
+    year: currentDate.getFullYear()
+  }
 
   currentDate.setDate(1);
-  console.log(currentDate.getMonth());
-  console.log(currentDate.getDay());
 
   const day = currentDate.getDay();
   currentDate.setDate(day * -1);
@@ -25,8 +27,8 @@ export const Calendar = () => {
     <div className='Calendar'>
       {/* Year/Month Select */}
       <div className='Calendar-month'>
-        <h2>December</h2>
-        <h2>2022</h2>
+        <h2>{months[view.month]}</h2>
+        <h2>{view.year}</h2>
       </div>
 
       {/* Day of the Week */}

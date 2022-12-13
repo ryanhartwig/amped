@@ -21,14 +21,14 @@ export const Days = ({date = new Date()}: DaysProps) => {
 
       weekDate.setDate(day + 1);
       
-      return weekDate.getDate();
+      return new Date(weekDate);
     })
   }, [date]);
 
 
   return (
     <div className='Days'>
-      {days.map((d, i) => <Day key={`${i}-${d}`} date={d} />)}
+      {days.map((d, i) => <Day key={`${i}-${d.getDate}`} date={d} />)}
     </div>
   )
 }
