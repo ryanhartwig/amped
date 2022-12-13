@@ -7,7 +7,7 @@ import { BiDumbbell, BiNotepad } from 'react-icons/bi';
 import { IoIosFlash } from 'react-icons/io';
 import { BsCalendarCheck } from 'react-icons/bs';
 import { RxAvatar } from 'react-icons/rx';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 // interface BottomNavProps {
