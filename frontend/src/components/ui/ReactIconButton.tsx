@@ -25,7 +25,7 @@ export const ReactIconButton = ({children, fontSize, active = false, buttonSize,
   return (
     <div style={{...size, ...style}} onClick={onClick} className={clsx('ReactIconButton', {active: active})}>
       {children}
-      {text && <p className='rib-text' style={{fontSize}}>{text}</p>}
+      {text && <p className='rib-text noselect' style={{fontSize}}>{text}</p>}
     </div>
   )
 }

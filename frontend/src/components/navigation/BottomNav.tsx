@@ -7,7 +7,8 @@ import { BiDumbbell, BiNotepad } from 'react-icons/bi';
 import { IoIosFlash } from 'react-icons/io';
 import { BsCalendarCheck } from 'react-icons/bs';
 import { RxAvatar } from 'react-icons/rx';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // interface BottomNavProps {
 
@@ -16,12 +17,20 @@ import { useCallback, useState } from 'react';
 type Location = 'dash' | 'routines' | 'train' | 'finished' | 'profile';
 
 export const BottomNav = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const [route, setRoute] = useState<Location>('dash');
+  const [route, setRoute] = useState<Location>();
 
+  useEffect(() => {
+    const split = location.pathname.split('/');
+    const homeInd = split.findIndex(p => p === 'home');
+    setRoute(split[homeInd + 1] as Location);
+  }, [location.pathname]);
+  
   const onClick = useCallback((route: Location) => {
-    setRoute(route);
-  }, []);
+    navigate(`/home/${route}`);
+  }, [navigate]);
 
   return (
     <div className='BottomNav'>
