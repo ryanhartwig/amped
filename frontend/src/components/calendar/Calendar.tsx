@@ -21,15 +21,16 @@ interface View {
 
 export const Calendar = () => {
 
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  
 
   const [viewing, setViewing] = useState<View>({
-    month: currentDate.getMonth(),
-    year: currentDate.getFullYear(),
+    month: startDate.getMonth(),
+    year: startDate.getFullYear(),
   });
 
   const onMonthSwitch = useCallback((n: number) => {
-    const newDate = new Date(currentDate);
+    const newDate = new Date(startDate);
 
     newDate.setMonth(newDate.getMonth() + n);
     
@@ -41,8 +42,12 @@ export const Calendar = () => {
     newDate.setDate(1);
     newDate.setDate(newDate.getDay() * -1);
 
-    setCurrentDate(newDate);
-  }, [currentDate]);
+    setStartDate(newDate);
+  }, [startDate]);
+
+
+
+
 
   
   
@@ -70,7 +75,7 @@ export const Calendar = () => {
       
       {/* Calendar Days */}
       <div className='Calendar-fields-wrapper'>
-        <Days date={currentDate} viewing={viewing} />
+        <Days date={startDate} viewing={viewing} />
       </div>
     </div>
   )
