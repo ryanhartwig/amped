@@ -1,5 +1,8 @@
-import clsx from 'clsx';
 import './Day.css';
+
+import clsx from 'clsx';
+
+import { IoIosFlash } from 'react-icons/io';
 
 interface DayProps {
   date: Date,
@@ -11,10 +14,25 @@ interface DayProps {
 
 export const Day = ({date, viewing}: DayProps) => {
 
+  const today = new Date();
+  const ss = [0, 6].includes(date.getDay());
+
+  const session = (date.getFullYear() < today.getFullYear() 
+    || (date.getMonth() < today.getMonth() && date.getFullYear() === viewing.year)
+    || (date.getDate() <= today.getDate() && date.getMonth() === viewing.month))
+  && Math.round(Math.random());
+
   return (
-    <div className='Day'>
-      <div className={clsx('Day-content', {'out-of-view': viewing.month !== date.getMonth()})}>
+    <div className={clsx('Day', {ss})}>
+      <div className={clsx(
+        'Day-content', 
+        {'out-of-view': viewing.month !== date.getMonth()},
+        {'today': viewing.month === today.getMonth() && date.getDate() === today.getDate()},
+        {ss},
+        {session}
+      )}>
         <p>{date.getDate()}</p>
+        {session ? <IoIosFlash /> : <></>}
       </div>
     </div>
   )

@@ -4,8 +4,6 @@
   justify-content: center;
   align-items: center;
   
-  border: 1px solid white;
-
   width: 500px;
   height: 500px;
 }
@@ -32,13 +30,13 @@
   flex-grow: 0;
   flex-shrink: 0;
 
-  height: 25px;
+  height: 20px;
   width: 100%;
-
 }
 
 .Calendar-days > p {
   width: 100%;
+  font-weight: 100;
 }
 
 .Calendar-fields-wrapper {
@@ -49,6 +47,4 @@
 
   height: 100%;
   width: 100%;
-
-  border: 1px solid;
 }
