@@ -1,5 +1,6 @@
+import { useMemo } from 'react';
 import './Calendar.css';
-import { Week } from './Week';
+import { Days } from './Days';
 
 // interface CalendarProps {
 
@@ -9,6 +10,15 @@ const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export const Calendar = () => {
 
+  const currentDate = new Date();
+  console.log(currentDate.getMonth())
+
+  currentDate.setDate(1);
+  console.log(currentDate.getMonth());
+  console.log(currentDate.getDay());
+
+  const day = currentDate.getDay();
+  currentDate.setDate(day * -1);
 
 
   return (
@@ -26,12 +36,7 @@ export const Calendar = () => {
       
       {/* Calendar Days */}
       <div className='Calendar-fields-wrapper'>
-        <Week />
-        <Week />
-        <Week />
-        <Week />
-        <Week />
-        <Week />
+        <Days date={currentDate}/>
       </div>
     </div>
   )

@@ -1,17 +1,16 @@
 import './Day.css';
 
-// interface DayProps {
+interface DayProps {
+  date: any,
+}
 
-// }
-
-export const Day = () => {
-
+export const Day = ({date}: DayProps) => {
 
 
   return (
     <div className='Day'>
       <div className='Day-content'>
-
+        <p>{date}</p>
       </div>
     </div>
   )
