@@ -4,9 +4,13 @@ import './Days.css';
 
 interface DaysProps {
   date: Date,
+  viewing: {
+    month: number,
+    year: number,
+  }
 }
 
-export const Days = ({date = new Date()}: DaysProps) => {
+export const Days = ({date, viewing}: DaysProps) => {
 
   const days = useMemo(() => {
     const weekDate = new Date(date);
@@ -28,7 +32,7 @@ export const Days = ({date = new Date()}: DaysProps) => {
 
   return (
     <div className='Days'>
-      {days.map((d, i) => <Day key={`${i}-${d.getDate}`} date={d} />)}
+      {days.map((d, i) => <Day key={`${i}-${d.getDate}`} date={d} viewing={viewing} />)}
     </div>
   )
 }

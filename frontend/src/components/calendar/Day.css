@@ -25,3 +25,7 @@
 .Day p {
   font-size: 10px;
 }
+
+.Day-content.out-of-view {
+  opacity: 0.4;
+}

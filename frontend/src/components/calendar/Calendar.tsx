@@ -12,7 +12,7 @@ export const Calendar = () => {
 
   const currentDate = new Date();
 
-  const view = {
+  const viewing = {
     month: currentDate.getMonth(),
     year: currentDate.getFullYear()
   }
@@ -27,8 +27,8 @@ export const Calendar = () => {
     <div className='Calendar'>
       {/* Year/Month Select */}
       <div className='Calendar-month'>
-        <h2>{months[view.month]}</h2>
-        <h2>{view.year}</h2>
+        <h2>{months[viewing.month]}</h2>
+        <h2>{viewing.year}</h2>
       </div>
 
       {/* Day of the Week */}
@@ -38,7 +38,7 @@ export const Calendar = () => {
       
       {/* Calendar Days */}
       <div className='Calendar-fields-wrapper'>
-        <Days date={currentDate}/>
+        <Days date={currentDate} viewing={viewing} />
       </div>
     </div>
   )
