@@ -17,17 +17,19 @@ export const HeaderNav = () => {
 
   return (
     <div className='HeaderNav'>
-      {/* Left side */}
-      <Logo />
+      <div className='HeaderNav-items'>
+        {/* Left side */}
+        <Logo />
 
-      {/* Right side elements */}
-      <div className='header-nav-buttons'>
-        <ReactIconButton>
-          <IoIosNotificationsOutline size={32}/>
-        </ReactIconButton>
-        <ReactIconButton>
-          <FiSettings size={25}/>
-        </ReactIconButton>
+        {/* Right side elements */}
+        <div className='HeaderNav-buttons'>
+          <ReactIconButton buttonSize='45px'>
+            <IoIosNotificationsOutline size={32}/>
+          </ReactIconButton>
+          <ReactIconButton buttonSize='45px'>
+            <FiSettings size={25}/>
+          </ReactIconButton>
+        </div>
       </div>
     </div>
   )

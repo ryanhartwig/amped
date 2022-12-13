@@ -10,9 +10,10 @@ interface ReactIconButtonProps {
   text?: string,
   buttonSize?: string,
   fontSize?: string,
+  active?: boolean,
 }
 
-export const ReactIconButton = ({children, fontSize, buttonSize, className = '', style, onClick, text}: ReactIconButtonProps) => {
+export const ReactIconButton = ({children, fontSize, active = false, buttonSize, className = '', style, onClick, text}: ReactIconButtonProps) => {
 
   const size = {
     maxHeight: buttonSize,
@@ -22,7 +23,7 @@ export const ReactIconButton = ({children, fontSize, buttonSize, className = '',
   }
   
   return (
-    <div style={{...size}} className={clsx('ReactIconButton', className)}>
+    <div style={{...size, ...style}} onClick={onClick} className={clsx('ReactIconButton', {active: active})}>
       {children}
       {text && <p className='rib-text' style={{fontSize}}>{text}</p>}
     </div>

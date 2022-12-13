@@ -1,15 +1,18 @@
 .BottomNav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  
   background: #0C2E4E;
 
   flex-shrink: 0;
   flex-grow:0;
 
   height: 55px;
+  
 }
 
-.BottomNav > * {
-  margin: 0 5%;
+.BottomNav-items {
+  max-width: 650px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
 }
