@@ -15,6 +15,8 @@ export const Days = ({date, viewing}: DaysProps) => {
   const days = useMemo(() => {
     const weekDate = new Date(date);
 
+    
+
     const array = new Array(42).fill(0);
 
     return array.map((n, i) => {
