@@ -1,12 +1,10 @@
 .BottomNav {
-  
   background: #0C2E4E;
 
   flex-shrink: 0;
   flex-grow:0;
 
   height: 55px;
-  
 }
 
 .BottomNav-items {
