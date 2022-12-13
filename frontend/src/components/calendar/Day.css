@@ -1,0 +1,17 @@
+.Day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+  
+
+  padding: 4px;
+}
+
+.Day-content {
+  background: #302D2D;
+  width: 100%;
+  height: 100%;
+}

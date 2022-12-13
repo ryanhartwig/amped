@@ -9,7 +9,7 @@ export const Exercise = () => {
 
 
   return (
-    <div>
+    <div className='Exercise'>
       
     </div>
   )
