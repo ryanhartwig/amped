@@ -1,0 +1,13 @@
+.Logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Logo h1 {
+  font-size: 18px;
+}
+
+.logo-thin {
+  font-weight: 100;
+}
