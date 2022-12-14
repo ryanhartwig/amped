@@ -1,0 +1,59 @@
+.WeeklyTarget {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 50px;
+  overflow: hidden;
+  position: relative;
+
+  height: clamp(40px, 60px, 7vh);
+  
+  margin: 0 16px;
+
+}
+
+.WeeklyTarget-day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0C2E4E;
+
+  border-left: 1px solid #262424;
+  
+  width: 100%;
+  height: 100%;
+}
+.WeeklyTarget-day.trained {
+  background: #203956;
+}
+.WeeklyTarget-day:first-child {
+  border-left: none;
+}
+.WeeklyTarget-day.today {
+  border: 1px solid rgba(255, 255, 255, 0.257);
+}
+.WeeklyTarget-day.today p {
+  font-weight: 500;
+}
+
+.WeeklyTarget p {
+  font-size: 22px;
+  font-weight: 200;
+}
+
+.WeeklyTarget-trained {
+  position: absolute;
+  z-index: 0;
+
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.WeeklyTarget-today {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  color: #262424;
+  
+  height: 120%;
+}

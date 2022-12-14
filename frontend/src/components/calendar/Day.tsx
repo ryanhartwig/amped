@@ -20,7 +20,7 @@ export const Day = ({date, viewing}: DayProps) => {
   const session = (date.getFullYear() < today.getFullYear() 
     || (date.getMonth() < today.getMonth() && date.getFullYear() === viewing.year)
     || (date.getDate() <= today.getDate() && date.getMonth() === viewing.month))
-  && Math.round(Math.random());
+  && !!Math.round(Math.random());
 
   return (
     <div className={clsx('Day', {ss})}>
@@ -31,7 +31,7 @@ export const Day = ({date, viewing}: DayProps) => {
         {ss},
         {session}
       )}>
-        {session ? <IoIosFlash size={'85%'} className='Day-content-flash' /> : <></>}
+        {session && <IoIosFlash size={'85%'} className='Day-content-flash' />}
         <p>{date.getDate()}</p>
 
       </div>

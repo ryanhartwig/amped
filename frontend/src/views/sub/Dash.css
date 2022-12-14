@@ -1,4 +1,8 @@
 .Dash {
   margin: 0 auto;
-  width: fit-content;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: 650px;
 }
