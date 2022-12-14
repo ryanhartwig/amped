@@ -43,9 +43,7 @@
 .Day-content.ss {
   background: rgba(14, 52, 77, 0.637);
 }
-.Day-content.session {
-  background: rgba(37, 107, 91, 0.294);
-}
+
 .Day-content-flash {
   position: absolute;
   z-index: 0;
@@ -54,7 +52,6 @@
 }
 .Day-content.session p {
   position: absolute;
-  font-weight: 400;
   z-index: 1;
 }
 .Day-content.today {
@@ -63,4 +60,7 @@
 }
 .Day-content.today p {
   font-weight: 700;
+}
+.Day-content.session {
+  background: rgba(37, 107, 91, 0.294);
 }
