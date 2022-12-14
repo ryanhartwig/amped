@@ -1,5 +1,12 @@
 .SearchResults {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  overflow-y: auto;
+  
+  height: 60%;
   width: 100%;
   
   border-radius: 10px;

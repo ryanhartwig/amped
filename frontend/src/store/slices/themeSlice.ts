@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface Tags {
+  strength: string,
+  hypertrophy: string,
+  power: string,
+  speed: string,
+  endurance: string,
+}
 export interface ThemeState {
   background: string,
   background_alt: string,
@@ -7,6 +14,7 @@ export interface ThemeState {
   foregroundAlt: string,
   buttonPrimary: string,
   buttonSecondary: string,
+  tags: Tags
 }
 
 export const initialState: ThemeState = {
@@ -16,6 +24,13 @@ export const initialState: ThemeState = {
   foregroundAlt: '#0C2E4E',
   buttonPrimary: '#1C476F',
   buttonSecondary: '#0C2E4E',
+  tags: {
+    strength: '#3c2828',
+    hypertrophy: '#3c3c28',
+    power: '#3c3428',
+    speed: '#3c2831',
+    endurance: '#28393c',
+  }
 }
 
 export const themeReducer = createSlice({

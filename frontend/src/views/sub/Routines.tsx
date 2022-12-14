@@ -32,7 +32,7 @@ export const Routines = () => {
 
       {/* Search component */}
       <div className='Routines-search'>
-        <Search />
+        <Search tab={tab} />
       </div>
         
 

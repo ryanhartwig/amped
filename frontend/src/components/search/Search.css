@@ -5,3 +5,25 @@
   height: 100%;
   width: 100%;
 }
+
+.Search-bar {
+  padding: 10px;
+  padding-left: 20px;
+
+  border-radius: 10000px;
+
+  margin: 0 15px;
+}
+.Search input::placeholder {
+  color: white;
+  font-weight: 100;
+}
+
+.Search-tags {
+  padding: 3px;
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  flex-wrap: wrap;
+  /* overflow-x: scroll; */
+}
