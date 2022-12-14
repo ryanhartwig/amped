@@ -9,6 +9,7 @@ import { BsCalendarCheck } from 'react-icons/bs';
 import { RxAvatar } from 'react-icons/rx';
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../utility/hooks';
 
 // interface BottomNavProps {
 
@@ -21,6 +22,7 @@ export const BottomNav = () => {
   const navigate = useNavigate();
 
   const [route, setRoute] = useState<Location>();
+  const { foreground: background } = useAppSelector(s => s.theme);
 
   useEffect(() => {
     const split = location.pathname.split('/');
@@ -33,7 +35,7 @@ export const BottomNav = () => {
   }, [navigate]);
 
   return (
-    <div className='BottomNav'>
+    <div className='BottomNav' style={{background}}>
       <div className='BottomNav-items'>
         {/* Dashboard View */}
         <ReactIconButton 
