@@ -7,11 +7,12 @@
   width: 100vw;
   height: 40vh;
 
-  min-width: 320px;
-  min-height: 150px;
+ 
 
   max-width: 650px;
   max-height: 650px;
+
+  padding: 10px;
 }
 
 .Calendar-period {
@@ -51,15 +52,16 @@
   flex-grow: 0;
   flex-shrink: 0;
 
-  height: 20px;
+  height: fit-content;
   width: 100%;
 
-  margin-top: 5px;
+  margin-top: 3px;
 }
 
 .Calendar-days > p {
   width: 100%;
   font-weight: 100;
+  font-size: clamp(10px, 16px, 1.5vh);
 }
 
 .Calendar-fields-wrapper {

@@ -31,7 +31,7 @@ export const Day = ({date, viewing}: DayProps) => {
         {ss},
         {session}
       )}>
-        {session ? <IoIosFlash size={'80%'} className='Day-content-flash' /> : <></>}
+        {session ? <IoIosFlash size={'85%'} className='Day-content-flash' /> : <></>}
         <p>{date.getDate()}</p>
 
       </div>

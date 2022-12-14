@@ -32,19 +32,19 @@
 
 .Day p {
   font-size: clamp(10px, 16px, 1.5vh);
-  
   font-weight: 200;
 }
 
+
+/* Conditional Styling */
 .Day-content.out-of-view {
   opacity: 0.4;
 }
 .Day-content.ss {
   background: rgba(14, 52, 77, 0.637);
 }
-
 .Day-content.session {
-  background: rgba(32, 87, 74, 0.294);
+  background: rgba(37, 107, 91, 0.294);
 }
 .Day-content-flash {
   position: absolute;
