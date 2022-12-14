@@ -1,15 +1,23 @@
-import { Outlet, useLocation } from 'react-router-dom';
-import { BottomNav } from '../components/navigation/BottomNav';
-import { HeaderNav } from '../components/navigation/HeaderNav';
 import './Home.css';
 
-// interface HomeProps {
+import { Outlet, useNavigate } from 'react-router-dom';
+import { BottomNav } from '../components/navigation/BottomNav';
+import { HeaderNav } from '../components/navigation/HeaderNav';
+import { useView } from '../utility/hooks/useView';
 
-// }
+/* React icons */
+import { AiOutlineLeft } from 'react-icons/ai';
+import { useCallback } from 'react';
+
 
 export const Home = () => {
-  const location = useLocation();
+  const navigate = useNavigate();
 
+  const { route } = useView();
+
+  const onGoBack = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
 
   return (
     <div className='Home'>
@@ -18,7 +26,13 @@ export const Home = () => {
 
       {/* All sub-routes / views */}
       <div className='Outlet'>
-        sddsdsd
+
+        {route !== 'dash' && 
+        <div className='Home-goback noselect' onClick={onGoBack}>
+          <AiOutlineLeft />
+          <p>Back</p>
+        </div>}
+
         <Outlet />
       </div>
       

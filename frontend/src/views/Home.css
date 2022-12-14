@@ -12,3 +12,17 @@
   max-width: 100%;
   overflow:hidden;
 }
+
+.Home-goback {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  margin-top: 5px;
+}
+.Home-goback:hover > p {
+  text-decoration: underline;
+}
+.Home-goback > * {
+  margin-left: 5px;
+}
