@@ -1,0 +1,10 @@
+.Tag {
+  width: fit-content;
+  height: 100%;
+
+  border-radius: 10000px;
+}
+
+.Search-tags {
+  display: flex;
+}

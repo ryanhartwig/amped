@@ -1,3 +1,4 @@
+import { useAppSelector } from '../../utility/hooks';
 import './SearchResults.css';
 
 // interface SearchResultsProps {
@@ -6,10 +7,10 @@ import './SearchResults.css';
 
 export const SearchResults = () => {
 
-
+  const { background_alt: background } = useAppSelector(s => s.theme);
 
   return (
-    <div>
+    <div className='SearchResults' style={{background}}>
       
     </div>
   )

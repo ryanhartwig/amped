@@ -1,16 +1,16 @@
 import './Tag.css';
 
-// interface TagProps {
+interface TagProps {
+  text: string,
+  toggle?: boolean,
+}
 
-// }
-
-export const Tag = () => {
-
+export const Tag = ({text, toggle}: TagProps) => {
 
 
   return (
-    <div>
-      
+    <div className='Tag'>
+      <p>{text}</p>
     </div>
   )
 }

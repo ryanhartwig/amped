@@ -31,7 +31,9 @@ export const Routines = () => {
       </div>
 
       {/* Search component */}
-      <Search />
+      <div className='Routines-search'>
+        <Search />
+      </div>
         
 
       {/* "Add new ..." component */}
