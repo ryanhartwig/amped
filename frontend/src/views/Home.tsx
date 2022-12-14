@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { BottomNav } from '../components/navigation/BottomNav';
 import { HeaderNav } from '../components/navigation/HeaderNav';
 import './Home.css';
@@ -8,7 +8,7 @@ import './Home.css';
 // }
 
 export const Home = () => {
-
+  const location = useLocation();
 
 
   return (
@@ -18,6 +18,7 @@ export const Home = () => {
 
       {/* All sub-routes / views */}
       <div className='Outlet'>
+        sddsdsd
         <Outlet />
       </div>
       
