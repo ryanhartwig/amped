@@ -6,6 +6,7 @@ import { Logo } from '../ui/Logo';
 import { FiSettings } from 'react-icons/fi';
 import { IoIosNotificationsOutline } from 'react-icons/io'
 import { ReactIconButton } from '../ui/ReactIconButton';
+import { useAppSelector } from '../../utility/hooks';
 
 // interface HeaderNavProps {
 
@@ -13,10 +14,10 @@ import { ReactIconButton } from '../ui/ReactIconButton';
 
 export const HeaderNav = () => {
 
-
+  const { foreground: background } = useAppSelector(s => s.theme);
 
   return (
-    <div className='HeaderNav'>
+    <div className='HeaderNav' style={{background}}>
       <div className='HeaderNav-items'>
         {/* Left side */}
         <Logo />

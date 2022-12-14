@@ -8,10 +8,14 @@ import { Routines } from './views/sub/Routines';
 import { Train } from './views/sub/Train';
 import { Completed } from './views/sub/Completed';
 import { Profile } from './views/sub/Profile';
+import { useAppSelector } from './utility/hooks';
 
 function App() {
+
+  const { background } = useAppSelector(s => s.theme);
+  
   return (
-    <div className='App'>
+    <div className='App' style={{background}}>
       <BrowserRouter>
         <Routes>
           <Route path="login" element={<Login />}></Route>

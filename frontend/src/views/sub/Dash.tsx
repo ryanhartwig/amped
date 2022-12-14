@@ -29,7 +29,7 @@ export const Dash = () => {
 
       <div className='Dash-train'>
         <p>You have {workouts} workout{workouts !== 1 && 's'} scheduled for today</p>
-        <PrimaryButton logo text={'Train'} />
+        <PrimaryButton logo text={'Train'}/>
       </div>
     </div>
   )
