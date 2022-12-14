@@ -7,7 +7,6 @@ import './Routine.css';
 export const Routine = () => {
 
 
-
   return (
     <div className='Routine'>
       

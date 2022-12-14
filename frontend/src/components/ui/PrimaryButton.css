@@ -6,8 +6,12 @@
   justify-content: center;
   align-items: center;
   
-  height: 100%;
-  width: 100%;
+  min-width: 300px;
+  max-width: 400px;
+  width: 75%;
+  height: 55px;
+
+  margin: 0 auto;
 
   background: #1C476F;
 
