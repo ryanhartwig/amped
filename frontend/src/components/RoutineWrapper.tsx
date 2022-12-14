@@ -9,7 +9,7 @@ export const RoutineWrapper = () => {
 
 
   return (
-    <div>
+    <div className='RoutineWrapper'>
       
     </div>
   )

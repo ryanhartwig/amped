@@ -9,7 +9,7 @@ export const Routine = () => {
 
 
   return (
-    <div>
+    <div className='Routine'>
       
     </div>
   )
