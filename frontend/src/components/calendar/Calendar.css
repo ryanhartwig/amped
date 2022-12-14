@@ -3,12 +3,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
+
   width: 100vw;
-  height: 50vh;
+  height: 40vh;
 
   min-width: 320px;
-  min-height: 320px;
+  min-height: 150px;
+
+  max-width: 650px;
+  max-height: 650px;
 }
 
 .Calendar-period {
@@ -50,6 +53,8 @@
 
   height: 20px;
   width: 100%;
+
+  margin-top: 5px;
 }
 
 .Calendar-days > p {

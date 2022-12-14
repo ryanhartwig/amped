@@ -6,20 +6,17 @@ import { Days } from './Days';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import { ReactIconButton } from '../ui/ReactIconButton';
 import { useCallback, useState } from 'react';
+import { days, months } from '../../utility/data/days_months';
 
-// interface CalendarProps {
-
-// }
-
-const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
+interface CalendarProps {
+  showPeriod?: boolean,
+}
 interface View {
   month: number,
   year: number,
 }
 
-export const Calendar = () => {
+export const Calendar = ({showPeriod}: CalendarProps) => {
 
   const today = new Date();
   const initDate = new Date();
@@ -57,7 +54,7 @@ export const Calendar = () => {
   return (
     <div className='Calendar'>
       {/* Year/Month Select */}
-      <div className='Calendar-period noselect'>
+      { showPeriod && <div className='Calendar-period noselect'>
         <div className='Calendar-period-month'>
           <ReactIconButton buttonSize='30px' onClick={() => onMonthSwitch(0)} style={{borderRadius: '12px'}}>
             <AiOutlineLeft size={15}/>
@@ -68,7 +65,7 @@ export const Calendar = () => {
           </ReactIconButton>}
         </div>
         <h2>{viewing.year}</h2>
-      </div>
+      </div>}
 
       {/* Day of the Week */}
       <div className='Calendar-days'>
