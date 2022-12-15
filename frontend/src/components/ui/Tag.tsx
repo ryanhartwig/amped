@@ -10,13 +10,14 @@ interface TagProps {
   toggle?: string,
   color?: string,
   onClick?: (...args: any) => void,
+  style?: CSSProperties,
 }
 
 
 
-export const Tag = ({text, toggle, color = '#1e1e3f', onClick}: TagProps) => {
+export const Tag = ({text, toggle, color = '#1e1e3f', onClick, style}: TagProps) => {
 
-  const style: CSSProperties = toggle === 'add' 
+  const filled: CSSProperties = toggle === 'add' 
   ? {
     border: `1px solid ${color}`
   } : {
@@ -25,7 +26,13 @@ export const Tag = ({text, toggle, color = '#1e1e3f', onClick}: TagProps) => {
   } 
   
   return (
-    <div className={clsx('Tag', {toggle: !!toggle})} onClick={onClick} style={style}>
+    <div className={clsx('Tag', {toggle: !!toggle})} 
+      onClick={onClick} 
+      style={{
+        ...filled, 
+        ...style,
+      }}
+    >
       {toggle &&
         (toggle === 'add' ? <IoAddSharp className='Tag-icon' size={15} />
         : <IoRemoveSharp className='Tag-icon' size={15} />)}

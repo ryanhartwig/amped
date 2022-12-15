@@ -27,9 +27,8 @@ export const Search = ({tab}: SearchProps) => {
   const [query, setQuery] = useState<string>('');
   const [tagsSet, setTagsSet] = useState<Set<string>>(new Set());
   
-  const [routines] = useState<RoutineType[]>(sampleRoutines);
+  const [routines] = useState<RoutineType[]>(sampleRoutines.sort((a, b) => a.favourited ? -1 : 1));
   const [exercises] = useState<ExerciseType[]>(sampleExercises);
-
   
   const onToggleTag = useCallback((t: string) => {
     const newSet = new Set(tagsSet);
@@ -53,15 +52,15 @@ export const Search = ({tab}: SearchProps) => {
       />
 
       {/* Tag filters */}
-      <div className='Search-tags noselect'>
+      <div className='Search-tags noselect hidescrollbar'>
         {sampleTags.map(t => <Tag key={t} onClick={() => onToggleTag(t)} text={t} toggle={tagsSet.has(t) ? 'remove' : 'add'} color={tags[t as keyof Tags]} />)}
       </div>
 
       {/* Results */}
       <SearchResults>
         {tab === 'Routines' 
-          ? routines.map(r => <Routine routine={r} />)
-          : exercises.map(e => <Exercise exercise={e} />)}
+          ? routines.map(r => <Routine key={r.id} routine={r} />)
+          : exercises.map(e => <Exercise key={e.id} exercise={e} />)}
       </SearchResults>
     </div>
   )

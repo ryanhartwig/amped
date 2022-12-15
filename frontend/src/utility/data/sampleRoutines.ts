@@ -6,7 +6,7 @@ export const sampleRoutines: RoutineType[] = [
   {
     name: 'Chest & Triceps',
     est_duration: 40,
-    intensity: 5,
+    intensity: 4,
     tags: ['endurance'],
     id: uuid(),
     exercises: sampleExercises.filter(ex => ex.muscle_target === 'chest'),
@@ -14,7 +14,7 @@ export const sampleRoutines: RoutineType[] = [
     name: 'Biceps',
     est_duration: 40,
     intensity: 5,
-    tags: ['short version'],
+    tags: ['short', 'pull'],
     id: uuid(),
     exercises: sampleExercises.filter(ex => ex.muscle_target === 'biceps'),
     favourited: true,

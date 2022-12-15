@@ -25,6 +25,7 @@
   display: flex;
   justify-content: flex-start;
   align-content: center;
-  flex-wrap: wrap;
-  /* overflow-x: scroll; */
+  overflow-x: scroll;
+
+  min-height: 40px;
 }

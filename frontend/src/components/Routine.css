@@ -1,0 +1,58 @@
+.Routine {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  height: 60px;
+
+  width: calc(100% - 10px);
+  border-radius: 10px;
+
+  margin-top: 5px;
+  padding: 3px 5px;
+}
+.Routine-favourite {
+  color: rgb(121, 121, 29);
+  margin-right: 4px;
+}
+.Routine h2 {
+  font-size: 19px;
+  font-weight: 200;
+}
+
+.Routine-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Routine-top-nametag {
+  display: flex;
+  align-items: center;
+}
+.Routine-tags {
+  display: flex;
+  align-items: center;
+  height: 18px;
+  margin-left: 3px;
+}
+
+.Routine-intensity {
+  display: flex;
+}
+
+.Routine-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Routine p {
+  font-weight: 100;
+  font-size: 0.95em;
+}
+
+.Routine-duration {
+  font-size: 0.9em;
+  font-weight: 100;
+  opacity: 0.5;
+}

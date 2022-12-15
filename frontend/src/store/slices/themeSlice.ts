@@ -10,6 +10,7 @@ export interface Tags {
 export interface ThemeState {
   background: string,
   background_alt: string,
+  background_routine: string,
   foreground: string,
   foregroundAlt: string,
   buttonPrimary: string,
@@ -20,6 +21,7 @@ export interface ThemeState {
 export const initialState: ThemeState = {
   background: '#262424',
   background_alt: '#302D2D',
+  background_routine: '#232323',
   foreground: '#0C2E4E',
   foregroundAlt: '#0C2E4E',
   buttonPrimary: '#1C476F',
