@@ -22,6 +22,7 @@
 
 .Search-tags {
   padding: 3px;
+  
   display: flex;
   justify-content: flex-start;
   align-content: center;
