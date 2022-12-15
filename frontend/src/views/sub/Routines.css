@@ -30,6 +30,8 @@
 .Routines-search {
   width: 100%;
   height: 100%;
+
+  overflow:hidden;
   padding: 20px;
   padding-bottom: 0;
 }

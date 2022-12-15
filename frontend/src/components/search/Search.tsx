@@ -41,7 +41,7 @@ export const Search = ({tab}: SearchProps) => {
 
       {/* Tag filters */}
       <div className='Search-tags noselect'>
-        {sampleTags.map(t => <Tag onClick={() => onToggleTag(t)} text={t} toggle={tagsSet.has(t) ? 'remove' : 'add'} color={tags[t as keyof Tags]} />)}
+        {sampleTags.map(t => <Tag key={t} onClick={() => onToggleTag(t)} text={t} toggle={tagsSet.has(t) ? 'remove' : 'add'} color={tags[t as keyof Tags]} />)}
       </div>
 
       {/* Results */}

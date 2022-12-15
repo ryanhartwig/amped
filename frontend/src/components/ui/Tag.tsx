@@ -3,6 +3,7 @@ import './Tag.css';
 /* React Icons */
 import { IoAddSharp, IoRemoveSharp } from 'react-icons/io5';
 import clsx from 'clsx';
+import { CSSProperties } from 'react';
 
 interface TagProps {
   text: string,
@@ -15,7 +16,7 @@ interface TagProps {
 
 export const Tag = ({text, toggle, color = '#1e1e3f', onClick}: TagProps) => {
 
-  const style = toggle === 'add' 
+  const style: CSSProperties = toggle === 'add' 
   ? {
     border: `1px solid ${color}`
   } : {

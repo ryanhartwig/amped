@@ -21,6 +21,11 @@
   align-items: center;
   cursor: pointer;
 
+  
+  flex-shrink: 0;
+  flex-grow: 0;
+
+  height: fit-content;
   width: fit-content;
   
   margin: 5px;
@@ -28,4 +33,10 @@
 
 .Home-goback > * {
   margin-left: 5px;
+}
+
+.Home-app {
+  flex-shrink: 1;
+  flex-grow: 1;
+  height: 100%;
 }

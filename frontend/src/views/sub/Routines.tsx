@@ -23,6 +23,7 @@ export const Routines = () => {
       <div className='Routines-tabs-wrapper'>
         {tabs.map((t) => 
           <div className='Routines-tab' 
+            key={t}
             style={{background: t === tab ? background : ''}}
             onClick={() => setTab(t)}
           >

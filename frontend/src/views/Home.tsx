@@ -33,7 +33,10 @@ export const Home = () => {
           <p>Back</p>
         </div>}
 
-        <Outlet />
+        <div className='Home-app' style={{height: route !== 'dash' ? 'calc(100% - 34px)' : ''}}>
+          <Outlet />
+
+        </div>
       </div>
       
       {/* Bottom (mobile) navigation bar */}
