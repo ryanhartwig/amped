@@ -1,10 +1,17 @@
+import './Search.css';
+
 import { useCallback, useState } from 'react';
 import { Tags } from '../../store/slices/themeSlice';
 import { useAppSelector } from '../../utility/hooks';
 import { Tag } from '../ui/Tag';
-import './Search.css';
 
 import { SearchResults } from './SearchResults';
+import { sampleExercises } from '../../utility/data/sampleExercises';
+import { sampleRoutines } from '../../utility/data/sampleRoutines';
+import { ExerciseType } from '../../types/ExerciseType';
+import { RoutineType } from '../../types/RoutineType';
+import { Routine } from '../Routine';
+import { Exercise } from '../Exercise';
 
 
 const sampleTags = ['strength', 'hypertrophy', 'power', 'speed', 'metabolic'];
@@ -19,7 +26,11 @@ export const Search = ({tab}: SearchProps) => {
   
   const [query, setQuery] = useState<string>('');
   const [tagsSet, setTagsSet] = useState<Set<string>>(new Set());
+  
+  const [routines] = useState<RoutineType[]>(sampleRoutines);
+  const [exercises] = useState<ExerciseType[]>(sampleExercises);
 
+  
   const onToggleTag = useCallback((t: string) => {
     const newSet = new Set(tagsSet);
     tagsSet.has(t) 
@@ -27,6 +38,8 @@ export const Search = ({tab}: SearchProps) => {
       : newSet.add(t);
     setTagsSet(newSet);
   }, [tagsSet]);
+
+
 
   return (
     <div className='Search'>
@@ -45,7 +58,11 @@ export const Search = ({tab}: SearchProps) => {
       </div>
 
       {/* Results */}
-      <SearchResults />
+      <SearchResults>
+        {tab === 'Routines' 
+          ? routines.map(r => <Routine routine={r} />)
+          : exercises.map(e => <Exercise exercise={e} />)}
+      </SearchResults>
     </div>
   )
 }

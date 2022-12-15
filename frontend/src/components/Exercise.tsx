@@ -1,11 +1,11 @@
+import type { ExerciseType } from '../types/ExerciseType';
 import './Exercise.css';
 
-// interface ExerciseProps {
+interface ExerciseProps {
+  exercise: ExerciseType,
+}
 
-// }
-
-export const Exercise = () => {
-
+export const Exercise = ({exercise}: ExerciseProps) => {
 
 
   return (

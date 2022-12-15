@@ -1,41 +1,18 @@
-import { useAppSelector } from '../../utility/hooks';
 import './SearchResults.css';
 
+import { useAppSelector } from '../../utility/hooks';
+
 interface SearchResultsProps {
-  results?: any[],
+  children?: React.ReactNode;  
 }
 
-export const SearchResults = ({results}: SearchResultsProps) => {
+export const SearchResults = ({children}: SearchResultsProps) => {
 
   const { background_alt: background } = useAppSelector(s => s.theme);
 
   return (
     <div className='SearchResults hidescrollbar' style={{background}}>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p><p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p><p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p><p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p><p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
-      <p>sample thing</p>
+      {children}
     </div>
   )
 }
