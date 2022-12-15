@@ -10,15 +10,26 @@ import { useAppSelector } from '../utility/hooks';
 import { AiFillStar } from 'react-icons/ai';
 import { getDuration } from '../utility/helpers/getDuration';
 import { getDateTime } from '../utility/helpers/getDateTime';
+import { useEffect } from 'react';
 
 interface RoutineProps {
   routine: RoutineType,
+  setUserTags: React.Dispatch<React.SetStateAction<Set<string>>>,
 }
 
-export const Routine = ({routine}: RoutineProps) => {
+export const Routine = ({routine, setUserTags}: RoutineProps) => {
   const intensity = Array(routine.intensity).fill(0);
   const latest = sampleLastPerformedRoutines.find(r => r.routine_id === routine.id);
   const { background_routine: background } = useAppSelector(s => s.theme);
+
+  useEffect(() => {
+    setUserTags(p => {
+      const set = new Set(p);
+      routine.tags?.forEach(t => set.add(t));
+
+      return set;
+    })
+  }, [routine.tags, setUserTags])
 
   return (
     <div className='Routine' style={{background}}>

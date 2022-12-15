@@ -31,7 +31,6 @@ export const sampleRoutines: RoutineType[] = [
     name: 'Abs',
     est_duration: 40,
     intensity: 5,
-    tags: ['long'],
     id: 'Abs',
     exercises: sampleExercises.filter(ex => ex.muscle_target === 'biceps'),
     favourited: true,
