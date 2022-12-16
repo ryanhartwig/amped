@@ -13,6 +13,11 @@
   max-width: 650px;
 }
 
+.Dash p {
+  margin: 4px 0;
+  font-weight: 100;
+}
+
 .Dash-weekly {
   width: 100%;
 }
@@ -23,7 +28,6 @@
   width: calc(100% - 32px);
 }
 .Dash-weekly p {
-  font-weight: 200;
   font-size: clamp(13px, 18px, 4vw);
 }
 
