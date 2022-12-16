@@ -17,13 +17,4 @@ export const sampleExerciseData: ExerciseDataType[] = [
     exercise_id: 'floorfly',
     routine_data_id: 'chesttriceps',
     id: 'ct-ex3',
-  }, 
-
-  // Shoulders
-  {
-    duration: 320,
-    exercise_id: 'standingshoulderpress',
-    routine_data_id: 'chesttriceps',
-    id: 'ct-ex3',
-  }, 
-]
+  }, ];

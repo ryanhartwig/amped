@@ -17,7 +17,7 @@ const initialState: WorkoutsState = {
 }
 
 export const workoutDataReducer = createSlice({
-  name: 'theme',
+  name: 'workoutData',
   initialState: initialState,
   reducers: {
   }
