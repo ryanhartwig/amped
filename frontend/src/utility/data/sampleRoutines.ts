@@ -39,7 +39,7 @@ export const sampleRoutines: RoutineType[] = [
     name: 'Shoulders',
     est_duration: 40,
     intensity: 3,
-    tags: [],
+    tags: ['push'],
     id: 'Shoulders',
     exercises: sampleExercises.filter(ex => ex.muscle_target === 'biceps'),
     notes: 'do it',

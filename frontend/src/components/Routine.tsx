@@ -16,14 +16,18 @@ interface RoutineProps {
   routine: RoutineType,
   setUserTags: React.Dispatch<React.SetStateAction<Set<string>>>,
   activeTags: Set<string>,
+  query: string,
 }
 
-export const Routine = ({routine, setUserTags, activeTags}: RoutineProps) => {
+export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps) => {
   const intensity = Array(routine.intensity).fill(0);
   const latest = sampleLastPerformedRoutines.find(r => r.routine_id === routine.id);
   const { background_routine: background } = useAppSelector(s => s.theme);
 
-  const visible = !activeTags.size || Array.from(activeTags).every(t => routine.tags?.includes(t));
+  // Filter by tag
+  const visible = (!activeTags.size || Array.from(activeTags).every(t => routine.tags?.includes(t)))
+    && (query.length ? routine.name.toLowerCase().includes(query.toLowerCase()) : true);
+
 
   useEffect(() => {
     setUserTags(p => {
