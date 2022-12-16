@@ -24,9 +24,11 @@ h2, h3, h4, h5, h6, a, p {
 
 input {
   outline: none;
-  border: none;
+  border: 1px solid transparent;
   color: white;
-  font-weight: 200;
+}
+input:focus {
+  border-color: rgba(255, 255, 255, 0.176);
 }
 
 .noselect {
