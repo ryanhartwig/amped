@@ -1,6 +1,6 @@
-import { PerformedRoutineType } from "../../types/PerformedRoutineType";
+import { RoutineDataType } from "../../types/RoutineDataType";
 
-export const sampleLastPerformedRoutines: PerformedRoutineType[] = [
+export const sampleRoutineData: RoutineDataType[] = [
   {
     duration: 2743,
     id: 'ct1',

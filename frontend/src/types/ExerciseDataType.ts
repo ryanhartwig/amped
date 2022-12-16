@@ -1,6 +1,6 @@
 import { SetFieldType } from "./SetFieldType";
 
-export interface ExerciseData {
+export interface ExerciseDataType {
   /**
    * Id of exercise that this data belongs to
    */

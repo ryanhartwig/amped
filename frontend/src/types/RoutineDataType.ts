@@ -1,4 +1,4 @@
-export interface PerformedRoutineType {
+export interface RoutineDataType {
   /**
    * Unique id of the routine that this performance belongs to
    */

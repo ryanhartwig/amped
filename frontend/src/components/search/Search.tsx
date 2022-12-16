@@ -33,8 +33,8 @@ export const Search = ({tab}: SearchProps) => {
   const [appTags] = useState<Set<string>>(new Set(['strength', 'hypertrophy', 'power', 'speed', 'endurance']));
   const display = (tab === 'Routines' && userTags.size) || (tab === 'Exercises' && appTags.size) ? '' : 'none';
   
-  const [routines] = useState<RoutineType[]>(sampleRoutines.sort((a) => a.favourited ? -1 : 1));
-  const [exercises] = useState<ExerciseType[]>(sampleExercises.sort((a) => a.favourited ? -1 : 1));
+  const [routines] = useState<RoutineType[]>([...sampleRoutines].sort((a) => a.favourited ? -1 : 1));
+  const [exercises] = useState<ExerciseType[]>([...sampleExercises].sort((a) => a.favourited ? -1 : 1));
   
   const onToggleTag = useCallback((t: string) => {
     const newSet = new Set(activeTags);

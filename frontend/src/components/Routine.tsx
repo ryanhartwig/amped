@@ -2,7 +2,7 @@ import './Routine.css';
 
 import { RoutineType } from '../types/RoutineType';
 import { Tag } from './ui/Tag';
-import { sampleLastPerformedRoutines } from '../utility/data/samplePerformedRoutines';
+import { sampleRoutineData } from '../utility/data/sampleRoutineData';
 
 /* React Icons */
 import { VscFlame } from 'react-icons/vsc';
@@ -22,7 +22,7 @@ interface RoutineProps {
 
 export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps) => {
   const intensity = Array(routine.intensity).fill(0);
-  const latest = sampleLastPerformedRoutines.find(r => r.routine_id === routine.id);
+  const latest = sampleRoutineData.find(r => r.routine_id === routine.id);
   const { background_routine: background } = useAppSelector(s => s.theme);
 
   // Filter by tag
