@@ -1,5 +1,6 @@
 import type { ExerciseType } from '../types/ExerciseType';
 import { useAppSelector } from '../utility/hooks';
+import { useLazySearch } from '../utility/hooks/useLazySearch';
 import './Exercise.css';
 import { Tag } from './ui/Tag';
 
@@ -13,13 +14,12 @@ export const Exercise = ({exercise, query, activeTags}: ExerciseProps) => {
 
   const { background_routine: background } = useAppSelector(s => s.theme);
 
-  const visible = (!activeTags.size || activeTags.has(exercise.exercise_goal))
-    && (!query.length || exercise.name.toLowerCase().includes(query.toLowerCase()));
-
+  const tagged = (!activeTags.size || activeTags.has(exercise.exercise_goal));
+  const searched = useLazySearch(query, exercise.name, exercise.muscle_target);
 
   return (
     <>
-      {visible && 
+      {tagged && searched && 
       <div className='Exercise' style={{background}}>
         <h2>{exercise.name}</h2>
         <div className='Exercise-goal'>

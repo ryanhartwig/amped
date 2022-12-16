@@ -11,6 +11,7 @@ import { AiFillStar } from 'react-icons/ai';
 import { getDuration } from '../utility/helpers/getDuration';
 import { getDateTime } from '../utility/helpers/getDateTime';
 import { useEffect } from 'react';
+import { useLazySearch } from '../utility/hooks/useLazySearch';
 
 interface RoutineProps {
   routine: RoutineType,
@@ -25,8 +26,8 @@ export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps)
   const { background_routine: background } = useAppSelector(s => s.theme);
 
   // Filter by tag
-  const visible = (!activeTags.size || Array.from(activeTags).every(t => routine.tags?.includes(t)))
-    && (query.length ? routine.name.toLowerCase().includes(query.toLowerCase()) : true);
+  const tagged = (!activeTags.size || Array.from(activeTags).every(t => routine.tags?.includes(t)))
+  const searched = useLazySearch(query, routine.name)
 
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps)
 
   return (
     <>
-      {visible && 
+      {tagged && searched && 
       <div className='Routine' style={{background}}>
         <div className='Routine-top'>
           <div className='Routine-top-nametag'>
