@@ -41,15 +41,15 @@
 .Search-icon {
   position: absolute;
   opacity: 0.3;
-  left: 8.5%;
-  top: 2.5%;
+  left: 30px;
+  top: 11px;
 }
 
 .Search-clear {
   position: absolute;
   opacity: 0.3;
-  right: 8.5%;
-  top: 2.5%;
+  right: 30px;
+  top: 11px;
 }
 
 .Search-tags {
