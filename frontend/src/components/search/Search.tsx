@@ -56,7 +56,6 @@ export const Search = ({tab}: SearchProps) => {
         value={query} 
         onChange={(e) => setQuery(e.target.value)}
         style={{background}}
-        autoFocus
         placeholder={`Search ${tab.toLowerCase()}`}
       />
 
