@@ -50,9 +50,9 @@ export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps)
               {routine.tags?.map(t => 
                 <Tag key={`tag-${routine.id}-${t}`} 
                   text={t} 
+                  fontSize='11px'
                   style={{
                     height: '90%', 
-                    fontSize: '13px',
                     margin: '0 0 0 4px',
                   }} />)}
             </div>

@@ -69,7 +69,7 @@ export const Search = ({tab}: SearchProps) => {
       <SearchResults>
         {tab === 'Routines' 
           ? routines.map(r => <Routine query={query} activeTags={activeTags} setUserTags={setUserTags} key={r.id} routine={r} />)
-          : exercises.map(e => <Exercise key={e.id} exercise={e} />)}
+          : exercises.map(e => <Exercise key={e.id} exercise={e} query={query} activeTags={activeTags} />)}
       </SearchResults>
     </div>
   )

@@ -11,11 +11,12 @@ interface TagProps {
   color?: string,
   onClick?: (...args: any) => void,
   style?: CSSProperties,
+  fontSize?: string,
 }
 
 
 
-export const Tag = ({text, toggle, color = '#1e1e3f', onClick, style}: TagProps) => {
+export const Tag = ({text, toggle, color = '#1e1e3f', onClick, style, fontSize = ''}: TagProps) => {
 
   const filled: CSSProperties = toggle === 'add' 
   ? {
@@ -36,7 +37,7 @@ export const Tag = ({text, toggle, color = '#1e1e3f', onClick, style}: TagProps)
       {toggle &&
         (toggle === 'add' ? <IoAddSharp className='Tag-icon' size={15} />
         : <IoRemoveSharp className='Tag-icon' size={15} />)}
-      <p>{text}</p>
+      <p style={{fontSize}}>{text}</p>
     </div>
   )
 }

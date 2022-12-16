@@ -7,6 +7,7 @@ export interface RoutineType {
   est_duration: number,
   intensity: Intensity,
   id: string,
+  // latestData?: 
   favourited?: boolean,
   tags?: string[],
   notes?: string,
