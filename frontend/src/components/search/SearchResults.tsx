@@ -1,16 +1,18 @@
 import './SearchResults.css';
 
-// interface SearchResultsProps {
+import { useAppSelector } from '../../utility/hooks';
 
-// }
+interface SearchResultsProps {
+  children?: React.ReactNode;  
+}
 
-export const SearchResults = () => {
+export const SearchResults = ({children}: SearchResultsProps) => {
 
-
+  const { background_alt: background } = useAppSelector(s => s.theme);
 
   return (
-    <div>
-      
+    <div className='SearchResults hidescrollbar' style={{background}}>
+      {children}
     </div>
   )
 }

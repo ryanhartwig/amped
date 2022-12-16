@@ -1,0 +1,35 @@
+.Search { 
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  width: 100%;
+}
+.Search h2 {
+  font-size: 19px;
+  font-weight: 200;
+}
+
+.Search-bar {
+  padding: 10px;
+  padding-left: 20px;
+
+  border-radius: 10000px;
+
+  margin: 0 15px;
+  margin-bottom: 3px;
+}
+.Search input::placeholder {
+  color: white;
+  font-weight: 100;
+}
+
+.Search-tags {
+  
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  overflow-x: scroll;
+
+  min-height: 34px;
+}

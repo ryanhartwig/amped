@@ -1,0 +1,73 @@
+.Routine {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 0 0 auto;
+
+  height: 56px;
+
+  width: calc(100% - 10px);
+  border-radius: 10px;
+
+  margin-top: 5px;
+  padding: 4px 5px;
+}
+.Routine:last-of-type {
+  margin-bottom: 5px;
+}
+.Routine-favourite {
+  color: rgb(121, 121, 29);
+  margin-right: 4px;
+}
+
+
+.Routine-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Routine-top-nametag {
+  display: flex;
+  align-items: center;
+}
+.Routine-tags {
+  display: flex;
+  align-items: center;
+  height: 18px;
+  margin-left: 3px;
+}
+
+.Routine-intensity {
+  display: flex;
+}
+
+.Routine-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Routine p {
+  font-weight: 100;
+  font-size: 13px
+}
+
+.Routine-duration {
+  font-size: 0.9em;
+  font-weight: 100;
+  opacity: 0.5;
+}
+
+.Routine-latest-data {
+  display: flex;
+  opacity: 0.8;
+}
+
+.Routine-latest-data p {
+  font-size: 12px;
+}
+
+.Routine-details {
+  display: flex;
+  align-items: flex-end;
+}

@@ -1,0 +1,27 @@
+.Exercise {
+  display: flex;
+  align-items: center;
+
+  width: calc(100% - 10px);
+  height: 40px;
+
+  margin: 5px auto 0 auto;
+  padding: 4px 7px;
+
+  border-radius: 10px;
+}
+.Exercise:last-of-type {
+  margin-bottom: 5px;
+}
+
+.Exercise-goal {
+  margin-left: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.177);
+  border-radius: 10000px;
+
+  padding: 3px 7px;
+}
+.Exercise-goal p {
+  font-size: 10px;
+  font-weight: 100;
+}

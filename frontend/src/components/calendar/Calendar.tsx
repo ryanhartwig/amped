@@ -73,7 +73,7 @@ export const Calendar = ({showPeriod}: CalendarProps) => {
       </div>
       
       {/* Calendar Days */}
-      <div className='Calendar-fields-wrapper'>
+      <div className='Calendar-fields-wrapper noselect'>
         <Days date={startDate} viewing={viewing} />
       </div>
     </div>

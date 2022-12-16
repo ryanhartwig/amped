@@ -1,0 +1,42 @@
+.Routines {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 100%;
+}
+
+.Routines-tabs-wrapper {
+  display: flex;
+  align-items: center;
+  
+  width: 100%;
+  height: fit-content;
+
+  border-bottom: 1px solid grey;
+}
+.Routines-tabs-wrapper h2 { 
+  font-weight: 200;
+  font-size: 19px;
+}
+
+.Routines-tab {
+  cursor: pointer;
+  
+  width: 100%;
+}
+
+.Routines-search {
+  width: 100%;
+  height: 100%;
+
+  overflow:hidden;
+  padding: 20px;
+  padding-bottom: 0;
+}
+
+.Routines-add {
+  width: 100%;
+  margin: 14px 0;
+}

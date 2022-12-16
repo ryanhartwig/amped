@@ -18,6 +18,16 @@ code {
     monospace;
 }
 
+p {
+  font-weight: 200;
+}
+
+input {
+  outline: none;
+  color: white;
+  font-weight: 200;
+}
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -28,6 +38,11 @@ code {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-p {
-  font-weight: 200;
+.hidescrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.hidescrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }

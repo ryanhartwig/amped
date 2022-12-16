@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Calendar } from '../../components/calendar/Calendar';
 import { WeeklyTarget } from '../../components/stats/WeeklyTarget';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
@@ -10,10 +11,15 @@ import './Dash.css';
 // }
 
 export const Dash = () => {
+  const navigate = useNavigate();
 
   const [daysLeft] = useState<number>(2);
   const [workouts] = useState<number>(3);
 
+  const onTrain = useCallback(() => {
+    navigate('/home/train');
+  }, [navigate]);
+  
   return (
     <div className='Dash'>
       <Calendar />
@@ -29,7 +35,7 @@ export const Dash = () => {
 
       <div className='Dash-train'>
         <p>You have {workouts} workout{workouts !== 1 && 's'} scheduled for today</p>
-        <PrimaryButton logo text={'Train'}/>
+        <PrimaryButton logo text={'Train'} onClick={onTrain}/>
       </div>
     </div>
   )

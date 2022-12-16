@@ -2,33 +2,29 @@ import './BottomNav.css';
 
 import { ReactIconButton } from '../ui/ReactIconButton';
 
+import type { Location } from '../../utility/hooks/useView';
+
 /* React Icons */
 import { BiDumbbell, BiNotepad } from 'react-icons/bi';
 import { IoIosFlash } from 'react-icons/io';
 import { BsCalendarCheck } from 'react-icons/bs';
 import { RxAvatar } from 'react-icons/rx';
-import { useCallback, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../utility/hooks';
+import { useView } from '../../utility/hooks/useView';
 
 // interface BottomNavProps {
 
 // }
 
-type Location = 'dash' | 'routines' | 'train' | 'finished' | 'profile';
 
 export const BottomNav = () => {
-  const location = useLocation();
   const navigate = useNavigate();
 
-  const [route, setRoute] = useState<Location>();
   const { foreground: background } = useAppSelector(s => s.theme);
-
-  useEffect(() => {
-    const split = location.pathname.split('/');
-    const homeInd = split.findIndex(p => p === 'home');
-    setRoute(split[homeInd + 1] as Location);
-  }, [location.pathname]);
+  const { route } = useView();
+  
   
   const onClick = useCallback((route: Location) => {
     navigate(`/home/${route}`);

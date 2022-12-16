@@ -1,10 +1,11 @@
+import { SetFieldType } from '../../types/SetFieldType';
 import './SetField.css';
 
-// interface SetFieldProps {
+interface SetFieldProps {
+  set: SetFieldType,
+}
 
-// }
-
-export const SetField = () => {
+export const SetField = ({set}: SetFieldProps) => {
 
 
 
