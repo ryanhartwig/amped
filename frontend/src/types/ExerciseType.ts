@@ -6,5 +6,6 @@ export interface ExerciseType {
   exercise_goal: string,
   muscle_target: string,
   intensity?: Intensity,
+  favourited?: boolean,
   notes?: string,
 }

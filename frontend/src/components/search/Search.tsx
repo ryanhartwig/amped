@@ -12,6 +12,8 @@ import { ExerciseType } from '../../types/ExerciseType';
 import { RoutineType } from '../../types/RoutineType';
 import { Routine } from '../Routine';
 import { Exercise } from '../Exercise';
+import { IoCloseOutline } from 'react-icons/io5';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 
 // const sampleTags = ['strength', 'hypertrophy', 'power', 'speed', 'metabolic'];
@@ -31,8 +33,8 @@ export const Search = ({tab}: SearchProps) => {
   const [appTags] = useState<Set<string>>(new Set(['strength', 'hypertrophy', 'power', 'speed', 'endurance']));
   const display = (tab === 'Routines' && userTags.size) || (tab === 'Exercises' && appTags.size) ? '' : 'none';
   
-  const [routines] = useState<RoutineType[]>(sampleRoutines.sort((a, b) => a.favourited ? -1 : 1));
-  const [exercises] = useState<ExerciseType[]>(sampleExercises);
+  const [routines] = useState<RoutineType[]>(sampleRoutines.sort((a) => a.favourited ? -1 : 1));
+  const [exercises] = useState<ExerciseType[]>(sampleExercises.sort((a) => a.favourited ? -1 : 1));
   
   const onToggleTag = useCallback((t: string) => {
     const newSet = new Set(activeTags);
@@ -47,10 +49,12 @@ export const Search = ({tab}: SearchProps) => {
     setActiveTagss(new Set());
   }, [tab]);
 
-
-
   return (
     <div className='Search'>
+      {/* Search bar icon */}
+      <div className='Search-icon'>
+        <AiOutlineSearch size={21} />
+      </div>
       {/* Search bar */}
       <input className='Search-bar' 
         value={query} 
@@ -58,6 +62,10 @@ export const Search = ({tab}: SearchProps) => {
         style={{background}}
         placeholder={`Search ${tab.toLowerCase()}`}
       />
+      {/* Clear search bar */}
+      <div className='Search-clear' onClick={() => setQuery('')} style={{display: query.length ? '' : 'none'}}>
+        <IoCloseOutline size={21} />
+      </div>
 
       {/* Tag filters */}
       <div className='Search-tags noselect hidescrollbar' style={{display}}>

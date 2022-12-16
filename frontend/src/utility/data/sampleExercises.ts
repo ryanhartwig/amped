@@ -12,6 +12,7 @@ export const sampleExercises: ExerciseType[] = [
     exercise_goal: 'hypertrophy',
     muscle_target: 'chest',
     id: 'chestfly',
+    favourited: true,
     intensity: 4,
   }, {
     name: 'Incline Bench Press',
@@ -30,6 +31,7 @@ export const sampleExercises: ExerciseType[] = [
     exercise_goal: 'hypertrophy',
     muscle_target: 'brachioradialis',
     id: 'hammercurl',
+    favourited: true,
     intensity: 4,
   }, {
     name: 'Leg Extension',
