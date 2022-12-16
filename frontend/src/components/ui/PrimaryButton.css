@@ -27,6 +27,7 @@
 .PrimaryButton-logo {
   overflow:visible;
   position: absolute;
+  padding-right: 80%;
 
   display: flex;
   justify-content: center;
@@ -34,5 +35,4 @@
 
   height: 100%;
   width: auto;
-  left: 4%;
 }
