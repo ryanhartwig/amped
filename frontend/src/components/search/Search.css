@@ -4,7 +4,6 @@
 
   height: 100%;
   width: 100%;
-
 }
 
 .Search-bar {
@@ -22,12 +21,11 @@
 }
 
 .Search-tags {
-  padding: 3px;
   
   display: flex;
   justify-content: flex-start;
   align-content: center;
   overflow-x: scroll;
 
-  min-height: 40px;
+  min-height: 34px;
 }

@@ -1,6 +1,6 @@
 import './Search.css';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Tags } from '../../store/slices/themeSlice';
 import { useAppSelector } from '../../utility/hooks';
 import { Tag } from '../ui/Tag';
@@ -26,7 +26,10 @@ export const Search = ({tab}: SearchProps) => {
   
   const [query, setQuery] = useState<string>('');
   const [activeTags, setActiveTagss] = useState<Set<string>>(new Set());
+
   const [userTags, setUserTags] = useState<Set<string>>(new Set());
+  const [appTags] = useState<Set<string>>(new Set(['strength', 'hypertrophy', 'power', 'speed', 'endurance']));
+  const display = (tab === 'Routines' && userTags.size) || (tab === 'Exercises' && appTags.size) ? '' : 'none';
   
   const [routines] = useState<RoutineType[]>(sampleRoutines.sort((a, b) => a.favourited ? -1 : 1));
   const [exercises] = useState<ExerciseType[]>(sampleExercises);
@@ -38,6 +41,11 @@ export const Search = ({tab}: SearchProps) => {
       : newSet.add(t);
     setActiveTagss(newSet);
   }, [activeTags]);
+
+  useEffect(() => {
+    setQuery('');
+    setActiveTagss(new Set());
+  }, [tab]);
 
 
 
@@ -53,9 +61,9 @@ export const Search = ({tab}: SearchProps) => {
       />
 
       {/* Tag filters */}
-      {!!userTags.size && <div className='Search-tags noselect hidescrollbar'>
-        {Array.from(userTags).map(t => <Tag key={t} onClick={() => onToggleTag(t)} text={t} toggle={activeTags.has(t) ? 'remove' : 'add'} color={tags[t as keyof Tags]} />)}
-      </div>}
+      <div className='Search-tags noselect hidescrollbar' style={{display}}>
+        {Array.from(tab === 'Routines' ? userTags : appTags).map(t => <Tag key={t} onClick={() => onToggleTag(t)} text={t} toggle={activeTags.has(t) ? 'remove' : 'add'} color={tags[t as keyof Tags]} />)}
+      </div>
 
       {/* Results */}
       <SearchResults>
