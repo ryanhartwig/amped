@@ -12,7 +12,7 @@ export const sampleRoutineData: RoutineDataType[] = [
     duration: 2118,
     id: 'b1',
     routine_id: 'biceps',
-    start_date: Date.now() - 10000,
+    start_date: (Date.now() - 1000000000),
     post_notes: 'Flex more',
     energy: 7,
   }

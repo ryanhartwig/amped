@@ -4,6 +4,8 @@
 
   width: calc(100% - 10px);
   height: 40px;
+  
+  flex-shrink: 0;
 
   margin: 5px auto 0 auto;
   padding: 4px 7px;

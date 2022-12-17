@@ -45,5 +45,42 @@ export const sampleExercises: ExerciseType[] = [
     muscle_target: 'quad',
     id: 'legextension',
     intensity: 5,
+  }, {
+    name: 'Tricep Extension',
+    type: 'Exercise',
+    exercise_goal: 'strength',
+    muscle_target: 'triceps',
+    id: 'tricepextension',
+    intensity: 4,
+    favourited: true,
+  }, {
+    name: 'Floor Fly',
+    type: 'Exercise',
+    exercise_goal: 'hypertrophy',
+    muscle_target: 'pec major',
+    id: 'floorfly',
+    intensity: 5,
+  }, {
+    name: 'Standing Shoulder Press',
+    type: 'Exercise',
+    exercise_goal: 'power',
+    muscle_target: 'front delts',
+    id: 'standingshoulderpress',
+    intensity: 5,
+    favourited: true,
+  }, {
+    name: 'Deadlift',
+    type: 'Exercise',
+    exercise_goal: 'strength',
+    muscle_target: 'low back',
+    id: 'deadlift',
+    intensity: 5,
+  }, {
+    name: 'Scissors',
+    type: 'Exercise',
+    exercise_goal: 'endurance',
+    muscle_target: 'lower abs',
+    id: 'scissors',
+    intensity: 4,
   }
 ]

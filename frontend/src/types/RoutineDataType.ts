@@ -1,10 +1,10 @@
 export interface RoutineDataType {
   /**
-   * Unique id of the routine that this performance belongs to
+   * Id of the routine that this performance belongs to
    */
   routine_id: string,
   /**
-   * Unique id of this performed routine
+   * This performed routine's unique id
    */
   id: string,
   /**

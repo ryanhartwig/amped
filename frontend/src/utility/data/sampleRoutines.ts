@@ -27,7 +27,7 @@ export const sampleRoutines: RoutineType[] = [
     intensity: 1,
     tags: ['push'],
     id: 'Legs',
-    exercises: sampleExercises.filter(ex => ex.muscle_target === 'biceps'),
+    exercises: sampleExercises.filter(ex => ex.muscle_target === 'quad'),
     favourited: true,
     notes: 'do it',
   }, {
@@ -36,7 +36,7 @@ export const sampleRoutines: RoutineType[] = [
     est_duration: 40,
     intensity: 5,
     id: 'Abs',
-    exercises: sampleExercises.filter(ex => ex.muscle_target === 'biceps'),
+    exercises: sampleExercises.filter(ex => ex.muscle_target === 'lower abs'),
     favourited: true,
     notes: 'do it',
   }, {
@@ -46,7 +46,7 @@ export const sampleRoutines: RoutineType[] = [
     intensity: 3,
     tags: ['push'],
     id: 'Shoulders',
-    exercises: sampleExercises.filter(ex => ex.muscle_target === 'biceps'),
+    exercises: sampleExercises.filter(ex => ex.muscle_target === 'front delts'),
     notes: 'do it',
   }, {
     name: 'Back',
@@ -55,7 +55,7 @@ export const sampleRoutines: RoutineType[] = [
     intensity: 2,
     tags: ['annoying'],
     id: 'Back',
-    exercises: sampleExercises.filter(ex => ex.muscle_target === 'biceps'),
+    exercises: sampleExercises.filter(ex => ex.muscle_target === 'low back'),
     notes: 'do it',
   }
 ];
