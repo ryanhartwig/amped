@@ -1,7 +1,7 @@
 import { ExerciseDataType } from "../../types/ExerciseDataType";
 
+
 export const sampleExerciseData: ExerciseDataType[] = [
-  // Chest & Triceps
   {
     duration: 452,
     exercise_id: 'chestfly',
@@ -17,4 +17,5 @@ export const sampleExerciseData: ExerciseDataType[] = [
     exercise_id: 'floorfly',
     routine_data_id: 'chesttriceps',
     id: 'ct-ex3',
-  }, ];
+  }, 
+]
