@@ -45,7 +45,7 @@ export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps)
       <div className='Routine' style={{background}}>
         <div className='Routine-top'>
           <div className='Routine-top-nametag'>
-            {routine.favourited && <AiFillStar className='Routine-favourite' />}
+            {routine.favourited && <AiFillStar className='favourite' />}
             <h2>{routine.name}</h2>
             <div className='Routine-tags'>
               {routine.tags?.map(t => 
