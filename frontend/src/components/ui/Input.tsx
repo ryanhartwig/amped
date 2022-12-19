@@ -1,28 +1,18 @@
-import { CSSProperties } from 'react';
 import './Input.css';
 
-interface InputProps {
-  onChange: (...args: any) => void,
-  style?: CSSProperties,
-  value: string,
-  placeholder?: string,
+interface InputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   className?: string,
   mini?: boolean,
   onEnter?: (...args: any) => void,
-  required?: boolean,
 }
 
-export const Input = ({placeholder, required, onEnter, onChange, value, style, className = '', mini = false}: InputProps) => {
+export const Input: React.FC<InputProps> = ({onEnter, className = '', mini = false, ...props}) => {
   
   return (
-    <div className='Input'>
-      <input style={{...style, }} 
+    <div className='Input' style={{width: '100%'}}>
+      <input {...props} 
         className={`${className} ${mini ? 'mini' : ''}`}
-        placeholder={placeholder} 
-        value={value} 
-        required={required}
-        onKeyDown={(e) => e.key === 'Enter' && onEnter && onEnter()}
-        onChange={onChange} />
+        onKeyDown={(e) => e.key === 'Enter' && onEnter && onEnter()}/>
     </div>
   )
 }

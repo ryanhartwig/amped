@@ -28,9 +28,28 @@
   position: relative;
 
   padding: 18px;
+  padding-top: 6px;
 }
 .AddRoutine-form input {
   margin-bottom: 8px;
+}
+
+.AddRoutine-name {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.AddRoutine-favourite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(121, 121, 29);
+  padding: 11px;
+  position: absolute;
+  height: 100%;
+  left: -3px;
+  top: -4px;
+  z-index: 3;
 }
 
 .AddRoutine-addtag-wrapper {
@@ -71,4 +90,17 @@
   display: flex;
   overflow-x: auto;
   height: 33px;
+}
+
+.AddRoutine-duration {
+  position: relative;
+}
+.AddRoutine-min {
+  position: absolute;
+  font-weight: 100;
+  font-size: 0.85em;
+  pointer-events: none;
+  opacity: 0.7;
+
+  top: 14px;
 }

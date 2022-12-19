@@ -1,11 +1,13 @@
+import './Exercise.css';
+
 import type { ExerciseType } from '../types/ExerciseType';
 import { lazySearch } from '../utility/helpers/lazySearch';
 import { useAppSelector } from '../utility/hooks';
-import './Exercise.css';
 import { Tag } from './ui/Tag';
 
-/* React Icons */
+/* React icons */
 import { AiFillStar } from 'react-icons/ai';
+
 
 interface ExerciseProps {
   exercise: ExerciseType,
