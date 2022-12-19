@@ -10,6 +10,14 @@
   font-size: 1.3em;
 }
 
+.AddRoutine-preview {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 15px 5px;
+  margin: 0 auto;
+}
+
 .AddRoutine-form {
   display: flex;
   flex-direction: column;

@@ -10,13 +10,13 @@ import { AiFillStar } from 'react-icons/ai';
 import { getDuration } from '../utility/helpers/getDuration';
 import { getDateTime } from '../utility/helpers/getDateTime';
 import { useEffect } from 'react';
-import { useLazySearch } from '../utility/hooks/useLazySearch';
+import { lazySearch } from '../utility/helpers/lazySearch';
 
 interface RoutineProps {
   routine: RoutineType,
-  setUserTags: React.Dispatch<React.SetStateAction<Set<string>>>,
-  activeTags: Set<string>,
-  query: string,
+  activeTags?: Set<string>,
+  query?: string,
+  setUserTags?: React.Dispatch<React.SetStateAction<Set<string>>>,
 }
 
 export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps) => {
@@ -26,11 +26,12 @@ export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps)
   const { background_routine: background } = useAppSelector(s => s.theme);
 
   // Filter by tag
-  const tagged = (!activeTags.size || Array.from(activeTags).every(t => routine.tags?.includes(t)))
-  const searched = useLazySearch(query, routine.name)
+  const tagged = activeTags ? (!activeTags.size || Array.from(activeTags).every(t => routine.tags?.includes(t))) : true;
+  const searched = query ? lazySearch(query, routine.name) : true;
 
 
   useEffect(() => {
+    if (!setUserTags) return;
     setUserTags(p => {
       const set = new Set(p);
       routine.tags?.forEach(t => set.add(t));

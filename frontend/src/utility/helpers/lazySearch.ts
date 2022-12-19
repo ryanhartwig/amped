@@ -1,4 +1,4 @@
-export const useLazySearch = (query: string, ...items: string[]) => {
+export const lazySearch = (query: string, ...items: string[]) => {
   return !query.length 
     || query.toLowerCase().split(' ').every(
       (subQuery) => 

@@ -1,6 +1,6 @@
 import type { ExerciseType } from '../types/ExerciseType';
+import { lazySearch } from '../utility/helpers/lazySearch';
 import { useAppSelector } from '../utility/hooks';
-import { useLazySearch } from '../utility/hooks/useLazySearch';
 import './Exercise.css';
 import { Tag } from './ui/Tag';
 
@@ -9,16 +9,16 @@ import { AiFillStar } from 'react-icons/ai';
 
 interface ExerciseProps {
   exercise: ExerciseType,
-  query: string,
-  activeTags: Set<string>,
+  query?: string,
+  activeTags?: Set<string>,
 }
 
 export const Exercise = ({exercise, query, activeTags}: ExerciseProps) => {
 
   const { background_routine: background } = useAppSelector(s => s.theme);
 
-  const tagged = (!activeTags.size || activeTags.has(exercise.exercise_goal));
-  const searched = useLazySearch(query, exercise.name, exercise.muscle_target);
+  const tagged = activeTags ? (!activeTags.size || activeTags.has(exercise.exercise_goal)) : true;
+  const searched = query ? lazySearch(query, exercise.name, exercise.muscle_target) : true;
 
   return (
     <>
