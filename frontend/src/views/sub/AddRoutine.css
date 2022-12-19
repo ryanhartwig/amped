@@ -14,7 +14,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 15px 5px;
+  padding: 8px 5px;
   margin: 0 auto;
 }
 
@@ -90,7 +90,8 @@
   display: flex;
   overflow-x: auto;
   height: 33px;
-
+  flex-shrink: 0;
+  flex-grow: 0;
 
 }
 
@@ -120,4 +121,37 @@
 .AddRoutine-intensity-icon.fill {
   color: rgb(206, 140, 100);
   opacity: 1;
+}
+
+.AddRoutine-exercises {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  
+  height: 100%;
+  margin-top: 15px;
+  border-radius: 10px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.AddRoutine-add-exercise {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  height: 24px;
+}
+.AddRoutine-add-exercise > *:last-child {
+  margin-left: 8px;
+  position: relative;
+  font-size: 17px;
+  font-weight: 100;
+  opacity: 0.8;
+}
+.AddRoutine-add-exercise:hover > *:last-child {
+  text-decoration: underline;
+  opacity: 1;
+  font-weight: 200;
 }

@@ -2,7 +2,7 @@ import './AddRoutine.css';
 
 /* React icons */
 import { IoReturnDownBackSharp } from 'react-icons/io5';
-import { AiFillStar, AiOutlineStar, AiOutlineClose } from 'react-icons/ai';
+import { AiFillStar, AiOutlineStar, AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
 
 import { Routine } from '../../components/Routine';
 import { useAppSelector } from '../../utility/hooks';
@@ -15,6 +15,7 @@ import { VscFlame } from 'react-icons/vsc';
 import clsx from 'clsx';
 import { Intensity } from '../../types';
 import { ExerciseType } from '../../types/ExerciseType';
+import { Exercise } from '../../components/Exercise';
 
 export const AddRoutine = () => {
   const { background_alt: background } = useAppSelector(s => s.theme);
@@ -121,8 +122,12 @@ export const AddRoutine = () => {
           )}
         </div>
 
-        <div className='AddRoutine-exercises'>
-
+        <div className='AddRoutine-exercises hidescrollbar' style={{background}}>
+          {exercises.map(e => <Exercise exercise={e} />)}
+          <div className='AddRoutine-add-exercise'>
+            <AiOutlinePlus size={19} style={{opacity: 0.3}}/>
+            <p>Select exercises</p>
+          </div>
         </div>
         
       </form>
