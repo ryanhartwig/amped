@@ -15,6 +15,13 @@ export const sampleRoutineData: RoutineDataType[] = [
     start_date: (Date.now() - 1000000000),
     post_notes: 'Flex more',
     energy: 7,
+  }, {
+    duration: 2420,
+    id: 's1',
+    routine_id: 'shoulders',
+    start_date: (Date.now() - 2000000000),
+    post_notes: '',
+    energy: 10,
   }
 ]
 

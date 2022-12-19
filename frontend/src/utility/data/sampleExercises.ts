@@ -69,6 +69,13 @@ export const sampleExercises: ExerciseType[] = [
     intensity: 5,
     favourited: true,
   }, {
+    name: 'Front Raise',
+    type: 'Exercise',
+    exercise_goal: 'hypertrophy',
+    muscle_target: 'front delts',
+    id: 'frontraise',
+    intensity: 5,
+  }, {
     name: 'Deadlift',
     type: 'Exercise',
     exercise_goal: 'strength',

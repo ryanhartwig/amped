@@ -1,17 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ExerciseDataType } from "../../types/ExerciseDataType";
 import { RoutineDataType } from "../../types/RoutineDataType";
+import { sampleExerciseData } from "../../utility/data/sampleExerciseData";
 import { sampleRoutineData } from "../../utility/data/sampleRoutineData";
 
 
 interface WorkoutsState { 
   routineData: RoutineDataType[],
-  // exerciseData: ExerciseDataType[],
+  exerciseData: ExerciseDataType[],
 }
 
 // Will fetch from db when using real data
 const initialState: WorkoutsState = {
   routineData: sampleRoutineData,
-  // exerciseData: sampleExercises,
+  exerciseData: sampleExerciseData,
 }
 
 export const workoutDataReducer = createSlice({
