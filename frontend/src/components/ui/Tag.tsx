@@ -7,7 +7,7 @@ import { CSSProperties } from 'react';
 
 interface TagProps {
   text: string,
-  toggle?: string,
+  toggle?: 'add' | 'remove',
   color?: string,
   onClick?: (...args: any) => void,
   style?: CSSProperties,

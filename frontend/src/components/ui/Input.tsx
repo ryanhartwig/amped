@@ -9,9 +9,10 @@ interface InputProps {
   className?: string,
   mini?: boolean,
   onEnter?: (...args: any) => void,
+  required?: boolean,
 }
 
-export const Input = ({placeholder, onEnter, onChange, value, style, className = '', mini = false}: InputProps) => {
+export const Input = ({placeholder, required, onEnter, onChange, value, style, className = '', mini = false}: InputProps) => {
   
   return (
     <div className='Input'>
@@ -19,6 +20,7 @@ export const Input = ({placeholder, onEnter, onChange, value, style, className =
         className={`${className} ${mini ? 'mini' : ''}`}
         placeholder={placeholder} 
         value={value} 
+        required={required}
         onKeyDown={(e) => e.key === 'Enter' && onEnter && onEnter()}
         onChange={onChange} />
     </div>

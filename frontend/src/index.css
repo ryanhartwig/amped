@@ -41,8 +41,6 @@ input {
 
   color: rgba(255, 255, 255, 0.593);
 
-  margin: 0 15px;
-  margin-bottom: 3px;
 }
 input::placeholder {
   color: white;

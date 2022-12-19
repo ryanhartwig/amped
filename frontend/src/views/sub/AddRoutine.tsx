@@ -5,18 +5,34 @@ import { useCallback, useState } from 'react';
 /* React icons */
 import { IoReturnDownBackSharp } from 'react-icons/io5';
 import { Input } from '../../components/ui/Input';
+import { Tag } from '../../components/ui/Tag';
 
 export const AddRoutine = () => {
   const [routineName, setRoutineName] = useState<string>('');
   const [tag, setTag] = useState<string>('');
+
+  const [tags, setTags] = useState<Set<string>>(new Set());
 
   const onSaveRoutine = useCallback((e: any) => {
     e.preventDefault();
   }, []);
 
   const onAddTag = useCallback(() => {
-    console.log(tag);
+    setTags(p => {
+      const tags = new Set(p);
+      tags.add(tag);
+      setTag('');
+      return tags;
+    })
   }, [tag]);
+
+  const onRemoveTag = useCallback((t: string) => {
+    setTags(p => {
+      const tags = new Set(p);
+      tags.delete(t);
+      return tags;
+    })
+  }, [])
   
   return (
     <div className='AddRoutine'>
@@ -31,16 +47,22 @@ export const AddRoutine = () => {
 
         <div className='AddRoutine-addtag-wrapper'>
           <Input style={{paddingRight: 80}} 
-            onChange={({target}) => setTag(target.value)} 
+            onChange={({target}) => setTag(target.value.toLowerCase())} 
             value={tag} 
             mini
             onEnter={onAddTag}
-            placeholder="Add tags (push, pull ... )"/>
+            placeholder="Tags (push, pull ...)"/>
           {!!tag.length && <div className='AddRoutine-enter'>
             <IoReturnDownBackSharp size={26} style={{color: 'grey'}}/>
             <p>add</p>
           </div>}
         </div>
+        <div className='AddRoutine-tags hidescrollbar noselect'>
+          {Array.from(tags).map(t => <Tag text={t} toggle='remove' onClick={() => onRemoveTag(t)} key={t} />)}
+        </div>
+
+        <h3 style={{marginTop: 15}}>Training Goal: </h3>
+
       </form>
     </div>
   )

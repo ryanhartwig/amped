@@ -1,4 +1,10 @@
 
+.AddRoutine {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 /* Header */
 .AddRoutine h2 {
   font-size: 1.3em;
@@ -7,9 +13,13 @@
 .AddRoutine-form {
   display: flex;
   flex-direction: column;
+
+  text-align: left;
+
+  height: 100%;
   position: relative;
 
-  padding: 13px;
+  padding: 18px;
 }
 .AddRoutine-form input {
   margin-bottom: 8px;
@@ -32,7 +42,7 @@
 
   font-size: 9px;
 
-  right: 12px;
+  right: -6px;
   top: 1px;
 
   width: 60px;
@@ -47,4 +57,10 @@
   right: 24px;
   opacity: 0.8;
   align-self: flex-end;
+}
+
+.AddRoutine-tags {
+  display: flex;
+  overflow-x: auto;
+  height: 33px;
 }
