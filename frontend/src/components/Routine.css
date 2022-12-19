@@ -1,7 +1,7 @@
 .Routine {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   flex: 0 0 auto;
 
   height: 56px;
@@ -15,16 +15,13 @@
 .Routine:last-of-type {
   margin-bottom: 5px;
 }
-.Routine-favourite {
-  color: rgb(121, 121, 29);
-  margin-right: 4px;
-}
 
 
 .Routine-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 4px;
 }
 
 .Routine-top-nametag {

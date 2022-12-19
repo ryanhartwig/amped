@@ -2,7 +2,6 @@ import './Routine.css';
 
 import { RoutineType } from '../types/RoutineType';
 import { Tag } from './ui/Tag';
-import { sampleLastPerformedRoutines } from '../utility/data/samplePerformedRoutines';
 
 /* React Icons */
 import { VscFlame } from 'react-icons/vsc';
@@ -22,7 +21,8 @@ interface RoutineProps {
 
 export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps) => {
   const intensity = Array(routine.intensity).fill(0);
-  const latest = sampleLastPerformedRoutines.find(r => r.routine_id === routine.id);
+  const latest = useAppSelector(s => s.workoutData.routineData).find(r => r.routine_id === routine.id);
+  
   const { background_routine: background } = useAppSelector(s => s.theme);
 
   // Filter by tag
@@ -45,7 +45,7 @@ export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps)
       <div className='Routine' style={{background}}>
         <div className='Routine-top'>
           <div className='Routine-top-nametag'>
-            {routine.favourited && <AiFillStar className='Routine-favourite' />}
+            {routine.favourited && <AiFillStar className='favourite' />}
             <h2>{routine.name}</h2>
             <div className='Routine-tags'>
               {routine.tags?.map(t => 

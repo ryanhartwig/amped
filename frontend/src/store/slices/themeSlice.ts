@@ -39,7 +39,6 @@ export const themeReducer = createSlice({
   name: 'theme',
   initialState: initialState,
   reducers: {
-    // (eventual) change theme (light / dark) action
   }
 });
 

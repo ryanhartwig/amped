@@ -4,6 +4,8 @@
 
   width: calc(100% - 10px);
   height: 40px;
+  
+  flex-shrink: 0;
 
   margin: 5px auto 0 auto;
   padding: 4px 7px;
@@ -26,7 +28,3 @@
   font-weight: 100;
 }
 
-.Exercise-favourite {
-  color: rgb(121, 121, 29);
-  margin-right: 4px;
-}

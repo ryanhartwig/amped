@@ -3,12 +3,14 @@ import { ExerciseType } from "../../types/ExerciseType";
 export const sampleExercises: ExerciseType[] = [
   {
     name: 'Bench Press',
+    type: 'Exercise',
     exercise_goal: 'strength',
     muscle_target: 'chest',
     id: 'benchpress',
     intensity: 4,
   }, {
     name: 'Chest Fly',
+    type: 'Exercise',
     exercise_goal: 'hypertrophy',
     muscle_target: 'chest',
     id: 'chestfly',
@@ -16,18 +18,21 @@ export const sampleExercises: ExerciseType[] = [
     intensity: 4,
   }, {
     name: 'Incline Bench Press',
+    type: 'Exercise',
     exercise_goal: 'power',
     muscle_target: 'chest',
     id: 'inclinebenchpress',
     intensity: 5,
   }, {
     name: 'Bicep Curl',
+    type: 'Exercise',
     exercise_goal: 'strength',
     muscle_target: 'biceps',
     id: 'bicepcurl',
     intensity: 5,
   }, {
     name: 'Hammer Curl',
+    type: 'Exercise',
     exercise_goal: 'hypertrophy',
     muscle_target: 'brachioradialis',
     id: 'hammercurl',
@@ -35,9 +40,54 @@ export const sampleExercises: ExerciseType[] = [
     intensity: 4,
   }, {
     name: 'Leg Extension',
+    type: 'Exercise',
     exercise_goal: 'endurance',
     muscle_target: 'quad',
     id: 'legextension',
     intensity: 5,
+  }, {
+    name: 'Tricep Extension',
+    type: 'Exercise',
+    exercise_goal: 'strength',
+    muscle_target: 'triceps',
+    id: 'tricepextension',
+    intensity: 4,
+    favourited: true,
+  }, {
+    name: 'Floor Fly',
+    type: 'Exercise',
+    exercise_goal: 'hypertrophy',
+    muscle_target: 'pec major',
+    id: 'floorfly',
+    intensity: 5,
+  }, {
+    name: 'Standing Shoulder Press',
+    type: 'Exercise',
+    exercise_goal: 'power',
+    muscle_target: 'front delts',
+    id: 'standingshoulderpress',
+    intensity: 5,
+    favourited: true,
+  }, {
+    name: 'Front Raise',
+    type: 'Exercise',
+    exercise_goal: 'hypertrophy',
+    muscle_target: 'front delts',
+    id: 'frontraise',
+    intensity: 5,
+  }, {
+    name: 'Deadlift',
+    type: 'Exercise',
+    exercise_goal: 'strength',
+    muscle_target: 'low back',
+    id: 'deadlift',
+    intensity: 5,
+  }, {
+    name: 'Scissors',
+    type: 'Exercise',
+    exercise_goal: 'endurance',
+    muscle_target: 'lower abs',
+    id: 'scissors',
+    intensity: 4,
   }
 ]

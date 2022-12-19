@@ -1,9 +1,11 @@
-import { AiFillStar } from 'react-icons/ai';
 import type { ExerciseType } from '../types/ExerciseType';
 import { useAppSelector } from '../utility/hooks';
 import { useLazySearch } from '../utility/hooks/useLazySearch';
 import './Exercise.css';
 import { Tag } from './ui/Tag';
+
+/* React Icons */
+import { AiFillStar } from 'react-icons/ai';
 
 interface ExerciseProps {
   exercise: ExerciseType,
@@ -22,7 +24,7 @@ export const Exercise = ({exercise, query, activeTags}: ExerciseProps) => {
     <>
       {tagged && searched && 
       <div className='Exercise' style={{background}}>
-        {exercise.favourited && <AiFillStar className='Exercise-favourite' />}
+        {exercise.favourited && <AiFillStar className='favourite' />}
         <h2>{exercise.name}</h2>
         <div className='Exercise-goal'>
           <p>{exercise.exercise_goal}</p>

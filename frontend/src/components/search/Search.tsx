@@ -6,35 +6,28 @@ import { useAppSelector } from '../../utility/hooks';
 import { Tag } from '../ui/Tag';
 
 import { SearchResults } from './SearchResults';
-import { sampleExercises } from '../../utility/data/sampleExercises';
-import { sampleRoutines } from '../../utility/data/sampleRoutines';
-import { ExerciseType } from '../../types/ExerciseType';
-import { RoutineType } from '../../types/RoutineType';
 import { Routine } from '../Routine';
 import { Exercise } from '../Exercise';
 import { IoCloseOutline } from 'react-icons/io5';
 import { AiOutlineSearch } from 'react-icons/ai';
-
-
-// const sampleTags = ['strength', 'hypertrophy', 'power', 'speed', 'metabolic'];
 
 interface SearchProps {
   tab: 'Routines' | 'Exercises',
 }
 
 export const Search = ({tab}: SearchProps) => {
-
   const { background_alt: background, tags } = useAppSelector(s => s.theme);
   
   const [query, setQuery] = useState<string>('');
   const [activeTags, setActiveTagss] = useState<Set<string>>(new Set());
-
   const [userTags, setUserTags] = useState<Set<string>>(new Set());
   const [appTags] = useState<Set<string>>(new Set(['strength', 'hypertrophy', 'power', 'speed', 'endurance']));
+
+  const routines = [...useAppSelector(s => s.workouts.routines)].sort(r => r.favourited ? -1 : 1);
+  const exercises = [...useAppSelector(s => s.workouts.exercises)].sort(e => e.favourited ? -1 : 1);
+
   const display = (tab === 'Routines' && userTags.size) || (tab === 'Exercises' && appTags.size) ? '' : 'none';
-  
-  const [routines] = useState<RoutineType[]>(sampleRoutines.sort((a) => a.favourited ? -1 : 1));
-  const [exercises] = useState<ExerciseType[]>(sampleExercises.sort((a) => a.favourited ? -1 : 1));
+
   
   const onToggleTag = useCallback((t: string) => {
     const newSet = new Set(activeTags);
