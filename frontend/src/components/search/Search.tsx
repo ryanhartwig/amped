@@ -30,7 +30,7 @@ export const Search = ({tab, onSaveSelect}: SearchProps) => {
   const exercises = [...useAppSelector(s => s.workouts.exercises)].sort(e => e.favourited ? -1 : 1);
 
   const display = (tab === 'Routines' && userTags.size) || (tab === 'Exercises' && appTags.size) ? '' : 'none';
-
+  
   const [selected, setSelected] = useState<ExerciseType[]>([]);
 
   const onSelect = useCallback((e: ExerciseType) => {
