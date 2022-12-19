@@ -2,7 +2,7 @@ import './AddRoutine.css';
 
 /* React icons */
 import { IoReturnDownBackSharp } from 'react-icons/io5';
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { AiFillStar, AiOutlineStar, AiOutlineClose } from 'react-icons/ai';
 
 import { Routine } from '../../components/Routine';
 import { useAppSelector } from '../../utility/hooks';
@@ -12,6 +12,9 @@ import { Tag } from '../../components/ui/Tag';
 import { RoutineType } from '../../types/RoutineType';
 import uuid from 'react-uuid';
 import { VscFlame } from 'react-icons/vsc';
+import clsx from 'clsx';
+import { Intensity } from '../../types';
+import { ExerciseType } from '../../types/ExerciseType';
 
 export const AddRoutine = () => {
   const { background_alt: background } = useAppSelector(s => s.theme);
@@ -21,16 +24,18 @@ export const AddRoutine = () => {
   const [tags, setTags] = useState<Set<string>>(new Set());
   const [favourited, setFavourited ] = useState<boolean>(false);
   const [duration, setDuration] = useState<string>('');
+  const [intensity, setIntensity] = useState<Intensity>(0);
+  const [exercises] = useState<ExerciseType[]>([]);
 
   const routine = useMemo<RoutineType>(() => ({
     name: routineName || 'Routine name',
-    exercises: [],
-    intensity: 1,
+    exercises,
+    intensity,
     tags: Array.from(tags),
     id: uuid(),
     est_duration: Number(duration || 1),
     favourited,
-  }), [duration, favourited, routineName, tags]);
+  }), [duration, exercises, favourited, intensity, routineName, tags]);
 
   const onSaveRoutine = useCallback((e: any) => {
     e.preventDefault();
@@ -101,16 +106,23 @@ export const AddRoutine = () => {
             <p>add</p>
           </div>}
         </div>
-        <div className='AddRoutine-tags hidescrollbar noselect'>
+        {!!tags.size && <div className='AddRoutine-tags hidescrollbar noselect'>
           {Array.from(tags).map(t => <Tag text={t} toggle='remove' onClick={() => onRemoveTag(t)} key={t} />)}
-        </div>
+        </div>}
 
         <div className='AddRoutine-intensity'>
-          {Array(5).fill(true).map(() => 
-            <div key={uuid()} className='AddRoutine-intensity-icon'>
-              <VscFlame  />
-            </div>
+          {Array(6).fill(true).map((x, i) => 
+            <>
+              {<div key={uuid()} onClick={() => setIntensity((i + 1 === 6 ? 0 : i + 1) as Intensity)} className={clsx('AddRoutine-intensity-icon', {'fill': intensity > i})}>
+                {i < 5 && <VscFlame size={26} style={{marginRight: 8}} />}
+                {i === 5 && !!intensity && <AiOutlineClose size={18} style={{marginRight: 8, color: 'grey'}} />}
+              </div>}
+            </>
           )}
+        </div>
+
+        <div className='AddRoutine-exercises'>
+
         </div>
         
       </form>

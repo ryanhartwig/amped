@@ -90,6 +90,8 @@
   display: flex;
   overflow-x: auto;
   height: 33px;
+
+
 }
 
 .AddRoutine-duration {
@@ -103,4 +105,19 @@
   opacity: 0.7;
 
   top: 14px;
+}
+
+.AddRoutine-intensity {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+.AddRoutine-intensity-icon {
+  opacity: 0.3;
+  color: white;
+  transition: all 2s;
+}
+.AddRoutine-intensity-icon.fill {
+  color: rgb(206, 140, 100);
+  opacity: 1;
 }
