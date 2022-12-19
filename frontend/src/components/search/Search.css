@@ -22,21 +22,10 @@
 }
 
 .Search-bar {
-  padding: 13px;
-  padding-left: 44px;
-
   border-radius: 10000px;
-
-  color: rgba(255, 255, 255, 0.593);
-
-  margin: 0 15px;
-  margin-bottom: 3px;
+  padding: 12px 44px;
 }
-.Search input::placeholder {
-  color: white;
-  font-weight: 100;
-  opacity: 0.3;
-}
+
 
 .Search-icon {
   position: absolute;

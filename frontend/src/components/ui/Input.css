@@ -1,0 +1,35 @@
+.Input {
+  display: flex;
+  flex-direction: column;
+}
+
+.Input input {
+  background: none;
+  font-size: 1.2em;
+
+  border-bottom: 2px solid grey;
+  border-radius: 3px;
+  
+  padding: 12px 16px;
+  padding-left: 6px;
+
+  transition: background-color 0.1s;
+}
+.Input input:focus {
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-bottom: 2px solid grey;
+}
+.Input input::placeholder {
+  font-weight: 200;
+  opacity: 0.5;
+}
+
+.Input .mini {
+  border-bottom: 1px solid grey;
+  font-size: 0.97em;
+  padding: 9px;
+  padding-left: 6px;
+}
+.Input .mini:focus {
+  border-bottom: 1px solid grey;
+}

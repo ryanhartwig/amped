@@ -1,0 +1,50 @@
+
+/* Header */
+.AddRoutine h2 {
+  font-size: 1.3em;
+}
+
+.AddRoutine-form {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  padding: 13px;
+}
+.AddRoutine-form input {
+  margin-bottom: 8px;
+}
+
+.AddRoutine-addtag-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+.AddRoutine-enter {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: space-around;
+  position: absolute;
+  white-space: nowrap;
+
+  font-size: 9px;
+
+  right: 12px;
+  top: 1px;
+
+  width: 60px;
+}
+.AddRoutine-enter > *:first-child {
+  opacity: 0.6;
+}
+
+.AddRoutine-enter p {
+  position: relative;
+  top: 7px;
+  right: 24px;
+  opacity: 0.8;
+  align-self: flex-end;
+}

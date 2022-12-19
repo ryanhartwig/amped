@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-body {
+body, input {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -22,15 +22,38 @@ h2, h3, h4, h5, h6, a, p {
   font-weight: 200;
 }
 
+hr {
+  margin: 2px 0;
+  border-bottom: none;
+}
+
+/* Input Defaults */
 input {
   outline: none;
   border: 1px solid transparent;
   color: white;
+  font-weight: 300; 
+
+  padding: 12px 16px;
+  font-size: 1em;
+
+  border-radius: 10px;
+
+  color: rgba(255, 255, 255, 0.593);
+
+  margin: 0 15px;
+  margin-bottom: 3px;
+}
+input::placeholder {
+  color: white;
+  font-weight: 100;
+  opacity: 0.3;
 }
 input:focus {
   border-color: rgba(255, 255, 255, 0.176);
 }
 
+/* Prevent text highlighting / selection */
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -41,6 +64,7 @@ input:focus {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+/* Make scrollbar invisible */
 .hidescrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -53,8 +77,7 @@ input:focus {
 
 
 /* Simplified reset.css */
-
-html, body, div, span, applet, object, iframe,
+whtml, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
