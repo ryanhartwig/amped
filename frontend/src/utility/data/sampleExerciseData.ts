@@ -1,6 +1,4 @@
-import '';
 import { ExerciseDataType } from "../../types/ExerciseDataType";
-
 
 export const sampleExerciseData: ExerciseDataType[] = [
   // Chest & Triceps
