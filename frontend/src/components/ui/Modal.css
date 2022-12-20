@@ -45,3 +45,18 @@
   border-top: 1px solid grey;
 
 }
+
+.Modal-close {
+  display: flex;
+  align-items: center;
+  margin: 10px auto;
+  width: fit-content;
+}
+.Modal-close > *:first-child {
+  opacity: 0.4;  
+}
+.Modal-close > p {
+  margin-left: 8px;
+  font-size: 14px;
+  font-weight: 100;
+}

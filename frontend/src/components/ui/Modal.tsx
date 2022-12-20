@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRef } from 'react';
+import { AiOutlineClose } from 'react-icons/ai';
 import { useAppSelector } from '../../utility/hooks';
 import { useClickout } from '../../utility/hooks/useClickout';
 import './Modal.css';
@@ -11,9 +12,10 @@ interface ModalProps {
   onClose: (...args: any) => void,
   open: boolean,
   triggerRef: React.MutableRefObject<any>,
+  closeText?: string;
 }
 
-export const Modal = ({children, onClose, open, triggerRef}: ModalProps) => {
+export const Modal = ({children, onClose, open, triggerRef, closeText}: ModalProps) => {
   const header = React.Children.map(children, (child: any) => child?.type?.displayName === 'Header' ? child : null)
   const content = React.Children.map(children, (child: any) => child?.type?.displayName !== 'Header' ? child : null)
 
@@ -33,8 +35,12 @@ export const Modal = ({children, onClose, open, triggerRef}: ModalProps) => {
           </div>}
           <div className='Modal-content'>
             {content}
-
           </div>
+          {closeText && 
+          <div className='Modal-close'>
+            <AiOutlineClose size={14} />
+            <p>{closeText}</p>
+          </div>}
         </div>
       </div>}
     </>

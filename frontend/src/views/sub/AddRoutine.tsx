@@ -152,7 +152,11 @@ export const AddRoutine = () => {
         </div>        
       </form>
       
-      <Modal open={open} onClose={() => setOpen(false)} triggerRef={triggerRef} >
+      <Modal closeText='Cancel'
+        open={open} 
+        onClose={() => setOpen(false)} 
+        triggerRef={triggerRef} 
+      >
         <Modal.Header>Select Exercises</Modal.Header>
         <div className='AddRoutine-search'>
           <Search tab='Exercises' />

@@ -18,8 +18,6 @@ export const PrimaryButton = ({text, onClick, Icon = IoIosFlash, logo, altColor,
 
   const altTheme = useAppSelector(s => s.theme.buttonSecondary);
 
-
-
   return (
     <div className={clsx('PrimaryButton', 'noselect')} style={{background: altColor ? altTheme : ''}} onClick={onClick}>
       <h2>{text}</h2>
