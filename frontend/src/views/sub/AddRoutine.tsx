@@ -152,7 +152,8 @@ export const AddRoutine = () => {
       </form>
       
       <Modal open={open} onClose={() => setOpen(false)} triggerRef={triggerRef} >
-        <p>sup</p>
+        <Modal.Header>Select Exercises</Modal.Header>
+        
       </Modal> 
 
     </div>
