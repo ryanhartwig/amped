@@ -19,7 +19,7 @@ import { Exercise } from '../../components/Exercise';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 
 export const AddRoutine = () => {
-  const formRef = useRef<HTMLFormElement>(undefined!);
+  const submitRef = useRef<HTMLInputElement>(undefined!);
   
   const { background_alt: background } = useAppSelector(s => s.theme);
   
@@ -44,7 +44,6 @@ export const AddRoutine = () => {
   const onSaveRoutine = useCallback((e: any) => {
     e.preventDefault();
 
-    console.log('submit');
   }, []);
 
   const onAddTag = useCallback(() => {
@@ -65,10 +64,6 @@ export const AddRoutine = () => {
     })
   }, []);
 
-  const onSave = useCallback(() => {
-    formRef.current.submit();
-  }, []);
-  
   return (
     <div className='AddRoutine'>
       <h2>Add a new workout routine</h2>
@@ -77,7 +72,7 @@ export const AddRoutine = () => {
       <div className='AddRoutine-preview' style={{background}}>
         <Routine routine={routine} />
       </div>
-      <form className='AddRoutine-form' onSubmit={onSaveRoutine} ref={formRef}>
+      <form className='AddRoutine-form' onSubmit={onSaveRoutine}>
         <div className='AddRoutine-name'>
           
           <Input onChange={({target}) => setRoutineName(target.value)} 
@@ -122,24 +117,24 @@ export const AddRoutine = () => {
           {/* Interactive tags */}
           {!!tags.size && 
             <div className='AddRoutine-tags hidescrollbar noselect'>
-              {Array.from(tags).map(t => <Tag text={t} toggle='remove' onClick={() => onRemoveTag(t)} key={t} />)}
+              {Array.from(tags).map(t => <Tag key={t} text={t} toggle='remove' onClick={() => onRemoveTag(t)} />)}
             </div>}
         </div>
         
 
         <div className='AddRoutine-intensity'>
           {Array(6).fill(true).map((x, i) => 
-            <>
-              {<div key={uuid()} onClick={() => setIntensity((i + 1 === 6 ? 0 : i + 1) as Intensity)} className={clsx('AddRoutine-intensity-icon', {'fill': intensity > i})}>
+            <div key={uuid()}>
+              {<div  onClick={() => setIntensity((i + 1 === 6 ? 0 : i + 1) as Intensity)} className={clsx('AddRoutine-intensity-icon', {'fill': intensity > i})}>
                 {i < 5 && <VscFlame size={26} style={{marginRight: 8}} />}
                 {i === 5 && !!intensity && <AiOutlineClose size={18} style={{marginRight: 8, color: 'grey'}} />}
               </div>}
-            </>
+            </div>
           )}
         </div>
 
         <div className='AddRoutine-exercises hidescrollbar' style={{background}}>
-          {exercises.map(e => <Exercise exercise={e} />)}
+          {exercises.map(e => <Exercise key={e.id} exercise={e} />)}
           <div className='AddRoutine-add-exercise'>
             <AiOutlinePlus size={19} style={{opacity: 0.3}}/>
             <p>Select exercises</p>
@@ -147,8 +142,10 @@ export const AddRoutine = () => {
         </div>
 
         <div className='AddRoutine-save'>
-          <PrimaryButton text='Save' onClick={onSave} />
+          <PrimaryButton text='Save' onClick={() => submitRef.current.click()} />
         </div>
+
+        <input ref={submitRef} type={'submit'} style={{display: 'none'}}></input>
         
       </form>
     </div>
