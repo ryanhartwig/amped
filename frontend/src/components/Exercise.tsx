@@ -18,7 +18,7 @@ interface ExerciseProps {
   selectedPosition?: number,
 }
 
-export const Exercise = ({exercise, query, activeTags, onSelect, selectedPosition}: ExerciseProps) => {
+export const Exercise = ({exercise, query, activeTags, onSelect = undefined, selectedPosition}: ExerciseProps) => {
 
   const { background_routine: background } = useAppSelector(s => s.theme);
 

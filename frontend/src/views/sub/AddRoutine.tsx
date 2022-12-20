@@ -52,6 +52,7 @@ export const AddRoutine = () => {
 
   const onSaveSelection = useCallback((exercises: ExerciseType[]) => {
     setExercises(p => [...p, ...exercises]);
+    setOpen(false);
   }, []);
 
   const onAddTag = useCallback(() => {

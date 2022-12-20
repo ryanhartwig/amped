@@ -2,6 +2,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  white-space: nowrap;
 
   width: calc(100% - 10px);
   height: 40px;
@@ -11,14 +12,19 @@
   margin: 5px auto 0 auto;
   padding: 4px 7px;
 
+  border: 1px solid transparent;
+
   border-radius: 10px;
+
+  transition: border-color 0.2s, background-color 0.2s;
 }
 .Exercise:last-of-type {
   margin-bottom: 5px;
 }
 
 .Exercise.selected {
-  border: 1px solid green;
+  border-color: rgba(97, 112, 139, 0.538);
+  background-color:rgb(40, 39, 39) !important;
 }
 
 .Exercise-goal {

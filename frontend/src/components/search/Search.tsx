@@ -11,13 +11,14 @@ import { Exercise } from '../Exercise';
 import { IoCloseOutline } from 'react-icons/io5';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { ExerciseType } from '../../types/ExerciseType';
+import { PrimaryButton } from '../ui/PrimaryButton';
 
 interface SearchProps {
   tab: 'Routines' | 'Exercises',
   onSaveSelect?: (exercises: ExerciseType[]) => any,
 }
 
-export const Search = ({tab}: SearchProps) => {
+export const Search = ({tab, onSaveSelect}: SearchProps) => {
   const { background_alt: background, tags } = useAppSelector(s => s.theme);
   
   const [query, setQuery] = useState<string>('');
@@ -93,17 +94,25 @@ export const Search = ({tab}: SearchProps) => {
               exercise={e} 
               query={query} 
               activeTags={activeTags} 
-              onSelect={() => onSelect(e)} 
-              selectedPosition={(() => {
-                const index = selected.findIndex(s => s.id === e.id);
-                return index === -1 
-                  ? undefined
-                  : index + 1
-              })()} 
+              onSelect={onSaveSelect ? () => onSelect(e) : undefined} 
+              selectedPosition={onSaveSelect 
+                ? (() => {
+                    const index = selected.findIndex(s => s.id === e.id);
+                    return index === -1 
+                      ? undefined
+                      : index + 1
+                  })() 
+                : undefined} 
             />
           )
         }
       </SearchResults>
+
+      {onSaveSelect && 
+        <div className='Search-save-selection' onClick={() => onSaveSelect(selected)}>
+          <PrimaryButton text='Save' />
+        </div>
+      }
     </div>
   )
 }
