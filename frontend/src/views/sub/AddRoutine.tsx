@@ -51,12 +51,16 @@ export const AddRoutine = () => {
     favourited,
   }), [duration, exercises, favourited, intensity, routineName, tags]);
 
-  useEffect(() => {
-    setExercises(exerciseList.map((ex, i) => ({exercise: ex, position: i})));
-  }, [exerciseList]);
-
   const onSaveRoutine = useCallback((e: any) => {
 
+  }, []);
+
+  useEffect(() => {
+    setExercises(exerciseList.map((ex, i) => ({exercise: ex, position: i})))
+  }, [exerciseList]);
+
+  const onRemoveExercise = useCallback((exercise: RoutineExercise) => {
+    setExerciseList(p => [...p.slice(0, exercise.position), ...p.slice(exercise.position + 1)])
   }, []);
 
   const onSaveSelection = useCallback((exercises: ExerciseType[]) => {
@@ -155,7 +159,11 @@ export const AddRoutine = () => {
         </div>
 
         <div className='AddRoutine-exercises hidescrollbar' style={{background}}>
-          {exercises.map(e => <Exercise key={e.exercise.id + '' + e.position} exercise={e.exercise} />)}
+          {exercises.map(e => 
+            <div key={e.exercise.id + '' + e.position} className='AddRoutine-exercise' onClick={() => onRemoveExercise(e)}>
+              <Exercise exercise={e.exercise} />
+            </div>
+            )}
           <div className='AddRoutine-add-exercise'>
             <AiOutlinePlus size={19} style={{opacity: 0.3}}/>
             <p ref={triggerRef} onClick={onSelectExercises}>Select exercises</p>
