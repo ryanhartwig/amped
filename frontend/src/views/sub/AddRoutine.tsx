@@ -1,7 +1,7 @@
 import './AddRoutine.css';
 
 /* React icons */
-import { IoReturnDownBackSharp } from 'react-icons/io5';
+import { IoReturnDownBackSharp, IoTrash } from 'react-icons/io5';
 import { AiFillStar, AiOutlineStar, AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
 
 import { Routine } from '../../components/Routine';
@@ -51,8 +51,8 @@ export const AddRoutine = () => {
     favourited,
   }), [duration, exercises, favourited, intensity, routineName, tags]);
 
-  const onSaveRoutine = useCallback((e: any) => {
-
+  const onSaveRoutine = useCallback(() => {
+    
   }, []);
 
   useEffect(() => {
@@ -160,8 +160,11 @@ export const AddRoutine = () => {
 
         <div className='AddRoutine-exercises hidescrollbar' style={{background}}>
           {exercises.map(e => 
-            <div key={e.exercise.id + '' + e.position} className='AddRoutine-exercise' onClick={() => onRemoveExercise(e)}>
+            <div key={e.exercise.id + '' + e.position} className='AddRoutine-exercise'>
               <Exercise exercise={e.exercise} />
+              <div className='AddRoutine-exercise-remove' onClick={() => onRemoveExercise(e)}>
+                <IoTrash />
+              </div>
             </div>
             )}
           <div className='AddRoutine-add-exercise'>
