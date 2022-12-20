@@ -14,6 +14,7 @@ const tabs: Tab[] = ['Routines', 'Exercises'];
 
 export const Routines = () => {
   const navigate = useNavigate();
+  
   const {background_alt: background} = useAppSelector(s => s.theme);
 
   const [tab, setTab] = useState<'Routines' | 'Exercises'>('Routines');
