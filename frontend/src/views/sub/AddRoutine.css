@@ -25,6 +25,7 @@
   text-align: left;
 
   height: 100%;
+  max-height: calc(100% - 110px);
   position: relative;
 
   padding: 6px;
@@ -124,20 +125,22 @@
 .AddRoutine-exercises {
   display: flex;
   flex-direction: column;
-  padding: 15px;
-  
-  height: 100%;
+  padding: 2px;
+
+  flex-basis: 100%;
+
+
   margin-top: 15px;
   border-radius: 10px;
 
-  overflow-y: auto;     
-  overflow-x: hidden;
+  overflow: auto;     
 }
 .AddRoutine-add-exercise {
   display: flex;
   align-items: center;
   cursor: pointer;
 
+  margin: 16px;
   height: 24px;
 }
 .AddRoutine-add-exercise > *:last-child {
