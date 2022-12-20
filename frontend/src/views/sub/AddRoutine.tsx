@@ -3,6 +3,7 @@ import './AddRoutine.css';
 /* React icons */
 import { IoReturnDownBackSharp, IoTrash } from 'react-icons/io5';
 import { AiFillStar, AiOutlineStar, AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
+import { VscFlame } from 'react-icons/vsc';
 
 import { Routine } from '../../components/Routine';
 import { useAppSelector } from '../../utility/hooks';
@@ -11,7 +12,6 @@ import { Input } from '../../components/ui/Input';
 import { Tag } from '../../components/ui/Tag';
 import { RoutineExercise, RoutineType } from '../../types/RoutineType';
 import uuid from 'react-uuid';
-import { VscFlame } from 'react-icons/vsc';
 import clsx from 'clsx';
 import { Intensity } from '../../types';
 import { ExerciseType } from '../../types/ExerciseType';
@@ -19,8 +19,14 @@ import { Exercise } from '../../components/Exercise';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { Modal } from '../../components/ui/Modal';
 import { Search } from '../../components/search/Search';
+import { useDispatch } from 'react-redux';
+import { addWorkout } from '../../store/slices/workoutsSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const AddRoutine = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
   const { background_alt: background } = useAppSelector(s => s.theme);
   
   const [routineName, setRoutineName] = useState<string>('');
@@ -52,8 +58,9 @@ export const AddRoutine = () => {
   }), [duration, exercises, favourited, intensity, routineName, tags]);
 
   const onSaveRoutine = useCallback(() => {
-    
-  }, []);
+    dispatch(addWorkout(routine));
+    navigate('/home/routines', { state: { name: routineName || 'Routine Name' }})
+  }, [dispatch, navigate, routine, routineName]);
 
   useEffect(() => {
     setExercises(exerciseList.map((ex, i) => ({exercise: ex, position: i})))

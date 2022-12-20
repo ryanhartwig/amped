@@ -1,6 +1,6 @@
 import './Search.css';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Tags } from '../../store/slices/themeSlice';
 import { useAppSelector } from '../../utility/hooks';
 import { Tag } from '../ui/Tag';
@@ -12,6 +12,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { ExerciseType } from '../../types/ExerciseType';
 import { PrimaryButton } from '../ui/PrimaryButton';
+import { useLocation } from 'react-router-dom';
 
 interface SearchProps {
   tab: 'Routines' | 'Exercises',
@@ -20,11 +21,12 @@ interface SearchProps {
 
 export const Search = ({tab, onSaveSelect}: SearchProps) => {
   const { background_alt: background, tags } = useAppSelector(s => s.theme);
+  const location = useLocation();
   
-  const [query, setQuery] = useState<string>('');
-  const [activeTags, setActiveTagss] = useState<Set<string>>(new Set());
+  const [query, setQuery] = useState<string>(location.state?.name || '');
+  const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
   const [userTags, setUserTags] = useState<Set<string>>(new Set());
-  const [appTags] = useState<Set<string>>(new Set(['strength', 'hypertrophy', 'power', 'speed', 'endurance']));
+  const [appTags] = useState<Set<string>>(new Set(['strength', 'hypertrophy', 'power', 'speed', 'endurance', 'other']));
 
   const routines = [...useAppSelector(s => s.workouts.routines)].sort(r => r.favourited ? -1 : 1);
   const exercises = [...useAppSelector(s => s.workouts.exercises)].sort(e => e.favourited ? -1 : 1);
@@ -48,12 +50,16 @@ export const Search = ({tab, onSaveSelect}: SearchProps) => {
     activeTags.has(t) 
       ? newSet.delete(t)
       : newSet.add(t);
-    setActiveTagss(newSet);
+    setActiveTags(newSet);
   }, [activeTags]);
 
+  // Prevent resetting on initial render
+  const tabRef = useRef<string>(tab);
   useEffect(() => {
+    if (tabRef.current === tab) return;
+    tabRef.current = tab;
     setQuery('');
-    setActiveTagss(new Set());
+    setActiveTags(new Set());
   }, [tab]);
 
   return (
