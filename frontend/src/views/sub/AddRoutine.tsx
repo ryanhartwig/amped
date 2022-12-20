@@ -6,10 +6,10 @@ import { AiFillStar, AiOutlineStar, AiOutlineClose, AiOutlinePlus } from 'react-
 
 import { Routine } from '../../components/Routine';
 import { useAppSelector } from '../../utility/hooks';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Input } from '../../components/ui/Input';
 import { Tag } from '../../components/ui/Tag';
-import { RoutineType } from '../../types/RoutineType';
+import { RoutineExercise, RoutineType } from '../../types/RoutineType';
 import uuid from 'react-uuid';
 import { VscFlame } from 'react-icons/vsc';
 import clsx from 'clsx';
@@ -29,7 +29,12 @@ export const AddRoutine = () => {
   const [favourited, setFavourited ] = useState<boolean>(false);
   const [duration, setDuration] = useState<string>('');
   const [intensity, setIntensity] = useState<Intensity>(0);
-  const [exercises, setExercises] = useState<ExerciseType[]>([]);
+
+  // Array of selected exercises (contains duplicates)
+  const [exerciseList, setExerciseList] = useState<ExerciseType[]>([]);
+
+  // Array of index-positioned exercise (duplicates are therefore uniquely identifiable)
+  const [exercises, setExercises] = useState<RoutineExercise[]>(exerciseList.map((ex, i) => ({exercise: ex, position: i})));
 
   // Select exercises modal state
   const [open, setOpen] = useState<boolean>(false);
@@ -46,12 +51,16 @@ export const AddRoutine = () => {
     favourited,
   }), [duration, exercises, favourited, intensity, routineName, tags]);
 
+  useEffect(() => {
+    setExercises(exerciseList.map((ex, i) => ({exercise: ex, position: i})));
+  }, [exerciseList]);
+
   const onSaveRoutine = useCallback((e: any) => {
 
   }, []);
 
   const onSaveSelection = useCallback((exercises: ExerciseType[]) => {
-    setExercises(p => [...p, ...exercises]);
+    setExerciseList(p => [...p, ...exercises]);
     setOpen(false);
   }, []);
 
@@ -146,7 +155,7 @@ export const AddRoutine = () => {
         </div>
 
         <div className='AddRoutine-exercises hidescrollbar' style={{background}}>
-          {exercises.map(e => <Exercise key={e.id} exercise={e} />)}
+          {exercises.map(e => <Exercise key={e.exercise.id + '' + e.position} exercise={e.exercise} />)}
           <div className='AddRoutine-add-exercise'>
             <AiOutlinePlus size={19} style={{opacity: 0.3}}/>
             <p ref={triggerRef} onClick={onSelectExercises}>Select exercises</p>

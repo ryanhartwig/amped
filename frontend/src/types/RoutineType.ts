@@ -1,6 +1,11 @@
 import { Intensity } from ".";
 import { ExerciseType } from "./ExerciseType";
 
+export interface RoutineExercise {
+  position: number,
+  exercise: ExerciseType,
+}
+
 export interface RoutineType {
   name: string,
   /**
@@ -9,7 +14,7 @@ export interface RoutineType {
    * This property will not be stored in postgres, but queried and filled after the 
    * routine is fetched
    */
-  exercises: ExerciseType[],
+  exercises: RoutineExercise[],
   /**
    * Approximate duration of the exercise
    */

@@ -7,8 +7,6 @@ export const useClickout = (
   const clickout = useCallback((e: any) => {
     if (refs && refs.some(r => r?.current?.contains(e.target))) return;
 
-    console.log(`clickout on ${e.target}`)
-    console.log(refs)
     onClickout();
   }, [onClickout, refs]);
   
