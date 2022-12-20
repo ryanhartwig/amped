@@ -10,9 +10,11 @@ import { Routine } from '../Routine';
 import { Exercise } from '../Exercise';
 import { IoCloseOutline } from 'react-icons/io5';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { ExerciseType } from '../../types/ExerciseType';
 
 interface SearchProps {
   tab: 'Routines' | 'Exercises',
+  onSaveSelect?: (exercises: ExerciseType[]) => any,
 }
 
 export const Search = ({tab}: SearchProps) => {
@@ -28,6 +30,17 @@ export const Search = ({tab}: SearchProps) => {
 
   const display = (tab === 'Routines' && userTags.size) || (tab === 'Exercises' && appTags.size) ? '' : 'none';
 
+  const [selected, setSelected] = useState<ExerciseType[]>([]);
+
+  const onSelect = useCallback((e: ExerciseType) => {
+    const index = selected.findIndex(s => s.id === e.id);
+
+    setSelected(p => {
+      return (index === -1) 
+        ? [...p, e]
+        : [...p.slice(0, index), ...p.slice(index + 1)];
+    })
+  }, [selected]);
   
   const onToggleTag = useCallback((t: string) => {
     const newSet = new Set(activeTags);
@@ -68,8 +81,28 @@ export const Search = ({tab}: SearchProps) => {
       {/* Results */}
       <SearchResults>
         {tab === 'Routines' 
-          ? routines.map(r => <Routine query={query} activeTags={activeTags} setUserTags={setUserTags} key={r.id} routine={r} />)
-          : exercises.map(e => <Exercise key={e.id} exercise={e} query={query} activeTags={activeTags} />)}
+          ? routines.map(r => 
+            <Routine query={query} 
+              activeTags={activeTags} 
+              setUserTags={setUserTags} 
+              key={r.id} 
+              routine={r} 
+            /> )
+          : exercises.map(e => 
+            <Exercise key={e.id} 
+              exercise={e} 
+              query={query} 
+              activeTags={activeTags} 
+              onSelect={() => onSelect(e)} 
+              selectedPosition={(() => {
+                const index = selected.findIndex(s => s.id === e.id);
+                return index === -1 
+                  ? undefined
+                  : index + 1
+              })()} 
+            />
+          )
+        }
       </SearchResults>
     </div>
   )

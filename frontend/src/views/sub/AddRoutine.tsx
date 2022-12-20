@@ -29,7 +29,7 @@ export const AddRoutine = () => {
   const [favourited, setFavourited ] = useState<boolean>(false);
   const [duration, setDuration] = useState<string>('');
   const [intensity, setIntensity] = useState<Intensity>(0);
-  const [exercises] = useState<ExerciseType[]>([]);
+  const [exercises, setExercises] = useState<ExerciseType[]>([]);
 
   // Select exercises modal state
   const [open, setOpen] = useState<boolean>(false);
@@ -39,6 +39,7 @@ export const AddRoutine = () => {
     name: routineName || 'Routine name',
     exercises,
     intensity,
+    type: 'Routine',
     tags: Array.from(tags),
     id: uuid(),
     est_duration: Number(duration || 1),
@@ -47,6 +48,10 @@ export const AddRoutine = () => {
 
   const onSaveRoutine = useCallback((e: any) => {
 
+  }, []);
+
+  const onSaveSelection = useCallback((exercises: ExerciseType[]) => {
+    setExercises(p => [...p, ...exercises]);
   }, []);
 
   const onAddTag = useCallback(() => {
@@ -159,7 +164,7 @@ export const AddRoutine = () => {
       >
         <Modal.Header>Select Exercises</Modal.Header>
         <div className='AddRoutine-search'>
-          <Search tab='Exercises' />
+          <Search tab='Exercises' onSaveSelect={onSaveSelection} />
         </div>
       </Modal> 
 

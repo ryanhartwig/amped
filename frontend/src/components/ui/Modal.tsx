@@ -37,7 +37,7 @@ export const Modal = ({children, onClose, open, triggerRef, closeText}: ModalPro
             {content}
           </div>
           {closeText && 
-          <div className='Modal-close'>
+          <div onClick={onClose} className='Modal-close'>
             <AiOutlineClose size={14} />
             <p>{closeText}</p>
           </div>}
