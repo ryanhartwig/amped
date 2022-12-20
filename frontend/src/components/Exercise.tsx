@@ -39,7 +39,7 @@ export const Exercise = ({exercise, query, activeTags, onSelect = undefined, sel
           fontSize='10px' 
         />
         {onSelect && 
-        <div className='Exercise-position'>
+        <div className='Exercise-position' style={{background}}>
           {selectedPosition ? <div className='Exercise-position-number'>
             <p>{selectedPosition}</p>
           </div> : <AiOutlinePlus size={13} style={{opacity: 0.3}} /> }
