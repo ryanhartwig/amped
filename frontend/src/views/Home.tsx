@@ -43,7 +43,7 @@ export const Home = () => {
       </div>
       
       {/* Bottom (mobile) navigation bar */}
-      <BottomNav />
+      {!cancel && <BottomNav />}
     </div>
   )
 }

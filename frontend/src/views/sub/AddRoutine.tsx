@@ -6,7 +6,7 @@ import { AiFillStar, AiOutlineStar, AiOutlineClose, AiOutlinePlus } from 'react-
 
 import { Routine } from '../../components/Routine';
 import { useAppSelector } from '../../utility/hooks';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Input } from '../../components/ui/Input';
 import { Tag } from '../../components/ui/Tag';
 import { RoutineType } from '../../types/RoutineType';
@@ -19,8 +19,6 @@ import { Exercise } from '../../components/Exercise';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 
 export const AddRoutine = () => {
-  const submitRef = useRef<HTMLInputElement>(undefined!);
-  
   const { background_alt: background } = useAppSelector(s => s.theme);
   
   const [routineName, setRoutineName] = useState<string>('');
@@ -30,6 +28,7 @@ export const AddRoutine = () => {
   const [duration, setDuration] = useState<string>('');
   const [intensity, setIntensity] = useState<Intensity>(0);
   const [exercises] = useState<ExerciseType[]>([]);
+  // const [exModal, setExModal] = useState<boolean>(false);
 
   const routine = useMemo<RoutineType>(() => ({
     name: routineName || 'Routine name',
@@ -42,7 +41,6 @@ export const AddRoutine = () => {
   }), [duration, exercises, favourited, intensity, routineName, tags]);
 
   const onSaveRoutine = useCallback((e: any) => {
-    e.preventDefault();
 
   }, []);
 
@@ -64,6 +62,10 @@ export const AddRoutine = () => {
     })
   }, []);
 
+  const onSelectExercises = useCallback(() => {
+    
+  }, []);
+
   return (
     <div className='AddRoutine'>
       <h2>Add a new workout routine</h2>
@@ -72,11 +74,11 @@ export const AddRoutine = () => {
       <div className='AddRoutine-preview' style={{background}}>
         <Routine routine={routine} />
       </div>
-      <form className='AddRoutine-form' onSubmit={onSaveRoutine}>
+      <form className='AddRoutine-form'>
         <div className='AddRoutine-name'>
-          
           <Input onChange={({target}) => setRoutineName(target.value)} 
             value={routineName}
+            required
             style={{paddingLeft: 35}}
             placeholder="Routine name" 
           />
@@ -121,7 +123,6 @@ export const AddRoutine = () => {
             </div>}
         </div>
         
-
         <div className='AddRoutine-intensity'>
           {Array(6).fill(true).map((x, i) => 
             <div key={uuid()}>
@@ -137,17 +138,16 @@ export const AddRoutine = () => {
           {exercises.map(e => <Exercise key={e.id} exercise={e} />)}
           <div className='AddRoutine-add-exercise'>
             <AiOutlinePlus size={19} style={{opacity: 0.3}}/>
-            <p>Select exercises</p>
+            <p onClick={onSelectExercises}>Select exercises</p>
           </div>
         </div>
 
         <div className='AddRoutine-save'>
-          <PrimaryButton text='Save' onClick={() => submitRef.current.click()} />
-        </div>
-
-        <input ref={submitRef} type={'submit'} style={{display: 'none'}}></input>
-        
+          <PrimaryButton text='Save' onClick={onSaveRoutine} />
+        </div>        
       </form>
+
+
     </div>
   )
 }
