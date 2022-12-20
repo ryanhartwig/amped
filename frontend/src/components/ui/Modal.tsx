@@ -8,18 +8,24 @@ interface ModalProps {
   children: React.ReactNode;
   onClose: (...args: any) => void,
   open: boolean,
+  triggerRef: React.MutableRefObject<any>,
 }
 
-export const Modal = ({children, onClose, open}: ModalProps) => {
+export const Modal = ({children, onClose, open, triggerRef}: ModalProps) => {
   const contentRef = useRef<HTMLDivElement>(undefined!);
 
-  useClickout(onClose, contentRef)
+  useClickout(onClose, contentRef, triggerRef)
+
+
 
   return (
-    <div className='Modal noselect'>
-      <div className='Modal-content' ref={contentRef}>
-        {children}
-      </div>
-    </div>
+    <>
+      {open && <div className='Modal noselect'>
+        <div className='Modal-content' ref={contentRef}>
+          {children}
+        </div>
+      </div>}
+    </>
+    
   )
 }

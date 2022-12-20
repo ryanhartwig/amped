@@ -6,7 +6,7 @@ import { AiFillStar, AiOutlineStar, AiOutlineClose, AiOutlinePlus } from 'react-
 
 import { Routine } from '../../components/Routine';
 import { useAppSelector } from '../../utility/hooks';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { Input } from '../../components/ui/Input';
 import { Tag } from '../../components/ui/Tag';
 import { RoutineType } from '../../types/RoutineType';
@@ -17,6 +17,7 @@ import { Intensity } from '../../types';
 import { ExerciseType } from '../../types/ExerciseType';
 import { Exercise } from '../../components/Exercise';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
+import { Modal } from '../../components/ui/Modal';
 
 export const AddRoutine = () => {
   const { background_alt: background } = useAppSelector(s => s.theme);
@@ -28,7 +29,10 @@ export const AddRoutine = () => {
   const [duration, setDuration] = useState<string>('');
   const [intensity, setIntensity] = useState<Intensity>(0);
   const [exercises] = useState<ExerciseType[]>([]);
-  // const [exModal, setExModal] = useState<boolean>(false);
+
+  // Select exercises modal state
+  const [open, setOpen] = useState<boolean>(false);
+  const triggerRef = useRef<HTMLParagraphElement>(undefined!);
 
   const routine = useMemo<RoutineType>(() => ({
     name: routineName || 'Routine name',
@@ -63,7 +67,7 @@ export const AddRoutine = () => {
   }, []);
 
   const onSelectExercises = useCallback(() => {
-    
+    setOpen(true);
   }, []);
 
   return (
@@ -138,7 +142,7 @@ export const AddRoutine = () => {
           {exercises.map(e => <Exercise key={e.id} exercise={e} />)}
           <div className='AddRoutine-add-exercise'>
             <AiOutlinePlus size={19} style={{opacity: 0.3}}/>
-            <p onClick={onSelectExercises}>Select exercises</p>
+            <p ref={triggerRef} onClick={onSelectExercises}>Select exercises</p>
           </div>
         </div>
 
@@ -146,7 +150,10 @@ export const AddRoutine = () => {
           <PrimaryButton text='Save' onClick={onSaveRoutine} />
         </div>        
       </form>
-
+      
+      <Modal open={open} onClose={() => setOpen(false)} triggerRef={triggerRef} >
+        <p>sup</p>
+      </Modal> 
 
     </div>
   )
