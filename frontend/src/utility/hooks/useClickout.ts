@@ -5,8 +5,10 @@ export const useClickout = (
   ...refs: React.MutableRefObject<any>[]
 ) => {
   const clickout = useCallback((e: any) => {
-    if (refs.some(r => r.current.contains(e.target))) return;
+    if (refs && refs.some(r => r?.current?.contains(e.target))) return;
 
+    console.log(`clickout on ${e.target}`)
+    console.log(refs)
     onClickout();
   }, [onClickout, refs]);
   

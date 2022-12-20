@@ -20,7 +20,7 @@ export const Modal = ({children, onClose, open, triggerRef}: ModalProps) => {
   const { background_alt: background } = useAppSelector(s => s.theme);
   
   const contentRef = useRef<HTMLDivElement>(undefined!);
-  useClickout(onClose, contentRef, triggerRef)
+  useClickout(onClose, contentRef, triggerRef);
 
   return (
     <>

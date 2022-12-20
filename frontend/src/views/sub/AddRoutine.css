@@ -153,6 +153,11 @@
   font-weight: 200;
 }
 
+/* Modal */
+.AddRoutine-search {
+  height: 60vh;
+}
+
 /* Save routine */
 .AddRoutine-save {
   margin-top: 6px;

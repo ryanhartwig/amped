@@ -18,6 +18,7 @@ import { ExerciseType } from '../../types/ExerciseType';
 import { Exercise } from '../../components/Exercise';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { Modal } from '../../components/ui/Modal';
+import { Search } from '../../components/search/Search';
 
 export const AddRoutine = () => {
   const { background_alt: background } = useAppSelector(s => s.theme);
@@ -153,7 +154,9 @@ export const AddRoutine = () => {
       
       <Modal open={open} onClose={() => setOpen(false)} triggerRef={triggerRef} >
         <Modal.Header>Select Exercises</Modal.Header>
-        
+        <div className='AddRoutine-search'>
+          <Search tab='Exercises' />
+        </div>
       </Modal> 
 
     </div>
