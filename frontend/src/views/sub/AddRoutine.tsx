@@ -6,7 +6,7 @@ import { AiFillStar, AiOutlineStar, AiOutlineClose, AiOutlinePlus } from 'react-
 
 import { Routine } from '../../components/Routine';
 import { useAppSelector } from '../../utility/hooks';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { Input } from '../../components/ui/Input';
 import { Tag } from '../../components/ui/Tag';
 import { RoutineType } from '../../types/RoutineType';
@@ -16,11 +16,14 @@ import clsx from 'clsx';
 import { Intensity } from '../../types';
 import { ExerciseType } from '../../types/ExerciseType';
 import { Exercise } from '../../components/Exercise';
+import { PrimaryButton } from '../../components/ui/PrimaryButton';
 
 export const AddRoutine = () => {
+  const formRef = useRef<HTMLFormElement>(undefined!);
+  
   const { background_alt: background } = useAppSelector(s => s.theme);
   
-  const [routineName, setRoutineName] = useState<string>();
+  const [routineName, setRoutineName] = useState<string>('');
   const [tag, setTag] = useState<string>('');
   const [tags, setTags] = useState<Set<string>>(new Set());
   const [favourited, setFavourited ] = useState<boolean>(false);
@@ -40,6 +43,8 @@ export const AddRoutine = () => {
 
   const onSaveRoutine = useCallback((e: any) => {
     e.preventDefault();
+
+    console.log('submit');
   }, []);
 
   const onAddTag = useCallback(() => {
@@ -58,7 +63,11 @@ export const AddRoutine = () => {
       tags.delete(t);
       return tags;
     })
-  }, [])
+  }, []);
+
+  const onSave = useCallback(() => {
+    formRef.current.submit();
+  }, []);
   
   return (
     <div className='AddRoutine'>
@@ -68,7 +77,7 @@ export const AddRoutine = () => {
       <div className='AddRoutine-preview' style={{background}}>
         <Routine routine={routine} />
       </div>
-      <form className='AddRoutine-form' onSubmit={onSaveRoutine}>
+      <form className='AddRoutine-form' onSubmit={onSaveRoutine} ref={formRef}>
         <div className='AddRoutine-name'>
           
           <Input onChange={({target}) => setRoutineName(target.value)} 
@@ -95,21 +104,28 @@ export const AddRoutine = () => {
         </div>
 
         <div className='AddRoutine-addtag-wrapper'>
-          <Input style={{paddingRight: 80}} 
+          <Input style={{paddingRight: '60%'}} 
             onChange={({target}) => setTag(target.value.toLowerCase())} 
             value={tag} 
             mini
             onEnter={onAddTag}
             onBlur={onAddTag}
             placeholder="Tags (push, pull ...)"/>
-          {!!tag.length && <div className='AddRoutine-enter'>
-            <IoReturnDownBackSharp size={26} style={{color: 'grey'}}/>
-            <p>add</p>
-          </div>}
+
+          {/* Enter to add Icon / text */}
+          {!!tag.length && 
+            <div className='AddRoutine-enter'>
+              <IoReturnDownBackSharp size={26} style={{color: 'grey'}}/>
+              <p>add</p>
+            </div>}
+
+          {/* Interactive tags */}
+          {!!tags.size && 
+            <div className='AddRoutine-tags hidescrollbar noselect'>
+              {Array.from(tags).map(t => <Tag text={t} toggle='remove' onClick={() => onRemoveTag(t)} key={t} />)}
+            </div>}
         </div>
-        {!!tags.size && <div className='AddRoutine-tags hidescrollbar noselect'>
-          {Array.from(tags).map(t => <Tag text={t} toggle='remove' onClick={() => onRemoveTag(t)} key={t} />)}
-        </div>}
+        
 
         <div className='AddRoutine-intensity'>
           {Array(6).fill(true).map((x, i) => 
@@ -128,6 +144,10 @@ export const AddRoutine = () => {
             <AiOutlinePlus size={19} style={{opacity: 0.3}}/>
             <p>Select exercises</p>
           </div>
+        </div>
+
+        <div className='AddRoutine-save'>
+          <PrimaryButton text='Save' onClick={onSave} />
         </div>
         
       </form>
