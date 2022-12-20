@@ -6,7 +6,7 @@ import { useAppSelector } from '../utility/hooks';
 import { Tag } from './ui/Tag';
 
 /* React icons */
-import { AiFillStar } from 'react-icons/ai';
+import { AiFillStar, AiOutlinePlus } from 'react-icons/ai';
 import clsx from 'clsx';
 
 
@@ -38,12 +38,13 @@ export const Exercise = ({exercise, query, activeTags, onSelect, selectedPositio
           style={{height: '19px', marginLeft: '5px'}}
           fontSize='10px' 
         />
-        {selectedPosition && 
+        {onSelect && 
         <div className='Exercise-position'>
-          <div className='Exercise-position-number'>
+          {selectedPosition ? <div className='Exercise-position-number'>
             <p>{selectedPosition}</p>
-          </div>
-        </div>}
+          </div> : <AiOutlinePlus size={13} style={{opacity: 0.3}} /> }
+        </div> 
+        }
       </div>}
     </>
   )
