@@ -1,0 +1,38 @@
+.Train {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  padding: 10px;
+}
+.Train p {
+  font-size: 14px;
+  opacity: 0.9;
+  margin: 3px;
+}
+
+.Train-actions {
+  margin: 10px 0;
+}
+.Train-actions > * {
+  margin-bottom: 15px;
+}
+
+.Train-hr-text {
+  margin: 15px auto;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 240px;
+}
+.Train-hr-text p {
+  padding: 0 6px;
+  font-weight: 100;
+}
+.Train-hr-text hr {
+  width: 50%;
+  margin: 0 auto;
+  opacity: 0.3;
+}
