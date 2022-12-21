@@ -13,13 +13,16 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { ExerciseType } from '../../types/ExerciseType';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import { useLocation } from 'react-router-dom';
+import { RoutineType } from '../../types/RoutineType';
 
 interface SearchProps {
   tab: 'Routines' | 'Exercises',
   onSaveSelect?: (exercises: ExerciseType[]) => any,
+  setEdit?: React.Dispatch<React.SetStateAction<RoutineType | ExerciseType | undefined>>,
+  edit?: RoutineType | ExerciseType,
 }
 
-export const Search = ({tab, onSaveSelect}: SearchProps) => {
+export const Search = ({tab, onSaveSelect, setEdit, edit}: SearchProps) => {
   const { background_alt: background, tags } = useAppSelector(s => s.theme);
   const location = useLocation();
   
@@ -94,6 +97,8 @@ export const Search = ({tab, onSaveSelect}: SearchProps) => {
               setUserTags={setUserTags} 
               key={r.id} 
               routine={r} 
+              setEdit={setEdit}
+              edit={edit}
             /> )
           : exercises.map(e => 
             <Exercise key={e.id} 
@@ -101,6 +106,8 @@ export const Search = ({tab, onSaveSelect}: SearchProps) => {
               query={query} 
               activeTags={activeTags} 
               onSelect={onSaveSelect ? () => onSelect(e) : undefined} 
+              setEdit={setEdit}
+              edit={edit}
               selectedPosition={onSaveSelect 
                 ? (() => {
                     const index = selected.findIndex(s => s.id === e.id);

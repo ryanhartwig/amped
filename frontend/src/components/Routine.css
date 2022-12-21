@@ -3,17 +3,27 @@
   flex-direction: column;
   justify-content: space-around;
   flex: 0 0 auto;
+  cursor: pointer;
 
   height: 56px;
 
   width: calc(100% - 10px);
   border-radius: 10px;
 
+  border: 1px solid transparent;
+
   margin-top: 5px;
   padding: 4px 5px;
+
+  transition: border-color 0.2s;
 }
 .Routine:last-of-type {
   margin-bottom: 5px;
+}
+
+/* Selected routine to be edited */
+.Routine.edit {
+  border-color: hwb(214 16% 48% / 0.63);
 }
 
 

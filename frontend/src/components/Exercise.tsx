@@ -8,6 +8,8 @@ import { Tag } from './ui/Tag';
 /* React icons */
 import { AiFillStar, AiOutlinePlus } from 'react-icons/ai';
 import clsx from 'clsx';
+import { useCallback } from 'react';
+import { RoutineType } from '../types/RoutineType';
 
 
 interface ExerciseProps {
@@ -16,19 +18,26 @@ interface ExerciseProps {
   activeTags?: Set<string>,
   onSelect?: (...args: any) => any,
   selectedPosition?: number,
+  setEdit?: React.Dispatch<React.SetStateAction<RoutineType | ExerciseType | undefined>>,
+  edit?: RoutineType | ExerciseType,
 }
 
-export const Exercise = ({exercise, query, activeTags, onSelect = undefined, selectedPosition}: ExerciseProps) => {
+export const Exercise = ({exercise, query, activeTags, onSelect = undefined, edit, setEdit, selectedPosition}: ExerciseProps) => {
 
   const { background_routine: background } = useAppSelector(s => s.theme);
 
   const tagged = activeTags ? (!activeTags.size || activeTags.has(exercise.exercise_goal)) : true;
   const searched = query ? lazySearch(query, exercise.name, exercise.muscle_target) : true;
 
+  const onClick = useCallback(() => {
+    onSelect && onSelect();
+    setEdit && setEdit(exercise);
+  }, [exercise, onSelect, setEdit]);
+
   return (
     <>
       {tagged && searched && 
-      <div className={clsx('Exercise', {'selected': selectedPosition})} onClick={onSelect} style={{background}}>
+      <div className={clsx('Exercise', {'selected': selectedPosition})} onClick={onClick} style={{background}}>
         {exercise.favourited && <AiFillStar className='Exercise-favourite' />}
         <h2>{exercise.name}</h2>
         <div className='Exercise-goal'>

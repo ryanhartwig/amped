@@ -8,21 +8,20 @@ import { IconType } from 'react-icons/lib';
 interface PrimaryButtonProps {
   text: string,
   onClick?: (...args: any) => void,
-  logo?: boolean,
-  Icon?: IconType,
+  icon?: IconType | 'logo',
   altColor?: boolean,
   transparent?: boolean,
 }
 
-export const PrimaryButton = ({text, onClick, Icon = IoIosFlash, logo, altColor, transparent}: PrimaryButtonProps) => {
-
+export const PrimaryButton = ({text, onClick, icon, altColor, transparent}: PrimaryButtonProps) => {
+  const Icon = icon ? icon === 'logo' ? IoIosFlash : icon : undefined;
   const altTheme = useAppSelector(s => s.theme.buttonSecondary);
 
   return (
     <div className={clsx('PrimaryButton', 'noselect')} style={{background: altColor ? altTheme : ''}} onClick={onClick}>
       <h2>{text}</h2>
-      {logo && <div className='PrimaryButton-logo'>
-        <Icon size={'28px'} />
+      {Icon && <div className='PrimaryButton-logo'>
+        <Icon size={'24px'} />
       </div>}
     </div>
   )
