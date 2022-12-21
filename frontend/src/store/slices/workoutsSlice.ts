@@ -32,9 +32,13 @@ export const workoutsReducer = createSlice({
         state.exercises = state.exercises.filter(e => e.id !== id);
       }
     },
+    editRoutine: (state, action: PayloadAction<RoutineType>) => {
+      const index = state.routines.findIndex(r => r.id === action.payload.id);
+      state.routines[index] = action.payload;      
+    },
   }
 });
 
-export const { addWorkout, removeWorkout } = workoutsReducer.actions;
+export const { addWorkout, removeWorkout, editRoutine } = workoutsReducer.actions;
 
 export default workoutsReducer.reducer;
