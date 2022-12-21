@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search } from '../../components/search/Search';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
+import { ExerciseType } from '../../types/ExerciseType';
+import { RoutineType } from '../../types/RoutineType';
 import { useAppSelector } from '../../utility/hooks';
 import './Routines.css';
 
@@ -18,6 +20,7 @@ export const Routines = () => {
   const {background_alt: background} = useAppSelector(s => s.theme);
 
   const [tab, setTab] = useState<'Routines' | 'Exercises'>('Routines');
+  const [edit, setEdit] = useState<RoutineType | ExerciseType>();
 
   return (
     <div className='Routines'>
@@ -35,7 +38,7 @@ export const Routines = () => {
 
       {/* Search component */}
       <div className='Routines-search'>
-        <Search tab={tab} />
+        <Search tab={tab} setEdit={setEdit} edit={edit} />
       </div>
         
 
@@ -43,7 +46,8 @@ export const Routines = () => {
       <div className='Routines-add'>
         <PrimaryButton 
           onClick={() => navigate(tab === 'Routines' ? '/home/routines/add-rt' : '/home/routines/add-ex')} 
-          text={`Add a New ${tab.slice(0, -1)}`} />
+          text={`Add a New ${tab.slice(0, -1)}`} 
+          />
       </div>
     </div>
   )

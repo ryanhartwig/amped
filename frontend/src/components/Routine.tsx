@@ -9,17 +9,21 @@ import { useAppSelector } from '../utility/hooks';
 import { AiFillStar } from 'react-icons/ai';
 import { getDuration } from '../utility/helpers/getDuration';
 import { getDateTime } from '../utility/helpers/getDateTime';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { lazySearch } from '../utility/helpers/lazySearch';
+import { ExerciseType } from '../types/ExerciseType';
+import clsx from 'clsx';
 
 interface RoutineProps {
   routine: RoutineType,
   activeTags?: Set<string>,
   query?: string,
   setUserTags?: React.Dispatch<React.SetStateAction<Set<string>>>,
+  setEdit?: React.Dispatch<React.SetStateAction<RoutineType | ExerciseType | undefined>>,
+  edit?: RoutineType | ExerciseType,
 }
 
-export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps) => {
+export const Routine = ({routine, setUserTags, activeTags, query, edit, setEdit}: RoutineProps) => {
   const intensity = Array(routine.intensity).fill(0);
   const latest = useAppSelector(s => s.workoutData.routineData).find(r => r.routine_id === routine.id);
   
@@ -29,6 +33,9 @@ export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps)
   const tagged = activeTags ? (!activeTags.size || Array.from(activeTags).every(t => routine.tags?.includes(t))) : true;
   const searched = query ? lazySearch(query, routine.name) : true;
 
+  const onClick = useCallback(() => {
+    setEdit && setEdit(p => p?.id === routine.id ? undefined : routine);
+  }, [routine, setEdit]);
 
   useEffect(() => {
     if (!setUserTags) return;
@@ -43,7 +50,7 @@ export const Routine = ({routine, setUserTags, activeTags, query}: RoutineProps)
   return (
     <>
       {tagged && searched && 
-      <div className='Routine' style={{background}}>
+      <div className={clsx('Routine', {'edit': edit && edit.id === routine.id})} style={{background}} onClick={onClick}>
         <div className='Routine-top'>
           <div className='Routine-top-nametag'>
             {routine.favourited && <AiFillStar className='favourite' />}
