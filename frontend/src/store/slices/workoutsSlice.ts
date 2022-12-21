@@ -31,13 +31,18 @@ export const workoutsReducer = createSlice({
         state.routines = state.routines.filter(r => r.id !== action.payload.id);
       }
     },
-    editRoutine: (state, action: PayloadAction<RoutineType>) => {
-      const index = state.routines.findIndex(r => r.id === action.payload.id);
-      state.routines[index] = action.payload;      
+    editWorkout: (state, action: PayloadAction<RoutineType | ExerciseType>) => {
+      if (action.payload.type === 'Routine') {
+        const index = state.routines.findIndex(r => r.id === action.payload.id);
+        state.routines[index] = action.payload;      
+      } else {
+        const index = state.exercises.findIndex(e => e.id === action.payload.id);
+        state.exercises[index] = action.payload;      
+      }
     },
   }
 });
 
-export const { addWorkout, removeWorkout, editRoutine } = workoutsReducer.actions;
+export const { addWorkout, removeWorkout, editWorkout } = workoutsReducer.actions;
 
 export default workoutsReducer.reducer;

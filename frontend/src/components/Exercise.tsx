@@ -26,8 +26,8 @@ export const Exercise = ({exercise, query, activeTags, onSelect = undefined, edi
 
   const { background_routine: background } = useAppSelector(s => s.theme);
 
-  const tagged = activeTags ? (!activeTags.size || activeTags.has(exercise.exercise_goal)) : true;
-  const searched = query ? lazySearch(query, exercise.name, exercise.muscle_target) : true;
+  const tagged = !activeTags?.size || (!activeTags.size || activeTags.has(exercise.exercise_goal));
+  const searched = !query?.length || lazySearch(query, exercise.name, ...exercise.muscle_targets);
 
   const onClick = useCallback(() => {
     onSelect && onSelect();
@@ -38,22 +38,30 @@ export const Exercise = ({exercise, query, activeTags, onSelect = undefined, edi
     <>
       {tagged && searched && 
       <div className={clsx('Exercise', {'selected': selectedPosition})} onClick={onClick} style={{background}}>
-        {exercise.favourited && <AiFillStar className='Exercise-favourite' />}
-        <h2>{exercise.name}</h2>
-        <div className='Exercise-goal'>
-          <p>{exercise.exercise_goal}</p>
+        <div className='Exercise-details'>
+          {exercise.favourited && <AiFillStar className='Exercise-favourite' />}
+          <h2>{exercise.name}</h2>
+          {exercise.exercise_goal && <div className='Exercise-goal'>
+            <p>{exercise.exercise_goal}</p>
+          </div>}
+          
+          {onSelect && 
+          <div className='Exercise-position' style={{background}}>
+            {selectedPosition ? <div className='Exercise-position-number'>
+              <p>{selectedPosition}</p>
+            </div> : <AiOutlinePlus size={13} style={{opacity: 0.3}} /> }
+          </div> 
+          }
+          
         </div>
-        <Tag text={exercise.muscle_target} 
-          style={{height: '19px', marginLeft: '5px'}}
-          fontSize='10px' 
-        />
-        {onSelect && 
-        <div className='Exercise-position' style={{background}}>
-          {selectedPosition ? <div className='Exercise-position-number'>
-            <p>{selectedPosition}</p>
-          </div> : <AiOutlinePlus size={13} style={{opacity: 0.3}} /> }
-        </div> 
-        }
+        <div className='Exercise-targets hidescrollbar'>
+          {exercise.muscle_targets.map(t => 
+            <Tag key={`${exercise.id}-${t}`} text={t} style={{height: '19px', marginLeft: '5px'}} fontSize='10px' />
+          )}
+        </div>
+
+
+        
       </div>}
     </>
   )

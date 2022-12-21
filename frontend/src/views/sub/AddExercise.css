@@ -1,0 +1,214 @@
+
+.AddExercise {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Header */
+.AddExercise h2 {
+  font-size: 1.3em;
+}
+
+.AddExercise-preview {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 5px;
+  margin: 0 auto;
+}
+
+.AddExercise-form {
+  display: flex;
+  flex-direction: column;
+
+  text-align: left;
+
+  height: 100%;
+  max-height: calc(100% - 110px);
+  position: relative;
+
+  padding: 6px;
+}
+.AddExercise-form input {
+  margin-bottom: 8px;
+}
+
+.AddExercise-name {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.AddExercise-favourite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(121, 121, 29);
+  padding: 11px;
+  position: absolute;
+  height: 100%;
+  left: -3px;
+  top: -4px;
+  z-index: 3;
+}
+
+/* Add tags input & tags */
+.AddExercise-addtag-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+.AddExercise-enter {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: space-around;
+  position: absolute;
+  white-space: nowrap;
+  font-size: 9px;
+
+  right: -6px;
+  top: 1px;
+
+  width: 60px;
+}
+.AddExercise-enter > *:first-child {
+  opacity: 0.6;
+}
+.AddExercise-enter p {
+  position: relative;
+  top: 7px;
+  right: 24px;
+  opacity: 0.8;
+  align-self: flex-end;
+}
+.AddExercise-tags {
+  display: flex;
+  height: 33px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  overflow-x: auto;
+}
+
+/* Duration input */
+.AddExercise-duration {
+  position: relative;
+}
+.AddExercise-min {
+  position: absolute;
+  font-weight: 100;
+  font-size: 0.85em;
+  pointer-events: none;
+  opacity: 0.7;
+
+  top: 14px;
+}
+
+/* Intensity select */
+.AddExercise-intensity {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+.AddExercise-intensity-icon {
+  opacity: 0.3;
+  color: white;
+  transition: all 2s;
+}
+.AddExercise-intensity-icon.fill {
+  color: rgb(206, 140, 100);
+  opacity: 1;
+}
+
+/* Exercise select */
+.AddExercise-exercises {
+  display: flex;
+  flex-direction: column;
+  padding: 2px;
+
+  flex-basis: 100%;
+
+
+  margin-top: 15px;
+  border-radius: 10px;
+
+  overflow: auto;     
+}
+.AddExercise-add-exercise {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  margin: 16px;
+  height: 24px;
+}
+.AddExercise-add-exercise > *:last-child {
+  margin-left: 8px;
+  position: relative;
+  font-size: 17px;
+  font-weight: 100;
+  opacity: 0.8;
+}
+.AddExercise-add-exercise:hover > *:last-child {
+  text-decoration: underline;
+  opacity: 1;
+  font-weight: 200;
+}
+.AddExercise-exercise {
+  display: flex;
+  align-items: center;
+}
+.AddExercise-exercise-remove {
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin: 2px 9px;
+  cursor: pointer;
+  color: white;
+
+  transition: color 0.2s;
+}
+.AddExercise-exercise-remove:hover {
+  color: rgb(158, 87, 87);
+}
+.AddExercise-exercise .Exercise {
+  margin-bottom: 0px;
+  margin-top: 4px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+}
+
+/* Modal */
+.AddExercise-search {
+  height: 70vh;
+}
+.AddExercise-search .Exercise {
+  cursor: pointer;
+}             
+
+/* Save routine */
+.AddExercise-save {
+  margin-top: 10px;
+  display: flex;
+}
+
+.AddExercise-remove {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+
+  cursor: poitner;
+  
+  font-size: 12px;
+  margin-right: 20px;
+  margin-left: 20px;
+  padding: 0 5px;
+  border-radius: 10000px;
+  height: 100%;
+  width: 140px;
+  background: rgb(105, 31, 14);
+
+}
