@@ -5,20 +5,19 @@ import clsx from 'clsx';
 import { useAppSelector } from '../../utility/hooks';
 import { IconType } from 'react-icons/lib';
 
-interface PrimaryButtonProps {
+interface PrimaryButtonProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   text: string,
-  onClick?: (...args: any) => void,
   icon?: IconType | 'logo',
   altColor?: boolean,
-  transparent?: boolean,
+  className?: string,
 }
 
-export const PrimaryButton = ({text, onClick, icon, altColor, transparent}: PrimaryButtonProps) => {
+export const PrimaryButton = ({text, icon, altColor, className, ...props}: PrimaryButtonProps) => {
   const Icon = icon ? icon === 'logo' ? IoIosFlash : icon : undefined;
   const altTheme = useAppSelector(s => s.theme.buttonSecondary);
 
   return (
-    <div className={clsx('PrimaryButton', 'noselect')} style={{background: altColor ? altTheme : ''}} onClick={onClick}>
+    <div {...props} className={clsx('PrimaryButton', 'noselect') + ' ' + className || ''} style={{background: altColor ? altTheme : '', ...props.style}} >
       <h2>{text}</h2>
       {Icon && <div className='PrimaryButton-logo'>
         <Icon size={'19px'} />

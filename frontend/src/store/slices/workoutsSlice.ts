@@ -24,12 +24,11 @@ export const workoutsReducer = createSlice({
       if (action.payload.type === 'Exercise') state.exercises.push(action.payload);
       else (state.routines.push(action.payload));
     }, 
-    removeWorkout: (state, action: PayloadAction<{type: 'Routine' | 'Exercise', id: string}>) => {
-      const { type, id } = action.payload;
-      if (type === 'Routine') {
-        state.routines = state.routines.filter(r => r.id !== id);
+    removeWorkout: (state, action: PayloadAction<RoutineType | ExerciseType>) => {
+      if (action.payload.type === 'Exercise') {
+        state.exercises = state.exercises.filter(e => e.id !== action.payload.id);
       } else {
-        state.exercises = state.exercises.filter(e => e.id !== id);
+        state.routines = state.routines.filter(r => r.id !== action.payload.id);
       }
     },
     editRoutine: (state, action: PayloadAction<RoutineType>) => {

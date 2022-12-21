@@ -41,12 +41,10 @@
   padding-bottom: 0;
 }
 
-.Routines-add {
+.Routines-actions {
+  display: flex;
+  align-items: center;
   width: 100%;
   margin: 14px 0;
 }
 
-.favourite {
-  color: rgb(95, 95, 28);
-  margin-right: 4px;
-}

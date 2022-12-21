@@ -2,7 +2,7 @@ import './AddRoutine.css';
 
 /* React icons */
 import { IoReturnDownBackSharp, IoTrash } from 'react-icons/io5';
-import { AiFillStar, AiOutlineStar, AiOutlineClose, AiOutlinePlus } from 'react-icons/ai';
+import { AiFillStar, AiOutlineStar, AiOutlineClose, AiOutlinePlus, AiOutlineDelete } from 'react-icons/ai';
 import { VscFlame } from 'react-icons/vsc';
 
 import { Routine } from '../../components/Routine';
@@ -20,7 +20,7 @@ import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { Modal } from '../../components/ui/Modal';
 import { Search } from '../../components/search/Search';
 import { useDispatch } from 'react-redux';
-import { addWorkout, editRoutine } from '../../store/slices/workoutsSlice';
+import { addWorkout, editRoutine, removeWorkout } from '../../store/slices/workoutsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export const AddRoutine = () => {
@@ -109,6 +109,12 @@ export const AddRoutine = () => {
     setOpen(true);
   }, []);
 
+  const onRemoveRoutine = useCallback(() => {
+    if (!editing) return;
+    dispatch(removeWorkout(editing))
+    navigate('/home/routines')
+  }, [dispatch, editing, navigate]);
+
   return (
     <div className='AddRoutine'>
       <h2>{editing ? 'Edit' : 'Add a new workout'} routine</h2>
@@ -194,6 +200,12 @@ export const AddRoutine = () => {
 
         <div className='AddRoutine-save'>
           <PrimaryButton text='Save' onClick={onSaveRoutine} />
+          {editing &&             
+          <div className='AddRoutine-remove' onClick={onRemoveRoutine}>
+            <AiOutlineDelete size={22} />
+            <p style={{marginTop: 5}}>Delete Routine</p>
+          </div>
+        }
         </div>        
       </form>
       

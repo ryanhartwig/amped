@@ -185,9 +185,30 @@
 }
 .AddRoutine-search .Exercise {
   cursor: pointer;
-}
+}             
 
 /* Save routine */
 .AddRoutine-save {
   margin-top: 10px;
+  display: flex;
+}
+
+.AddRoutine-remove {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+
+  cursor: poitner;
+  
+  font-size: 12px;
+  margin-right: 20px;
+  margin-left: 20px;
+  padding: 0 5px;
+  border-radius: 10000px;
+  height: 100%;
+  width: 140px;
+  background: rgb(105, 31, 14);
+
 }
