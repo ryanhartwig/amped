@@ -69,7 +69,7 @@ export const Calendar = ({showPeriod}: CalendarProps) => {
 
       {/* Day of the Week */}
       <div className='Calendar-days'>
-        {days.map(d => <p key={d}>{d}</p>)}
+        {days.map(d => <p key={d}>{d.slice(0, 3)}</p>)}
       </div>
       
       {/* Calendar Days */}
