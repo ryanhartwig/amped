@@ -44,17 +44,18 @@ export const Routines = () => {
         
 
       {/* "Add new ..." component */}
-      <div className='Routines-add'>
+      <div className='Routines-actions'>
         {edit 
           ? <PrimaryButton onClick={() => navigate(tab === 'Routines' ? '/home/routines/add-rt' : '/home/routines/add-ex', { state: { edit }})} 
               text={`Edit ${tab.slice(0, -1)}`}
               icon={AiOutlineEdit}
+              className="Routines-edit"
           />
           : <PrimaryButton onClick={() => navigate(tab === 'Routines' ? '/home/routines/add-rt' : '/home/routines/add-ex')} 
               text={`Add a New ${tab.slice(0, -1)}`} 
               icon={AiOutlinePlus}
           />}
-
+        
       </div>
     </div>
   )
