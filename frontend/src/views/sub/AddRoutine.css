@@ -28,7 +28,7 @@
   max-height: calc(100% - 110px);
   position: relative;
 
-  padding: 6px;
+  padding: 9px;
 }
 .AddRoutine-form input {
   margin-bottom: 8px;

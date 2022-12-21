@@ -36,22 +36,24 @@ export const AddExercise = () => {
   const [target, setTarget] = useState<Set<string>>(new Set(editing?.muscle_targets));
   const [favourited, setFavourited ] = useState<boolean>(editing?.favourited || false);
   const [intensity, setIntensity] = useState<Intensity>(editing?.intensity || 0);
+  const [notes, setNotes] = useState<string>(editing?.notes || '');
+  const [goal, setGoal] = useState<string>(editing?.exercise_goal || 'Select exercise goal');
 
   const exercise = useMemo<ExerciseType>(() => ({
     name: exerciseName || 'Exercise name',
     intensity,
     type: 'Exercise',
     id: editing?.id || uuid(),
-    notes: '',
-    exercise_goal: '',
+    notes: notes,
+    exercise_goal: goal === 'Select exercise goal' ? 'Other' : goal,
     muscle_targets: Array.from(target),
     favourited,
-  }), [exerciseName, intensity, editing?.id, target, favourited]);
+  }), [exerciseName, intensity, editing?.id, notes, goal, target, favourited]);
 
-  const onSaveRoutine = useCallback(() => {
+  const onSaveExercise = useCallback(() => {
     if (editing) {
       dispatch(editWorkout(exercise));
-      navigate('/home/routines', { state: { }})
+      navigate('/home/routines', { state: { tag: 'Exercises' }})
       return;
     } 
 
@@ -97,11 +99,22 @@ export const AddExercise = () => {
             value={exerciseName}
             required
             style={{paddingLeft: 35}}
-            placeholder="Routine name" 
+            placeholder="Exercise name" 
           />
           <div className='AddExercise-favourite' onClick={() => setFavourited(p => !p)}>
             {favourited ? <AiFillStar size={20}/> : <AiOutlineStar size={20}/>}
           </div>
+        </div>
+        
+        <div className='AddExercise-goal'>
+          <select id="exercise-goal" value={goal} onChange={(e) => setGoal(e.target.value)}>
+            <option value="Select exercise goal" disabled>Select exercise goal</option>
+            <option value="Hypertrophy">Hypertrophy</option>
+            <option value="Power">Power</option>
+            <option value="Speed">Speed</option>
+            <option value="Endurance">Endurance</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
 
         <div className='AddExercise-addtag-wrapper'>
@@ -139,8 +152,37 @@ export const AddExercise = () => {
           )}
         </div>
 
+        <div className='AddExercise-notes'>
+          <textarea value={notes} 
+            onChange={(e) => setNotes(e.target.value)} 
+            placeholder='Exercise notes' 
+            className='AddExercise-notes-text' 
+            style={{background}}
+          />
+        </div>
+
+        {/* Fill space (maintains flex-start positioning with save at bottom) */}
+        <div className='AddExercise-fill'>
+        </div>
+        
+
+        {/* Select photos for exercise demonstration, etc (to be implemented) */}
+        {/* <div className='AddExercise-media'>
+          <PrimaryButton 
+            text='Add media' 
+            style={{
+              height: '100%', 
+              background: 'none', 
+              border: '1px solid grey',
+              width: '50%',
+            }} 
+            iconSize={13}
+            fontSize={15}
+          />
+        </div> */}
+
         <div className='AddExercise-save'>
-          <PrimaryButton text='Save' onClick={onSaveRoutine} />
+          <PrimaryButton text='Save' onClick={onSaveExercise} />
           {editing &&             
           <div className='AddExercise-remove' onClick={onRemoveExercise}>
             <AiOutlineDelete size={22} />
@@ -149,6 +191,7 @@ export const AddExercise = () => {
         }
         </div>        
       </form>
+
     </div>
   )
 }

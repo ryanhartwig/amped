@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Search } from '../../components/search/Search';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { ExerciseType } from '../../types/ExerciseType';
@@ -17,10 +17,11 @@ const tabs: Tab[] = ['Routines', 'Exercises'];
 
 export const Routines = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   
   const {background_alt: background} = useAppSelector(s => s.theme);
 
-  const [tab, setTab] = useState<'Routines' | 'Exercises'>('Routines');
+  const [tab, setTab] = useState<'Routines' | 'Exercises'>(location.state?.tag || 'Routines');
   const [edit, setEdit] = useState<RoutineType | ExerciseType>();
 
   return (
