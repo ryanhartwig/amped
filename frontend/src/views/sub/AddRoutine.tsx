@@ -20,7 +20,7 @@ import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { Modal } from '../../components/ui/Modal';
 import { Search } from '../../components/search/Search';
 import { useDispatch } from 'react-redux';
-import { addWorkout, editRoutine, removeWorkout } from '../../store/slices/workoutsSlice';
+import { addWorkout, editWorkout, removeWorkout } from '../../store/slices/workoutsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export const AddRoutine = () => {
@@ -66,11 +66,12 @@ export const AddRoutine = () => {
 
   const onSaveRoutine = useCallback(() => {
     if (editing) {
-      dispatch(editRoutine(routine));
-    } else {
-      dispatch(addWorkout(routine));
-    }
-    
+      dispatch(editWorkout(routine));
+      navigate('/home/routines', { state: { }})
+      return;
+    } 
+
+    dispatch(addWorkout(routine));
     navigate('/home/routines', { state: { name: routineName || 'Routine Name' }})
   }, [dispatch, editing, navigate, routine, routineName]);
 
@@ -111,8 +112,8 @@ export const AddRoutine = () => {
 
   const onRemoveRoutine = useCallback(() => {
     if (!editing) return;
-    dispatch(removeWorkout(editing))
-    navigate('/home/routines')
+    dispatch(removeWorkout(editing));
+    navigate('/home/routines');
   }, [dispatch, editing, navigate]);
 
   return (

@@ -12,7 +12,7 @@ export interface ExerciseType {
   /**
    * Main muscle-group focus for this exercise
    */
-  muscle_target: string,
+  muscle_targets: string[],
   type: 'Exercise',
   intensity?: Intensity,
   favourited?: boolean,
