@@ -21,20 +21,27 @@ import { Modal } from '../../components/ui/Modal';
 import { Search } from '../../components/search/Search';
 import { useDispatch } from 'react-redux';
 import { addWorkout } from '../../store/slices/workoutsSlice';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const AddRoutine = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const editing: RoutineType | undefined = location.state?.edit;
+  console.log(location)
   
   const { background_alt: background } = useAppSelector(s => s.theme);
-  
-  const [routineName, setRoutineName] = useState<string>('');
+
+  // Input value
   const [tag, setTag] = useState<string>('');
-  const [tags, setTags] = useState<Set<string>>(new Set());
-  const [favourited, setFavourited ] = useState<boolean>(false);
-  const [duration, setDuration] = useState<string>('');
-  const [intensity, setIntensity] = useState<Intensity>(0);
+  
+  // Routine properties
+  const [routineName, setRoutineName] = useState<string>(editing?.name || '');
+  const [tags, setTags] = useState<Set<string>>(new Set(editing?.tags));
+  const [favourited, setFavourited ] = useState<boolean>(editing?.favourited || false);
+  const [duration, setDuration] = useState<string>(editing?.est_duration?.toString() || '');
+  const [intensity, setIntensity] = useState<Intensity>(editing?.intensity || 0);
 
   // Array of selected exercises (contains duplicates)
   const [exerciseList, setExerciseList] = useState<ExerciseType[]>([]);

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { Search } from '../../components/search/Search';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
@@ -44,10 +45,16 @@ export const Routines = () => {
 
       {/* "Add new ..." component */}
       <div className='Routines-add'>
-        <PrimaryButton 
-          onClick={() => navigate(tab === 'Routines' ? '/home/routines/add-rt' : '/home/routines/add-ex')} 
-          text={`Add a New ${tab.slice(0, -1)}`} 
+        {edit 
+          ? <PrimaryButton onClick={() => navigate(tab === 'Routines' ? '/home/routines/add-rt' : '/home/routines/add-ex', { state: { edit }})} 
+              text={`Edit ${tab.slice(0, -1)}`}
+              icon={AiOutlineEdit}
           />
+          : <PrimaryButton onClick={() => navigate(tab === 'Routines' ? '/home/routines/add-rt' : '/home/routines/add-ex')} 
+              text={`Add a New ${tab.slice(0, -1)}`} 
+              icon={AiOutlinePlus}
+          />}
+
       </div>
     </div>
   )

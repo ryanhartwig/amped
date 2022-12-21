@@ -58,12 +58,15 @@ export const Search = ({tab, onSaveSelect, setEdit, edit}: SearchProps) => {
 
   // Prevent resetting on initial render
   const tabRef = useRef<string>(tab);
+  
+  /* Reset when changing tabs */
   useEffect(() => {
     if (tabRef.current === tab) return;
     tabRef.current = tab;
     setQuery('');
     setActiveTags(new Set());
-  }, [tab]);
+    setEdit && setEdit(undefined);
+  }, [setEdit, tab]);
 
   return (
     <div className='Search'>
