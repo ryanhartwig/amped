@@ -6,10 +6,11 @@ import { useAppSelector } from '../utility/hooks';
 import { Tag } from './ui/Tag';
 
 /* React icons */
-import { AiFillStar, AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus } from 'react-icons/ai';
 import clsx from 'clsx';
 import { useCallback } from 'react';
 import { RoutineType } from '../types/RoutineType';
+import { IoIosFlash } from 'react-icons/io';
 
 
 interface ExerciseProps {
@@ -37,9 +38,9 @@ export const Exercise = ({exercise, query, activeTags, onSelect = undefined, edi
   return (
     <>
       {tagged && searched && 
-      <div className={clsx('Exercise', {'selected': selectedPosition})} onClick={onClick} style={{background}}>
+      <div className={clsx('Exercise', {'edit': edit?.id === exercise.id}, {'selected': selectedPosition})} onClick={onClick} style={{background}}>
         <div className='Exercise-details'>
-          {exercise.favourited && <AiFillStar className='Exercise-favourite' />}
+          {exercise.favourited && <IoIosFlash className='Exercise-favourite' />}
           <h2>{exercise.name}</h2>
           {exercise.exercise_goal && <div className='Exercise-goal'>
             <p>{exercise.exercise_goal}</p>

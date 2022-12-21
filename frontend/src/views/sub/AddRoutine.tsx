@@ -2,7 +2,7 @@ import './AddRoutine.css';
 
 /* React icons */
 import { IoReturnDownBackSharp, IoTrash } from 'react-icons/io5';
-import { AiFillStar, AiOutlineStar, AiOutlineClose, AiOutlinePlus, AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlineClose, AiOutlinePlus, AiOutlineDelete, AiOutlineCheckCircle } from 'react-icons/ai';
 import { VscFlame } from 'react-icons/vsc';
 
 import { Routine } from '../../components/Routine';
@@ -22,6 +22,7 @@ import { Search } from '../../components/search/Search';
 import { useDispatch } from 'react-redux';
 import { addWorkout, editWorkout, removeWorkout } from '../../store/slices/workoutsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
 
 export const AddRoutine = () => {
   const dispatch = useDispatch();
@@ -133,7 +134,7 @@ export const AddRoutine = () => {
             placeholder="Routine name" 
           />
           <div className='AddRoutine-favourite' onClick={() => setFavourited(p => !p)}>
-            {favourited ? <AiFillStar size={20}/> : <AiOutlineStar size={20}/>}
+            {favourited ? <IoIosFlash size={20}/> : <IoIosFlashOff size={20} style={{color: 'grey'}} />}
           </div>
         </div>
 
@@ -200,7 +201,7 @@ export const AddRoutine = () => {
         </div>
 
         <div className='AddRoutine-save'>
-          <PrimaryButton text='Save' onClick={onSaveRoutine} />
+          <PrimaryButton icon={AiOutlineCheckCircle} text='Save' onClick={onSaveRoutine} />
           {editing &&             
           <div className='AddRoutine-remove' onClick={onRemoveRoutine}>
             <AiOutlineDelete size={22} />
