@@ -20,7 +20,7 @@ import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { Modal } from '../../components/ui/Modal';
 import { Search } from '../../components/search/Search';
 import { useDispatch } from 'react-redux';
-import { addWorkout } from '../../store/slices/workoutsSlice';
+import { addWorkout, editRoutine } from '../../store/slices/workoutsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export const AddRoutine = () => {
@@ -44,7 +44,7 @@ export const AddRoutine = () => {
   const [intensity, setIntensity] = useState<Intensity>(editing?.intensity || 0);
 
   // Array of selected exercises (contains duplicates)
-  const [exerciseList, setExerciseList] = useState<ExerciseType[]>([]);
+  const [exerciseList, setExerciseList] = useState<ExerciseType[]>(editing?.exercises.map(e => e.exercise) || []);
 
   // Array of index-positioned exercise (duplicates are therefore uniquely identifiable)
   const [exercises, setExercises] = useState<RoutineExercise[]>(exerciseList.map((ex, i) => ({exercise: ex, position: i})));
@@ -59,15 +59,20 @@ export const AddRoutine = () => {
     intensity,
     type: 'Routine',
     tags: Array.from(tags),
-    id: uuid(),
+    id: editing?.id || uuid(),
     est_duration: Number(duration || 1),
     favourited,
-  }), [duration, exercises, favourited, intensity, routineName, tags]);
+  }), [duration, editing?.id, exercises, favourited, intensity, routineName, tags]);
 
   const onSaveRoutine = useCallback(() => {
-    dispatch(addWorkout(routine));
+    if (editing) {
+      dispatch(editRoutine(routine));
+    } else {
+      dispatch(addWorkout(routine));
+    }
+    
     navigate('/home/routines', { state: { name: routineName || 'Routine Name' }})
-  }, [dispatch, navigate, routine, routineName]);
+  }, [dispatch, editing, navigate, routine, routineName]);
 
   useEffect(() => {
     setExercises(exerciseList.map((ex, i) => ({exercise: ex, position: i})))
@@ -106,7 +111,7 @@ export const AddRoutine = () => {
 
   return (
     <div className='AddRoutine'>
-      <h2>Add a new workout routine</h2>
+      <h2>{editing ? 'Edit' : 'Add a new workout'} routine</h2>
       <hr></hr>
       
       <div className='AddRoutine-preview' style={{background}}>

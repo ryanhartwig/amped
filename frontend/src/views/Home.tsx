@@ -18,8 +18,12 @@ export const Home = () => {
   const { route } = useView();
 
   const onGoBack = useCallback(() => {
-    navigate(-1);
-  }, [navigate]);
+    if (cancel) {
+      navigate('/home/routines', { state: {}});
+    } else {
+      navigate(-1);
+    }
+  }, [cancel, navigate]);
 
 
   return (
