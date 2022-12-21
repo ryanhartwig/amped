@@ -6,13 +6,13 @@ import { Tag } from './ui/Tag';
 /* React Icons */
 import { VscFlame } from 'react-icons/vsc';
 import { useAppSelector } from '../utility/hooks';
-import { AiFillStar } from 'react-icons/ai';
 import { getDuration } from '../utility/helpers/getDuration';
 import { getDateTime } from '../utility/helpers/getDateTime';
 import { useCallback, useEffect } from 'react';
 import { lazySearch } from '../utility/helpers/lazySearch';
 import { ExerciseType } from '../types/ExerciseType';
 import clsx from 'clsx';
+import { IoIosFlash } from 'react-icons/io';
 
 interface RoutineProps {
   routine: RoutineType,
@@ -53,7 +53,7 @@ export const Routine = ({routine, setUserTags, activeTags, query, edit, setEdit}
       <div className={clsx('Routine', {'edit': edit && edit.id === routine.id})} style={{background}} onClick={onClick}>
         <div className='Routine-top'>
           <div className='Routine-top-nametag'>
-            {routine.favourited && <AiFillStar className='favourite' />}
+            {routine.favourited && <IoIosFlash className='favourite' />}
             <h2>{routine.name}</h2>
             <div className='Routine-tags'>
               {routine.tags?.map(t => 

@@ -20,7 +20,7 @@ export const Modal = ({children, onClose, open, triggerRef, closeText}: ModalPro
   const header = React.Children.map(children, (child: any) => child?.type?.displayName === 'Header' ? child : null)
   const content = React.Children.map(children, (child: any) => child?.type?.displayName !== 'Header' ? child : null)
 
-  const { background_alt: background } = useAppSelector(s => s.theme);
+  const { background } = useAppSelector(s => s.theme);
   
   const contentRef = useRef<HTMLDivElement>(undefined!);
   useClickout(onClose, contentRef, triggerRef);

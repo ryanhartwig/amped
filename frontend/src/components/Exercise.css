@@ -19,7 +19,7 @@
   margin: 5px auto 0 auto;
   padding: 4px 6px;
 
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   border-radius: 10px;
 
   transition: border-color 0.2s, background-color 0.2s;
@@ -30,6 +30,10 @@
 .Exercise h2 {
   font-size: 16px;
   margin-left: 2px;
+}
+
+.Exercise.edit {
+  border-color: hwb(214 16% 48% / 0.63);
 }
 
 .Exercise-details {

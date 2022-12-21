@@ -2,7 +2,7 @@ import './AddExercise.css';
 
 /* React icons */
 import { IoReturnDownBackSharp } from 'react-icons/io5';
-import { AiFillStar, AiOutlineStar, AiOutlineClose, AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlineClose, AiOutlineDelete, AiOutlineCheckCircle } from 'react-icons/ai';
 import { VscFlame } from 'react-icons/vsc';
 
 import { useAppSelector } from '../../utility/hooks';
@@ -18,6 +18,7 @@ import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { useDispatch } from 'react-redux';
 import { addWorkout, editWorkout, removeWorkout } from '../../store/slices/workoutsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
 
 export const AddExercise = () => {
   const dispatch = useDispatch();
@@ -102,7 +103,7 @@ export const AddExercise = () => {
             placeholder="Exercise name" 
           />
           <div className='AddExercise-favourite' onClick={() => setFavourited(p => !p)}>
-            {favourited ? <AiFillStar size={20}/> : <AiOutlineStar size={20}/>}
+            {favourited ? <IoIosFlash size={20}/> : <IoIosFlashOff size={20} style={{color: 'grey'}} />}
           </div>
         </div>
         
@@ -182,7 +183,7 @@ export const AddExercise = () => {
         </div> */}
 
         <div className='AddExercise-save'>
-          <PrimaryButton text='Save' onClick={onSaveExercise} />
+          <PrimaryButton icon={AiOutlineCheckCircle} text='Save' onClick={onSaveExercise} />
           {editing &&             
           <div className='AddExercise-remove' onClick={onRemoveExercise}>
             <AiOutlineDelete size={22} />
