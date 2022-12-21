@@ -1,4 +1,8 @@
 .Exercise {
+  display: flex;
+  justify-content: center;
+
+  flex-direction: column;
   position: relative;
   white-space: nowrap;
   cursor: pointer;
@@ -8,11 +12,12 @@
 
   width: calc(100% - 10px);
   height: fit-content;
+  min-height: 40px;
   
   flex-shrink: 0;
 
   margin: 5px auto 0 auto;
-  padding: 4px 7px;
+  padding: 4px 6px;
 
   border: 1px solid transparent;
   border-radius: 10px;
@@ -21,6 +26,10 @@
 }
 .Exercise:last-of-type {
   margin-bottom: 5px;
+}
+.Exercise h2 {
+  font-size: 16px;
+  margin-left: 2px;
 }
 
 .Exercise-details {
@@ -79,5 +88,6 @@
 
 .Exercise .Tag {
   margin: 0;
-  margin-top: 3px;
+  margin-top: 4px;
+  margin-left: -3px;
 }
