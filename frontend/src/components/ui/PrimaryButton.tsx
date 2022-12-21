@@ -21,7 +21,7 @@ export const PrimaryButton = ({text, onClick, icon, altColor, transparent}: Prim
     <div className={clsx('PrimaryButton', 'noselect')} style={{background: altColor ? altTheme : ''}} onClick={onClick}>
       <h2>{text}</h2>
       {Icon && <div className='PrimaryButton-logo'>
-        <Icon size={'24px'} />
+        <Icon size={'19px'} />
       </div>}
     </div>
   )
