@@ -82,7 +82,7 @@ export const AddExercise = () => {
   const onRemoveExercise = useCallback(() => {
     if (!editing) return;
     dispatch(removeWorkout(editing));
-    navigate('/home/routines');
+    navigate('/home/routines', { state: { tag: 'Exercises' }});
   }, [dispatch, editing, navigate]);
 
   return (
