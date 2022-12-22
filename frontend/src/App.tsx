@@ -5,12 +5,13 @@ import { Home } from './views/Home';
 import { Dash } from './views/sub/Dash';
 import { NotFound } from './views/NotFound';
 import { Routines } from './views/sub/Routines';
-import { Train } from './views/sub/Train';
+import { Train } from './views/sub/train/Train';
 import { Completed } from './views/sub/Completed';
 import { Profile } from './views/sub/Profile';
 import { useAppSelector } from './utility/helpers/hooks';
 import { AddExercise } from './views/sub/AddExercise';
 import { AddRoutine } from './views/sub/AddRoutine';
+import { Overview } from './views/sub/train/Overview';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="routines/add-rt" element={<AddRoutine />} />
             <Route path="routines/add-ex" element={<AddExercise />} />
             <Route path="train" element={<Train />} />
+            <Route path="train/overview" element={<Overview />} />
             <Route path="finished" element={<Completed />} />
             <Route path="profile" element={<Profile />} />
           </Route>
