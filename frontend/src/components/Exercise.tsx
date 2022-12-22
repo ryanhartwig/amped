@@ -2,7 +2,7 @@ import './Exercise.css';
 
 import type { ExerciseType } from '../types/ExerciseType';
 import { lazySearch } from '../utility/helpers/lazySearch';
-import { useAppSelector } from '../utility/hooks';
+import { useAppSelector } from '../utility/helpers/hooks';
 import { Tag } from './ui/Tag';
 
 /* React icons */

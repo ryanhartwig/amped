@@ -5,7 +5,7 @@ import { Tag } from './ui/Tag';
 
 /* React Icons */
 import { VscFlame } from 'react-icons/vsc';
-import { useAppSelector } from '../utility/hooks';
+import { useAppSelector } from '../utility/helpers/hooks';
 import { getDuration } from '../utility/helpers/getDuration';
 import { getDateTime } from '../utility/helpers/getDateTime';
 import { useCallback, useEffect } from 'react';

@@ -6,7 +6,7 @@ import { Logo } from '../ui/Logo';
 import { FiSettings } from 'react-icons/fi';
 import { IoIosNotificationsOutline } from 'react-icons/io'
 import { ReactIconButton } from '../ui/ReactIconButton';
-import { useAppSelector } from '../../utility/hooks';
+import { useAppSelector } from '../../utility/helpers/hooks';
 
 // interface HeaderNavProps {
 

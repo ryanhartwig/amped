@@ -8,7 +8,7 @@ import { Routines } from './views/sub/Routines';
 import { Train } from './views/sub/Train';
 import { Completed } from './views/sub/Completed';
 import { Profile } from './views/sub/Profile';
-import { useAppSelector } from './utility/hooks';
+import { useAppSelector } from './utility/helpers/hooks';
 import { AddExercise } from './views/sub/AddExercise';
 import { AddRoutine } from './views/sub/AddRoutine';
 

@@ -3,7 +3,7 @@ import './Home.css';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { BottomNav } from '../components/navigation/BottomNav';
 import { HeaderNav } from '../components/navigation/HeaderNav';
-import { useView } from '../utility/hooks/useView';
+import { useView } from '../utility/helpers/hooks/useView';
 
 /* React icons */
 import { AiOutlineLeft } from 'react-icons/ai';

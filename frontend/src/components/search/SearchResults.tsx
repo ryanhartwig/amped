@@ -1,6 +1,6 @@
 import './SearchResults.css';
 
-import { useAppSelector } from '../../utility/hooks';
+import { useAppSelector } from '../../utility/helpers/hooks';
 
 interface SearchResultsProps {
   children?: React.ReactNode;  
