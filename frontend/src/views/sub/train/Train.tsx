@@ -1,8 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Routine } from '../../../components/Routine';
 import { Search } from '../../../components/search/Search';
 import { Modal } from '../../../components/ui/Modal';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
+import { setSelectedRoutine } from '../../../store/slices/sessionSlice';
 import { ExerciseType } from '../../../types/ExerciseType';
 import { RoutineType } from '../../../types/RoutineType';
 import { ScheduledState } from '../../../types/scheduledState';
@@ -10,11 +13,10 @@ import { days } from '../../../utility/data/days_months';
 import { useAppSelector } from '../../../utility/helpers/hooks';
 import './Train.css';
 
-// interface TrainProps {
-
-// }
-
 export const Train = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
   const date = new Date();
 
   const { background_alt: background } = useAppSelector(s => s.theme);
@@ -31,9 +33,11 @@ export const Train = () => {
     setHighlighted(undefined);
   }, [open]);
 
-  const onStartSession = useCallback(() => {
-    if (!selected) return;
-  }, [selected]);
+  useEffect(() => {
+    if (!selected || selected.type !== 'Routine') return;
+    dispatch(setSelectedRoutine(selected));
+    navigate('/home/train/overview')
+  }, [dispatch, navigate, selected])
 
   return (
     <div className='Train'>
@@ -71,7 +75,7 @@ export const Train = () => {
         <div className='Train-routines-search'>
           <Search selected={highlighted} setSelected={setHighlighted} tab='Routines' />
         </div>
-        <PrimaryButton onClick={onStartSession} style={{marginTop: 8}} text={selected ? 'Continue' : 'Select a routine'} disabled={!selected} />
+        <PrimaryButton onClick={() => setSelected(highlighted)} style={{marginTop: 8}} text={highlighted ? 'Continue' : 'Select a routine'} disabled={!highlighted} />
       </Modal>
     </div>
   )
