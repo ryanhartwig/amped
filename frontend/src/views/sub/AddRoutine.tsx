@@ -201,7 +201,7 @@ export const AddRoutine = () => {
         </div>
 
         <div className='AddRoutine-save'>
-          <PrimaryButton icon={AiOutlineCheckCircle} text='Save' onClick={onSaveRoutine} />
+          <PrimaryButton icon={AiOutlineCheckCircle} style={{minWidth: 0}} text='Save' onClick={onSaveRoutine} />
           {editing &&             
           <div className='AddRoutine-remove' onClick={onRemoveRoutine}>
             <AiOutlineDelete size={22} />
