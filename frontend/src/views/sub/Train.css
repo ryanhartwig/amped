@@ -66,3 +66,11 @@
   margin: 0 auto;
   opacity: 0.3;
 }
+
+.Train-modal {
+  max-height: 40vh;
+}
+
+.Train-routines-search {
+  height: 70vh;
+}

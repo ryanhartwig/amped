@@ -18,11 +18,11 @@ import { RoutineType } from '../../types/RoutineType';
 interface SearchProps {
   tab: 'Routines' | 'Exercises',
   onSaveSelect?: (exercises: ExerciseType[]) => any,
-  setEdit?: React.Dispatch<React.SetStateAction<RoutineType | ExerciseType | undefined>>,
-  edit?: RoutineType | ExerciseType,
+  setSelected?: React.Dispatch<React.SetStateAction<RoutineType | ExerciseType | undefined>>,
+  selected?: RoutineType | ExerciseType,
 }
 
-export const Search = ({tab, onSaveSelect, setEdit, edit}: SearchProps) => {
+export const Search = ({tab, onSaveSelect, setSelected, selected}: SearchProps) => {
   const { background_alt: background, tags } = useAppSelector(s => s.theme);
   const location = useLocation();
   
@@ -36,17 +36,17 @@ export const Search = ({tab, onSaveSelect, setEdit, edit}: SearchProps) => {
 
   const display = (tab === 'Routines' && userTags.size) || (tab === 'Exercises' && appTags.size) ? '' : 'none';
   
-  const [selected, setSelected] = useState<ExerciseType[]>([]);
+  const [addExercises, setAddExercises] = useState<ExerciseType[]>([]);
 
   const onSelect = useCallback((e: ExerciseType) => {
-    const index = selected.findIndex(s => s.id === e.id);
+    const index = addExercises.findIndex(s => s.id === e.id);
 
-    setSelected(p => {
+    setAddExercises(p => {
       return (index === -1) 
         ? [...p, e]
         : [...p.slice(0, index), ...p.slice(index + 1)];
     })
-  }, [selected]);
+  }, [addExercises]);
   
   const onToggleTag = useCallback((t: string) => {
     const newSet = new Set(activeTags);
@@ -65,8 +65,8 @@ export const Search = ({tab, onSaveSelect, setEdit, edit}: SearchProps) => {
     tabRef.current = tab;
     setQuery('');
     setActiveTags(new Set());
-    setEdit && setEdit(undefined);
-  }, [setEdit, tab]);
+    setSelected && setSelected(undefined);
+  }, [setSelected, tab]);
 
   return (
     <div className='Search'>
@@ -100,8 +100,8 @@ export const Search = ({tab, onSaveSelect, setEdit, edit}: SearchProps) => {
               setUserTags={setUserTags} 
               key={r.id} 
               routine={r} 
-              setEdit={setEdit}
-              edit={edit}
+              setSelected={setSelected}
+              selected={selected}
             /> )
           : exercises.map(e => 
             <Exercise key={e.id} 
@@ -109,11 +109,11 @@ export const Search = ({tab, onSaveSelect, setEdit, edit}: SearchProps) => {
               query={query} 
               activeTags={activeTags} 
               onSelect={onSaveSelect ? () => onSelect(e) : undefined} 
-              setEdit={setEdit}
-              edit={edit}
+              setSelected={setSelected}
+              selected={selected}
               selectedPosition={onSaveSelect 
                 ? (() => {
-                    const index = selected.findIndex(s => s.id === e.id);
+                    const index = addExercises.findIndex(s => s.id === e.id);
                     return index === -1 
                       ? undefined
                       : index + 1
@@ -125,7 +125,7 @@ export const Search = ({tab, onSaveSelect, setEdit, edit}: SearchProps) => {
       </SearchResults>
 
       {onSaveSelect && 
-        <div className='Search-save-selection' onClick={() => onSaveSelect(selected)}>
+        <div className='Search-save-selection' onClick={() => onSaveSelect(addExercises)}>
           <PrimaryButton text='Save' />
         </div>
       }

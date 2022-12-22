@@ -20,15 +20,15 @@ interface RoutineProps {
   activeTags?: Set<string>,
   query?: string,
   setUserTags?: React.Dispatch<React.SetStateAction<Set<string>>>,
-  setEdit?: React.Dispatch<React.SetStateAction<RoutineType | ExerciseType | undefined>>,
-  edit?: RoutineType | ExerciseType, 
+  setSelected?: React.Dispatch<React.SetStateAction<RoutineType | ExerciseType | undefined>>,
+  selected?: RoutineType | ExerciseType, 
   /**
    * Visual representation (only) of "completed" checkmark
    */
   completed?: boolean,
 }
 
-export const Routine = ({routine, setUserTags, activeTags, query, completed, edit, setEdit}: RoutineProps) => {
+export const Routine = ({routine, setUserTags, activeTags, query, completed, selected, setSelected: setEdit}: RoutineProps) => {
   const intensity = Array(routine.intensity).fill(0);
   const latest = useAppSelector(s => s.workoutData.routineData).find(r => r.routine_id === routine.id);
   
@@ -55,7 +55,7 @@ export const Routine = ({routine, setUserTags, activeTags, query, completed, edi
   return (
     <>
       {tagged && searched && 
-      <div className={clsx('Routine', {'edit': edit && edit.id === routine.id})} style={{background}} onClick={onClick}>
+      <div className={clsx('Routine', {'selected': selected && selected.id === routine.id})} style={{background}} onClick={onClick}>
         <div className='Routine-top'>
           <div className='Routine-top-nametag'>
             {routine.favourited && <IoIosFlash className='favourite' />}

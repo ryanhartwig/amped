@@ -1,7 +1,10 @@
 import { useRef, useState } from 'react';
 import { Routine } from '../../components/Routine';
+import { Search } from '../../components/search/Search';
 import { Modal } from '../../components/ui/Modal';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
+import { ExerciseType } from '../../types/ExerciseType';
+import { RoutineType } from '../../types/RoutineType';
 import { ScheduledState } from '../../types/scheduledState';
 import { days } from '../../utility/data/days_months';
 import { useAppSelector } from '../../utility/hooks';
@@ -21,6 +24,8 @@ export const Train = () => {
   const completed = scheduled.filter(s => s.completed);
 
   const [open, setOpen] = useState<boolean>(false);
+
+  const [selected, setSelected] = useState<RoutineType | ExerciseType>();
 
   return (
     <div className='Train'>
@@ -54,7 +59,10 @@ export const Train = () => {
       </div>
 
       <Modal triggerRef={triggerRef} onClose={() => setOpen(false)} open={open}>
-        
+        <Modal.Header>Select a routine to start</Modal.Header>
+        <div className='Train-routines-search'>
+          <Search selected={selected} setSelected={setSelected} tab='Routines' />
+        </div>
       </Modal>
     </div>
   )

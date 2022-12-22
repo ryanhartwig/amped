@@ -19,11 +19,11 @@ interface ExerciseProps {
   activeTags?: Set<string>,
   onSelect?: (...args: any) => any,
   selectedPosition?: number,
-  setEdit?: React.Dispatch<React.SetStateAction<RoutineType | ExerciseType | undefined>>,
-  edit?: RoutineType | ExerciseType,
+  setSelected?: React.Dispatch<React.SetStateAction<RoutineType | ExerciseType | undefined>>,
+  selected?: RoutineType | ExerciseType,
 }
 
-export const Exercise = ({exercise, query, activeTags, onSelect = undefined, edit, setEdit, selectedPosition}: ExerciseProps) => {
+export const Exercise = ({exercise, query, activeTags, onSelect = undefined, selected, setSelected, selectedPosition}: ExerciseProps) => {
 
   const { background_routine: background } = useAppSelector(s => s.theme);
 
@@ -32,15 +32,15 @@ export const Exercise = ({exercise, query, activeTags, onSelect = undefined, edi
 
   const onClick = useCallback(() => {
     onSelect && onSelect();
-    setEdit && setEdit(exercise);
-  }, [exercise, onSelect, setEdit]);
+    setSelected && setSelected(exercise);
+  }, [exercise, onSelect, setSelected]);
 
   return (
     <>
       {tagged && searched && 
-      <div className={clsx('Exercise', {'edit': edit?.id === exercise.id}, {'selected': selectedPosition})} onClick={onClick} style={{background}}>
+      <div className={clsx('Exercise', {'selected': selected?.id === exercise.id}, {'adding': selectedPosition})} onClick={onClick} style={{background}}>
         <div className='Exercise-details'>
-          {exercise.favourited && <IoIosFlash className='Exercise-favourite' />}
+          {exercise.favourited && <IoIosFlash className='favourite' />}
           <h2>{exercise.name}</h2>
           {exercise.exercise_goal && <div className='Exercise-goal'>
             <p>{exercise.exercise_goal}</p>
