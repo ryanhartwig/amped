@@ -17,21 +17,27 @@ export interface ScheduledState {
 }
 
 export const scheduled: ScheduledState = {
-  monday: getRandomData(),
-  tuesday: getRandomData(),
-  wednesday: getRandomData(),
-  thursday: getRandomData(),
-  friday: getRandomData(),
-  saturday: getRandomData(),
-  sunday: getRandomData(),
+  monday: getDailyRoutines(),
+  tuesday: getDailyRoutines(),
+  wednesday: getDailyRoutines(),
+  thursday: getDailyRoutines(),
+  friday: getDailyRoutines(),
+  saturday: getDailyRoutines(),
+  sunday: getDailyRoutines(),
 }
 
 
-function getRandomData() {
-  return Array(Math.floor(Math.random() * 6))
-    .fill(true)
-    .map(() => ({
-      routine: sampleRoutines[Math.floor(Math.random() * sampleRoutines.length)],
-      completed: !!Math.round(Math.random()),
-    }));
+function getDailyRoutines() {
+  const ids = new Set<string>(
+    Array(Math.floor(Math.random() * 6))
+      .fill(true)
+      .map(() => sampleRoutines[Math.floor(Math.random() * sampleRoutines.length)].id)
+  );
+  const routines:ScheduledRoutine[] = [];
+  ids.forEach(id => routines.push({
+    routine: sampleRoutines.find(r => r.id === id)!,
+    completed: !!Math.round(Math.random())
+  }));
+
+  return routines;
 }
