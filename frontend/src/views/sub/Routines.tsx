@@ -22,7 +22,7 @@ export const Routines = () => {
   const {background_alt: background} = useAppSelector(s => s.theme);
 
   const [tab, setTab] = useState<'Routines' | 'Exercises'>(location.state?.tag || 'Routines');
-  const [edit, setEdit] = useState<RoutineType | ExerciseType>();
+  const [selected, setSelected] = useState<RoutineType | ExerciseType>();
 
   return (
     <div className='Routines'>
@@ -40,14 +40,14 @@ export const Routines = () => {
 
       {/* Search component */}
       <div className='Routines-search'>
-        <Search tab={tab} setEdit={setEdit} edit={edit} />
+        <Search tab={tab} setSelected={setSelected} selected={selected} />
       </div>
         
 
       {/* "Add new ..." component */}
       <div className='Routines-actions'>
-        {edit 
-          ? <PrimaryButton onClick={() => navigate(tab === 'Routines' ? '/home/routines/add-rt' : '/home/routines/add-ex', { state: { edit }})} 
+        {selected 
+          ? <PrimaryButton onClick={() => navigate(tab === 'Routines' ? '/home/routines/add-rt' : '/home/routines/add-ex', { state: { edit: selected }})} 
               text={`Edit ${tab.slice(0, -1)}`}
               icon={AiOutlineEdit}
               className="Routines-edit"

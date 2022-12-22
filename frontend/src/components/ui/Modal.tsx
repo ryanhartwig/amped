@@ -8,7 +8,7 @@ import './Modal.css';
 
 /* React Icons */
 
-interface ModalProps {
+interface ModalProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   children: React.ReactNode;
   onClose: (...args: any) => void,
   open: boolean,
@@ -16,10 +16,11 @@ interface ModalProps {
   closeText?: string;
 }
 
-export const Modal = ({children, onClose, open, triggerRef, closeText}: ModalProps) => {
+export const Modal = ({children, onClose, open, triggerRef, closeText, ...divProps}: ModalProps) => {
   const header = React.Children.map(children, (child: any) => child?.type?.displayName === 'Header' ? child : null)
   const content = React.Children.map(children, (child: any) => child?.type?.displayName !== 'Header' ? child : null)
 
+  console.log(header);
   const { background } = useAppSelector(s => s.theme);
   
   const contentRef = useRef<HTMLDivElement>(undefined!);
@@ -27,14 +28,14 @@ export const Modal = ({children, onClose, open, triggerRef, closeText}: ModalPro
 
   return (
     <>
-      {open && <div className='Modal noselect'>
+      {open && <div  className='Modal noselect'>
         
-        <div className='Modal-box' ref={contentRef} style={{background}}>
-          {header && <div className='Modal-header'>
+        <div className={'Modal-box '} ref={contentRef} style={{background}}>
+          {!!header?.length && <div className='Modal-header'>
             <h2>{header}</h2>
             <hr></hr>
-          </div>}
-          <div className='Modal-content'>
+        </div>}
+          <div {...divProps} className={'Modal-content ' + divProps.className ?? ''}>
             {content}
           </div>
           {closeText && 

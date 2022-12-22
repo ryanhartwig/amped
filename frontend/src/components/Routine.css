@@ -24,7 +24,7 @@
 }
 
 /* Selected routine to be edited */
-.Routine.edit {
+.Routine.selected {
   border-color: hwb(214 16% 48% / 0.63);
 }
 

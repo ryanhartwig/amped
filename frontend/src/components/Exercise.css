@@ -32,7 +32,7 @@
   margin-left: 2px;
 }
 
-.Exercise.edit {
+.Exercise.selected {
   border-color: hwb(214 16% 48% / 0.63);
 }
 
@@ -49,7 +49,7 @@
   left: -5px;
 }
 
-.Exercise.selected {
+.Exercise.adding {
   border-color: rgba(97, 112, 139, 0.538);
   background-color:rgb(17, 25, 51) !important;
 }
@@ -64,11 +64,6 @@
 .Exercise-goal p {
   font-size: 10px;
   font-weight: 100;
-}
-
-.Exercise-favourite {
-  color: rgb(121, 121, 29);
-  margin-right: 4px;
 }
 
 .Exercise-position {

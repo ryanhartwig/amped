@@ -133,7 +133,7 @@ export const AddRoutine = () => {
             style={{paddingLeft: 35}}
             placeholder="Routine name" 
           />
-          <div className='AddRoutine-favourite' onClick={() => setFavourited(p => !p)}>
+          <div className='AddRoutine-favourite favourite' onClick={() => setFavourited(p => !p)}>
             {favourited ? <IoIosFlash size={20}/> : <IoIosFlashOff size={20} style={{color: 'grey'}} />}
           </div>
         </div>
