@@ -3,6 +3,7 @@ import workoutsSlice from './slices/workoutsSlice';
 import themeSlice from './slices/themeSlice';
 import workoutDataSlice from './slices/workoutDataSlice';
 import userSlice from './slices/userSlice';
+import sessionSlice from './slices/sessionSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     workouts: workoutsSlice,
     workoutData: workoutDataSlice,
     user: userSlice,
+    session: sessionSlice,
   },
 });
 
