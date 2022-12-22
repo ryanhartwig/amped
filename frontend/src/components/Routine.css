@@ -4,6 +4,8 @@
   justify-content: space-around;
   flex: 0 0 auto;
   cursor: pointer;
+  white-space: nowrap;
+  overflow:hidden;
 
   height: 56px;
 
