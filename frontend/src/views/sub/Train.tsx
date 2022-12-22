@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import { Routine } from '../../components/Routine';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
-import { RoutineType } from '../../types/RoutineType';
+import { ScheduledState } from '../../types/scheduledState';
 import { days } from '../../utility/data/days_months';
 import { useAppSelector } from '../../utility/hooks';
 import './Train.css';
@@ -13,13 +12,10 @@ import './Train.css';
 export const Train = () => {
   const date = new Date();
 
-  const samples = useAppSelector(s => s.workouts.routines)
-  const sample = Array(Math.floor(Math.random() * 12)).fill(true).map(r => samples[Math.floor(Math.random() * samples.length)])
-
   const { background_alt: background } = useAppSelector(s => s.theme);
 
-  const [scheduled] = useState<RoutineType[]>(sample);
-  const [completed] = useState<RoutineType[]>([]);
+  const scheduled = useAppSelector(s => s.user.scheduled[days[date.getDay()].toLowerCase() as keyof ScheduledState])
+  const completed = scheduled.filter(s => s.completed);
 
 
   return (
@@ -34,7 +30,7 @@ export const Train = () => {
       <div className='Train-scheduled'>
         <div className='Train-scheduled-workouts hidescrollbar' style={{background}}>
           {scheduled.map((r, i) => 
-            <Routine key={`${r}-${i}`} routine={r} />
+            <Routine key={`${r}-${i}`} routine={r.routine} />
           )}
         </div>
       </div> 
