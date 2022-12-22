@@ -1,0 +1,32 @@
+.InfoBorder {
+  position: relative;
+  
+  min-width: 100px;
+  min-height: 100px;
+
+  height: 100%;
+  width: 100%;
+
+  border: 1px solid rgb(73, 73, 73);
+  border-radius: 12px;
+}
+
+.InfoBorder-title {
+  width: 100%;
+  margin: 0 auto;
+  position: absolute;
+  top: -10px;
+}
+.InfoBorder-title > div {
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0 12px;
+}
+
+.InfoBorder-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+}
