@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Routine } from '../../components/Routine';
 import { Search } from '../../components/search/Search';
 import { Modal } from '../../components/ui/Modal';
@@ -24,8 +24,11 @@ export const Train = () => {
   const completed = scheduled.filter(s => s.completed);
 
   const [open, setOpen] = useState<boolean>(false);
-
   const [selected, setSelected] = useState<RoutineType | ExerciseType>();
+
+  useEffect(() => {
+    setSelected(undefined);
+  }, [open]);
 
   const onStartSession = useCallback(() => {
     if (!selected) return;
@@ -43,7 +46,7 @@ export const Train = () => {
       <div className='Train-scheduled'>
         <div className='Train-scheduled-workouts hidescrollbar' style={{background}}>
           {scheduled.map((r, i) => 
-            <Routine key={`${r}-${i}`} completed={r.completed} routine={r.routine} />
+            <Routine selected={selected} setSelected={setSelected} key={`${r}-${i}`} completed={r.completed} routine={r.routine} />
           )}
         </div>
       </div> 
@@ -62,7 +65,7 @@ export const Train = () => {
         <PrimaryButton text='Start a custom session' altColor style={{height: '50px'}} icon={'logo'} />
       </div>
 
-      <Modal triggerRef={triggerRef} onClose={() => setOpen(false)} open={open}>
+      <Modal closeText='Close' triggerRef={triggerRef} onClose={() => setOpen(false)} open={open}>
         <Modal.Header>Select a routine to start</Modal.Header>
         <div className='Train-routines-search'>
           <Search selected={selected} setSelected={setSelected} tab='Routines' />
