@@ -2,7 +2,7 @@ import './PrimaryButton.css';
 
 import { IoIosFlash } from 'react-icons/io';
 import clsx from 'clsx';
-import { useAppSelector } from '../../utility/hooks';
+import { useAppSelector } from '../../utility/helpers/hooks';
 import { IconType } from 'react-icons/lib';
 import React from 'react';
 

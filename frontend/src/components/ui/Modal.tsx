@@ -2,8 +2,8 @@
 import React from 'react';
 import { useRef } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-import { useAppSelector } from '../../utility/hooks';
-import { useClickout } from '../../utility/hooks/useClickout';
+import { useAppSelector } from '../../utility/helpers/hooks';
+import { useClickout } from '../../utility/helpers/hooks/useClickout';
 import './Modal.css';
 
 /* React Icons */

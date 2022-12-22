@@ -2,7 +2,7 @@ import './Search.css';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Tags } from '../../store/slices/themeSlice';
-import { useAppSelector } from '../../utility/hooks';
+import { useAppSelector } from '../../utility/helpers/hooks';
 import { Tag } from '../ui/Tag';
 
 import { SearchResults } from './SearchResults';

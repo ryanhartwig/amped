@@ -2,7 +2,7 @@ import './BottomNav.css';
 
 import { ReactIconButton } from '../ui/ReactIconButton';
 
-import type { Location } from '../../utility/hooks/useView';
+import type { Location } from '../../utility/helpers/hooks/useView';
 
 /* React Icons */
 import { BiDumbbell, BiNotepad } from 'react-icons/bi';
@@ -11,8 +11,8 @@ import { BsCalendarCheck } from 'react-icons/bs';
 import { RxAvatar } from 'react-icons/rx';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../utility/hooks';
-import { useView } from '../../utility/hooks/useView';
+import { useAppSelector } from '../../utility/helpers/hooks';
+import { useView } from '../../utility/helpers/hooks/useView';
 
 // interface BottomNavProps {
 

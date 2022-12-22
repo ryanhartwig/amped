@@ -5,7 +5,7 @@ import { Search } from '../../components/search/Search';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { ExerciseType } from '../../types/ExerciseType';
 import { RoutineType } from '../../types/RoutineType';
-import { useAppSelector } from '../../utility/hooks';
+import { useAppSelector } from '../../utility/helpers/hooks';
 import './Routines.css';
 
 // interface RoutinesProps {
