@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Routine } from '../../components/Routine';
-import { Search } from '../../components/search/Search';
-import { Modal } from '../../components/ui/Modal';
-import { PrimaryButton } from '../../components/ui/PrimaryButton';
-import { ExerciseType } from '../../types/ExerciseType';
-import { RoutineType } from '../../types/RoutineType';
-import { ScheduledState } from '../../types/scheduledState';
-import { days } from '../../utility/data/days_months';
-import { useAppSelector } from '../../utility/helpers/hooks';
+import { Routine } from '../../../components/Routine';
+import { Search } from '../../../components/search/Search';
+import { Modal } from '../../../components/ui/Modal';
+import { PrimaryButton } from '../../../components/ui/PrimaryButton';
+import { ExerciseType } from '../../../types/ExerciseType';
+import { RoutineType } from '../../../types/RoutineType';
+import { ScheduledState } from '../../../types/scheduledState';
+import { days } from '../../../utility/data/days_months';
+import { useAppSelector } from '../../../utility/helpers/hooks';
 import './Train.css';
 
 // interface TrainProps {
@@ -25,9 +25,10 @@ export const Train = () => {
 
   const [open, setOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<RoutineType | ExerciseType>();
+  const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
 
   useEffect(() => {
-    setSelected(undefined);
+    setHighlighted(undefined);
   }, [open]);
 
   const onStartSession = useCallback(() => {
@@ -68,7 +69,7 @@ export const Train = () => {
       <Modal closeText='Close' triggerRef={triggerRef} onClose={() => setOpen(false)} open={open}>
         <Modal.Header>Select a routine to start</Modal.Header>
         <div className='Train-routines-search'>
-          <Search selected={selected} setSelected={setSelected} tab='Routines' />
+          <Search selected={highlighted} setSelected={setHighlighted} tab='Routines' />
         </div>
         <PrimaryButton onClick={onStartSession} style={{marginTop: 8}} text={selected ? 'Continue' : 'Select a routine'} disabled={!selected} />
       </Modal>
