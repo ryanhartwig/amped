@@ -106,3 +106,9 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
+
+
+/* Font sizes */
+h2 {
+  font-size: 19px;
+}
