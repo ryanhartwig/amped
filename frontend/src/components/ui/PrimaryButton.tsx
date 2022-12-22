@@ -13,14 +13,15 @@ interface PrimaryButtonProps extends React.DetailedHTMLProps<React.HTMLAttribute
   className?: string,
   iconSize?: number,
   fontSize?: number | '',
+  disabled?: boolean,
 }
 
-export const PrimaryButton = React.forwardRef(({text, fontSize = '', icon, iconSize = 19, altColor, className, ...rest}: PrimaryButtonProps, ref: React.ForwardedRef<HTMLDivElement> | undefined) => {
+export const PrimaryButton = React.forwardRef(({disabled, text, fontSize = '', icon, iconSize = 19, altColor, className, ...rest}: PrimaryButtonProps, ref: React.ForwardedRef<HTMLDivElement> | undefined) => {
   const Icon = icon ? icon === 'logo' ? IoIosFlash : icon : undefined;
   const altTheme = useAppSelector(s => s.theme.buttonSecondary);
 
   return (
-    <div {...rest} ref={ref} className={clsx('PrimaryButton', 'noselect') + ' ' + className || ''} style={{background: altColor ? altTheme : '', ...rest.style}} >
+    <div {...rest} ref={ref} className={clsx('PrimaryButton', 'noselect', { disabled }) + ' ' + className || ''} style={{background: altColor ? altTheme : '', ...rest.style}} >
       <h2 style={{fontSize}}>{text}</h2>
       {Icon && <div className='PrimaryButton-logo'>
         <Icon size={iconSize} />

@@ -16,6 +16,8 @@
   background: #1C476F;
 
   border-radius: 10000px;
+
+  transition: opacity 0.4s;
 }
 .PrimaryButton h2 {
   font-size: 18px;
@@ -35,4 +37,9 @@
 
   height: 100%;
   width: auto;
+}
+
+.PrimaryButton.disabled {
+  opacity: 0.5;
+  pointer-events: none;  
 }

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Routine } from '../../components/Routine';
 import { Search } from '../../components/search/Search';
 import { Modal } from '../../components/ui/Modal';
@@ -26,6 +26,10 @@ export const Train = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const [selected, setSelected] = useState<RoutineType | ExerciseType>();
+
+  const onStartSession = useCallback(() => {
+    if (!selected) return;
+  }, [selected]);
 
   return (
     <div className='Train'>
@@ -63,6 +67,7 @@ export const Train = () => {
         <div className='Train-routines-search'>
           <Search selected={selected} setSelected={setSelected} tab='Routines' />
         </div>
+        <PrimaryButton onClick={onStartSession} style={{marginTop: 8}} text={selected ? 'Continue' : 'Select a routine'} disabled={!selected} />
       </Modal>
     </div>
   )
