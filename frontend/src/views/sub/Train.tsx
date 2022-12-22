@@ -30,7 +30,7 @@ export const Train = () => {
       <div className='Train-scheduled'>
         <div className='Train-scheduled-workouts hidescrollbar' style={{background}}>
           {scheduled.map((r, i) => 
-            <Routine key={`${r}-${i}`} routine={r.routine} />
+            <Routine key={`${r}-${i}`} completed={r.completed} routine={r.routine} />
           )}
         </div>
       </div> 
