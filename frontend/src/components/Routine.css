@@ -28,6 +28,12 @@
   border-color: hwb(214 16% 48% / 0.63);
 }
 
+.Routine-completed {
+  display: flex;
+  align-items: center;
+  color: #0094FF;
+}
+
 
 .Routine-top {
   display: flex;

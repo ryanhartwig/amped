@@ -13,6 +13,7 @@ import { lazySearch } from '../utility/helpers/lazySearch';
 import { ExerciseType } from '../types/ExerciseType';
 import clsx from 'clsx';
 import { IoIosFlash } from 'react-icons/io';
+import { AiOutlineCheck } from 'react-icons/ai';
 
 interface RoutineProps {
   routine: RoutineType,
@@ -20,10 +21,14 @@ interface RoutineProps {
   query?: string,
   setUserTags?: React.Dispatch<React.SetStateAction<Set<string>>>,
   setEdit?: React.Dispatch<React.SetStateAction<RoutineType | ExerciseType | undefined>>,
-  edit?: RoutineType | ExerciseType,
+  edit?: RoutineType | ExerciseType, 
+  /**
+   * Visual representation (only) of "completed" checkmark
+   */
+  completed?: boolean,
 }
 
-export const Routine = ({routine, setUserTags, activeTags, query, edit, setEdit}: RoutineProps) => {
+export const Routine = ({routine, setUserTags, activeTags, query, completed, edit, setEdit}: RoutineProps) => {
   const intensity = Array(routine.intensity).fill(0);
   const latest = useAppSelector(s => s.workoutData.routineData).find(r => r.routine_id === routine.id);
   
@@ -65,6 +70,7 @@ export const Routine = ({routine, setUserTags, activeTags, query, edit, setEdit}
                     margin: '0 0 0 4px',
                   }} />)}
             </div>
+            
           </div>
 
           <div className='Routine-intensity'>
@@ -73,10 +79,15 @@ export const Routine = ({routine, setUserTags, activeTags, query, edit, setEdit}
           
         </div>
         <div className='Routine-bottom'>
-          <div className='Routine-details'>
+          {!completed 
+          ? <div className='Routine-details'>
             <p>{routine.exercises.length} Exercises∙</p>
             <p className='Routine-duration'>{routine.est_duration} min</p>
           </div>
+          : <div className='Routine-completed'>
+            <AiOutlineCheck size={13} />
+            <p>complete</p>
+          </div>}
 
           {latest && 
           <div className='Routine-latest-data'>
