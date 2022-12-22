@@ -183,7 +183,7 @@ export const AddExercise = () => {
         </div> */}
 
         <div className='AddExercise-save'>
-          <PrimaryButton icon={AiOutlineCheckCircle} text='Save' onClick={onSaveExercise} />
+          <PrimaryButton icon={AiOutlineCheckCircle} style={{minWidth: 0}} text='Save' onClick={onSaveExercise} />
           {editing &&             
           <div className='AddExercise-remove' onClick={onRemoveExercise}>
             <AiOutlineDelete size={22} />

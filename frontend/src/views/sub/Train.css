@@ -17,7 +17,7 @@
 /* Scheduled workouts */
 .Train-scheduled {
   max-height: calc(100% - 12px);
-  padding-bottom: 7px;
+  border-radius: 10px;
   overflow:hidden;
   position:relative;
   top: 15px;
