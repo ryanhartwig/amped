@@ -5,7 +5,8 @@
   height: 100%;
   width: 100%;
 
-  padding: 15px;
+  padding: 10px;
+  padding-top: 0;
 }
 .Train p {
   font-size: 13px;
@@ -15,11 +16,11 @@
 
 /* Scheduled workouts */
 .Train-scheduled {
-  max-height: calc(100% - 53px);
+  max-height: calc(100% - 12px);
   padding-bottom: 7px;
   overflow:hidden;
   position:relative;
-  top: 12px;
+  top: 15px;
 }
 .Train-scheduled-info {
   position: absolute;
