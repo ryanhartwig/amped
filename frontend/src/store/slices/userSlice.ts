@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { scheduled, Scheduled } from "../../types/scheduledState";
+import { scheduled, ScheduledState } from "../../types/scheduledState";
 
 interface UserState {
-  scheduled: Scheduled,
+  scheduled: ScheduledState,
 }
 
 const initialState: UserState = {

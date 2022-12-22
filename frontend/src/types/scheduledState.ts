@@ -1,21 +1,37 @@
+import { sampleRoutines } from "../utility/data/sampleRoutines";
 import { RoutineType } from "./RoutineType";
 
-export interface Scheduled {
-  monday: RoutineType[];
-  tuesday: RoutineType[];
-  wednesday: RoutineType[];
-  thursday: RoutineType[];
-  friday: RoutineType[];
-  saturday: RoutineType[];
-  sunday: RoutineType[];
+interface ScheduledRoutine {
+  routine: RoutineType,
+  completed: boolean,
 }
 
-export const scheduled = {
-  monday: [],
-  tuesday: [],
-  wednesday: [],
-  thursday: [],
-  friday: [],
-  saturday: [],
-  sunday: [],
+export interface ScheduledState {
+  monday: ScheduledRoutine[];
+  tuesday: ScheduledRoutine[];
+  wednesday: ScheduledRoutine[];
+  thursday: ScheduledRoutine[];
+  friday: ScheduledRoutine[];
+  saturday: ScheduledRoutine[];
+  sunday: ScheduledRoutine[];
+}
+
+export const scheduled: ScheduledState = {
+  monday: getRandomData(),
+  tuesday: getRandomData(),
+  wednesday: getRandomData(),
+  thursday: getRandomData(),
+  friday: getRandomData(),
+  saturday: getRandomData(),
+  sunday: getRandomData(),
+}
+
+
+function getRandomData() {
+  return Array(Math.floor(Math.random() * 6))
+    .fill(true)
+    .map(() => ({
+      routine: sampleRoutines[Math.floor(Math.random() * sampleRoutines.length)],
+      completed: !!Math.round(Math.random()),
+    }));
 }
