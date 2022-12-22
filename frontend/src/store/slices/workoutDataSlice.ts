@@ -5,13 +5,13 @@ import { sampleExerciseData } from "../../utility/data/sampleExerciseData";
 import { sampleRoutineData } from "../../utility/data/sampleRoutineData";
 
 
-interface WorkoutsState { 
+interface WorkoutDataState { 
   routineData: RoutineDataType[],
   exerciseData: ExerciseDataType[],
 }
 
 // Will fetch from db when using real data
-const initialState: WorkoutsState = {
+const initialState: WorkoutDataState = {
   routineData: sampleRoutineData,
   exerciseData: sampleExerciseData,
 }
