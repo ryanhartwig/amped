@@ -17,7 +17,7 @@ const initialState: WorkoutsState = {
 }
 
 export const workoutsReducer = createSlice({
-  name: 'theme',
+  name: 'workouts',
   initialState: initialState,
   reducers: {
     addWorkout: (state, action: PayloadAction<RoutineType | ExerciseType>) => {
