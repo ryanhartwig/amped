@@ -31,12 +31,19 @@ export const Overview = () => {
       
       <div className='Overview-routine'>
         <InfoBorder title={routine?.name}>
-          <InfoBorder.HeaderLeft>45 min</InfoBorder.HeaderLeft>
-          <InfoBorder.HeaderRight>5</InfoBorder.HeaderRight>
-          <InfoBorder.FooterLeft>things</InfoBorder.FooterLeft>
-          <InfoBorder.FooterRight>wow!</InfoBorder.FooterRight>
+          <InfoBorder.HeaderLeft>
+            <p className='Overview-info'>45 min</p>
+          </InfoBorder.HeaderLeft>
+          <InfoBorder.HeaderRight>
+            <p className='Overview-info'>5</p>
+          </InfoBorder.HeaderRight>
+          <InfoBorder.FooterLeft>
+            <p className='Overview-info'>things</p>
+          </InfoBorder.FooterLeft>
+          <InfoBorder.FooterRight>
+            <p className='Overview-info'>wow!</p>
+          </InfoBorder.FooterRight>
 
-          <p>more things</p>
         </InfoBorder>
       </div>
     </div>

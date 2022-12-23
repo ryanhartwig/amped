@@ -9,13 +9,17 @@
 
   border: 1px solid rgb(73, 73, 73);
   border-radius: 12px;
+
+  padding: 5px;
 }
 
+/* Title */
 .InfoBorder-title {
   width: 100%;
   margin: 0 auto;
   position: absolute;
   top: -10px;
+  left: 0;
 }
 .InfoBorder-title > div {
   width: fit-content;
@@ -23,10 +27,46 @@
   padding: 0 12px;
 }
 
+/* Header left & right items */
 .InfoBorder-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
   text-align: center;
   white-space: nowrap;
+
+  margin: 0 auto;
+
+  width: 90%;
+  position: absolute;
+  left: 5%;
+  top: -9px;
+}
+.InfoBorder-head-right {
+  text-align: right;
+}
+.InfoBorder-head-left {
+  text-align: left;
+}
+
+/* Footer left & right items */
+.InfoBorder-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+
+  margin: 0 auto;
+
+  width: 90%;
+  position: absolute;
+  left: 5%;
+  bottom: -7px;
+}
+.InfoBorder-foot-right {
+  text-align: right;
+}
+.InfoBorder-foot-left {
+  text-align: left;
 }

@@ -29,22 +29,22 @@ export const InfoBorder = ({children, title, buttonText}: InfoBorderProps) => {
         <div style={{background}}><p>{title}</p></div>
       </div>
       <div className='InfoBorder-head'>
-        <div className='InfoBorder-head-left' style={{background}}>
-          {hl}
+        <div className='InfoBorder-head-left'>
+          <div style={{background}}>{hl}</div>
         </div>
-        <div className='InfoBorder-head-right' style={{background}}>
-          {hr}
+        <div className='InfoBorder-head-right' >
+          <div style={{background}}>{hr}</div>
         </div>
       </div>
       <div className='InfoBorder-foot'>
-        <div className='InfoBorder-foot-left' style={{background}}>
-          {fl}
+        <div className='InfoBorder-foot-left' >
+          <div style={{background}}>{fl}</div>
         </div>
-        <div className='InfoBorder-foot-center' style={{background}}>
-          {buttonText}
+        <div className='InfoBorder-foot-center' >
+          <div style={{background}}><p>{buttonText}</p></div>
         </div>
-        <div className='InfoBorder-foot-right' style={{background}}>
-          {fr}
+        <div className='InfoBorder-foot-right' >
+          <div style={{background}}>{fr}</div>
         </div>
       </div>
       {content}
