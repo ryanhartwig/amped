@@ -19,7 +19,7 @@ export const SessionHeader = ({routineTitle}: SessionheaderProps) => {
       <div className='SessionHeader-items'>
         {/* Left side */}
         <Logo />
-        <p>{routineTitle}</p>
+        <p className='SessionHeader-title'>{routineTitle}</p>
         <div className='Sessionheader-timer'>
           <Timer />
         </div>
