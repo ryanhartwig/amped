@@ -33,7 +33,7 @@ export const Overview = () => {
       <h2>Overview</h2>
       
       {routine && <div className='Overview-routine'>
-        <InfoBorder title={routine?.name} buttonText="See routine notes">
+        <InfoBorder title={routine?.name} >
           <InfoBorder.HeaderLeft>
             <p className='Overview-info'>{routine.est_duration} min</p>
           </InfoBorder.HeaderLeft>

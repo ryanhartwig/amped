@@ -33,6 +33,8 @@
   width: 100%;
   bottom: -10px;
   font-size: 0.78em;
+  z-index: 1;
+  left: 0;
 }
 .InfoBorder-button > div {
   width: fit-content;
@@ -40,6 +42,7 @@
   padding: 3px 14px;
   border-radius: 10000px;
   border: 1px solid rgb(73, 73, 73);
+  cursor: pointer;
 }
 
 /* Header left & right items */
@@ -73,6 +76,8 @@
   white-space: nowrap;
 
   margin: 0 auto;
+
+  z-index: 0;
 
   width: 90%;
   position: absolute;

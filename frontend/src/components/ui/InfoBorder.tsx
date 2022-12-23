@@ -26,12 +26,12 @@ export const InfoBorder = ({children, title, buttonText}: InfoBorderProps) => {
   return (
     <div className='InfoBorder'>
       {/* Center / title */}
-      <div className='InfoBorder-title' >
+      <div className='InfoBorder-title noselect' >
         <div style={{background}}><p>{title}</p></div>
       </div>
 
       {/* Left / right top line */}
-      <div className='InfoBorder-head'>
+      <div className='InfoBorder-head noselect'>
         <div className='InfoBorder-head-left'>
           <div style={{background}}>{hl}</div>
         </div>
@@ -41,12 +41,12 @@ export const InfoBorder = ({children, title, buttonText}: InfoBorderProps) => {
       </div>
 
       {/* Button, center bottom */}
-      <div className='InfoBorder-button' >
+      {buttonText && <div className='InfoBorder-button ' >
         <div style={{background}}><p>{buttonText}</p></div>
-      </div>
+      </div>}
 
       {/* Left / right bottom line */}
-      <div className='InfoBorder-foot'>
+      <div className='InfoBorder-foot noselect'>
         <div className='InfoBorder-foot-left' >
           <div style={{background}}>{fl}</div>
         </div>
