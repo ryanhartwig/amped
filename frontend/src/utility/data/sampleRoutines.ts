@@ -63,5 +63,10 @@ export const sampleRoutines: RoutineType[] = [
     exercises: sampleExercises.filter(ex => ex.muscle_targets.includes('biceps'))
       .map((ex, i) => ({exercise: ex, position: i})),
     notes: 'do it',
+    lastSessionNotes: `Focus lat contraction
+    
+    
+Lower weight to challenge proper muscle groups. 
+  - keep movements quick and controlled`, 
   }
 ];
