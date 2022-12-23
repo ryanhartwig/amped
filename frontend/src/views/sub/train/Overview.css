@@ -1,10 +1,21 @@
-.Overview-routine {
-  width: 95%;
-  margin: 30px auto; 
-
-
+.Overview {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
+/* Info border wrapper */
+.Overview-routine {
+  margin: 0 auto; 
+  padding: 20px 0;
+  width: 95%;
+  overflow: hidden;
+  min-height: 50vh;
+}
+
+/* info text in each corner */
 .Overview-info {
   display: flex;
   justify-content: center;
@@ -13,3 +24,57 @@
   font-size: 0.8em;
   font-weight: 100;
 }
+
+/* Info border content */
+.Overview-content {
+  display: flex;
+  flex-direction: column;
+  padding: 7px;
+  overflow:hidden;
+  height: fit-content;
+  height: 100%;
+  max-height: 100%;
+}
+
+.Overview-exercises {
+  border-radius: 10px;
+  overflow:hidden;
+  overflow-y: auto;
+}
+.Overview-exercise {
+  display: flex;
+  align-items: center;
+}
+
+.Overview-lastnotes {
+  text-align: left;
+  margin-top: 12px;
+  width: 100%;
+}
+.Overview-lastnotes > p {
+  font-size: 15px;
+  font-weight: 100;
+}
+.Overview-textarea {
+  width: 100%;
+  height: fit-content;
+  border-radius: 10px;
+  margin: 5px 0;
+}
+
+.Overview-text {
+  white-space: pre-wrap;
+  font-size: 13px;
+  font-weight: 100;
+  padding: 7px;
+}
+
+
+
+/* Start session */
+.Overview-start {
+  margin: 24px auto 40px auto;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { VscFlame } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
+import { Exercise } from '../../../components/Exercise';
 import { InfoBorder } from '../../../components/ui/InfoBorder';
+import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { RoutineType } from '../../../types/RoutineType';
 import { useAppSelector } from '../../../utility/helpers/hooks';
 import './Overview.css';
@@ -14,6 +16,7 @@ export const Overview = () => {
   const navigate = useNavigate();
 
   const selectedRoutine = useAppSelector(s => s.session.selectedRoutine);
+  const { background_alt: background } = useAppSelector(s => s.theme);
 
   const [routine, setRoutine] = useState<RoutineType>();
   const [intensity, setIntensity] = useState<true[]>([]);
@@ -30,8 +33,6 @@ export const Overview = () => {
 
   return (
     <div className='Overview'>
-      <h2>Overview</h2>
-      
       {routine && <div className='Overview-routine'>
         <InfoBorder title={routine?.name} >
           <InfoBorder.HeaderLeft>
@@ -46,8 +47,20 @@ export const Overview = () => {
             </div>
           </InfoBorder.FooterLeft>
 
+          <div className='Overview-content'>
+            <div className='Overview-exercises hidescrollbar' style={{background}}>
+              {routine.exercises.map((e, i) => <Exercise key={`${e.position}-${e.exercise}`} exercise={e.exercise} />)}
+            </div>
+            {routine.lastSessionNotes && <div className='Overview-lastnotes'>
+              <p>Last session's notes</p>
+              <div className='Overview-textarea' style={{background}}>
+                <p className='Overview-text'>{routine.lastSessionNotes}</p>
+              </div>
+            </div>}
+          </div>
         </InfoBorder>
       </div>}
+      <PrimaryButton className='Overview-start' text='Start' icon={'logo'} />
     </div>
   )
 }

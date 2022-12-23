@@ -31,4 +31,5 @@ export interface RoutineType {
    */
   tags?: string[],
   notes?: string,
+  lastSessionNotes?: string,
 }
