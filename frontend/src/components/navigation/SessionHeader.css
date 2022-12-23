@@ -1,9 +1,15 @@
 .SessionHeader {
   flex: 0 0;
   padding: 5px;
+  position: relative;
 }
 
 .SessionHeader-items {
   display: flex;
   justify-content: space-between;
+}
+
+.SessionHeader-title {
+  position: absolute;
+  width: 100%;
 }

@@ -12,8 +12,6 @@ export const FormatTime = ({seconds, showHour}: FormatTimeProps) => {
   const min = zeroTime(Math.floor((seconds - (Number(hr) * 3600)) / 60));
   const sec = zeroTime(seconds % 60);
 
-  
-
   return (
     <div className='FormatTime'>
       <p>{(!!hr || showHour) && `${hr}:`}{`${min}:`}{`${sec}`}</p>
