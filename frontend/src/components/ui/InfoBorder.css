@@ -27,6 +27,21 @@
   padding: 0 12px;
 }
 
+/* Center-bottom Button */
+.InfoBorder-button {
+  position: absolute;
+  width: 100%;
+  bottom: -10px;
+  font-size: 0.78em;
+}
+.InfoBorder-button > div {
+  width: fit-content;
+  margin: 0 auto;
+  padding: 3px 14px;
+  border-radius: 10000px;
+  border: 1px solid rgb(73, 73, 73);
+}
+
 /* Header left & right items */
 .InfoBorder-head {
   display: flex;
@@ -40,7 +55,7 @@
   width: 90%;
   position: absolute;
   left: 5%;
-  top: -9px;
+  top: -7px;
 }
 .InfoBorder-head-right {
   text-align: right;

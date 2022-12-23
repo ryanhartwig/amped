@@ -6,6 +6,7 @@
   width: 100%;
 }
 
+
 .Outlet {
   display: flex;
   flex-direction: column;
@@ -26,9 +27,10 @@
   flex-grow: 0;
 
   height: fit-content;
-  width: fit-content;
+  width: 100%;
   
-  margin: 7px;
+  margin: 7px auto;
+  max-width: 650px;
 }
 
 .Home-goback > * {
@@ -39,4 +41,8 @@
   flex-shrink: 1;
   flex-grow: 1;
   height: 100%;
+  width: 100%;
+
+  max-width: 650px;
+  margin:0 auto;
 }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { VscFlame } from 'react-icons/vsc';
 import { useNavigate } from 'react-router-dom';
 import { InfoBorder } from '../../../components/ui/InfoBorder';
 import { RoutineType } from '../../../types/RoutineType';
@@ -15,6 +16,7 @@ export const Overview = () => {
   const selectedRoutine = useAppSelector(s => s.session.selectedRoutine);
 
   const [routine, setRoutine] = useState<RoutineType>();
+  const [intensity, setIntensity] = useState<true[]>([]);
 
   useEffect(() => {
     if (typeof selectedRoutine === 'string' || selectedRoutine?.type !== 'Routine') {
@@ -23,29 +25,29 @@ export const Overview = () => {
     };
 
     setRoutine(selectedRoutine);
+    setIntensity(Array(selectedRoutine.intensity).fill(true));
   }, [navigate, selectedRoutine]);
 
   return (
     <div className='Overview'>
       <h2>Overview</h2>
       
-      <div className='Overview-routine'>
-        <InfoBorder title={routine?.name}>
+      {routine && <div className='Overview-routine'>
+        <InfoBorder title={routine?.name} buttonText="See routine notes">
           <InfoBorder.HeaderLeft>
-            <p className='Overview-info'>45 min</p>
+            <p className='Overview-info'>{routine.est_duration} min</p>
           </InfoBorder.HeaderLeft>
           <InfoBorder.HeaderRight>
-            <p className='Overview-info'>5</p>
+            <p className='Overview-info'>{routine.exercises.length} exercises</p>
           </InfoBorder.HeaderRight>
           <InfoBorder.FooterLeft>
-            <p className='Overview-info'>things</p>
+            <div className='Overview-info' style={{color: 'rgb(107, 77, 59)'}}>
+              {intensity.map((x, i) => <VscFlame key={i} />)}
+            </div>
           </InfoBorder.FooterLeft>
-          <InfoBorder.FooterRight>
-            <p className='Overview-info'>wow!</p>
-          </InfoBorder.FooterRight>
 
         </InfoBorder>
-      </div>
+      </div>}
     </div>
   )
 }

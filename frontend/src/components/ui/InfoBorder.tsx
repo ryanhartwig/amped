@@ -25,9 +25,12 @@ export const InfoBorder = ({children, title, buttonText}: InfoBorderProps) => {
 
   return (
     <div className='InfoBorder'>
+      {/* Center / title */}
       <div className='InfoBorder-title' >
         <div style={{background}}><p>{title}</p></div>
       </div>
+
+      {/* Left / right top line */}
       <div className='InfoBorder-head'>
         <div className='InfoBorder-head-left'>
           <div style={{background}}>{hl}</div>
@@ -36,17 +39,22 @@ export const InfoBorder = ({children, title, buttonText}: InfoBorderProps) => {
           <div style={{background}}>{hr}</div>
         </div>
       </div>
+
+      {/* Button, center bottom */}
+      <div className='InfoBorder-button' >
+        <div style={{background}}><p>{buttonText}</p></div>
+      </div>
+
+      {/* Left / right bottom line */}
       <div className='InfoBorder-foot'>
         <div className='InfoBorder-foot-left' >
           <div style={{background}}>{fl}</div>
-        </div>
-        <div className='InfoBorder-foot-center' >
-          <div style={{background}}><p>{buttonText}</p></div>
         </div>
         <div className='InfoBorder-foot-right' >
           <div style={{background}}>{fr}</div>
         </div>
       </div>
+
       {content}
     </div>
   )
