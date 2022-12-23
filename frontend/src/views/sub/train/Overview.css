@@ -1,11 +1,14 @@
 .Overview-routine {
-  width: 90%;
+  width: 95%;
   margin: 30px auto; 
 
 
 }
 
 .Overview-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0 8px;
   font-size: 0.8em;
   font-weight: 100;
