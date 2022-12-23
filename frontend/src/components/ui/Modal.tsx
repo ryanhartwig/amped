@@ -20,7 +20,6 @@ export const Modal = ({children, onClose, open, triggerRef, closeText, ...divPro
   const header = React.Children.map(children, (child: any) => child?.type?.displayName === 'Header' ? child : null)
   const content = React.Children.map(children, (child: any) => child?.type?.displayName !== 'Header' ? child : null)
 
-  console.log(header);
   const { background } = useAppSelector(s => s.theme);
   
   const contentRef = useRef<HTMLDivElement>(undefined!);
