@@ -7,6 +7,7 @@ import { InfoBorder } from '../ui/InfoBorder';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { setPosition } from '../../store/slices/sessionSlice';
+import { useNavigate } from 'react-router-dom';
 
 interface SessionFooterProps {
   currentPosition: number,
@@ -14,6 +15,7 @@ interface SessionFooterProps {
 
 export const SessionFooter = ({currentPosition}: SessionFooterProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { foreground: background } = useAppSelector(s => s.theme);
   const nextExercise = useAppSelector(s => s.session.selectedRoutine?.exercises[currentPosition + 1]?.exercise.name) || 'Summary'
@@ -38,6 +40,7 @@ export const SessionFooter = ({currentPosition}: SessionFooterProps) => {
           text="Pause" 
           buttonSize='55px' fontSize='13px' 
           active
+          onClick={() => navigate('/home/train/overview')}
           style={{flex: '0 0'}}
         >
           <IoIosFlash size={30}/>
