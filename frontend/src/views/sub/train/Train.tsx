@@ -5,7 +5,7 @@ import { Routine } from '../../../components/Routine';
 import { Search } from '../../../components/search/Search';
 import { Modal } from '../../../components/ui/Modal';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { setSelectedRoutine } from '../../../store/slices/sessionSlice';
+import { setPosition, setSelectedRoutine } from '../../../store/slices/sessionSlice';
 import { ExerciseType } from '../../../types/ExerciseType';
 import { RoutineType } from '../../../types/RoutineType';
 import { ScheduledState } from '../../../types/scheduledState';
@@ -36,6 +36,7 @@ export const Train = () => {
   useEffect(() => {
     if (!selected || selected.type !== 'Routine') return;
     dispatch(setSelectedRoutine(selected));
+    dispatch(setPosition(0));
     navigate('/home/train/overview')
   }, [dispatch, navigate, selected])
 
