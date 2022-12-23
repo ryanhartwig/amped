@@ -1,3 +1,29 @@
 .SessionFooter {
   flex: 0 0;
 }
+
+.SessionFooter-items {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.SessionFooter-items > * {
+  width: 100%;
+}
+
+
+
+/* prev / next */
+.SessionFooter-nav-button {
+  margin: 9px 14px;
+}
+.SessionFooter-nav-text {
+  font-size: 0.7em;
+  font-weight: 100;
+  opacity: 0.6;
+
+  position: relative;
+  top: 1px;
+
+  padding: 0 4px;
+}

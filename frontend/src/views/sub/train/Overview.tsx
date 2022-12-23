@@ -16,7 +16,7 @@ export const Overview = () => {
   const navigate = useNavigate();
 
   const selectedRoutine = useAppSelector(s => s.session.selectedRoutine);
-  const { background_alt: background } = useAppSelector(s => s.theme);
+  const { background_alt, background } = useAppSelector(s => s.theme);
 
   const [routine, setRoutine] = useState<RoutineType>();
   const [intensity, setIntensity] = useState<true[]>([]);
@@ -34,7 +34,7 @@ export const Overview = () => {
   return (
     <div className='Overview'>
       {routine && <div className='Overview-routine'>
-        <InfoBorder title={routine?.name} >
+        <InfoBorder background={background} title={routine?.name} >
           <InfoBorder.HeaderLeft>
             <p className='Overview-info'>{routine.est_duration} min</p>
           </InfoBorder.HeaderLeft>
@@ -48,12 +48,12 @@ export const Overview = () => {
           </InfoBorder.FooterLeft>
 
           <div className='Overview-content'>
-            <div className='Overview-exercises hidescrollbar' style={{background}}>
+            <div className='Overview-exercises hidescrollbar' style={{background: background_alt}}>
               {routine.exercises.map((e, i) => <Exercise key={`${e.position}-${e.exercise}`} exercise={e.exercise} />)}
             </div>
             {routine.lastSessionNotes && <div className='Overview-lastnotes'>
               <p>Last session's notes</p>
-              <div className='Overview-textarea' style={{background}}>
+              <div className='Overview-textarea' style={{background: background_alt}}>
                 <p className='Overview-text'>{routine.lastSessionNotes}</p>
               </div>
             </div>}

@@ -1,14 +1,15 @@
 import React from 'react';
-import { useAppSelector } from '../../utility/helpers/hooks';
 import './InfoBorder.css';
 
-interface InfoBorderProps {
+interface InfoBorderProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title?: string,
   children?: React.ReactNode,
   buttonText?: string,
+  className?: string,
+  background: string,
 }
 
-export const InfoBorder = ({children, title, buttonText}: InfoBorderProps) => {
+export const InfoBorder = ({children, background, title, buttonText, className = '', ...rest}: InfoBorderProps) => {
   const hl = React.Children.map(children, (child: any) => child.type.displayName === 'HeaderLeft' ? child : null)
   const hr = React.Children.map(children, (child: any) => child.type.displayName === 'HeaderRight' ? child : null)
   const fl = React.Children.map(children, (child: any) => child.type.displayName === 'FooterLeft' ? child : null)
@@ -21,10 +22,8 @@ export const InfoBorder = ({children, title, buttonText}: InfoBorderProps) => {
         : child
   );
 
-  const { background } = useAppSelector(s => s.theme);
-
   return (
-    <div className='InfoBorder'>
+    <div {...rest} className={'InfoBorder ' + className}>
       {/* Center / title */}
       <div className='InfoBorder-title noselect' >
         <div style={{background}}><p>{title}</p></div>
