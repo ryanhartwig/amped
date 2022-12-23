@@ -28,15 +28,18 @@
 .InfoBorder-button {
   position: absolute;
   width: 100%;
-  bottom: -10px;
+  bottom: -11px;
   font-size: 0.78em;
   z-index: 1;
   left: 0;
 }
+.InfoBorder-button p {
+  opacity: 0.8;
+}
 .InfoBorder-button > div {
   width: fit-content;
   margin: 0 auto;
-  padding: 3px 14px;
+  padding: 4px 16px;
   border-radius: 10000px;
   border: 1px solid rgb(73, 73, 73);
   cursor: pointer;
