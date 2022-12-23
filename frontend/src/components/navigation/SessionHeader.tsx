@@ -20,9 +20,10 @@ export const SessionHeader = ({routineTitle}: SessionheaderProps) => {
         {/* Left side */}
         <Logo />
         <p className='SessionHeader-title'>{routineTitle}</p>
-        <div className='Sessionheader-timer'>
+        <div className='SessionHeader-timer'>
           <Timer />
         </div>
+
       </div>
     </div>
   )
