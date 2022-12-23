@@ -8,9 +8,11 @@ import { Timer } from '../stats/Timer';
 
 interface SessionheaderProps {
   routineTitle: string,
+  time: number,
+  setTime: React.Dispatch<React.SetStateAction<number>>,
 }
 
-export const SessionHeader = ({routineTitle}: SessionheaderProps) => {
+export const SessionHeader = ({routineTitle, time, setTime}: SessionheaderProps) => {
 
   const { foreground: background } = useAppSelector(s => s.theme);
 
@@ -21,7 +23,7 @@ export const SessionHeader = ({routineTitle}: SessionheaderProps) => {
         <Logo />
         <p className='SessionHeader-title'>{routineTitle}</p>
         <div className='SessionHeader-timer'>
-          <Timer />
+          <Timer time={time} setTime={setTime} showHour />
         </div>
 
       </div>

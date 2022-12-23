@@ -13,6 +13,7 @@
 .SessionHeader-title {
   position: absolute;
   width: 100%;
+  left: 0;
 }
 
 .SessionHeader-timer {
@@ -21,7 +22,7 @@
   align-items: center;
 
   position:relative;
-  left: 4px;
+  left: 7px;
 
   min-width: 71px;
   height: 100%;

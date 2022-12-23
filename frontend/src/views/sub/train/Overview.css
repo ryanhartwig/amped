@@ -29,6 +29,7 @@
 .Overview-content {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   padding: 7px;
   overflow:hidden;
   height: fit-content;

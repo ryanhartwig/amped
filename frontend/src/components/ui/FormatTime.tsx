@@ -15,7 +15,7 @@ export const FormatTime = ({seconds, showHour}: FormatTimeProps) => {
 
   return (
     <div className='FormatTime'>
-      <p>{(!!hr || showHour) && `${hr}:`}{`${min}:`}{`${sec}`}</p>
+      <p>{(!!Number(hr) || showHour) && `${hr}:`}{`${min}:`}{`${sec}`}</p>
     </div>
   )
 }
