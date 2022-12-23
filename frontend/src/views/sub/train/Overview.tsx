@@ -60,7 +60,7 @@ export const Overview = () => {
           </div>
         </InfoBorder>
       </div>}
-      <PrimaryButton className='Overview-start' text='Start' icon={'logo'} />
+      <PrimaryButton onClick={() => navigate('/session')} className='Overview-start' text='Start' icon={'logo'} />
     </div>
   )
 }

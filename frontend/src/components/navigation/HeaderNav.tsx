@@ -8,10 +8,6 @@ import { IoIosNotificationsOutline } from 'react-icons/io'
 import { ReactIconButton } from '../ui/ReactIconButton';
 import { useAppSelector } from '../../utility/helpers/hooks';
 
-// interface HeaderNavProps {
-
-// }
-
 export const HeaderNav = () => {
 
   const { foreground: background } = useAppSelector(s => s.theme);

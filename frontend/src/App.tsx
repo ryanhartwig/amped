@@ -12,6 +12,7 @@ import { useAppSelector } from './utility/helpers/hooks';
 import { AddExercise } from './views/sub/AddExercise';
 import { AddRoutine } from './views/sub/AddRoutine';
 import { Overview } from './views/sub/train/Overview';
+import { Session } from './views/sub/train/Session';
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
             <Route path="finished" element={<Completed />} />
             <Route path="profile" element={<Profile />} />
           </Route>
+          <Route path="session" element={<Session />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

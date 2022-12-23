@@ -1,0 +1,9 @@
+.SessionHeader {
+  flex: 0 0;
+  padding: 5px;
+}
+
+.SessionHeader-items {
+  display: flex;
+  justify-content: space-between;
+}
