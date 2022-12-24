@@ -35,11 +35,7 @@ export const sessionReducer = createSlice({
     setExerciseData: (state, action: PayloadAction<ExerciseDataType>) => {
       if (!state.exerciseData) return;
 
-      const index = state.exerciseData
-        .findIndex(ex => 
-          ex.id === action.payload.exercise_id && 
-          ex.exercise_position === action.payload.exercise_position
-      );
+      const index = state.exerciseData.findIndex(ex => ex.id === action.payload.id);
 
       if (index === -1) {
         state.exerciseData.push(action.payload);
