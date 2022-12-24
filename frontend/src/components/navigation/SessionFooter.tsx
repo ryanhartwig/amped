@@ -9,13 +9,15 @@ import { useDispatch } from 'react-redux';
 import { setPosition } from '../../store/slices/sessionSlice';
 import { useNavigate } from 'react-router-dom';
 import { RoutineType } from '../../types/RoutineType';
+import { ExerciseDataType } from '../../types/ExerciseDataType';
 
 interface SessionFooterProps {
   currentPosition: number,
   routine: RoutineType,
+  exerciseData: ExerciseDataType,
 }
 
-export const SessionFooter = ({currentPosition, routine}: SessionFooterProps) => {
+export const SessionFooter = ({currentPosition, exerciseData, routine}: SessionFooterProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
