@@ -12,6 +12,7 @@ import { InfoBorder } from '../../../components/ui/InfoBorder';
 import { useDispatch } from 'react-redux';
 import { setExerciseData, setPosition } from '../../../store/slices/sessionSlice';
 import { SetFieldType } from '../../../types/SetFieldType';
+import { RoutineExercise } from '../../../types/RoutineType';
 
 // interface SessionProps {
 
@@ -24,7 +25,7 @@ export const Session = () => {
   const routineId = useAppSelector(s => s.session.selectedRoutineId);
   const routine = useAppSelector(s => s.workouts.routines).find(r => r.id === routineId)!;
   const position = useAppSelector(s => s.session.currentPosition)!;
-  const exercise = routine.exercises[position];
+  const exercise = useMemo<RoutineExercise>(() => routine.exercises[position], [position, routine.exercises]);
   const { background } = useAppSelector(s => s.theme);
 
   const prevExerciseData = useAppSelector(s => s.session.exerciseData?.find(e => e.exercise_position === position));
