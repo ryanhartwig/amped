@@ -4,30 +4,23 @@ import { useAppSelector } from '../../utility/helpers/hooks';
 import { IoIosFlash } from 'react-icons/io';
 import { ReactIconButton } from '../ui/ReactIconButton';
 import { InfoBorder } from '../ui/InfoBorder';
-import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { setPosition } from '../../store/slices/sessionSlice';
 import { useNavigate } from 'react-router-dom';
 import { RoutineType } from '../../types/RoutineType';
-import { ExerciseDataType } from '../../types/ExerciseDataType';
 
 interface SessionFooterProps {
   currentPosition: number,
   routine: RoutineType,
-  exerciseData: ExerciseDataType,
+  onNavigate: (dir: 1 | -1) => void,
 }
 
-export const SessionFooter = ({currentPosition, exerciseData, routine}: SessionFooterProps) => {
-  const dispatch = useDispatch();
+export const SessionFooter = ({currentPosition, onNavigate, routine}: SessionFooterProps) => {
   const navigate = useNavigate();
 
   const { foreground: background } = useAppSelector(s => s.theme);
   const nextExercise = routine.exercises[currentPosition + 1]?.exercise.name || null;
   const prevExercise = routine.exercises[currentPosition - 1]?.exercise.name || null;
 
-  const onNavigate = useCallback((dir: 1 | -1) => {
-    dispatch(setPosition(currentPosition + dir))
-  }, [currentPosition, dispatch]);
+  
   
   return (
     <div className='SessionFooter' style={{background}}>
