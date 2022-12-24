@@ -32,6 +32,21 @@ export const sessionReducer = createSlice({
     clearSession: (state) => {
       return {};
     },
+    setExerciseData: (state, action: PayloadAction<ExerciseDataType>) => {
+      if (!state.exerciseData) return;
+
+      const index = state.exerciseData
+        .findIndex(ex => 
+          ex.id === action.payload.exercise_id && 
+          ex.exercise_position === action.payload.exercise_position
+      );
+
+      if (index === -1) {
+        state.exerciseData.push(action.payload);
+      } else {
+        state.exerciseData[index] = action.payload;
+      }
+    },
   }
 });
 
