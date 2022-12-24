@@ -50,6 +50,6 @@ export const sessionReducer = createSlice({
   }
 });
 
-export const { setSelectedRoutine, setPosition, initializeSession, clearSession } = sessionReducer.actions;
+export const { setSelectedRoutine, setPosition, initializeSession, clearSession, setExerciseData } = sessionReducer.actions;
 
 export default sessionReducer.reducer;
