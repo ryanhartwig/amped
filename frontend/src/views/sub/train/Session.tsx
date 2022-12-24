@@ -13,19 +13,24 @@ import { SessionData } from './SessionData';
 
 export const Session = () => {
   const navigate = useNavigate();
+  
 
-  const routine = useAppSelector(s => s.session.selectedRoutine);
-  const position = useAppSelector(s => s.session.currentPosition);
-  const exercise = useAppSelector(s => s.session.selectedRoutine?.exercises[position]);
+  const routineId = useAppSelector(s => s.session.selectedRoutineId);
+  const routine = useAppSelector(s => s.workouts.routines).find(r => r.id === routineId)!;
+  const position = useAppSelector(s => s.session.currentPosition)!;
+  const exercise = useAppSelector(s => routine.exercises[position])!;
 
   const [exerciseTime, setExerciseTime] = useState<number>(0);
   const [routineTime, setRoutineTime] = useState<number>(0);
 
+
+
+
   useEffect(() => {
-    if (!routine) {
+    if (!routineId) {
       navigate('/home/train')
     }
-  }, [navigate, routine]);
+  }, [navigate, routineId]);
   
   return (
     <>
@@ -39,7 +44,7 @@ export const Session = () => {
             routineTime={routineTime}
             setExerciseTime={setExerciseTime} 
           />
-        <SessionFooter currentPosition={position} />
+        <SessionFooter routine={routine} currentPosition={position} />
       </div>}
     </>
   )
