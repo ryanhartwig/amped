@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { VscFlame } from 'react-icons/vsc';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Exercise } from '../../../components/Exercise';
 import { InfoBorder } from '../../../components/ui/InfoBorder';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
+import { initializeSession } from '../../../store/slices/sessionSlice';
 import { RoutineType } from '../../../types/RoutineType';
 import { useAppSelector } from '../../../utility/helpers/hooks';
 import './Overview.css';
@@ -14,15 +16,17 @@ import './Overview.css';
 
 export const Overview = () => { 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const selectedRoutine = useAppSelector(s => s.session.selectedRoutine);
+  const selectedRoutineId = useAppSelector(s => s.session.selectedRoutineId);
+  const selectedRoutine = useAppSelector(s => s.workouts.routines).find(r => r.id === selectedRoutineId);
   const { background_alt, background } = useAppSelector(s => s.theme);
 
   const [routine, setRoutine] = useState<RoutineType>();
   const [intensity, setIntensity] = useState<true[]>([]);
 
   useEffect(() => {
-    if (typeof selectedRoutine === 'string' || selectedRoutine?.type !== 'Routine') {
+    if (!selectedRoutine) {
       navigate('/home/train');
       return;
     };
@@ -30,6 +34,11 @@ export const Overview = () => {
     setRoutine(selectedRoutine);
     setIntensity(Array(selectedRoutine.intensity).fill(true));
   }, [navigate, selectedRoutine]);
+
+  const onStartSession = useCallback(() => {
+    dispatch(initializeSession());
+    navigate('/session')
+  }, [dispatch, navigate]);
 
   return (
     <div className='Overview'>
@@ -60,7 +69,7 @@ export const Overview = () => {
           </div>
         </InfoBorder>
       </div>}
-      <PrimaryButton onClick={() => navigate('/session')} className='Overview-start' text='Start' icon={'logo'} />
+      <PrimaryButton onClick={onStartSession} className='Overview-start' text='Start' icon={'logo'} />
     </div>
   )
 }

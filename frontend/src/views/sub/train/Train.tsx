@@ -35,7 +35,7 @@ export const Train = () => {
 
   useEffect(() => {
     if (!selected || selected.type !== 'Routine') return;
-    dispatch(setSelectedRoutine(selected));
+    dispatch(setSelectedRoutine(selected.id));
     dispatch(setPosition(0));
     navigate('/home/train/overview')
   }, [dispatch, navigate, selected])

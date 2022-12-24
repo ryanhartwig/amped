@@ -8,18 +8,20 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { setPosition } from '../../store/slices/sessionSlice';
 import { useNavigate } from 'react-router-dom';
+import { RoutineType } from '../../types/RoutineType';
 
 interface SessionFooterProps {
   currentPosition: number,
+  routine: RoutineType,
 }
 
-export const SessionFooter = ({currentPosition}: SessionFooterProps) => {
+export const SessionFooter = ({currentPosition, routine}: SessionFooterProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { foreground: background } = useAppSelector(s => s.theme);
-  const nextExercise = useAppSelector(s => s.session.selectedRoutine?.exercises[currentPosition + 1]?.exercise.name) || 'Summary'
-  const prevExercise = useAppSelector(s => s.session.selectedRoutine?.exercises[currentPosition - 1]?.exercise.name) || null;
+  const nextExercise = routine.exercises[currentPosition + 1]?.exercise.name || null;
+  const prevExercise = routine.exercises[currentPosition - 1]?.exercise.name || null;
 
   const onNavigate = useCallback((dir: 1 | -1) => {
     dispatch(setPosition(currentPosition + dir))
@@ -49,7 +51,7 @@ export const SessionFooter = ({currentPosition}: SessionFooterProps) => {
           <InfoBorder background={background} style={{borderRadius: '7px', borderColor: 'rgba(255,255,255,0.2'}}>
             <InfoBorder.HeaderRight><p className='SessionFooter-nav-text'>Next</p></InfoBorder.HeaderRight>
             <div className='SessionFooter-button-text' onClick={() => onNavigate(1)}>
-              <p>{nextExercise}</p>
+              <p>{nextExercise || 'Summary'}</p>
             </div>
           </InfoBorder>
         </div>

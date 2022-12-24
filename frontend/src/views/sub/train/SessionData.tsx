@@ -5,10 +5,10 @@ import { InfoBorder } from '../../../components/ui/InfoBorder';
 import { useRef, useMemo } from 'react';
 import uuid from 'react-uuid';
 import { ExerciseDataType } from '../../../types/ExerciseDataType';
-import { RoutineDataType } from '../../../types/RoutineDataType';
 import { useAppSelector } from '../../../utility/helpers/hooks';
 import { ExerciseType } from '../../../types/ExerciseType';
 import { RoutineType } from '../../../types/RoutineType';
+import { useDispatch } from 'react-redux';
 
 interface SessionDataProps {
   routine: RoutineType,
@@ -25,13 +25,6 @@ export const SessionData = ({routine, exercise, routineTime, exerciseTime, setEx
   const routineId = useRef<string>(uuid());
   const startDate = useRef<Date>(new Date());
 
-  const routineData = useMemo<RoutineDataType>(() => ({
-    duration: routineTime,
-    id: routineId.current,
-    routine_id: routine!.id,
-    start_date: startDate.current.getTime(),
-  }), [routine, routineTime])
-
   const exerciseData = useMemo<ExerciseDataType>(() => ({
     duration: exerciseTime,
     exercise_id: exercise.id,
@@ -41,7 +34,6 @@ export const SessionData = ({routine, exercise, routineTime, exerciseTime, setEx
     sets: [],
   }), [exercise.id, exerciseTime, position])
 
-  
 
   return (
     <div className='SessionData'>
