@@ -35,7 +35,7 @@ export const AddSet = () => {
         incrementBy={1}
         mini
       />
-      <div className='AddSet-modifiers'>
+      <div className='AddSet-modifiers noselect hidescrollbar'>
         {['Warmup', 'Drop Set', 'Hit Failure'].map((t, i) => 
           <Tag key={t} 
             text={t} 

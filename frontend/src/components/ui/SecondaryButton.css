@@ -4,6 +4,8 @@
   align-items: center;
   font-size: 15px;
 
+  cursor: pointer;
+
   border-radius: 10000px;
   border: 1px solid rgba(128, 128, 128, 0.376);
   padding: 11px 18px;
@@ -11,6 +13,12 @@
   min-width: 180px;
   max-width: 300px;
   width: 100%;
+
+  transition: border-color 0.2s;
+}
+
+.SecondaryButton:hover {
+  border-color: rgba(128, 128, 128, 0.6);
 }
 
 .SecondaryButton p {
