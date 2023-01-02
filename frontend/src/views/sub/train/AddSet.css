@@ -1,0 +1,12 @@
+.AddSet {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+  
+  height: 340px;
+  width: calc(100% - 30px);
+
+  margin: 15px auto;
+  border-radius: 10px;
+}

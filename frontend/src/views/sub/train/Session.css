@@ -28,3 +28,18 @@
   display: flex;
   justify-content: center;
 }
+
+/* Inner content */
+.Session-content-inner {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  overflow: hidden;
+  
+  margin: 0 -5px;
+  height: 100%;
+}
+.Session-content-sets {
+  overflow: hidden;
+  height: 100%;
+}

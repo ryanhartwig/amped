@@ -13,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { setExerciseData, setPosition } from '../../../store/slices/sessionSlice';
 import { SetFieldType } from '../../../types/SetFieldType';
 import { RoutineExercise } from '../../../types/RoutineType';
+import { AddSet } from './AddSet';
 
 // interface SessionProps {
 
@@ -82,6 +83,13 @@ export const Session = () => {
             <InfoBorder.HeaderRight>
               <Timer className={'Session-info timer'} time={exerciseTime} setTime={setExerciseTime} />
             </InfoBorder.HeaderRight>
+
+            <div className='Session-content-inner'>
+              <div className='Session-content-sets'>
+
+              </div>
+              <AddSet />
+            </div>
           </InfoBorder>
         </div>
         <SessionFooter onNavigate={onNavigate} routine={routine} currentPosition={position} />

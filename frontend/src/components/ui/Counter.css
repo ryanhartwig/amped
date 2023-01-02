@@ -1,0 +1,14 @@
+.Counter-input {
+  text-align: center; 
+  color: white;
+  
+  padding: 0;
+  padding-bottom: 2px;
+  
+  width: 89px;
+  height: 50px;
+
+  font-weight: 100;
+  font-size: 46px;
+}
+
