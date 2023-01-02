@@ -31,4 +31,4 @@ export interface SetFieldType {
   count: number,
 }
 
-export type Modifier = 'warmup' | 'dropset' | 'hitfailure';
+export type Modifier = 'Warmup' | 'Drop Set' | 'Hit Failure';

@@ -10,7 +10,6 @@ interface SetFieldProps {
 export const SetField = ({set}: SetFieldProps) => {
 
 
-
   return (
     <div className='SetField'>
       <div>

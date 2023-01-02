@@ -31,7 +31,7 @@ export const AddSet = ({onAddSet, setTime, setSetTime, exercise_data_id}: AddSet
     count: reps,
     duration: setTime,
     exercise_data_id,
-    modifiers: Array.from(activeTags).map(t => t.toLowerCase().replace(/\s+/g, '')) as Modifier[], // remove spaces
+    modifiers: Array.from(activeTags) as Modifier[],
     weight,
   }), [activeTags, exercise_data_id, id, reps, setTime, weight]);
 
@@ -40,7 +40,7 @@ export const AddSet = ({onAddSet, setTime, setSetTime, exercise_data_id}: AddSet
   const onToggleTag = useCallback((tag: string) => {
     const mutuallyExclusive = ['Warmup', 'Drop Set'].filter(t => t !== tag);
     const tags = [tag];
-    
+
     if (tag !== 'Hit Failure' && activeTags.has(mutuallyExclusive[0])) {
       tags.push(mutuallyExclusive[0]);
     };
