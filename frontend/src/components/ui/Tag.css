@@ -30,6 +30,8 @@
 .Tag > p {
   opacity: 0.6;
 
+  position: relative;
+  bottom: 1px;
   transition: opacity 0.2s;
 }
 .Tag:hover > * {
