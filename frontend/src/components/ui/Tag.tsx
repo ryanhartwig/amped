@@ -24,7 +24,7 @@ export const Tag = ({text, toggle, color = '#1e1e3f', onClick, style, fontSize =
     border: `1px solid ${color}`,
     color: matchColorText ? color : '',
   } : {
-    border: 'none',
+    border: '1px solid transparent',
     background: color,
     color: '',
   } 
