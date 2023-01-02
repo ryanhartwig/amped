@@ -3,7 +3,7 @@ import './Session.css';
 import { SessionHeader } from '../../../components/navigation/SessionHeader'
 import { SessionFooter } from '../../../components/navigation/SessionFooter';
 import { useAppSelector } from '../../../utility/helpers/hooks';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import uuid from 'react-uuid';
 import { ExerciseDataType } from '../../../types/ExerciseDataType';
 import { Timer } from '../../../components/stats/Timer';
@@ -17,6 +17,8 @@ import { SetField } from '../../../components/stats/SetField';
 
 export const Session = () => {
   const dispatch = useDispatch();
+
+  const setsRef = useRef<HTMLDivElement>(undefined!);
   
   const routineId = useAppSelector(s => s.session.selectedRoutineId);
 
@@ -58,7 +60,9 @@ export const Session = () => {
     setSets(p => [...p, set].map((s, i) => ({...s, position: i})) as SetFieldType[]);
   }, [])
 
-  useEffect(() => {console.log(sets)}, [sets]);
+  useEffect(() => {
+    setsRef.current.scrollTop = setsRef.current.scrollHeight;
+  }, [sets]);
   
   // Update exerciseData state fields with previous data (if exists)
   useEffect(() => {
@@ -85,7 +89,7 @@ export const Session = () => {
 
             {/* Setlist & Add Set Area */}
             <div className='Session-content-inner'>
-              <div className='Session-content-sets'>
+              <div className='Session-content-sets hidescrollbar' ref={setsRef}>
                 {sets.map(s => <SetField key={s.id} set={s} sets={sets} />)}
               </div>
               <AddSet onAddSet={onAddSet} setTime={setTime} setSetTime={setSetTime} exercise_data_id={exerciseData.id} />

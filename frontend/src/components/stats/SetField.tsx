@@ -1,6 +1,7 @@
 import { BsDot } from 'react-icons/bs';
 import { SetFieldType } from '../../types/SetFieldType';
 import { FormatTime } from '../ui/FormatTime';
+import { Tag } from '../ui/Tag';
 import './SetField.css';
 
 interface SetFieldProps {
@@ -45,6 +46,7 @@ export const SetField = ({set, sets}: SetFieldProps) => {
         <p style={{fontSize: 11, opacity: 0.4}}>reps</p>
       </div>
       <div>
+        {failure && <Tag text='Hit Failure' fontSize='0.7em' hollow matchColorText color='#6e2b2b' />}
         <p><FormatTime seconds={set.duration} style={{fontSize: '0.9em', opacity: 0.7}} /></p>
       </div>
     </div>
