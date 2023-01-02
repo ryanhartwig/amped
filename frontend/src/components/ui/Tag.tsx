@@ -13,14 +13,16 @@ interface TagProps {
 style?: CSSProperties,
   fontSize?: string,
   matchColorText?: boolean,
+  hollow?: boolean,
 }
 
 
 
-export const Tag = ({text, toggle, color = '#1e1e3f', onClick, style, fontSize = '', matchColorText}: TagProps) => {
+export const Tag = ({text, toggle, color = '#1e1e3f', hollow, onClick, style, fontSize = '', matchColorText}: TagProps) => {
+  const state = hollow ? 'add' : toggle;
 
-  const filled: CSSProperties = toggle === 'add' 
-  ? {
+  const filled: CSSProperties = state === 'add' || hollow
+    ? {
     border: `1px solid ${color}`,
     color: matchColorText ? color : '',
   } : {
@@ -30,15 +32,15 @@ export const Tag = ({text, toggle, color = '#1e1e3f', onClick, style, fontSize =
   } 
   
   return (
-    <div className={clsx('Tag', {toggle: !!toggle}, {'match-color-text': matchColorText})} 
+    <div className={clsx('Tag', {toggle: !!state}, {'match-color-text': matchColorText})} 
       onClick={onClick} 
       style={{
         ...filled, 
         ...style,
       }}
     >
-      {toggle &&
-        (toggle === 'add' ? <IoAddSharp className='Tag-icon' style={{color: matchColorText ? color : 'white'}} size={15} />
+      {state && !hollow &&
+        (state === 'add' ? <IoAddSharp className='Tag-icon' style={{color: matchColorText ? color : 'white'}} size={15} />
         : <IoRemoveSharp className='Tag-icon' style={{color: 'white'}} size={15} />)}
       <p style={{fontSize}}>{text}</p>
     </div>
