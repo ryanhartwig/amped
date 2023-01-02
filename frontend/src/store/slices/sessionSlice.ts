@@ -6,7 +6,7 @@ interface SessionState {
   selectedRoutineId?: string,
   session_id?: string,
   currentPosition?: number,
-  sessionStartDate?: Date,
+  sessionStartDate?: number,
   exerciseData?: ExerciseDataType[],
 }
 
@@ -26,7 +26,7 @@ export const sessionReducer = createSlice({
     initializeSession: (state) => {
       state.session_id = uuid();
       state.currentPosition = 0;
-      state.sessionStartDate = new Date();
+      state.sessionStartDate = (new Date()).getTime();
       state.exerciseData = [];
     },
     clearSession: (state) => {

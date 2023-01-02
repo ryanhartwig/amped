@@ -54,6 +54,7 @@ export const Session = () => {
     setSets([]);
   }, [dispatch, exerciseData, position]);
 
+  // Update exerciseData state fields with previous data (if exists)
   useEffect(() => {
     if (!prevExerciseData) return;
 
