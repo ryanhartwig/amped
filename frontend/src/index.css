@@ -5,7 +5,7 @@
 }
 
 html {
-  overflow:hidden;
+  /* overflow:hidden; */
 }
 
 body, input, select, option {
@@ -85,7 +85,7 @@ input:focus {
 
 
 /* Simplified reset.css */
-whtml, body, div, span, applet, object, iframe,
+html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -115,4 +115,13 @@ body {
 /* Font sizes */
 h2 {
   font-size: 19px;
+}
+
+::-moz-selection { /* Code for Firefox */
+  background: yellow;
+}
+
+::selection {
+  color: rgb(1, 1, 1);
+  background: rgb(75, 75, 75);
 }
