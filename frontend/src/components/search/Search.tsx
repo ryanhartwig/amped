@@ -14,6 +14,7 @@ import { ExerciseType } from '../../types/ExerciseType';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import { useLocation } from 'react-router-dom';
 import { RoutineType } from '../../types/RoutineType';
+import { useToggleSet } from '../../utility/helpers/hooks/useToggleSet';
 
 interface SearchProps {
   tab: 'Routines' | 'Exercises',
@@ -48,13 +49,7 @@ export const Search = ({tab, onSaveSelect, setSelected, selected}: SearchProps) 
     })
   }, [addExercises]);
   
-  const onToggleTag = useCallback((t: string) => {
-    const newSet = new Set(activeTags);
-    activeTags.has(t) 
-      ? newSet.delete(t)
-      : newSet.add(t);
-    setActiveTags(newSet);
-  }, [activeTags]);
+  const onToggleTag = useToggleSet(activeTags, setActiveTags)
 
   // Prevent resetting on initial render
   const tabRef = useRef<string>(tab);
