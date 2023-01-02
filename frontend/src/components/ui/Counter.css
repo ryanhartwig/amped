@@ -7,6 +7,8 @@
 .Counter-input {
   text-align: center; 
   color: white;
+
+  border-radius: 5px;
   
   padding: 0;
   padding-bottom: 2px;
@@ -42,6 +44,10 @@
 
 
 /* Minified Version Overrides */
+.Counter.small {
+  height: 40px;
+}
+
 .Counter.small .Counter-input {
   font-size: 28px;
   height: 34px;

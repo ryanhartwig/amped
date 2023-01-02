@@ -26,15 +26,17 @@ export const AddSet = () => {
 
   return (
     <div className='AddSet' style={{background}}>
-      <Counter value={weight} 
-        setValue={setWeight}
-        incrementBy={5}
-      />
-      <Counter value={reps} 
-        setValue={setReps}
-        incrementBy={1}
-        mini
-      />
+      <div className='AddSet-counters'>
+        <Counter value={weight} 
+          setValue={setWeight}
+          incrementBy={5}
+        />
+        <Counter value={reps} 
+          setValue={setReps}
+          incrementBy={1}
+          mini
+        />
+      </div>
       <div className='AddSet-modifiers noselect hidescrollbar'>
         {['Warmup', 'Drop Set', 'Hit Failure'].map((t, i) => 
           <Tag key={t} 
