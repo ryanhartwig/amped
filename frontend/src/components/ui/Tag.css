@@ -7,16 +7,17 @@
   pointer-events: none;
   
   width: fit-content;
-  height: 27px;
+  height: fit-content;
 
-  margin: 3px;
-  padding: 3px 12px;
+  margin: 0 3px;
+  padding: 2px 12px;
+
+  line-height: normal;
 
   border-radius: 10000px;
 
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, background-color 0.2s, color 0.2s;
   white-space: nowrap;
-
 }
 .Tag * {
   pointer-events: none;
@@ -26,7 +27,7 @@
   pointer-events: auto;
 }
 
-.Tag > * {
+.Tag > p {
   opacity: 0.6;
 
   transition: opacity 0.2s;
@@ -38,14 +39,19 @@
 .Tag-icon {
   margin-right: 4px;
   color: rgba(255, 255, 255, 0.668);
+  opacity: 0.5;
+  transition: opacity 0.2s;
 }
 
 .Tag p {
-  font-weight: 200;
+  font-weight: 300;
   font-size: 13px;
 }
 
-
 .Search-tags {
   display: flex;
+}
+
+.Tag.match-color-text * {
+  opacity: 1;
 }

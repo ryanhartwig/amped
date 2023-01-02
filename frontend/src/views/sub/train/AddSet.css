@@ -10,3 +10,14 @@
   margin: 15px auto;
   border-radius: 10px;
 }
+
+.AddSet-modifiers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.AddSet-time {
+  margin: 5px;
+  width: calc(100% - 20px);
+}
