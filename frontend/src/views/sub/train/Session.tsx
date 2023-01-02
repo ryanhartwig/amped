@@ -4,7 +4,6 @@ import { SessionHeader } from '../../../components/navigation/SessionHeader'
 import { SessionFooter } from '../../../components/navigation/SessionFooter';
 import { useAppSelector } from '../../../utility/helpers/hooks';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import uuid from 'react-uuid';
 import { ExerciseDataType } from '../../../types/ExerciseDataType';
 import { Timer } from '../../../components/stats/Timer';
@@ -15,18 +14,15 @@ import { SetFieldType } from '../../../types/SetFieldType';
 import { RoutineExercise } from '../../../types/RoutineType';
 import { AddSet } from './AddSet';
 
-// interface SessionProps {
-
-// }
-
 export const Session = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   
   const routineId = useAppSelector(s => s.session.selectedRoutineId);
+
   const routine = useAppSelector(s => s.workouts.routines).find(r => r.id === routineId)!;
   const position = useAppSelector(s => s.session.currentPosition)!;
   const exercise = useMemo<RoutineExercise>(() => routine.exercises[position], [position, routine.exercises]);
+  
   const { background } = useAppSelector(s => s.theme);
 
   const prevExerciseData = useAppSelector(s => s.session.exerciseData?.find(e => e.exercise_position === position));
@@ -63,12 +59,6 @@ export const Session = () => {
     setId(prevExerciseData.id);
     setSets(prevExerciseData.sets);
   }, [prevExerciseData]);
-
-  useEffect(() => {
-    if (!routineId) {
-      navigate('/home/train')
-    }
-  }, [navigate, routineId]);
   
   return (
     <>

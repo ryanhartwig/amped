@@ -17,7 +17,7 @@ import { Session } from './views/sub/train/Session';
 function App() {
 
   const { background } = useAppSelector(s => s.theme);
-  
+
   return (
     <div className='App' style={{background}}>
       <BrowserRouter>
