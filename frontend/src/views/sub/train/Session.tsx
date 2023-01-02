@@ -13,6 +13,7 @@ import { setExerciseData, setPosition } from '../../../store/slices/sessionSlice
 import { SetFieldType } from '../../../types/SetFieldType';
 import { RoutineExercise } from '../../../types/RoutineType';
 import { AddSet } from './AddSet';
+import { SetField } from '../../../components/stats/SetField';
 
 export const Session = () => {
   const dispatch = useDispatch();
@@ -29,9 +30,10 @@ export const Session = () => {
 
   const [id, setId] = useState<string>(uuid());
   const [sets, setSets] = useState<SetFieldType[]>([]);
-
   const [exerciseTime, setExerciseTime] = useState<number>(0);
   const [routineTime, setRoutineTime] = useState<number>(0);
+
+  const [setTime, setSetTime] = useState<number>(0);
 
   const exerciseData = useMemo<ExerciseDataType>(() => ({
     duration: exerciseTime,
@@ -49,8 +51,15 @@ export const Session = () => {
     setExerciseTime(0);
     setId(uuid());
     setSets([]);
+    setSetTime(0);
   }, [dispatch, exerciseData, position]);
 
+  const onAddSet = useCallback((set: Partial<SetFieldType>) => {
+    setSets(p => [...p, set].map((s, i) => ({...s, position: i})) as SetFieldType[]);
+  }, [])
+
+  useEffect(() => {console.log(sets)}, [sets]);
+  
   // Update exerciseData state fields with previous data (if exists)
   useEffect(() => {
     if (!prevExerciseData) return;
@@ -74,11 +83,12 @@ export const Session = () => {
               <Timer className={'Session-info timer'} time={exerciseTime} setTime={setExerciseTime} />
             </InfoBorder.HeaderRight>
 
+            {/* Setlist & Add Set Area */}
             <div className='Session-content-inner'>
               <div className='Session-content-sets'>
-
+                {sets.map(s => <SetField set={s} />)}
               </div>
-              <AddSet />
+              <AddSet onAddSet={onAddSet} setTime={setTime} setSetTime={setSetTime} exercise_data_id={exerciseData.id} />
             </div>
           </InfoBorder>
         </div>

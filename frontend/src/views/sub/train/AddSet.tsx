@@ -1,28 +1,55 @@
-import { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
+import uuid from 'react-uuid';
 import { Counter } from '../../../components/ui/Counter';
 import { SecondaryButton } from '../../../components/ui/SecondaryButton';
 import { Tag } from '../../../components/ui/Tag';
+import { Modifier, SetFieldType } from '../../../types/SetFieldType';
 import { useAppSelector } from '../../../utility/helpers/hooks';
 import { useToggleSet } from '../../../utility/helpers/hooks/useToggleSet';
 import './AddSet.css';
 
-// interface AddSetProps {
+interface AddSetProps {
+  onAddSet: (set: Partial<SetFieldType>) => void,
+  exercise_data_id: string,
+  setTime: number,
+  setSetTime: React.Dispatch<React.SetStateAction<number>>,
+}
 
-// }
-
-export const AddSet = () => {
+export const AddSet = ({onAddSet, setTime, setSetTime, exercise_data_id}: AddSetProps) => {
 
   const { background_alt: background } = useAppSelector(s => s.theme);
 
   const tagColors = ['#725231', '#375c7d', '#6e2b2b'];
 
+  const [id, setId] = useState<string>(uuid());
   const [weight, setWeight] = useState<number>(90);
-  const [reps, setReps] = useState<number>(0);
-  const [setTime, setSetTime] = useState<number>(0);
-
+  const [reps, setReps] = useState<number>(5);
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
 
+  const setField: Partial<SetFieldType> = useMemo(() => ({
+    id,
+    count: reps,
+    duration: setTime,
+    exercise_data_id,
+    modifiers: Array.from(activeTags).map(t => t.toLowerCase().replace(/\s+/g, '')) as Modifier[], // remove spaces
+    weight,
+  }), [activeTags, exercise_data_id, id, reps, setTime, weight]);
+
   const onToggleTag = useToggleSet(activeTags, setActiveTags);
+
+  const reset = useCallback(() => {
+    setWeight(90);
+    setReps(5);
+    setSetTime(0);
+    setActiveTags(new Set());
+    setId(uuid());
+  }, [setSetTime]);
+
+  const onAddSetField = useCallback(() => {
+    onAddSet(setField);
+    reset();
+  }, [onAddSet, reset, setField]);
+
 
   return (
     <div className='AddSet noselect' style={{background}}>
@@ -53,7 +80,12 @@ export const AddSet = () => {
           />
         )}
       </div>
-      <SecondaryButton className='AddSet-time' text={'Add set'} time={setTime} setTime={setSetTime} />
+      <SecondaryButton className='AddSet-time' 
+        text={'Add set'} 
+        time={setTime} 
+        setTime={setSetTime} 
+        onClick={onAddSetField}
+      />
     </div>
   )
 }

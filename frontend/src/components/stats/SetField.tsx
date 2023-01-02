@@ -10,7 +10,7 @@ export const SetField = ({set}: SetFieldProps) => {
 
 
   return (
-    <div>
+    <div className='SetField'>
       
     </div>
   )

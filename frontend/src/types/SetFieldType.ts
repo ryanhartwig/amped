@@ -1,5 +1,9 @@
 export interface SetFieldType {
   /**
+   * Id of this set
+   */
+  id: string,
+  /**
    * Related exercise data id
    */
   exercise_data_id: string,
@@ -16,9 +20,9 @@ export interface SetFieldType {
   /**
    * Set number / position
    */
-  order: number,
+  position: number,
   /**
-   * LBS/KG, 0 === bodyweight
+   * LBS/KG
    */
   weight: number,
   /**
