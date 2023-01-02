@@ -35,7 +35,18 @@ export const AddSet = ({onAddSet, setTime, setSetTime, exercise_data_id}: AddSet
     weight,
   }), [activeTags, exercise_data_id, id, reps, setTime, weight]);
 
-  const onToggleTag = useToggleSet(activeTags, setActiveTags);
+  const toggleTag = useToggleSet(activeTags, setActiveTags);
+
+  const onToggleTag = useCallback((tag: string) => {
+    const mutuallyExclusive = ['Warmup', 'Drop Set'].filter(t => t !== tag);
+    const tags = [tag];
+    
+    if (tag !== 'Hit Failure' && activeTags.has(mutuallyExclusive[0])) {
+      tags.push(mutuallyExclusive[0]);
+    };
+
+    toggleTag(...tags);
+  }, [activeTags, toggleTag]);
 
   const reset = useCallback(() => {
     setWeight(90);
