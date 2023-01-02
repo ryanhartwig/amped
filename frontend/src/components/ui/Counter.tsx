@@ -11,10 +11,12 @@ interface CounterProps extends React.DetailedHTMLProps<React.InputHTMLAttributes
   setValue: React.Dispatch<React.SetStateAction<number>>,
   max?: number,
   min?: number,
+  mini?: boolean,
 }
 
-export const Counter = ({incrementBy, value, max = 999, min = 0, background, setValue, ...inputProps}: CounterProps) => {
+export const Counter = ({incrementBy, mini, value, max = 999, min = 0, background, setValue, ...inputProps}: CounterProps) => {
   const inputRef = useRef<HTMLInputElement>(undefined!);
+  const small = mini ? 'small' : '';
 
   const { background: defaultBackground } = useAppSelector(s => s.theme);
   if (!background) {
@@ -45,8 +47,8 @@ export const Counter = ({incrementBy, value, max = 999, min = 0, background, set
   }, [max, min, setValue, value]);
 
   return (
-    <div className='Counter'>
-      <div className='Counter-change-value' 
+    <div className={'Counter ' + small}>
+      <div className='Counter-change-value'
         style={{background}}
         onClick={() => onStep(incrementBy * -1)}
       >

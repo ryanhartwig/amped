@@ -39,3 +39,15 @@
 .Counter-change-value:hover > * {
   opacity: 1;
 }
+
+
+/* Minified Version Overrides */
+.Counter.small .Counter-input {
+  font-size: 28px;
+  height: 34px;
+  width: 63px;
+}
+
+.Counter.small .Counter-change-value {
+  padding: 4px;
+}
