@@ -4,9 +4,10 @@
   box-sizing: border-box;
 }
 
-html {
-  /* overflow:hidden; */
-}
+/* For mobile */
+/* html {
+  overflow:hidden;
+} */
 
 body, input, select, option {
   margin: 0;

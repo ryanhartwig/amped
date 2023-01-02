@@ -1,3 +1,9 @@
+.Counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .Counter-input {
   text-align: center; 
   color: white;
@@ -12,3 +18,24 @@
   font-size: 46px;
 }
 
+.Counter-change-value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  margin: 18px;
+  padding: 6px;
+  border-radius: 10000px;
+}
+
+.Counter-change-value > * {
+  opacity: 0.5;
+
+  transition: opacity 0.1s;
+}
+
+.Counter-change-value:hover > * {
+  opacity: 1;
+}

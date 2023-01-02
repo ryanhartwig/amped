@@ -18,7 +18,7 @@ export const AddSet = () => {
   return (
     <div className='AddSet' style={{background}}>
       <Counter value={weight} 
-        onChange={(e: any) => setWeight(e.target.value)} 
+        setValue={setWeight}
         incrementBy={5}
       />
     </div>
