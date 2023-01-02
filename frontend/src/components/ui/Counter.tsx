@@ -47,7 +47,7 @@ export const Counter = ({incrementBy, mini, value, max = 999, min = 0, backgroun
   }, [max, min, setValue, value]);
 
   return (
-    <div className={'Counter ' + small}>
+    <div className={'Counter noselect ' + small}>
       <div className='Counter-change-value'
         style={{background}}
         onClick={() => onStep(incrementBy * -1)}
