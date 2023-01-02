@@ -5,15 +5,39 @@ import './SetField.css';
 
 interface SetFieldProps {
   set: SetFieldType,
+  sets: SetFieldType[],
 }
 
-export const SetField = ({set}: SetFieldProps) => {
+export const SetField = ({set, sets}: SetFieldProps) => {
+  const setType = set.modifiers.includes('Drop Set')
+    ? 'Drop Set'
+    : set.modifiers.includes('Warmup')
+      ? 'Warmup'
+  : '';
+  const failure = set.modifiers.includes('Hit Failure');
 
+  const color = 
+    setType === 'Drop Set'
+      ? '#375c7d'
+      : setType === 'Warmup'
+        ? '#725231'
+  : '';
+
+  const getText = (): string => {
+    if (setType === 'Drop Set') return 'Drop Set';
+    const [ warmupSets, normalSets ] = [
+      sets.filter(s => s.modifiers.includes('Warmup')),
+      sets.filter(s => s.modifiers.every(m => !['Warmup', 'Drop Set'].includes(m)))
+    ];
+
+    if (setType === 'Warmup') return `Warmup ${warmupSets.findIndex(s => s.id === set.id) + 1}`
+    else return `Set ${normalSets.findIndex(s => s.id === set.id) + 1}`;
+  }
 
   return (
     <div className='SetField'>
       <div>
-        <p style={{fontSize: 13}}>Set {set.position + 1}</p>
+        <p style={{fontSize: 13, color}}>{getText()}</p>
         <BsDot style={{opacity: 0.2}} />
         <p style={{fontSize: 25}}>{set.weight}</p>
         <p style={{fontSize: 11, opacity: 0.4}}>lbs</p>
