@@ -10,6 +10,10 @@
   padding: 5px;
 }
 
+.InfoBorder.button:hover {
+  cursor: pointer;
+}
+
 /* Title */
 .InfoBorder-title {
   width: 100%;

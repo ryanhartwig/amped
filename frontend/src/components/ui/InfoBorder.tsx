@@ -7,9 +7,10 @@ interface InfoBorderProps extends React.DetailedHTMLProps<React.HTMLAttributes<H
   buttonText?: string,
   className?: string,
   background: string,
+  isButton?: boolean,
 }
 
-export const InfoBorder = ({children, background, title, buttonText, className = '', ...rest}: InfoBorderProps) => {
+export const InfoBorder = ({children, isButton, background, title, buttonText, className = '', ...rest}: InfoBorderProps) => {
   const hl = React.Children.map(children, (child: any) => child.type.displayName === 'HeaderLeft' ? child : null)
   const hr = React.Children.map(children, (child: any) => child.type.displayName === 'HeaderRight' ? child : null)
   const fl = React.Children.map(children, (child: any) => child.type.displayName === 'FooterLeft' ? child : null)
@@ -23,7 +24,7 @@ export const InfoBorder = ({children, background, title, buttonText, className =
   );
 
   return (
-    <div {...rest} className={'InfoBorder ' + className}>
+    <div {...rest} className={'InfoBorder ' + className} style={{...rest.style, cursor: isButton ? 'pointer' : ''}}>
       {/* Center / title */}
       <div className='InfoBorder-title noselect' >
         <div style={{background}}><p>{title}</p></div>
