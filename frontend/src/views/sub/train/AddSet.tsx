@@ -25,19 +25,23 @@ export const AddSet = () => {
   const onToggleTag = useToggleSet(activeTags, setActiveTags);
 
   return (
-    <div className='AddSet' style={{background}}>
-      <div className='AddSet-counters'>
+    <div className='AddSet noselect' style={{background}}>
+      <div className='AddSet-counter'>
+        <p className='AddSet-counter-label'>lbs</p>
         <Counter value={weight} 
           setValue={setWeight}
           incrementBy={5}
         />
+      </div>
+      <div className='AddSet-counter'>
+        <p className='AddSet-counter-label'>reps</p>
         <Counter value={reps} 
           setValue={setReps}
           incrementBy={1}
           mini
         />
       </div>
-      <div className='AddSet-modifiers noselect hidescrollbar'>
+      <div className='AddSet-modifiers hidescrollbar'>
         {['Warmup', 'Drop Set', 'Hit Failure'].map((t, i) => 
           <Tag key={t} 
             text={t} 

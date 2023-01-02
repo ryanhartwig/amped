@@ -37,3 +37,17 @@
   margin: 5px;
   width: calc(100% - 20px);
 }
+
+.AddSet-counter {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+.AddSet-counter-label {
+  position: absolute;
+  font-size: 13px;
+  opacity: 0.3;
+  top: calc(50% - 7px);
+  left: 10px;
+}
