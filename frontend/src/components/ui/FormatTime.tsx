@@ -1,12 +1,12 @@
 import { zeroTime } from '../../utility/helpers/zeroTime';
 import './FormatTime.css';
 
-interface FormatTimeProps {
+interface FormatTimeProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement> {
   seconds: number,
   showHour?: boolean,
 }
 
-export const FormatTime = ({seconds, showHour}: FormatTimeProps) => {
+export const FormatTime = ({seconds, showHour, ...pProps}: FormatTimeProps) => {
 
 
   const hr = zeroTime(Math.floor(seconds / 3600));
@@ -15,7 +15,7 @@ export const FormatTime = ({seconds, showHour}: FormatTimeProps) => {
 
   return (
     <div className='FormatTime'>
-      <p>{(!!Number(hr) || showHour) && `${hr}:`}{`${min}:`}{`${sec}`}</p>
+      <p {...pProps}>{(!!Number(hr) || showHour) && `${hr}:`}{`${min}:`}{`${sec}`}</p>
     </div>
   )
 }

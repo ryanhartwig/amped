@@ -1,0 +1,23 @@
+.SetField {
+  border-top: 1px solid rgba(128, 128, 128, 0.232);
+  border-bottom: 1px solid transparent;
+  height: 40px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.SetField p {
+  margin-left: 4px;
+}
+
+.SetField > div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.SetField > div:last-child {
+  justify-content: flex-end;
+}
+
