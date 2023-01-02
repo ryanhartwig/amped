@@ -29,7 +29,7 @@ export const Counter = ({incrementBy, value, max = 999, min = 0, background, set
   const onChangeCount = useCallback((e: any) => {
     if (isNaN(e.target.value)) return;
 
-    let num = e.target.value;
+    let num = Number(e.target.value);
 
     if (e.target.value.length) {
       num = Math.max(Math.min(Number(e.target.value), max), min);
