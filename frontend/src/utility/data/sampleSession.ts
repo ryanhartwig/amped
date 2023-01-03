@@ -10,6 +10,7 @@ export const sampleSessionData: SessionState = {
     {
       duration: 1250,
       exercise_id: 'bicepcurl',
+      exercise_name: 'Bicep Curl',
       exercise_position: 0,
       id: '41c1f0a7-ddc4-3df0-ef03-905f543e4e85',
       routine_data_id: 'Abs',
@@ -48,6 +49,7 @@ export const sampleSessionData: SessionState = {
     {
       duration: 1200,
       exercise_id: 'hammercurl',
+      exercise_name: 'Hammer Curl',
       exercise_position: 1,
       id: 'd11f395e-f65f-b509-de9f-00dba326094a',
       routine_data_id: 'Abs',
