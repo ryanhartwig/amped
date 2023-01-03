@@ -9,11 +9,11 @@ import './Modal.css';
 /* React Icons */
 
 interface ModalProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  children: React.ReactNode;
+  children: React.ReactNode,
   onClose: (...args: any) => void,
   open: boolean,
   triggerRef: React.MutableRefObject<any>,
-  closeText?: string;
+  closeText?: string,
 }
 
 export const Modal = ({children, onClose, open, triggerRef, closeText, ...divProps}: ModalProps) => {

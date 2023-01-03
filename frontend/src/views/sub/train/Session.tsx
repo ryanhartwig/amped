@@ -14,6 +14,7 @@ import { SetFieldType } from '../../../types/SetFieldType';
 import { RoutineExercise } from '../../../types/RoutineType';
 import { AddSet } from './AddSet';
 import { SetField } from '../../../components/stats/SetField';
+import { Modal } from '../../../components/ui/Modal';
 
 export const Session = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ export const Session = () => {
   const [routineTime, setRoutineTime] = useState<number>(0);
 
   const [setTime, setSetTime] = useState<number>(0);
+
 
   const exerciseData = useMemo<ExerciseDataType>(() => ({
     duration: exerciseTime,
@@ -79,7 +81,12 @@ export const Session = () => {
       <div className='Session'>
         <SessionHeader time={routineTime} setTime={setRoutineTime} routineTitle={routine.name} />
         <div className='Session-content'>
-          <InfoBorder background={background} title={exercise.exercise.name} buttonText={'See notes'}>
+          <InfoBorder background={background} 
+            title={exercise.exercise.name} 
+            buttonText={exercise.exercise.notes ? 'See notes' : undefined}
+            modalHeader='Exercise notes'
+            modalContent={<p style={{whiteSpace: 'pre-wrap'}}>{exercise.exercise.notes}</p>}
+          >
             <InfoBorder.HeaderLeft>
               <p className='Session-info'>{position + 1} <span className='Session-of'>of</span> {routine.exercises.length}</p>
             </InfoBorder.HeaderLeft>
@@ -97,7 +104,7 @@ export const Session = () => {
           </InfoBorder>
         </div>
         <SessionFooter onNavigate={onNavigate} routine={routine} currentPosition={position} />
-      </div>}
-    </>
+      </div>
+      }</>
   )
 }
