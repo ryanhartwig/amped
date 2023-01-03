@@ -6,13 +6,15 @@ interface ExerciseStatsProps {
   exerciseData: ExerciseDataType,
 }
 
-export const ExerciseStats = ({exerciseData}: ExerciseStatsProps) => {
+export const ExerciseStats = ({exerciseData: d}: ExerciseStatsProps) => {
 
   const { background_routine: background } = useAppSelector(s => s.theme);
 
   return (
     <div className='ExerciseStats' style={{background}}>
-      
+      <div className='ExerciseStats-position'>
+        {d.exercise_position + 1}
+      </div>
     </div>
   )
 }

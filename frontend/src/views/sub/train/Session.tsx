@@ -38,10 +38,11 @@ export const Session = () => {
     duration: exerciseTime,
     exercise_id: exercise.exercise.id,
     exercise_position: position,
+    exercise_name: exercise.exercise.name,
     id,
     routine_data_id: routine.id,
     sets, 
-  }), [exercise.exercise.id, exerciseTime, id, position, routine.id, sets]);
+  }), [exercise.exercise.id, exercise.exercise.name, exerciseTime, id, position, routine.id, sets]);
 
   const onNavigate = useCallback((dir: 1 | -1) => {
     dispatch(setExerciseData(exerciseData));
