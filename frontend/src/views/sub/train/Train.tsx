@@ -88,7 +88,7 @@ export const Train = () => {
         <PrimaryButton onClick={() => setSelected(highlighted)} style={{marginTop: 8}} text={highlighted ? 'Continue' : 'Select a routine'} disabled={!highlighted} />
       </Modal>
 
-      <Modal onClose={() => setSummary(false)} open={summary} closeText='Close Summary' >
+      <Modal onClose={() => setSummary(false)} open={summary} closeText='Close' >
         <Modal.Header>Summary</Modal.Header>
         <WorkoutSummary sessionData={sessionData} />
       </Modal>
