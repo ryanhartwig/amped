@@ -8,6 +8,7 @@ export interface SessionState {
   selectedRoutineId: string,
   session_duration: number,
   session_id: string,
+  routine_id: string,
   currentPosition: number,
   sessionStartDate: number,
   exerciseData: ExerciseDataType[],
@@ -18,6 +19,7 @@ const initialState: SessionState = {
   selectedRoutineId: '',
   session_duration: 0,
   session_id: '',
+  routine_id: '',
   currentPosition: 0,
   sessionStartDate: 0,
   exerciseData: [],
@@ -41,6 +43,7 @@ export const sessionReducer = createSlice({
       state.session_id = uuid();
       state.currentPosition = 0;
       state.session_duration = 0;
+      state.routine_id = state.selectedRoutineId;
       state.sessionStartDate = (new Date()).getTime();
       state.exerciseData = [];
     },
@@ -72,6 +75,7 @@ export const selectSessionData = (s: RootState) => ({
   session_id: s.session.session_id,
   sessionStartDate: s.session.sessionStartDate,
   exerciseData: s.session.exerciseData,
+  routine_id: s.session.routine_id,
 })
 
 export default sessionReducer.reducer;

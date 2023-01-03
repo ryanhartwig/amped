@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ExerciseDataType } from '../../types/ExerciseDataType';
+import { RoutineDataType } from '../../types/RoutineDataType';
 import { getDuration } from '../../utility/helpers/getDuration';
 import { useAppSelector } from '../../utility/helpers/hooks';
 import { InfoBorder } from '../ui/InfoBorder';
 import { Modal } from '../ui/Modal';
+import { PrimaryButton } from '../ui/PrimaryButton';
 import { SecondaryButton } from '../ui/SecondaryButton';
 import { ExerciseStats } from './ExerciseStats';
 import './WorkoutSummary.css';
@@ -12,6 +14,7 @@ interface SessionData {
   selectedRoutineId: string,
   session_duration: number,
   session_id: string,
+  routine_id: string,
   sessionStartDate: number,
   exerciseData: ExerciseDataType[],
 }
@@ -27,6 +30,15 @@ export const WorkoutSummary = ({sessionData: d}: WorkoutSummaryProps) => {
   const [rating, setRating] = useState<number>();
   const [notesOpen, setNotesOpen] = useState<boolean>(false);
   const [notes, setNotes] = useState<string>('');
+
+  const sessionData: RoutineDataType = useMemo(() => ({
+    duration: d.session_duration,
+    id: d.session_id,
+    routine_id: d.routine_id,
+    start_date: d.sessionStartDate,
+    energy: rating,
+    post_notes: notes,
+  }), [d.routine_id, d.sessionStartDate, d.session_duration, d.session_id, notes, rating]);
 
   useEffect(() => {
     console.log(notesOpen);
@@ -92,6 +104,8 @@ export const WorkoutSummary = ({sessionData: d}: WorkoutSummaryProps) => {
             />
         </div>
       </Modal>
+
+      <PrimaryButton text='Save' style={{flexShrink: 0, flexGrow: 0, marginTop: 15, height: 48}} />
     </div>
   )
 }

@@ -4,6 +4,7 @@ export const sampleSessionData: SessionState = {
   selectedRoutineId: 'Abs',
   session_duration: 2450,
   session_id: '7b8a9b40-333e-1108-0567-048740fb50d6',
+  routine_id: 'Abs',
   currentPosition: 1,
   sessionStartDate: 1672783106540,
   exerciseData: [
