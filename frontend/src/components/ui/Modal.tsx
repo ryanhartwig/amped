@@ -24,7 +24,9 @@ export const Modal = ({zIndex = 15, refs = [], children, onClose, open, closeTex
   const { background } = useAppSelector(s => s.theme);
 
   const contentRef = useRef<HTMLDivElement>(undefined!);
+
   useClickout(onClose, open, contentRef, ...refs);
+  
 
   return (
     <>

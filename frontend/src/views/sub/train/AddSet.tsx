@@ -50,7 +50,6 @@ export const AddSet = ({onAddSet, setTime, setSetTime, exercise_data_id}: AddSet
 
   const reset = useCallback(() => {
     setSetTime(0);
-    setActiveTags(new Set());
     setId(uuid());
   }, [setSetTime]);
 

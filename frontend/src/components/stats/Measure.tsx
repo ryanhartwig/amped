@@ -9,7 +9,7 @@ export const Measure = () => {
 
 
   return (
-    <div>
+    <div className='Measure'>
       
     </div>
   )

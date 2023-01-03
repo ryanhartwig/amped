@@ -3,7 +3,7 @@ import uuid from "react-uuid";
 import { ExerciseDataType } from "../../types/ExerciseDataType";
 import { RootState } from "../store";
 
-interface SessionState {
+export interface SessionState {
   selectedRoutineId: string,
   session_duration: number,
   session_id: string,
