@@ -33,7 +33,8 @@ export const SessionFooter = ({currentPosition, routineTime, onNavigate, routine
     dispatch(setDuration(routineTime))
     dispatch(setShowSummary(true));
     navigate('/home/train/');
-  }, [dispatch, navigate, routineTime]);
+    onNavigate(1);
+  }, [dispatch, navigate, onNavigate, routineTime]);
   
   return (
     <div className='SessionFooter' style={{background}}>

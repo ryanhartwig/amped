@@ -1,10 +1,11 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ExerciseDataType } from '../../types/ExerciseDataType';
 import { getDuration } from '../../utility/helpers/getDuration';
 import { useAppSelector } from '../../utility/helpers/hooks';
 import { InfoBorder } from '../ui/InfoBorder';
 import { Modal } from '../ui/Modal';
 import { SecondaryButton } from '../ui/SecondaryButton';
+import { ExerciseStats } from './ExerciseStats';
 import './WorkoutSummary.css';
 
 interface SessionData {
@@ -17,18 +18,11 @@ interface SessionData {
 
 interface WorkoutSummaryProps {
   sessionData: SessionData,
-  setRef: React.Dispatch<React.SetStateAction<MutableRefObject<HTMLDivElement>>>,
 }
 
-export const WorkoutSummary = ({sessionData: d, setRef}: WorkoutSummaryProps) => {
+export const WorkoutSummary = ({sessionData: d}: WorkoutSummaryProps) => {
 
   const { background_alt, background } = useAppSelector(s => s.theme);
-
-  const buttonRef = useRef<HTMLDivElement>(undefined!);
-
-  useEffect(() => {
-    setRef(buttonRef)
-  }, [setRef]);
 
   const [rating, setRating] = useState<number>();
   const [notesOpen, setNotesOpen] = useState<boolean>(false);
@@ -40,6 +34,7 @@ export const WorkoutSummary = ({sessionData: d, setRef}: WorkoutSummaryProps) =>
 
   return (
     <div className='WorkoutSummary'>
+      {/* Duration / Performance stats */}
       <div className='WorkoutSummary-stat'>
         <h2>{getDuration(d.session_duration)}</h2>
         <p>Total Duration</p>
@@ -48,8 +43,15 @@ export const WorkoutSummary = ({sessionData: d, setRef}: WorkoutSummaryProps) =>
         <h2>+0%</h2>
         <p>Relative Performance (coming soon)</p>
       </div>
+
+      {/* Exercise data & sets dropdowns */}
       <div className='WorkoutSummary-exerciselist' style={{background: background_alt}}>
+        {d.exerciseData.map(data => 
+          <ExerciseStats exerciseData={data} key={data.id} />
+        )}
       </div>
+
+      {/* 1-10 Rating */}
       <div className='WorkoutSummary-user-rating'>
         <InfoBorder background={background} title={'Rate this Workout'} >
           <div className='WorkoutSummary-ratings'>
@@ -64,6 +66,8 @@ export const WorkoutSummary = ({sessionData: d, setRef}: WorkoutSummaryProps) =>
           </div>
         </InfoBorder>
       </div>
+
+      {/* Post-workout Notes */}
       <SecondaryButton 
         text={'View/edit post-workout notes'} 
         onClick={() => setNotesOpen(true)}
@@ -76,6 +80,7 @@ export const WorkoutSummary = ({sessionData: d, setRef}: WorkoutSummaryProps) =>
         }} 
       />
 
+      {/* Notes modal */}
       <Modal open={notesOpen} onClose={() => setNotesOpen(false)}>
         <Modal.Header>Add Notes</Modal.Header>
         <div className='WorkoutSummary-notes'>
