@@ -4,9 +4,89 @@
   align-items: center;
   flex-direction: column;
 
-  min-width: 95vw;
+  width: 95vw;
   max-width: 600px;
 
+  height: 80vh;
+  max-height: 800px;
+
+}
+
+.WorkoutSummary-stat {
+  margin: 5px;
+}
+.WorkoutSummary h2 {
+  font-size: 22px;
+  opacity: 0.7;
+}
+
+.WorkoutSummary .WorkoutSummary-stat p {
+  margin-top: 7px;
+  font-size: 0.75em;
+  opacity: 0.5;
+}
+
+.WorkoutSummary-exerciselist {
+  overflow: hidden;
+
+  height: 100%;
+  width: 90%;
+
+  border-radius: 10px;
+
+  margin: 10px 0;
+}
+
+/* 1-10 User Rating */
+.WorkoutSummary-user-rating {
+  width: 85%;
+  height: 70px;
+
+  margin: 10px 0;
+}
+.WorkoutSummary-ratings {
   height: 100%;
   width: 100%;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.WorkoutSummary-rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  
+  width: 100%;
+  height: 80%;
+
+  border-radius: 10px;
+
+  transition: background-color 0.2s;
+}
+
+
+/* Notes */
+.WorkoutSummary-notes {
+  width: 80vw;
+  height: 50vh;
+  padding: 10px;
+}
+.WorkoutSummary-notes-text {
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  font-weight: 200;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  resize: none;
 }

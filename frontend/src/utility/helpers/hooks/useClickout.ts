@@ -5,19 +5,19 @@ export const useClickout = (
   open: boolean,
   ...refs: React.MutableRefObject<any>[]
 ) => {
+
+
   const clickout = useCallback((e: any) => {
     if (refs && refs.some(r => r?.current?.contains(e.target))) return;
+    window.removeEventListener('click', clickout);
     onClickout();
   }, [onClickout, refs]);
   
   useEffect(() => {
-    if (open) {
-      setTimeout(() => {
-        window.addEventListener('click', clickout);
-      }, 300)
-    } else {
-      window.removeEventListener('click', clickout);
-    }
+    setTimeout(() => {
+      window.addEventListener('click', clickout);
+    }, 300)
+
     return () => window.removeEventListener('click', clickout);
-  }, [clickout, open]);
+  }, [clickout]);
 }

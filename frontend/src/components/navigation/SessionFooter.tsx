@@ -10,15 +10,16 @@ import { useCallback, useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import { useDispatch } from 'react-redux';
-import { setShowSummary } from '../../store/slices/sessionSlice';
+import { setDuration, setShowSummary } from '../../store/slices/sessionSlice';
 
 interface SessionFooterProps {
   currentPosition: number,
   routine: RoutineType,
   onNavigate: (dir: 1 | -1) => void,
+  routineTime: number,
 }
 
-export const SessionFooter = ({currentPosition, onNavigate, routine}: SessionFooterProps) => {
+export const SessionFooter = ({currentPosition, routineTime, onNavigate, routine}: SessionFooterProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -29,9 +30,10 @@ export const SessionFooter = ({currentPosition, onNavigate, routine}: SessionFoo
   const [open, setOpen] = useState<boolean>(false);
 
   const onFinish = useCallback(() => {
-    navigate('/home/train/');
+    dispatch(setDuration(routineTime))
     dispatch(setShowSummary(true));
-  }, [dispatch, navigate]);
+    navigate('/home/train/');
+  }, [dispatch, navigate, routineTime]);
   
   return (
     <div className='SessionFooter' style={{background}}>
@@ -75,7 +77,7 @@ export const SessionFooter = ({currentPosition, onNavigate, routine}: SessionFoo
         <Modal.Header>Finish workout?</Modal.Header>
         <div className='SessionFooter-finish'>
           <p style={{fontSize: '0.8em', opacity: 0.6}}>You will not be able to return</p>
-          <PrimaryButton text='Finish' className='SessionFooter-finish-button' />
+          <PrimaryButton icon={'logo'} text='Finish' className='SessionFooter-finish-button' />
         </div>
       </Modal>
     </div>
