@@ -13,7 +13,6 @@ import { AddExercise } from './views/sub/AddExercise';
 import { AddRoutine } from './views/sub/AddRoutine';
 import { Overview } from './views/sub/train/Overview';
 import { Session } from './views/sub/train/Session';
-import { Summary } from './views/sub/train/Summary';
 
 function App() {
 
@@ -31,7 +30,6 @@ function App() {
             <Route path="routines/add-ex" element={<AddExercise />} />
             <Route path="train" element={<Train />} />
             <Route path="train/overview" element={<Overview />} />
-            <Route path="train/summary" element={<Summary />} />
             <Route path="finished" element={<Completed />} />
             <Route path="profile" element={<Profile />} />
           </Route>
