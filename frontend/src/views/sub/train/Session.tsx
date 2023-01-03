@@ -14,28 +14,23 @@ import { SetFieldType } from '../../../types/SetFieldType';
 import { RoutineExercise } from '../../../types/RoutineType';
 import { AddSet } from './AddSet';
 import { SetField } from '../../../components/stats/SetField';
-import { Modal } from '../../../components/ui/Modal';
 
 export const Session = () => {
   const dispatch = useDispatch();
 
   const setsRef = useRef<HTMLDivElement>(undefined!);
   
+  const { background } = useAppSelector(s => s.theme);
   const routineId = useAppSelector(s => s.session.selectedRoutineId);
-
   const routine = useAppSelector(s => s.workouts.routines).find(r => r.id === routineId)!;
   const position = useAppSelector(s => s.session.currentPosition)!;
   const exercise = useMemo<RoutineExercise>(() => routine.exercises[position], [position, routine.exercises]);
-  
-  const { background } = useAppSelector(s => s.theme);
-
   const prevExerciseData = useAppSelector(s => s.session.exerciseData?.find(e => e.exercise_position === position));
 
   const [id, setId] = useState<string>(uuid());
   const [sets, setSets] = useState<SetFieldType[]>([]);
   const [exerciseTime, setExerciseTime] = useState<number>(0);
   const [routineTime, setRoutineTime] = useState<number>(0);
-
   const [setTime, setSetTime] = useState<number>(0);
 
 
@@ -45,18 +40,20 @@ export const Session = () => {
     exercise_position: position,
     id,
     routine_data_id: routine.id,
-    sets,
+    sets, 
   }), [exercise.exercise.id, exerciseTime, id, position, routine.id, sets]);
 
   const onNavigate = useCallback((dir: 1 | -1) => {
     dispatch(setExerciseData(exerciseData));
+    if (position + dir === routine.exercises.length) return; 
+
     dispatch(setPosition(position + dir));
 
     setExerciseTime(0);
     setId(uuid());
     setSets([]);
     setSetTime(0);
-  }, [dispatch, exerciseData, position]);
+  }, [dispatch, exerciseData, position, routine.exercises.length]);
 
   const onAddSet = useCallback((set: Partial<SetFieldType>) => {
     setSets(p => [...p, set].map((s, i) => ({...s, position: i})) as SetFieldType[]);
@@ -104,7 +101,7 @@ export const Session = () => {
           </InfoBorder>
         </div>
         <SessionFooter onNavigate={onNavigate} routine={routine} currentPosition={position} />
-      </div>
-      }</>
+      </div>}
+      </>
   )
 }

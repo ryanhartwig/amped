@@ -36,3 +36,18 @@
   height: 100%;
   width: 100%;
 }
+
+/* Finish workout */
+.SessionFooter-finish {
+  width: 80vw;
+  max-width: 500px;
+}
+@media only screen and (max-width: 400px) {
+  .SessionFooter-finish {
+    width: 95vw;
+  }
+}
+
+.SessionFooter-finish-button {
+  margin: 28px auto 35px auto; 
+}
