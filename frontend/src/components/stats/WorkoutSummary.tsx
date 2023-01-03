@@ -45,7 +45,7 @@ export const WorkoutSummary = ({sessionData: d}: WorkoutSummaryProps) => {
       </div>
 
       {/* Exercise data & sets dropdowns */}
-      <div className='WorkoutSummary-exerciselist' style={{background: background_alt}}>
+      <div className='WorkoutSummary-exerciselist hidescrollbar' style={{background: background_alt}}>
         {d.exerciseData.map(data => 
           <ExerciseStats exerciseData={data} key={data.id} />
         )}

@@ -1,11 +1,17 @@
 .ExerciseStats {
   display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  height: fit-content;
+  margin: 4px 5px;
+  border-radius: 10px;
+}
+.ExerciseStats-base {
+  display: flex;
   align-items: center;
 
-  height: 55px;
-  margin: 4px 5px;
-
-  border-radius: 10px;
+  margin: 8px 0;
 
   cursor: pointer;
 }
@@ -43,4 +49,10 @@
 }
 .ExerciseStats-info .ExerciseStats-info-top p {
   font-size: 16px;
+}
+
+/* Sets */
+.ExerciseStats-sets {
+  font-size: 0.8em;
+  margin: 8px 5px;
 }

@@ -28,6 +28,7 @@
 
 .WorkoutSummary-exerciselist {
   overflow: hidden;
+  overflow-y: auto;
 
   height: 100%;
   width: 90%;
