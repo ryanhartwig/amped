@@ -14,6 +14,7 @@ import { SetFieldType } from '../../../types/SetFieldType';
 import { RoutineExercise } from '../../../types/RoutineType';
 import { AddSet } from './AddSet';
 import { SetField } from '../../../components/stats/SetField';
+import { RoutineDataType } from '../../../types/RoutineDataType';
 
 export const Session = () => {
   const dispatch = useDispatch();
@@ -26,13 +27,13 @@ export const Session = () => {
   const position = useAppSelector(s => s.session.currentPosition);
   const exercise = useMemo<RoutineExercise>(() => routine.exercises[position], [position, routine.exercises]);
   const prevExerciseData = useAppSelector(s => s.session.exerciseData.find(e => e.exercise_position === position));
+  const session = useAppSelector(s => s.session);
 
   const [id, setId] = useState<string>(uuid());
   const [sets, setSets] = useState<SetFieldType[]>([]);
   const [exerciseTime, setExerciseTime] = useState<number>(0);
   const [routineTime, setRoutineTime] = useState<number>(0);
   const [setTime, setSetTime] = useState<number>(0);
-
 
   const exerciseData = useMemo<ExerciseDataType>(() => ({
     duration: exerciseTime,
@@ -43,6 +44,13 @@ export const Session = () => {
     routine_data_id: routine.id,
     sets, 
   }), [exercise.exercise.id, exercise.exercise.name, exerciseTime, id, position, routine.id, sets]);
+
+  const routineData: RoutineDataType = useMemo(() => ({
+    duration: routineTime,
+    id: session.session_id,
+    routine_id: session.routine_id,
+    start_date: session.sessionStartDate,
+  }), [routineTime, session.routine_id, session.sessionStartDate, session.session_id]);
 
   const onNavigate = useCallback((dir: 1 | -1) => {
     dispatch(setExerciseData(exerciseData));
@@ -101,7 +109,7 @@ export const Session = () => {
             </div>
           </InfoBorder>
         </div>
-        <SessionFooter routineTime={routineTime} onNavigate={onNavigate} routine={routine} currentPosition={position} />
+        <SessionFooter sessionData={routineData} routineTime={routineTime} onNavigate={onNavigate} routine={routine} currentPosition={position} />
       </div>}
       </>
   )
