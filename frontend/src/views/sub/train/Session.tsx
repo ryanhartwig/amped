@@ -100,7 +100,7 @@ export const Session = () => {
             </div>
           </InfoBorder>
         </div>
-        <SessionFooter onNavigate={onNavigate} routine={routine} currentPosition={position} />
+        <SessionFooter routineTime={routineTime} onNavigate={onNavigate} routine={routine} currentPosition={position} />
       </div>}
       </>
   )

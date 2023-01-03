@@ -5,6 +5,7 @@ import { RootState } from "../store";
 
 interface SessionState {
   selectedRoutineId: string,
+  session_duration: number,
   session_id: string,
   currentPosition: number,
   sessionStartDate: number,
@@ -14,6 +15,7 @@ interface SessionState {
 
 const initialState: SessionState = {
   selectedRoutineId: '',
+  session_duration: 0,
   session_id: '',
   currentPosition: 0,
   sessionStartDate: 0,
@@ -31,9 +33,13 @@ export const sessionReducer = createSlice({
     setPosition: (state, action: PayloadAction<number>) => {
       state.currentPosition = action.payload
     },
+    setDuration: (state, action: PayloadAction<number>) => {
+      state.session_duration = action.payload;
+    },
     initializeSession: (state) => {
       state.session_id = uuid();
       state.currentPosition = 0;
+      state.session_duration = 0;
       state.sessionStartDate = (new Date()).getTime();
       state.exerciseData = [];
     },
@@ -57,10 +63,11 @@ export const sessionReducer = createSlice({
   }
 });
 
-export const { setSelectedRoutine, setShowSummary, setPosition, initializeSession, clearSession, setExerciseData } = sessionReducer.actions;
+export const { setSelectedRoutine, setShowSummary, setPosition, initializeSession, clearSession, setExerciseData, setDuration } = sessionReducer.actions;
 
 export const selectSessionData = (s: RootState) => ({
   selectedRoutineId: s.session.selectedRoutineId,
+  session_duration: s.session.session_duration,
   session_id: s.session.session_id,
   sessionStartDate: s.session.sessionStartDate,
   exerciseData: s.session.exerciseData,

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Routine } from '../../../components/Routine';
@@ -18,7 +18,6 @@ export const Train = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  
   const date = new Date();
 
   const { background_alt: background } = useAppSelector(s => s.theme);
@@ -30,10 +29,11 @@ export const Train = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<RoutineType | ExerciseType>();
   const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
+  const [buttonRef, setButtonRef] = useState<MutableRefObject<HTMLDivElement>>(undefined!);
 
   const showSummary = useAppSelector(s => s.session.showSummary);
-  const s = useAppSelector(selectSessionData)
   const [summary, setSummary] = useState<boolean>(true);
+  const sessionData = useAppSelector(selectSessionData);
 
   useEffect(() => {
     if (showSummary) setTimeout(() => { dispatch(setShowSummary(false)) }, 10);
@@ -89,9 +89,9 @@ export const Train = () => {
         <PrimaryButton onClick={() => setSelected(highlighted)} style={{marginTop: 8}} text={highlighted ? 'Continue' : 'Select a routine'} disabled={!highlighted} />
       </Modal>
 
-      <Modal onClose={() => setSummary(false)} open={summary}>
+      <Modal onClose={() => setSummary(false)} open={summary} closeText='Close Summary' refs={[buttonRef]}>
         <Modal.Header>Summary</Modal.Header>
-        {Object.values(s).every(s => s !== undefined) && <WorkoutSummary />}
+        <WorkoutSummary sessionData={sessionData} setRef={setButtonRef} />
       </Modal>
     </div>
   )
