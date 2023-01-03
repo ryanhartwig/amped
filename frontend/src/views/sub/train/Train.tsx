@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Routine } from '../../../components/Routine';
 import { Search } from '../../../components/search/Search';
+import { WorkoutSummary } from '../../../components/stats/WorkoutSummary';
 import { Modal } from '../../../components/ui/Modal';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { setPosition, setSelectedRoutine, setShowSummary } from '../../../store/slices/sessionSlice';
+import { selectSessionData, setPosition, setSelectedRoutine, setShowSummary } from '../../../store/slices/sessionSlice';
 import { ExerciseType } from '../../../types/ExerciseType';
 import { RoutineType } from '../../../types/RoutineType';
 import { ScheduledState } from '../../../types/scheduledState';
@@ -31,7 +32,8 @@ export const Train = () => {
   const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
 
   const showSummary = useAppSelector(s => s.session.showSummary);
-  const [summary, setSummary] = useState<boolean>(showSummary);
+  const s = useAppSelector(selectSessionData)
+  const [summary, setSummary] = useState<boolean>(true);
 
   useEffect(() => {
     if (showSummary) setTimeout(() => { dispatch(setShowSummary(false)) }, 10);
@@ -88,7 +90,8 @@ export const Train = () => {
       </Modal>
 
       <Modal onClose={() => setSummary(false)} open={summary}>
-        <p>summary stuff</p>
+        <Modal.Header>Summary</Modal.Header>
+        {Object.values(s).every(s => s !== undefined) && <WorkoutSummary />}
       </Modal>
     </div>
   )
