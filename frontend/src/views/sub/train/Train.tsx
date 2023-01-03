@@ -5,7 +5,7 @@ import { Routine } from '../../../components/Routine';
 import { Search } from '../../../components/search/Search';
 import { Modal } from '../../../components/ui/Modal';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { setPosition, setSelectedRoutine } from '../../../store/slices/sessionSlice';
+import { setPosition, setSelectedRoutine, setShowSummary } from '../../../store/slices/sessionSlice';
 import { ExerciseType } from '../../../types/ExerciseType';
 import { RoutineType } from '../../../types/RoutineType';
 import { ScheduledState } from '../../../types/scheduledState';
@@ -16,6 +16,7 @@ import './Train.css';
 export const Train = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   
   const date = new Date();
 
@@ -28,6 +29,13 @@ export const Train = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<RoutineType | ExerciseType>();
   const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
+
+  const showSummary = useAppSelector(s => s.session.showSummary);
+  const [summary, setSummary] = useState<boolean>(showSummary);
+
+  useEffect(() => {
+    if (showSummary) setTimeout(() => { dispatch(setShowSummary(false)) }, 10);
+  }, [dispatch, showSummary]);
 
   useEffect(() => {
     setHighlighted(undefined);
@@ -71,12 +79,16 @@ export const Train = () => {
         <PrimaryButton text='Start a custom session' altColor style={{height: '50px'}} icon={'logo'} />
       </div>
 
-      <Modal closeText='Close' triggerRef={triggerRef} onClose={() => setOpen(false)} open={open}>
+      <Modal closeText='Close' onClose={() => setOpen(false)} open={open}>
         <Modal.Header>Select a routine to start</Modal.Header>
         <div className='Train-routines-search'>
           <Search selected={highlighted} setSelected={setHighlighted} tab='Routines' />
         </div>
         <PrimaryButton onClick={() => setSelected(highlighted)} style={{marginTop: 8}} text={highlighted ? 'Continue' : 'Select a routine'} disabled={!highlighted} />
+      </Modal>
+
+      <Modal onClose={() => setSummary(false)} open={summary}>
+        <p>summary stuff</p>
       </Modal>
     </div>
   )

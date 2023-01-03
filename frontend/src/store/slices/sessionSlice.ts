@@ -8,9 +8,11 @@ interface SessionState {
   currentPosition?: number,
   sessionStartDate?: number,
   exerciseData?: ExerciseDataType[],
+  showSummary: boolean,
 }
 
 const initialState: SessionState = {
+  showSummary: false,
 }
 
 export const sessionReducer = createSlice({
@@ -29,8 +31,8 @@ export const sessionReducer = createSlice({
       state.sessionStartDate = (new Date()).getTime();
       state.exerciseData = [];
     },
-    clearSession: (state) => {
-      return {};
+    clearSession: () => {
+      return initialState;
     },
     setExerciseData: (state, action: PayloadAction<ExerciseDataType>) => {
       if (!state.exerciseData) return;
@@ -43,9 +45,12 @@ export const sessionReducer = createSlice({
         state.exerciseData[index] = action.payload;
       }
     },
+    setShowSummary: (state, action: PayloadAction<boolean>) => {
+      state.showSummary = action.payload;
+    },
   }
 });
 
-export const { setSelectedRoutine, setPosition, initializeSession, clearSession, setExerciseData } = sessionReducer.actions;
+export const { setSelectedRoutine, setShowSummary, setPosition, initializeSession, clearSession, setExerciseData } = sessionReducer.actions;
 
 export default sessionReducer.reducer;

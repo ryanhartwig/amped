@@ -6,9 +6,11 @@ import { ReactIconButton } from '../ui/ReactIconButton';
 import { InfoBorder } from '../ui/InfoBorder';
 import { useNavigate } from 'react-router-dom';
 import { RoutineType } from '../../types/RoutineType';
-import { useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { PrimaryButton } from '../ui/PrimaryButton';
+import { useDispatch } from 'react-redux';
+import { setShowSummary } from '../../store/slices/sessionSlice';
 
 interface SessionFooterProps {
   currentPosition: number,
@@ -18,13 +20,18 @@ interface SessionFooterProps {
 
 export const SessionFooter = ({currentPosition, onNavigate, routine}: SessionFooterProps) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { foreground: background } = useAppSelector(s => s.theme);
   const nextExercise = routine.exercises[currentPosition + 1]?.exercise.name || null;
   const prevExercise = routine.exercises[currentPosition - 1]?.exercise.name || null;
 
   const [open, setOpen] = useState<boolean>(false);
-  const triggerRef = useRef<HTMLDivElement>(undefined!);
+
+  const onFinish = useCallback(() => {
+    navigate('/home/train/');
+    dispatch(setShowSummary(true));
+  }, [dispatch, navigate]);
   
   return (
     <div className='SessionFooter' style={{background}}>
@@ -50,7 +57,6 @@ export const SessionFooter = ({currentPosition, onNavigate, routine}: SessionFoo
           <InfoBorder isButton background={background} style={{borderRadius: '7px', borderColor: 'rgba(255,255,255,0.2'}}>
             <InfoBorder.HeaderRight><p className='SessionFooter-nav-text'>Next</p></InfoBorder.HeaderRight>
             <div className='SessionFooter-button-text' 
-              ref={triggerRef}
               onClick={ nextExercise 
                 ? () => onNavigate(1)
                 : () => setOpen(true) }
@@ -63,9 +69,8 @@ export const SessionFooter = ({currentPosition, onNavigate, routine}: SessionFoo
 
       <Modal onClose={() => setOpen(false)} 
         open={open} 
-        triggerRef={triggerRef} 
         closeText='Not yet'
-        onClick={() => navigate('/home/train/summary')}
+        onClick={onFinish}
       >
         <Modal.Header>Finish workout?</Modal.Header>
         <div className='SessionFooter-finish'>
