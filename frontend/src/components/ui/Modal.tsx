@@ -12,19 +12,19 @@ interface ModalProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDi
   children: React.ReactNode,
   onClose: (...args: any) => void,
   open: boolean,
-  triggerRef: React.MutableRefObject<any>,
   closeText?: string,
   zIndex?: number,
+  refs?: React.MutableRefObject<any>[],
 }
 
-export const Modal = ({zIndex = 15, children, onClose, open, triggerRef, closeText, ...divProps}: ModalProps) => {
+export const Modal = ({zIndex = 15, refs = [], children, onClose, open, closeText, ...divProps}: ModalProps) => {
   const header = React.Children.map(children, (child: any) => child?.type?.displayName === 'Header' ? child : null)
   const content = React.Children.map(children, (child: any) => child?.type?.displayName !== 'Header' ? child : null)
 
   const { background } = useAppSelector(s => s.theme);
-  
+
   const contentRef = useRef<HTMLDivElement>(undefined!);
-  useClickout(onClose, contentRef, triggerRef);
+  useClickout(onClose, open, contentRef, ...refs);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import './InfoBorder.css';
 import { Modal } from './Modal';
 
@@ -9,12 +9,11 @@ interface InfoBorderProps extends React.DetailedHTMLProps<React.HTMLAttributes<H
   className?: string,
   background: string,
   isButton?: boolean,
-  setOpenButtonRef?: React.Dispatch<React.SetStateAction<MutableRefObject<HTMLDivElement>>>,
   modalContent?: React.ReactNode,
   modalHeader?: React.ReactNode,
 }
 
-export const InfoBorder = ({children, modalHeader, modalContent, setOpenButtonRef, onClick, isButton, background, title, buttonText, className = '', ...rest}: InfoBorderProps) => {
+export const InfoBorder = ({children, modalHeader, modalContent, onClick, isButton, background, title, buttonText, className = '', ...rest}: InfoBorderProps) => {
   const hl = React.Children.map(children, (child: any) => child.type.displayName === 'HeaderLeft' ? child : null)
   const hr = React.Children.map(children, (child: any) => child.type.displayName === 'HeaderRight' ? child : null)
   const fl = React.Children.map(children, (child: any) => child.type.displayName === 'FooterLeft' ? child : null)
@@ -28,12 +27,6 @@ export const InfoBorder = ({children, modalHeader, modalContent, setOpenButtonRe
   );
 
   const [open, setOpen] = useState<boolean>(false);
-
-  const divRef = useRef<HTMLDivElement>(undefined!);
-
-  useEffect(() => {
-    setOpenButtonRef && setOpenButtonRef(divRef);
-  }, [setOpenButtonRef]);
 
   return (
     <div {...rest} className={'InfoBorder ' + className} style={{...rest.style, cursor: isButton ? 'pointer' : ''}}>
@@ -53,7 +46,7 @@ export const InfoBorder = ({children, modalHeader, modalContent, setOpenButtonRe
       </div>
 
       {/* Button, center bottom */}
-      {buttonText && <div onClick={() => setOpen(true)} className='InfoBorder-button ' ref={divRef}>
+      {buttonText && <div onClick={() => setOpen(true)} className='InfoBorder-button '>
         <div style={{background}}><p>{buttonText}</p></div>
       </div>}
 
@@ -67,7 +60,7 @@ export const InfoBorder = ({children, modalHeader, modalContent, setOpenButtonRe
         </div>
       </div>
 
-      <Modal closeText='Close' triggerRef={divRef} open={open} onClose={() => setOpen(false)} >
+      <Modal closeText='Close' open={open} onClose={() => setOpen(false)} >
           <Modal.Header>{modalHeader}</Modal.Header>
           {modalContent}
       </Modal>

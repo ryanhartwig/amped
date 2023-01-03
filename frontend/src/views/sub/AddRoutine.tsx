@@ -7,7 +7,7 @@ import { VscFlame } from 'react-icons/vsc';
 
 import { Routine } from '../../components/Routine';
 import { useAppSelector } from '../../utility/helpers/hooks';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Input } from '../../components/ui/Input';
 import { Tag } from '../../components/ui/Tag';
 import { RoutineExercise, RoutineType } from '../../types/RoutineType';
@@ -30,7 +30,6 @@ export const AddRoutine = () => {
   const location = useLocation();
 
   const editing: RoutineType | undefined = location.state?.edit;
-  console.log(location)
   
   const { background_alt: background } = useAppSelector(s => s.theme);
 
@@ -52,7 +51,6 @@ export const AddRoutine = () => {
 
   // Select exercises modal state
   const [open, setOpen] = useState<boolean>(false);
-  const triggerRef = useRef<HTMLParagraphElement>(undefined!);
 
   const routine = useMemo<RoutineType>(() => ({
     name: routineName || 'Routine name',
@@ -196,7 +194,7 @@ export const AddRoutine = () => {
             )}
           <div className='AddRoutine-add-exercise'>
             <AiOutlinePlus size={19} style={{opacity: 0.3}}/>
-            <p ref={triggerRef} onClick={onSelectExercises}>Select exercises</p>
+            <p onClick={onSelectExercises}>Select exercises</p>
           </div>
         </div>
 
@@ -214,7 +212,6 @@ export const AddRoutine = () => {
       <Modal closeText='Cancel'
         open={open} 
         onClose={() => setOpen(false)} 
-        triggerRef={triggerRef} 
       >
         <Modal.Header>Select Exercises</Modal.Header>
         <div className='AddRoutine-search'>
