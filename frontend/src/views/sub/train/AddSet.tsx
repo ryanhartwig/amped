@@ -49,8 +49,6 @@ export const AddSet = ({onAddSet, setTime, setSetTime, exercise_data_id}: AddSet
   }, [activeTags, toggleTag]);
 
   const reset = useCallback(() => {
-    setWeight(90);
-    setReps(5);
     setSetTime(0);
     setActiveTags(new Set());
     setId(uuid());
