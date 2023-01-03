@@ -23,9 +23,9 @@ export const Session = () => {
   const { background } = useAppSelector(s => s.theme);
   const routineId = useAppSelector(s => s.session.selectedRoutineId);
   const routine = useAppSelector(s => s.workouts.routines).find(r => r.id === routineId)!;
-  const position = useAppSelector(s => s.session.currentPosition)!;
+  const position = useAppSelector(s => s.session.currentPosition);
   const exercise = useMemo<RoutineExercise>(() => routine.exercises[position], [position, routine.exercises]);
-  const prevExerciseData = useAppSelector(s => s.session.exerciseData?.find(e => e.exercise_position === position));
+  const prevExerciseData = useAppSelector(s => s.session.exerciseData.find(e => e.exercise_position === position));
 
   const [id, setId] = useState<string>(uuid());
   const [sets, setSets] = useState<SetFieldType[]>([]);
