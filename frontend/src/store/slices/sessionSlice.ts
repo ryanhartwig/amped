@@ -4,15 +4,20 @@ import { ExerciseDataType } from "../../types/ExerciseDataType";
 import { RootState } from "../store";
 
 interface SessionState {
-  selectedRoutineId?: string,
-  session_id?: string,
-  currentPosition?: number,
-  sessionStartDate?: number,
-  exerciseData?: ExerciseDataType[],
+  selectedRoutineId: string,
+  session_id: string,
+  currentPosition: number,
+  sessionStartDate: number,
+  exerciseData: ExerciseDataType[],
   showSummary: boolean,
 }
 
 const initialState: SessionState = {
+  selectedRoutineId: '',
+  session_id: '',
+  currentPosition: 0,
+  sessionStartDate: 0,
+  exerciseData: [],
   showSummary: false,
 }
 
