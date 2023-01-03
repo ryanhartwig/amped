@@ -1,4 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addEditRoutineData } from '../../store/slices/workoutDataSlice';
 import { ExerciseDataType } from '../../types/ExerciseDataType';
 import { RoutineDataType } from '../../types/RoutineDataType';
 import { getDuration } from '../../utility/helpers/getDuration';
@@ -21,9 +23,11 @@ interface SessionData {
 
 interface WorkoutSummaryProps {
   sessionData: SessionData,
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export const WorkoutSummary = ({sessionData: d}: WorkoutSummaryProps) => {
+export const WorkoutSummary = ({sessionData: d, setOpen}: WorkoutSummaryProps) => {
+  const dispatch = useDispatch();
 
   const { background_alt, background } = useAppSelector(s => s.theme);
 
@@ -40,9 +44,10 @@ export const WorkoutSummary = ({sessionData: d}: WorkoutSummaryProps) => {
     post_notes: notes,
   }), [d.routine_id, d.sessionStartDate, d.session_duration, d.session_id, notes, rating]);
 
-  useEffect(() => {
-    console.log(notesOpen);
-  }, [notesOpen])
+  const onSave = useCallback(() => {
+    dispatch(addEditRoutineData(sessionData))
+    setOpen(false);
+  }, [dispatch, sessionData, setOpen]);
 
   return (
     <div className='WorkoutSummary'>
@@ -105,7 +110,10 @@ export const WorkoutSummary = ({sessionData: d}: WorkoutSummaryProps) => {
         </div>
       </Modal>
 
-      <PrimaryButton text='Save' style={{flexShrink: 0, flexGrow: 0, marginTop: 15, height: 48}} />
+      <PrimaryButton text='Save' 
+        style={{flexShrink: 0, flexGrow: 0, marginTop: 15, height: 48}} 
+        onClick={onSave}
+      />
     </div>
   )
 }

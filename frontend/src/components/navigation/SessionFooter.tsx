@@ -11,15 +11,18 @@ import { Modal } from '../ui/Modal';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import { useDispatch } from 'react-redux';
 import { setDuration, setShowSummary } from '../../store/slices/sessionSlice';
+import { RoutineDataType } from '../../types/RoutineDataType';
+import { addEditRoutineData } from '../../store/slices/workoutDataSlice';
 
 interface SessionFooterProps {
   currentPosition: number,
   routine: RoutineType,
   onNavigate: (dir: 1 | -1) => void,
   routineTime: number,
+  sessionData: RoutineDataType,
 }
 
-export const SessionFooter = ({currentPosition, routineTime, onNavigate, routine}: SessionFooterProps) => {
+export const SessionFooter = ({currentPosition, sessionData, routineTime, onNavigate, routine}: SessionFooterProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -29,12 +32,15 @@ export const SessionFooter = ({currentPosition, routineTime, onNavigate, routine
 
   const [open, setOpen] = useState<boolean>(false);
 
+  
+
   const onFinish = useCallback(() => {
     dispatch(setDuration(routineTime))
     dispatch(setShowSummary(true));
+    dispatch(addEditRoutineData(sessionData));
     navigate('/home/train/');
     onNavigate(1);
-  }, [dispatch, navigate, onNavigate, routineTime]);
+  }, [dispatch, navigate, onNavigate, routineTime, sessionData]);
   
   return (
     <div className='SessionFooter' style={{background}}>

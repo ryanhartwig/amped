@@ -31,7 +31,7 @@ export const Train = () => {
   const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
 
   const showSummary = useAppSelector(s => s.session.showSummary);
-  const [summary, setSummary] = useState<boolean>(true);
+  const [summary, setSummary] = useState<boolean>(showSummary);
   const sessionData = useAppSelector(selectSessionData);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export const Train = () => {
     <div className='Train'>
       
       {scheduled.length ? <div className='Train-scheduled-info'>
-        <p>Your {days[date.getDay()]} routines</p>
+        <p>Your {days[date.getDay()]} Routines</p>
         <p>{completed.length} / {scheduled.length} complete</p>
       </div> : <p>You have not scheduled any workouts for today.</p>}
       
@@ -90,7 +90,7 @@ export const Train = () => {
 
       <Modal onClose={() => setSummary(false)} open={summary} closeText='Close' >
         <Modal.Header>Summary</Modal.Header>
-        <WorkoutSummary sessionData={sessionData} />
+        <WorkoutSummary sessionData={sessionData} setOpen={setSummary} />
       </Modal>
     </div>
   )
