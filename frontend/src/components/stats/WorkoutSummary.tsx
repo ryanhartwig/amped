@@ -13,10 +13,10 @@ import './WorkoutSummary.css';
 
 interface WorkoutSummaryProps {
   routineData: RoutineDataType,
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  onClose: (...args: any) => any,
 }
 
-export const WorkoutSummary = ({routineData, setOpen}: WorkoutSummaryProps) => {
+export const WorkoutSummary = ({routineData, onClose}: WorkoutSummaryProps) => {
   const dispatch = useDispatch();
 
   const { background_alt, background } = useAppSelector(s => s.theme);
@@ -33,8 +33,8 @@ export const WorkoutSummary = ({routineData, setOpen}: WorkoutSummaryProps) => {
 
   const onSave = useCallback(() => {
     dispatch(addEditRoutineData(editedRoutineData))
-    setOpen(false);
-  }, [dispatch, editedRoutineData, setOpen]);
+    onClose && onClose();
+  }, [dispatch, editedRoutineData, onClose]);
 
   return (
     <div className='WorkoutSummary'>

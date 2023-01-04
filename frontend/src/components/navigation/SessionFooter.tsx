@@ -10,7 +10,7 @@ import { useCallback, useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import { useDispatch } from 'react-redux';
-import { setDuration, setShowSummary } from '../../store/slices/sessionSlice';
+import { setDuration, setSummaryData } from '../../store/slices/sessionSlice';
 import { RoutineDataType } from '../../types/RoutineDataType';
 import { addEditRoutineData } from '../../store/slices/workoutDataSlice';
 
@@ -35,11 +35,10 @@ export const SessionFooter = ({currentPosition, routineData, routineTime, onNavi
   const onFinish = useCallback(() => {
     setOpen(false);
     dispatch(setDuration(routineTime))
-    dispatch(setShowSummary(true));
+    dispatch(setSummaryData(routineData));
     dispatch(addEditRoutineData(routineData));
     navigate('/home/train');
-    onNavigate(1);
-  }, [dispatch, navigate, onNavigate, routineTime, routineData]);
+  }, [dispatch, navigate, routineTime, routineData]);
   
   return (
     <div className='SessionFooter' style={{background}}>
@@ -67,7 +66,10 @@ export const SessionFooter = ({currentPosition, routineData, routineTime, onNavi
             <div className='SessionFooter-button-text' 
               onClick={ nextExercise 
                 ? () => onNavigate(1)
-                : () => setOpen(true) }
+                : () => {
+                  onNavigate(1);
+                  setOpen(true);
+                }}
             >
               <p>{nextExercise || 'Summary'}</p>
             </div>
