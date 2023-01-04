@@ -1,3 +1,7 @@
 .Completed-calendar {
   height: 40vh;
 }
+
+.Completed .Completed-calendar h2 {
+  font-size: 0.82em;
+}

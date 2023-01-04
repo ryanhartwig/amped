@@ -7,7 +7,7 @@ import { WorkoutSummary } from '../../../components/stats/WorkoutSummary';
 import { Modal } from '../../../components/ui/Modal';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { selectSessionData, setPosition, setSelectedRoutine, setShowSummary } from '../../../store/slices/sessionSlice';
-import { completedRoutinesToday } from '../../../store/slices/workoutDataSlice';
+import { selectCompletedToday } from '../../../store/slices/workoutDataSlice';
 import { ExerciseType } from '../../../types/ExerciseType';
 import { RoutineType } from '../../../types/RoutineType';
 import { ScheduledState } from '../../../types/scheduledState';
@@ -26,7 +26,7 @@ export const Train = () => {
 
   const scheduled = useAppSelector(s => s.user.scheduled[days[date.getDay()].toLowerCase() as keyof ScheduledState])
   const scheduledIds = scheduled.map(s => s.id);
-  const allCompletedToday = useAppSelector(completedRoutinesToday);
+  const allCompletedToday = useAppSelector(selectCompletedToday);
   const scheduledCompleted = allCompletedToday.filter(r => scheduledIds.includes(r.routine_id));
 
   const [open, setOpen] = useState<boolean>(false);
