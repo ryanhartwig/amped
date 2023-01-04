@@ -19,10 +19,10 @@ interface SessionFooterProps {
   routine: RoutineType,
   onNavigate: (dir: 1 | -1) => void,
   routineTime: number,
-  sessionData: RoutineDataType,
+  routineData: RoutineDataType,
 }
 
-export const SessionFooter = ({currentPosition, sessionData, routineTime, onNavigate, routine}: SessionFooterProps) => {
+export const SessionFooter = ({currentPosition, routineData, routineTime, onNavigate, routine}: SessionFooterProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -36,10 +36,10 @@ export const SessionFooter = ({currentPosition, sessionData, routineTime, onNavi
     setOpen(false);
     dispatch(setDuration(routineTime))
     dispatch(setShowSummary(true));
-    dispatch(addEditRoutineData(sessionData));
+    dispatch(addEditRoutineData(routineData));
     navigate('/home/train');
     onNavigate(1);
-  }, [dispatch, navigate, onNavigate, routineTime, sessionData]);
+  }, [dispatch, navigate, onNavigate, routineTime, routineData]);
   
   return (
     <div className='SessionFooter' style={{background}}>

@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addEditRoutineData } from '../../store/slices/workoutDataSlice';
-import { ExerciseDataType } from '../../types/ExerciseDataType';
 import { RoutineDataType } from '../../types/RoutineDataType';
 import { getDuration } from '../../utility/helpers/getDuration';
 import { useAppSelector } from '../../utility/helpers/hooks';
@@ -12,47 +11,36 @@ import { SecondaryButton } from '../ui/SecondaryButton';
 import { ExerciseStats } from './ExerciseStats';
 import './WorkoutSummary.css';
 
-interface SessionData {
-  session_duration: number,
-  session_id: string,
-  routine_id: string,
-  sessionStartDate: number,
-  exerciseData: ExerciseDataType[],
-}
-
 interface WorkoutSummaryProps {
-  sessionData: SessionData,
+  routineData: RoutineDataType,
   setOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export const WorkoutSummary = ({sessionData: d, setOpen}: WorkoutSummaryProps) => {
+export const WorkoutSummary = ({routineData, setOpen}: WorkoutSummaryProps) => {
   const dispatch = useDispatch();
 
   const { background_alt, background } = useAppSelector(s => s.theme);
 
-  const [rating, setRating] = useState<number>();
+  const [energy, setEnergy] = useState<number | undefined>(routineData.energy);
+  const [notes, setNotes] = useState<string>(routineData.notes || '');
   const [notesOpen, setNotesOpen] = useState<boolean>(false);
-  const [notes, setNotes] = useState<string>('');
 
-  const sessionData: RoutineDataType = useMemo(() => ({
-    duration: d.session_duration,
-    id: d.session_id,
-    routine_id: d.routine_id,
-    start_date: d.sessionStartDate,
-    energy: rating,
-    post_notes: notes,
-  }), [d.routine_id, d.sessionStartDate, d.session_duration, d.session_id, notes, rating]);
+  const editedRoutineData: RoutineDataType = useMemo(() => ({
+    ...routineData,
+    notes,
+    energy,
+  }), [energy, notes, routineData]);
 
   const onSave = useCallback(() => {
-    dispatch(addEditRoutineData(sessionData))
+    dispatch(addEditRoutineData(editedRoutineData))
     setOpen(false);
-  }, [dispatch, sessionData, setOpen]);
+  }, [dispatch, editedRoutineData, setOpen]);
 
   return (
     <div className='WorkoutSummary'>
       {/* Duration / Performance stats */}
       <div className='WorkoutSummary-stat'>
-        <h2>{getDuration(d.session_duration)}</h2>
+        <h2>{getDuration(routineData.duration)}</h2>
         <p>Total Duration</p>
       </div>
       <div className='WorkoutSummary-stat' style={{opacity: 0.4, cursor: 'not-allowed'}}>
@@ -62,7 +50,7 @@ export const WorkoutSummary = ({sessionData: d, setOpen}: WorkoutSummaryProps) =
 
       {/* Exercise data & sets dropdowns */}
       <div className='WorkoutSummary-exerciselist hidescrollbar' style={{background: background_alt}}>
-        {d.exerciseData.map(data => 
+        {routineData.exerciseData.map(data => 
           <ExerciseStats exerciseData={data} key={data.id} />
         )}
       </div>
@@ -74,8 +62,8 @@ export const WorkoutSummary = ({sessionData: d, setOpen}: WorkoutSummaryProps) =
             {Array(10).fill(true).map((x, i) => 
               <div className='WorkoutSummary-rating' 
                 key={i}
-                style={{background: rating === i + 1 ? background_alt : ''}}
-                onClick={() => setRating(i + 1)}
+                style={{background: energy === i + 1 ? background_alt : ''}}
+                onClick={() => setEnergy(i + 1)}
               >
                 <p>{i + 1}</p>
               </div>)}
