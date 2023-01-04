@@ -13,7 +13,6 @@ import { ExerciseStats } from './ExerciseStats';
 import './WorkoutSummary.css';
 
 interface SessionData {
-  selectedRoutineId: string,
   session_duration: number,
   session_id: string,
   routine_id: string,
