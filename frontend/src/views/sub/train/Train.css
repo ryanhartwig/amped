@@ -14,6 +14,10 @@
   margin: 3px;
 }
 
+.Train {
+  padding-top: 10px;
+}
+
 /* Scheduled workouts */
 .Train-scheduled {
   max-height: calc(100% - 12px);

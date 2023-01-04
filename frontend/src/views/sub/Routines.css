@@ -14,7 +14,7 @@
   width: 100%;
   height: fit-content;
 
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.323);
 }
 .Routines-tabs-wrapper h2 { 
   font-weight: 100;
@@ -27,8 +27,9 @@
   justify-content: center;
   
   cursor: pointer;
+
+  padding: 12px 0;
   
-  height: 25px;
   width: 100%;
 }
 
