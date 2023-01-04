@@ -26,9 +26,10 @@ interface RoutineProps {
    * Visual representation (only) of "completed" checkmark
    */
   completed?: boolean,
+  start_date?: number,
 }
 
-export const Routine = ({routine, setUserTags, activeTags, query, completed, selected, setSelected: setEdit}: RoutineProps) => {
+export const Routine = ({routine, setUserTags, start_date, activeTags, query, completed, selected, setSelected: setEdit}: RoutineProps) => {
   const intensity = Array(routine.intensity).fill(0);
   const complete = useAppSelector(s => s.workoutData.routineData);
   const latest = complete.filter(r => r.routine_id === routine.id).sort((a, b) => b.start_date - a.start_date)[0];
@@ -92,7 +93,7 @@ export const Routine = ({routine, setUserTags, activeTags, query, completed, sel
 
           {latest && 
           <div className='Routine-latest-data'>
-            <p>{getDateTime(latest.start_date)} •</p>
+            <p>{getDateTime(start_date || latest.start_date)} •</p>
             <p style={{marginLeft: '5px'}}>{getDuration(latest.duration)}</p>
           </div>}
         </div>

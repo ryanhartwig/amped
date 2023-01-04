@@ -44,7 +44,7 @@ export const workoutDataReducer = createSlice({
 
 export const { addEditRoutineData, addEditExerciseData } = workoutDataReducer.actions;
 
-export const completedRoutinesToday = (s: RootState) => {
+export const selectCompletedToday = (s: RootState) => {
   const now = new Date();
 
   now.setHours(0);
