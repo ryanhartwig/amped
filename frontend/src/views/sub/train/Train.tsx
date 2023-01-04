@@ -67,7 +67,7 @@ export const Train = () => {
       
       {scheduled.length ? <div className='Train-scheduled-info'>
         <p>Your {days[date.getDay()]} Routines</p>
-        <p>{scheduledCompleted.length} / {scheduled.length} complete</p>
+        <p>{new Set(scheduledCompleted.map(s => s.routine_id)).size} / {scheduled.length} complete</p>
       </div> : <p>You have not scheduled any workouts for today.</p>}
       
       {!!scheduled.length && 
