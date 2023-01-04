@@ -22,7 +22,9 @@ export const Dash = () => {
   
   return (
     <div className='Dash'>
-      <Calendar />
+      <div style={{height: '35vh'}}>
+        <Calendar />
+      </div>
 
       <div className='Dash-weekly'>
         <p>This Week</p>

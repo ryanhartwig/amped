@@ -1,16 +1,15 @@
+import { Calendar } from '../../components/calendar/Calendar';
 import './Completed.css';
-
-// interface CompletedProps {
-
-// }
 
 export const Completed = () => {
 
 
 
   return (
-    <div>
-      
+    <div className='Completed'>
+      <div className='Completed-calendar'>
+        <Calendar showPeriod />
+      </div>
     </div>
   )
 }
