@@ -1,26 +1,29 @@
-import React, { useCallback, useEffect } from "react"
+import React, { useCallback, useEffect, useRef } from "react"
 
 export const useClickout = (
   onClickout: (...args: any) => void,
   open: boolean,
   ...refs: React.MutableRefObject<any>[]
 ) => {
+  const listenerRef = useRef<boolean>(false);
 
-  const clickout = useCallback((e: any) => {
-    if (refs && refs.some(r => r?.current?.contains(e.target))) return;
-    window.removeEventListener('click', clickout);
+  const onClick = useCallback((e:any) => {
+    if ([...refs].some(r => r.current.contains(e?.target))) return;
+
     onClickout();
+    listenerRef.current = false;
+    window.removeEventListener('click', onClick);
   }, [onClickout, refs]);
-  
+
   useEffect(() => {
-    window.removeEventListener('click', clickout);
-    window.removeEventListener('click', clickout);
-    window.removeEventListener('click', clickout);
-
+    if (!open) return;
+    if (listenerRef.current) return;
+    
     setTimeout(() => {
-      window.addEventListener('click', clickout);
-    }, 300)
+      window.addEventListener('click', onClick);
+      listenerRef.current = true;
+    }, 100);
+  }, [onClick, open]);
 
-    return () => window.removeEventListener('click', clickout);
-  }, [clickout]);
+  return onClick;
 }
