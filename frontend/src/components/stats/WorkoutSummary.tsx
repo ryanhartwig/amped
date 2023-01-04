@@ -98,7 +98,7 @@ export const WorkoutSummary = ({routineData, onClose}: WorkoutSummaryProps) => {
       </Modal>
 
       <PrimaryButton text='Save' 
-        style={{flexShrink: 0, flexGrow: 0, marginTop: 15, height: 48}} 
+        style={{flexShrink: 0, flexGrow: 0, marginTop: 15, marginBottom: 15, height: 48}} 
         onClick={onSave}
       />
     </div>

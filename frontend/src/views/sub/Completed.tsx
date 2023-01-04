@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Calendar } from '../../components/calendar/Calendar';
 import { Routine } from '../../components/Routine';
 import { WorkoutSummary } from '../../components/stats/WorkoutSummary';
@@ -14,20 +14,13 @@ export const Completed = () => {
   const today = useAppSelector(selectCompletedToday);
   const allRoutines = useAppSelector(s => s.workouts.routines);
   
-  const [performed, setPerfomed] = useState<RoutineDataType[]>(today);
-  const [summaryData, setSummaryData] = useState<RoutineDataType | false>(false);
+  const [performed] = useState<RoutineDataType[]>(today);
+  const [summaryData, setSummaryData] = useState<RoutineDataType>();
 
   const routines = Array.from(new Set(performed.map(p => p.routine_id)))
     .map(id => allRoutines.find(r => r.id === id))
     .filter(r => r !== undefined) as RoutineType[]
   ;
-
-
-
-    
-  const onSelect = useCallback(() => {
-    
-  }, []);
 
   return (
     <div className='Completed'>
@@ -37,16 +30,17 @@ export const Completed = () => {
       <div className='Completed-routines'>
         {performed.map(p => 
           <Routine routine={routines.find(r => r.id === p.routine_id)!} 
+            key={p.id}
             completed 
             start_date={p.start_date}
             onSelect={() => setSummaryData(p)}
           />)}
       </div>
 
-      {/* <Modal onClose={() => setSummaryData(undefined)} open={!!summaryData} closeText='Close'>
+      <Modal onClose={() => setSummaryData(undefined)} open={!!summaryData} closeText='Close'>
         <Modal.Header>Workout Summary</Modal.Header>
-        {summaryData && <WorkoutSummary sessionData={summaryData} setOpen={setSummaryData as any} />}
-      </Modal> */}
+        {summaryData && <WorkoutSummary routineData={summaryData} onClose={() => setSummaryData(undefined)} />}
+      </Modal>
     </div>
   )
 }
