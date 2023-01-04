@@ -30,7 +30,8 @@ interface RoutineProps {
 
 export const Routine = ({routine, setUserTags, activeTags, query, completed, selected, setSelected: setEdit}: RoutineProps) => {
   const intensity = Array(routine.intensity).fill(0);
-  const latest = useAppSelector(s => s.workoutData.routineData).find(r => r.routine_id === routine.id);
+  const complete = useAppSelector(s => s.workoutData.routineData);
+  const latest = complete.filter(r => r.routine_id === routine.id).sort((a, b) => b.start_date - a.start_date)[0];
   
   const { background_routine: background } = useAppSelector(s => s.theme);
 
