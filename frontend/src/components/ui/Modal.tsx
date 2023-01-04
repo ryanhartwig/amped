@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useRef } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useAppSelector } from '../../utility/helpers/hooks';
@@ -23,15 +23,37 @@ export const Modal = ({zIndex = 15, refs = [], children, onClose, open, closeTex
 
   const { background } = useAppSelector(s => s.theme);
 
+  const modalRef = useRef<HTMLDivElement>(undefined!)
   const contentRef = useRef<HTMLDivElement>(undefined!);
 
-  useClickout(onClose, open, contentRef, ...refs);
+  // useClickout(onClose, open, contentRef, ...refs);
+  
+  const onClick = useCallback((e:any) => {
+    if ([contentRef, ...refs].some(r => r.current.contains(e.target))) return;
+
+    onClose();
+  }, [onClose, refs]);
+  
+  const cRef = useRef<any>(content);
+  useEffect(() => {
+    if (!open) return;
+    if (cRef.current !== content) {
+      cRef.current = content;
+      return;
+    }
+
+    console.log('adding');
+    modalRef.current.addEventListener('click', onClick);
+
+    const ref = modalRef.current;
+    return () => ref.removeEventListener('click', onClick);
+  }, [content, onClick, open]);
   
 
   return (
     <>
       {open && 
-      <div className='Modal noselect' style={{zIndex}}>
+      <div className='Modal noselect' style={{zIndex}} ref={modalRef}>
         <div className={'Modal-box '} ref={contentRef} style={{background}}>
           {!!header?.length && 
           <div className='Modal-header'>
