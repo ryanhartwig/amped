@@ -32,7 +32,7 @@ export const Exercise = ({exercise, query, activeTags, onSelect = undefined, sel
 
   const onClick = useCallback(() => {
     onSelect && onSelect();
-    setSelected && setSelected(exercise);
+    setSelected && setSelected(p => p?.id === exercise.id ? undefined : exercise);
   }, [exercise, onSelect, setSelected]);
 
   return (
