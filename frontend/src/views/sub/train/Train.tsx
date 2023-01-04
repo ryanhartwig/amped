@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Routine } from '../../../components/Routine';
@@ -31,7 +31,7 @@ export const Train = () => {
   const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
 
   const showSummary = useAppSelector(s => s.session.showSummary);
-  const [summary, setSummary] = useState<boolean>(true);
+  const [summary, setSummary] = useState<boolean>(showSummary);
   const sessionData = useAppSelector(selectSessionData);
 
   useEffect(() => {
@@ -48,6 +48,11 @@ export const Train = () => {
     dispatch(setPosition(0));
     navigate('/home/train/overview')
   }, [dispatch, navigate, selected])
+
+  const onContinue = useCallback(() => {
+    setOpen(false);
+    setSelected(highlighted)
+  }, [highlighted]);
 
   return (
     <div className='Train'>
@@ -85,7 +90,7 @@ export const Train = () => {
         <div className='Train-routines-search'>
           <Search selected={highlighted} setSelected={setHighlighted} tab='Routines' />
         </div>
-        <PrimaryButton onClick={() => setSelected(highlighted)} style={{marginTop: 8}} text={highlighted ? 'Continue' : 'Select a routine'} disabled={!highlighted} />
+        <PrimaryButton onClick={onContinue} style={{marginTop: 8}} text={highlighted ? 'Continue' : 'Select a routine'} disabled={!highlighted} />
       </Modal>
 
       <Modal onClose={() => setSummary(false)} open={summary} closeText='Close' >
