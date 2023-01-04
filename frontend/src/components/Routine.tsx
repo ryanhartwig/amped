@@ -22,6 +22,7 @@ interface RoutineProps {
   setUserTags?: React.Dispatch<React.SetStateAction<Set<string>>>,
   setSelected?: React.Dispatch<React.SetStateAction<RoutineType | ExerciseType | undefined>>,
   selected?: RoutineType | ExerciseType, 
+  onSelect?: (...args: any) => any,
   /**
    * Visual representation (only) of "completed" checkmark
    */
@@ -29,7 +30,7 @@ interface RoutineProps {
   start_date?: number,
 }
 
-export const Routine = ({routine, setUserTags, start_date, activeTags, query, completed, selected, setSelected: setEdit}: RoutineProps) => {
+export const Routine = ({routine, setUserTags, onSelect, start_date, activeTags, query, completed, selected, setSelected: setEdit}: RoutineProps) => {
   const intensity = Array(routine.intensity).fill(0);
   const complete = useAppSelector(s => s.workoutData.routineData);
   const latest = complete.filter(r => r.routine_id === routine.id).sort((a, b) => b.start_date - a.start_date)[0];
@@ -42,7 +43,8 @@ export const Routine = ({routine, setUserTags, start_date, activeTags, query, co
 
   const onClick = useCallback(() => {
     setEdit && setEdit(p => p?.id === routine.id ? undefined : routine);
-  }, [routine, setEdit]);
+    onSelect && onSelect();
+  }, [onSelect, routine, setEdit]);
 
   useEffect(() => {
     if (!setUserTags) return;
