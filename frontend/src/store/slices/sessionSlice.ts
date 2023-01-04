@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import uuid from "react-uuid";
 import { ExerciseDataType } from "../../types/ExerciseDataType";
+import { RoutineDataType } from "../../types/RoutineDataType";
 import { sampleSessionData } from "../../utility/data/sampleSession";
 import { RootState } from "../store";
 
@@ -12,7 +13,7 @@ export interface SessionState {
   currentPosition: number,
   sessionStartDate: number,
   exerciseData: ExerciseDataType[],
-  showSummary: boolean,
+  summaryData?: RoutineDataType,
 }
 
 const initialState: SessionState = {
@@ -23,7 +24,6 @@ const initialState: SessionState = {
   currentPosition: 0,
   sessionStartDate: 0,
   exerciseData: [],
-  showSummary: false,
 }
 
 export const sessionReducer = createSlice({
@@ -61,13 +61,13 @@ export const sessionReducer = createSlice({
         state.exerciseData[index] = action.payload;
       }
     },
-    setShowSummary: (state, action: PayloadAction<boolean>) => {
-      state.showSummary = action.payload;
+    setSummaryData: (state, action: PayloadAction<RoutineDataType | undefined>) => {
+      state.summaryData = action.payload;
     },
   }
 });
 
-export const { setSelectedRoutine, setShowSummary, setPosition, initializeSession, clearSession, setExerciseData, setDuration } = sessionReducer.actions;
+export const { setSelectedRoutine, setSummaryData, setPosition, initializeSession, clearSession, setExerciseData, setDuration } = sessionReducer.actions;
 
 export const selectSessionData = (s: RootState) => ({
   selectedRoutineId: s.session.selectedRoutineId,

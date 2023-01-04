@@ -124,5 +124,4 @@ export const sampleSessionData: SessionState = {
       ]
     }
   ],
-  showSummary: false
 }

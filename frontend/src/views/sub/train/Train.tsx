@@ -6,7 +6,7 @@ import { Search } from '../../../components/search/Search';
 import { WorkoutSummary } from '../../../components/stats/WorkoutSummary';
 import { Modal } from '../../../components/ui/Modal';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { selectSessionData, setPosition, setSelectedRoutine, setShowSummary } from '../../../store/slices/sessionSlice';
+import { setPosition, setSelectedRoutine, setSummaryData } from '../../../store/slices/sessionSlice';
 import { selectCompletedToday } from '../../../store/slices/workoutDataSlice';
 import { ExerciseType } from '../../../types/ExerciseType';
 import { RoutineType } from '../../../types/RoutineType';
@@ -29,17 +29,12 @@ export const Train = () => {
   const allCompletedToday = useAppSelector(selectCompletedToday);
   const scheduledCompleted = allCompletedToday.filter(r => scheduledIds.includes(r.routine_id));
 
+
   const [open, setOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<RoutineType | ExerciseType>();
   const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
 
-  const showSummary = useAppSelector(s => s.session.showSummary);
-  const [summary, setSummary] = useState<boolean>(showSummary);
-  const sessionData = useAppSelector(selectSessionData);
-
-  useEffect(() => {
-    if (showSummary) setTimeout(() => { dispatch(setShowSummary(false)) }, 10);
-  }, [dispatch, showSummary]);
+  const summaryData = useAppSelector(s => s.session.summaryData);
 
   useEffect(() => {
     setHighlighted(undefined);
@@ -96,9 +91,9 @@ export const Train = () => {
         <PrimaryButton onClick={onContinue} style={{marginTop: 8}} text={highlighted ? 'Continue' : 'Select a routine'} disabled={!highlighted} />
       </Modal>
 
-      <Modal onClose={() => setSummary(false)} open={summary} closeText='Close' >
+      <Modal onClose={() => dispatch(setSummaryData(undefined))} open={!!summaryData} closeText='Close' >
         <Modal.Header>Summary</Modal.Header>
-        <WorkoutSummary sessionData={sessionData} setOpen={setSummary} />
+        {summaryData && <WorkoutSummary routineData={summaryData} onClose={() => dispatch(setSummaryData(undefined))} />}
       </Modal>
     </div>
   )
