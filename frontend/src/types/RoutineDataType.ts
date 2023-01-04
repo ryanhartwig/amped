@@ -1,5 +1,7 @@
 /* Performed routines */
 
+import { ExerciseDataType } from "./ExerciseDataType";
+
 export interface RoutineDataType {
   /**
    * Id of the routine that this performance belongs to
@@ -17,10 +19,11 @@ export interface RoutineDataType {
    * UTC date number
    */
   start_date: number,
+  exerciseData: ExerciseDataType[],
   /**
    * User entered notes for this specific session
    */
-  post_notes?: string,
+  notes?: string,
   /**
    * User entered energy for this specific session
    */

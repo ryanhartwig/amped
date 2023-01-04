@@ -50,7 +50,8 @@ export const Session = () => {
     id: session.session_id,
     routine_id: session.routine_id,
     start_date: session.sessionStartDate,
-  }), [routineTime, session.routine_id, session.sessionStartDate, session.session_id]);
+    exerciseData: session.exerciseData,
+  }), [routineTime, session.exerciseData, session.routine_id, session.sessionStartDate, session.session_id]);
 
   const onNavigate = useCallback((dir: 1 | -1) => {
     dispatch(setExerciseData(exerciseData));
@@ -109,7 +110,7 @@ export const Session = () => {
             </div>
           </InfoBorder>
         </div>
-        <SessionFooter sessionData={routineData} routineTime={routineTime} onNavigate={onNavigate} routine={routine} currentPosition={position} />
+        <SessionFooter routineData={routineData} routineTime={routineTime} onNavigate={onNavigate} routine={routine} currentPosition={position} />
       </div>}
       </>
   )
