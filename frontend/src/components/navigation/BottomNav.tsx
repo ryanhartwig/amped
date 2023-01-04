@@ -23,7 +23,7 @@ export const BottomNav = () => {
   const navigate = useNavigate();
 
   const { foreground: background } = useAppSelector(s => s.theme);
-  const { route } = useView();
+  const route = useView();
   
   
   const onClick = useCallback((route: Location) => {
@@ -37,7 +37,7 @@ export const BottomNav = () => {
         <ReactIconButton 
           text="Dash" 
           buttonSize='55px' 
-          active={route === 'dash'}
+          active={route.includes('dash')}
           onClick={() => onClick('dash')}
         >
           <BiNotepad size={25}/>
@@ -47,7 +47,7 @@ export const BottomNav = () => {
         <ReactIconButton 
           text="Routines" 
           buttonSize='55px' 
-          active={route === 'routines'}
+          active={route.includes('routines')}
           onClick={() => onClick('routines')}
         >
           <BiDumbbell size={30}/>
@@ -57,7 +57,7 @@ export const BottomNav = () => {
         <ReactIconButton 
           text="Train" 
           buttonSize='55px' fontSize='13px' 
-          active={route === 'train'}
+          active={route.includes('train')}
           onClick={() => onClick('train')}
         >
           <IoIosFlash size={30}/>
@@ -67,20 +67,20 @@ export const BottomNav = () => {
         <ReactIconButton 
           text="Finished" 
           buttonSize='55px' 
-          active={route === 'finished'}
+          active={route.includes('finished')}
           onClick={() => onClick('finished')}
         >
-          <BsCalendarCheck size={21}/>
+          <BsCalendarCheck size={20}/>
         </ReactIconButton>
 
         {/* Profile View */}
         <ReactIconButton 
           text="Profile" 
           buttonSize='55px' 
-          active={route === 'profile'}
+          active={route.includes('profile')}
           onClick={() => onClick('profile')}
         >
-          <RxAvatar size={26}/>
+          <RxAvatar size={24}/>
         </ReactIconButton>
       </div>
     </div>

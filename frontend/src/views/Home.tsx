@@ -7,7 +7,7 @@ import { useView } from '../utility/helpers/hooks/useView';
 
 /* React icons */
 import { AiOutlineLeft } from 'react-icons/ai';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 
 export const Home = () => {
@@ -15,8 +15,12 @@ export const Home = () => {
   const location = useLocation();
   const cancel = ['add-rt', 'add-ex'].some(str => location.pathname.includes(str));
 
-  const { route } = useView();
+  const route = useView();
 
+  const back = useMemo(() => {
+    return !['dash', 'routines', 'train', 'finished', 'profile'].includes(route[route.length - 1]);
+  }, [route]);
+  
   const onGoBack = useCallback(() => {
     if (cancel) {
       navigate('/home/routines', { state: {}});
@@ -34,15 +38,13 @@ export const Home = () => {
       {/* All sub-routes / views */}
       <div className='Outlet'>
 
-        {route !== 'dash' && 
-        <div className='Home-goback noselect' onClick={onGoBack}>
+        {back && <div className='Home-goback noselect' onClick={onGoBack}>
           <AiOutlineLeft size={11} />
           <p>{cancel ? 'Cancel' : 'Back'}</p>
         </div>}
 
-        <div className='Home-app' style={{height: route !== 'dash' ? 'calc(100% - 34px)' : ''}}>
+        <div className='Home-app' style={{height: back ? 'calc(100% - 34px)' : ''}}>
           <Outlet />
-
         </div>
       </div>
       
