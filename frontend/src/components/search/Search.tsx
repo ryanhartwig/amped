@@ -83,7 +83,7 @@ export const Search = ({tab, onSaveSelect, setSelected, selected}: SearchProps) 
 
       {/* Tag filters */}
       <div className='Search-tags noselect hidescrollbar' style={{display}}>
-        {Array.from(tab === 'Routines' ? userTags : appTags).map(t => <Tag key={t} onClick={() => onToggleTag(t)} text={t} toggle={activeTags.has(t) ? 'remove' : 'add'} color={tags[t as keyof Tags]} />)}
+        {Array.from(tab === 'Routines' ? userTags : appTags).map(t => <Tag key={t} onClick={() => onToggleTag(t)} text={t} toggle={activeTags.has(t) ? 'remove' : 'add'} color={tags[t as keyof Tags]} style={{padding: '5px 7px'}} />)}
       </div>
 
       {/* Results */}

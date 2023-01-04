@@ -47,10 +47,13 @@
 .Search-tags {
   display: flex;
   justify-content: flex-start;
-  align-content: center;
   overflow-x: scroll;
 
-  min-height: 34px;
+
+  margin: 6px 0;
+
+  flex-shrink: 0;
+  flex-grow: 0;
 }
 
 .Search-save-selection {
