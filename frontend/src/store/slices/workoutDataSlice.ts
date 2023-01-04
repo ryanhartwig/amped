@@ -3,6 +3,7 @@ import { ExerciseDataType } from "../../types/ExerciseDataType";
 import { RoutineDataType } from "../../types/RoutineDataType";
 import { sampleExerciseData } from "../../utility/data/sampleExerciseData";
 import { sampleRoutineData } from "../../utility/data/sampleRoutineData";
+import { RootState } from "../store";
 
 
 interface WorkoutDataState { 
@@ -42,5 +43,16 @@ export const workoutDataReducer = createSlice({
 });
 
 export const { addEditRoutineData, addEditExerciseData } = workoutDataReducer.actions;
+
+export const completedRoutinesToday = (s: RootState) => {
+  const now = new Date();
+
+  now.setHours(0);
+  now.setMinutes(0);
+  now.setSeconds(0);
+  now.setMilliseconds(0);
+
+  return s.workoutData.routineData.filter(d => d.start_date > now.getTime());
+}
 
 export default workoutDataReducer.reducer;
