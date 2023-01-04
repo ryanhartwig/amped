@@ -31,7 +31,7 @@ export const Train = () => {
   const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
 
   const showSummary = useAppSelector(s => s.session.showSummary);
-  const [summary, setSummary] = useState<boolean>(showSummary);
+  const [summary, setSummary] = useState<boolean>(true);
   const sessionData = useAppSelector(selectSessionData);
 
   useEffect(() => {
