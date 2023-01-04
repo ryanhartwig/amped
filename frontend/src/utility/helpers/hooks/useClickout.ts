@@ -8,14 +8,14 @@ export const useClickout = (
   const listenerRef = useRef<boolean>(false);
 
   const onClick = useCallback((e:any) => {
-    if ([...refs].some(r => r.current.contains(e?.target))) return;
+    if ([...refs].some(r => r?.current?.contains(e?.target))) return;
 
     onClickout();
     listenerRef.current = false;
     window.removeEventListener('click', onClick);
   }, [onClickout, refs]);
 
-  useEffect(() => {
+  useEffect(() => {  
     if (!open) return;
     if (listenerRef.current) return;
     

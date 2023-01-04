@@ -32,9 +32,8 @@ export const SessionFooter = ({currentPosition, sessionData, routineTime, onNavi
 
   const [open, setOpen] = useState<boolean>(false);
 
-  
-
   const onFinish = useCallback(() => {
+    setOpen(false);
     dispatch(setDuration(routineTime))
     dispatch(setShowSummary(true));
     dispatch(addEditRoutineData(sessionData));
