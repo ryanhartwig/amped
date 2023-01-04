@@ -37,7 +37,7 @@ export const SessionFooter = ({currentPosition, sessionData, routineTime, onNavi
     dispatch(setDuration(routineTime))
     dispatch(setShowSummary(true));
     dispatch(addEditRoutineData(sessionData));
-    navigate('/home/train/');
+    navigate('/home/train');
     onNavigate(1);
   }, [dispatch, navigate, onNavigate, routineTime, sessionData]);
   

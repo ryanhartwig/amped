@@ -6,13 +6,12 @@ export type Location = 'dash' | 'routines' | 'train' | 'finished' | 'profile';
 export const useView = () => {
   const location = useLocation();
   
-  const [route, setRoute] = useState<Location>('dash');
+  const [route, setRoute] = useState<string[]>(location.pathname.split('/'));
 
   useEffect(() => {
     const split = location.pathname.split('/');
-    const homeInd = split.findIndex(p => p === 'home');
-    setRoute(split[homeInd + 1] as Location);
+    setRoute(split);
   }, [location.pathname]);
 
-  return { route };
+  return route;
 }

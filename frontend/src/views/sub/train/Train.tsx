@@ -29,11 +29,6 @@ export const Train = () => {
   const allCompletedToday = useAppSelector(completedRoutinesToday);
   const scheduledCompleted = allCompletedToday.filter(r => scheduledIds.includes(r.routine_id));
 
-  useEffect(() => {
-    console.log('all: ', allCompletedToday);
-    console.log('scheduled: ', scheduledCompleted);
-  }, [allCompletedToday, scheduledCompleted]);
-
   const [open, setOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<RoutineType | ExerciseType>();
   const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
