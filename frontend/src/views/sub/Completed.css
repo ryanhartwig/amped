@@ -28,7 +28,8 @@
 /* Routines completed on selected day */
 .Completed-routines-wrapper {
   overflow: hidden;
-  height: 100%;
+  height: fit-content;
+  max-height: 100%;
   padding: 14px;
 }
 .Completed-routines {
