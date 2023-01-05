@@ -24,13 +24,17 @@ export const Day = ({date, viewing, onSelect, selected}: DayProps) => {
   const [rangeMin, rangeMax] = minMaxDate(date);
 
   return (
-    <div className={clsx('Day', {ss}, {'selected': rangeMin === selected?.[0]})} onClick={() => onSelect && onSelect([rangeMin, rangeMax])}>
+    <div className={clsx('Day', {ss})} 
+      onClick={() => onSelect && onSelect([rangeMin, rangeMax])}
+      style={{cursor: onSelect && 'pointer'}}
+    >
       <div className={clsx(
         'Day-content', 
         {'out-of-view': viewing.month !== date.getMonth()},
         {'today': viewing.month === today.getMonth() && date.getDate() === today.getDate()},
         {ss},
-        {session}
+        {session},
+        {'selected': selected?.includes(rangeMin)}
       )}>
         {session && <IoIosFlash size={'85%'} className='Day-content-flash' />}
         <p>{date.getDate()}</p>

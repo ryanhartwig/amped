@@ -77,6 +77,6 @@
   font-weight: 200;
 }
 
-.Day.selected {
-  border: 1px solid grey;
+.Day-content.selected {
+  border: 1px solid rgba(128, 128, 128, 0.482);
 }

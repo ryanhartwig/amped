@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Calendar } from '../../components/calendar/Calendar';
 import { Routine } from '../../components/Routine';
 import { WorkoutSummary } from '../../components/stats/WorkoutSummary';
@@ -7,6 +7,7 @@ import { selectCompletedToday } from '../../store/slices/workoutDataSlice';
 import { RoutineDataType } from '../../types/RoutineDataType';
 import { RoutineType } from '../../types/RoutineType';
 import { useAppSelector } from '../../utility/helpers/hooks';
+import { minMaxDate } from '../../utility/helpers/minMaxDate';
 import './Completed.css';
 
 export const Completed = () => {
@@ -17,16 +18,30 @@ export const Completed = () => {
   const { background_alt: background } = useAppSelector(s => s.theme);
 
   const [summaryData, setSummaryData] = useState<RoutineDataType>();
+  const [selected, setSelected] = useState<[number, number]>(minMaxDate(new Date()));
 
   const routines = Array.from(new Set(today.map(p => p.routine_id)))
     .map(id => allRoutines.find(r => r.id === id))
     .filter(r => r !== undefined) as RoutineType[]
   ;
 
+
+  
+  const onSelect = useCallback(([min, max]: [number, number]) => {
+    setSelected([min, max]);
+    console.log(min, max);
+
+    const day0 = new Date(min);
+    const day1 = new Date(max);
+
+    console.log(day0);
+    console.log(day1);
+  }, []);
+
   return (
     <div className='Completed'>
       <div className='Completed-calendar'>
-        <Calendar showPeriod />
+        <Calendar showPeriod selected={selected} onSelect={onSelect} />
       </div>
 
       <div className='Completed-date'>
