@@ -13,6 +13,27 @@
   padding: 10px;
 }
 
+.Calendar-reset {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  justify-content: center;
+  line-height: normal;
+
+
+}
+
+.Calendar-reset p {
+  font-size: 14px;
+  margin-right: 25px;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.Calendar-reset p:hover {
+  opacity: 1;
+}
+
 .Calendar-period {
   display: flex;
   justify-content: space-between;

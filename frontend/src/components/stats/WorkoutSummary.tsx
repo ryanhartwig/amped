@@ -32,7 +32,6 @@ export const WorkoutSummary = ({routineData, onClose}: WorkoutSummaryProps) => {
   }), [energy, notes, routineData]);
 
   useEffect(() => {
-    console.log(routineData);
     setEnergy(routineData.energy);
     setNotes(routineData.notes || '');
   }, [routineData, routineData.energy, routineData.notes]);

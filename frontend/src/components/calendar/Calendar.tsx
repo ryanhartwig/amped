@@ -5,8 +5,9 @@ import { Days } from './Days';
 /* React Icons */
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import { ReactIconButton } from '../ui/ReactIconButton';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { days, months } from '../../utility/data/days_months';
+import { minMaxDate } from '../../utility/helpers/minMaxDate';
 
 interface CalendarProps {
   showPeriod?: boolean,
@@ -51,6 +52,21 @@ export const Calendar = ({showPeriod, onSelect, selected}: CalendarProps) => {
     setStartDate(newDate);
   }, [startDate]);
 
+  const [min, max] = minMaxDate(new Date());
+  const reset = useCallback(() => {
+    const td = new Date();
+    const init = new Date();
+    init.setDate(1);
+    init.setDate(init.getDay() * -1);
+    
+    setViewing({
+      month: td.getMonth(),
+      year: td.getFullYear(),
+    });
+    setStartDate(init);
+    onSelect && onSelect([min, max]);
+  }, [max, min, onSelect]);
+
   const blockInc = viewing.month === today.getMonth() && viewing.year === today.getFullYear();
 
   return (
@@ -66,7 +82,10 @@ export const Calendar = ({showPeriod, onSelect, selected}: CalendarProps) => {
             <AiOutlineRight size={15}/>
           </ReactIconButton>}
         </div>
-        <h2>{viewing.year}</h2>
+        <div className='Calendar-reset'>
+          <h2>{viewing.year}</h2>
+          <p onClick={reset}>Today</p>
+        </div>
       </div>}
 
       {/* Day of the Week */}

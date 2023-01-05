@@ -30,13 +30,6 @@ export const Completed = () => {
   
   const onSelect = useCallback(([min, max]: [number, number]) => {
     setSelected([min, max]);
-    console.log(min, max);
-
-    const day0 = new Date(min);
-    const day1 = new Date(max);
-
-    console.log(day0);
-    console.log(day1);
   }, []);
 
   return (
