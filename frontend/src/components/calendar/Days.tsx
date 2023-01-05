@@ -8,15 +8,14 @@ interface DaysProps {
     month: number,
     year: number,
   }
+  onSelect?: ([min, max]: [number, number]) => any,
+  selected?: [number, number]
 }
 
-export const Days = ({date, viewing}: DaysProps) => {
+export const Days = ({date, viewing, selected, onSelect}: DaysProps) => {
 
   const days = useMemo(() => {
     const weekDate = new Date(date);
-
-    
-
     const array = new Array(42).fill(0);
 
     return array.map((n, i) => {
@@ -34,7 +33,7 @@ export const Days = ({date, viewing}: DaysProps) => {
 
   return (
     <div className='Days'>
-      {days.map((d, i) => <Day key={`${i}-${d.getDate}`} date={d} viewing={viewing} />)}
+      {days.map((d, i) => <Day key={`${i}-${d.getDate}`} selected={selected} onSelect={onSelect} date={d} viewing={viewing} />)}
     </div>
   )
 }

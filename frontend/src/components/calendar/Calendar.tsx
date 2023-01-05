@@ -10,13 +10,15 @@ import { days, months } from '../../utility/data/days_months';
 
 interface CalendarProps {
   showPeriod?: boolean,
+  selected?: [number, number],
+  onSelect?: ([min, max]: [number, number]) => any,
 }
 interface View {
   month: number,
   year: number,
 }
 
-export const Calendar = ({showPeriod}: CalendarProps) => {
+export const Calendar = ({showPeriod, onSelect, selected}: CalendarProps) => {
 
   const today = new Date();
   const initDate = new Date();
@@ -74,7 +76,7 @@ export const Calendar = ({showPeriod}: CalendarProps) => {
       
       {/* Calendar Days */}
       <div className='Calendar-fields-wrapper noselect'>
-        <Days date={startDate} viewing={viewing} />
+        <Days date={startDate} viewing={viewing} onSelect={onSelect} selected={selected} />
       </div>
     </div>
   )

@@ -76,3 +76,7 @@
 .Day-content.today.out-of-view p {
   font-weight: 200;
 }
+
+.Day.selected {
+  border: 1px solid grey;
+}
