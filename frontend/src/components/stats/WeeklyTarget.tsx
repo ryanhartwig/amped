@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 import { IoIosFlash } from 'react-icons/io';
 import { days } from '../../utility/data/days_months';
+import { useAppSelector } from '../../utility/helpers/hooks';
+import { minMaxDate } from '../../utility/helpers/minMaxDate';
 import './WeeklyTarget.css';
 
 // interface WeeklyTargetProps {
@@ -10,11 +12,19 @@ import './WeeklyTarget.css';
 export const WeeklyTarget = () => {
 
   const today = new Date();
+  const firstDay = new Date().setDate(today.getDate() - today.getDay());
+
+  const data = useAppSelector(s => s.workoutData.routineData);
 
   return (
     <div className='WeeklyTarget'>
       {days.map((d, i) => {
-        const trained = !!Math.round(Math.random() * 1.2) && i <= today.getDay();
+        const day = new Date(firstDay)
+        day.setDate(day.getDate() + i);
+
+        const [min, max] = minMaxDate(day);
+        const trained = data.some(d => min <= d.start_date && max >= d.start_date);
+        
         return <div 
           className={clsx(
             'WeeklyTarget-day',

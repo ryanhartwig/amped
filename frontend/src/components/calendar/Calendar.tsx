@@ -5,7 +5,7 @@ import { Days } from './Days';
 /* React Icons */
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import { ReactIconButton } from '../ui/ReactIconButton';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { days, months } from '../../utility/data/days_months';
 import { minMaxDate } from '../../utility/helpers/minMaxDate';
 
