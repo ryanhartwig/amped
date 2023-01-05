@@ -31,13 +31,17 @@ export const ExerciseStats = ({exerciseData: d}: ExerciseStatsProps) => {
           <Dropdown 
             label='Show Setlist' 
             open={showSets} 
-            style={{opacity: 0.4}}
+            style={{opacity: 0.4, marginTop: 2}}
+            className='ExerciseStats-dropdown'
           />
         </div>
       </div>
       {showSets && 
       <div className='ExerciseStats-sets'>
-        {d.sets.map(s => <SetField set={s} sets={d.sets} key={s.id} />)}
+        {d.sets.length 
+          ? d.sets.map(s => <SetField set={s} sets={d.sets} key={s.id} />)
+          : <p>No sets</p>
+        }
       </div> }
     </div>
   )

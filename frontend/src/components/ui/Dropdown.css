@@ -14,9 +14,9 @@
 
   transition: background-color 0.2s;
 }
-.ui-dropdown-toggle:hover {
+/* .ui-dropdown-toggle:hover {
   background: rgba(69, 68, 68, 0.284);
-}
+} */
 .ui-dropdown-toggle > * {
   margin: 0 1px;
 }
