@@ -1,7 +1,44 @@
+.Completed {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  height: 100%;
+  overflow: hidden;
+}
 .Completed-calendar {
   height: 40vh;
+  flex-shrink: 0;
+  flex-grow: 0;
 }
-
 .Completed .Completed-calendar h2 {
   font-size: 0.82em;
+}
+
+/* Selected day */
+.Completed-date {
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+.Completed-date p {
+  font-weight: 100;
+  font-size: 0.9em;
+}
+
+/* Routines completed on selected day */
+.Completed-routines-wrapper {
+  overflow: hidden;
+  height: 100%;
+  padding: 14px;
+}
+.Completed-routines {
+  overflow-y: auto;
+  border-radius: 10px;;
+  margin: 0 auto;
+  
+  height: 100%;
+  width: 100%;
+}
+.Completed-routines .Routine { 
+  margin: 5px auto;
 }

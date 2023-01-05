@@ -14,6 +14,7 @@ export const Completed = () => {
   const today = useAppSelector(selectCompletedToday);
   const allRoutines = useAppSelector(s => s.workouts.routines);
   
+  const { background_alt: background } = useAppSelector(s => s.theme);
 
   const [summaryData, setSummaryData] = useState<RoutineDataType>();
 
@@ -27,20 +28,27 @@ export const Completed = () => {
       <div className='Completed-calendar'>
         <Calendar showPeriod />
       </div>
-      <div className='Completed-routines'>
-        {today.map(p => 
-          <Routine routine={routines.find(r => r.id === p.routine_id)!} 
-            key={p.id}
-            completed 
-            start_date={p.start_date}
-            onSelect={() => setSummaryData(p)}
-          />)}
+
+      <div className='Completed-date'>
+        <p>Today</p>
       </div>
 
-      <Modal onClose={() => setSummaryData(undefined)} open={!!summaryData} closeText='Close'>
-        <Modal.Header>Workout Summary</Modal.Header>
-        {summaryData && <WorkoutSummary routineData={summaryData} onClose={() => setSummaryData(undefined)} />}
-      </Modal>
+      <div className='Completed-routines-wrapper'>
+        <div className='Completed-routines hidescrollbar' style={{background}}>
+          {today.map(p => 
+            <Routine routine={routines.find(r => r.id === p.routine_id)!} 
+              key={p.id}
+              completed 
+              start_date={p.start_date}
+              onSelect={() => setSummaryData(p)}
+            />)}
+        </div>
+
+        <Modal onClose={() => setSummaryData(undefined)} open={!!summaryData} closeText='Close'>
+          <Modal.Header>Workout Summary</Modal.Header>
+          {summaryData && <WorkoutSummary routineData={summaryData} onClose={() => setSummaryData(undefined)} />}
+        </Modal>
+      </div>
     </div>
   )
 }
