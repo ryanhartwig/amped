@@ -3,6 +3,7 @@ import './Day.css';
 import clsx from 'clsx';
 
 import { IoIosFlash } from 'react-icons/io';
+import { minMaxDate } from '../../utility/helpers/minMaxDate';
 
 interface DayProps {
   date: Date,
@@ -10,20 +11,20 @@ interface DayProps {
     month: number,
     year: number,
   }
+  onSelect?: ([min, max]: [number, number]) => any,
+  selected?: [number, number],
 }
 
-export const Day = ({date, viewing}: DayProps) => {
+export const Day = ({date, viewing, onSelect, selected}: DayProps) => {
 
   const today = new Date();
   const ss = [0, 6].includes(date.getDay());
 
-  const session = (date.getFullYear() < today.getFullYear() 
-    || (date.getMonth() < today.getMonth() && date.getFullYear() === viewing.year)
-    || (date.getDate() <= today.getDate() && date.getMonth() === viewing.month))
-  && !!Math.round(Math.random());
+  const session = false;
+  const [rangeMin, rangeMax] = minMaxDate(date);
 
   return (
-    <div className={clsx('Day', {ss})}>
+    <div className={clsx('Day', {ss}, {'selected': rangeMin === selected?.[0]})} onClick={() => onSelect && onSelect([rangeMin, rangeMax])}>
       <div className={clsx(
         'Day-content', 
         {'out-of-view': viewing.month !== date.getMonth()},
