@@ -46,7 +46,8 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
     <div className='SessionFooter' style={{background}}>
       <div className='SessionFooter-items'>
         <div className='SessionFooter-nav-button'>
-          {!!prevExercise && <InfoBorder isButton background={background} style={{borderRadius: '7px', borderColor: 'rgba(255,255,255,0.2'}}>
+          {!!prevExercise && !paused && 
+          <InfoBorder isButton background={background} style={{borderRadius: '7px', borderColor: 'rgba(255,255,255,0.2'}}>
             <InfoBorder.HeaderLeft><p className='SessionFooter-nav-text'>Previous</p></InfoBorder.HeaderLeft>
             <div className='SessionFooter-button-text' onClick={() => onNavigate(-1)}>
               <p>{prevExercise}</p>
@@ -63,6 +64,7 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
           <IoIosFlash size={30}/>
         </ReactIconButton>
         <div className='SessionFooter-nav-button'>
+          { !paused && 
           <InfoBorder isButton background={background} style={{borderRadius: '7px', borderColor: 'rgba(255,255,255,0.2'}}>
             <InfoBorder.HeaderRight><p className='SessionFooter-nav-text'>Next</p></InfoBorder.HeaderRight>
             <div className='SessionFooter-button-text' 
@@ -75,7 +77,7 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
             >
               <p>{nextExercise || 'Summary'}</p>
             </div>
-          </InfoBorder>
+          </InfoBorder>}
         </div>
       </div>
 
