@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
+import { BiTrash } from 'react-icons/bi';
 import { VscFlame } from 'react-icons/vsc';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Exercise } from '../../../components/Exercise';
 import { InfoBorder } from '../../../components/ui/InfoBorder';
+import { Modal } from '../../../components/ui/Modal';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { initializeSession } from '../../../store/slices/sessionSlice';
 import { RoutineType } from '../../../types/RoutineType';
@@ -24,6 +26,7 @@ export const Overview = ({inSession}: OverviewProps) => {
 
   const [routine, setRoutine] = useState<RoutineType>();
   const [intensity, setIntensity] = useState<true[]>([]);
+  const [quitPrompt, setQuitPrompt] = useState<boolean>(false);
 
   const currentPosition = useAppSelector(s => s.session.currentPosition);
 
@@ -60,7 +63,7 @@ export const Overview = ({inSession}: OverviewProps) => {
 
           <div className='Overview-content'>
             <div className='Overview-exercises hidescrollbar' style={{background: background_alt}}>
-              {routine.exercises.map((e, i) => <Exercise key={`${e.position}-${e.exercise}`} selected={currentPosition === i ? e.exercise : undefined} exercise={e.exercise} />)}
+              {routine.exercises.map((e, i) => <Exercise key={`${e.position}-${e.exercise}`} selected={inSession && currentPosition === i ? e.exercise : undefined} exercise={e.exercise} />)}
             </div>
             {routine.lastSessionNotes && <div className='Overview-lastnotes'>
               <p>Last session's notes</p>
@@ -71,7 +74,17 @@ export const Overview = ({inSession}: OverviewProps) => {
           </div>
         </InfoBorder>
       </div>}
-      {!inSession && <PrimaryButton onClick={onStartSession} className='Overview-start' text='Start' icon={'logo'} />}
+      {!inSession 
+      ? <PrimaryButton onClick={onStartSession} className='Overview-start' text='Start' icon={'logo'} />
+      : <PrimaryButton text='Quit Session' onClick={() => setQuitPrompt(true)} className='Overview-start' icon={BiTrash} style={{background: '#6F2323', marginBottom: 75}} />}
+
+      <Modal open={quitPrompt} onClose={() => setQuitPrompt(false)} className='Overview-quit-prompt' closeText='Cancel'>
+        <Modal.Header>End Session?</Modal.Header>
+        <div className='Overview-quit-prompt-content'>
+          <p>You will lose all recorded performance metrics & exercise data for this session.</p>
+          <PrimaryButton style={{background: '#6F2323', marginBottom: 35, minWidth: 0  }} text='Quit' onClick={() => navigate('/home/train')} />
+        </div>
+      </Modal>
     </div>
   )
 }
