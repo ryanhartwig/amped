@@ -25,6 +25,8 @@ export const Overview = ({inSession}: OverviewProps) => {
   const [routine, setRoutine] = useState<RoutineType>();
   const [intensity, setIntensity] = useState<true[]>([]);
 
+  const currentPosition = useAppSelector(s => s.session.currentPosition);
+
   useEffect(() => {
     if (!selectedRoutine) {
       navigate('/home/train');
@@ -58,7 +60,7 @@ export const Overview = ({inSession}: OverviewProps) => {
 
           <div className='Overview-content'>
             <div className='Overview-exercises hidescrollbar' style={{background: background_alt}}>
-              {routine.exercises.map((e, i) => <Exercise key={`${e.position}-${e.exercise}`} exercise={e.exercise} />)}
+              {routine.exercises.map((e, i) => <Exercise key={`${e.position}-${e.exercise}`} selected={currentPosition === i ? e.exercise : undefined} exercise={e.exercise} />)}
             </div>
             {routine.lastSessionNotes && <div className='Overview-lastnotes'>
               <p>Last session's notes</p>
