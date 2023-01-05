@@ -5,14 +5,16 @@ import { Logo } from '../ui/Logo';
 /* React Icons */
 import { useAppSelector } from '../../utility/helpers/hooks';
 import { Timer } from '../stats/Timer';
+import { FormatTime } from '../ui/FormatTime';
 
 interface SessionheaderProps {
   routineTitle: string,
   time: number,
   setTime: React.Dispatch<React.SetStateAction<number>>,
+  paused: boolean,
 }
 
-export const SessionHeader = ({routineTitle, time, setTime}: SessionheaderProps) => {
+export const SessionHeader = ({routineTitle, paused, time, setTime}: SessionheaderProps) => {
 
   const { foreground: background } = useAppSelector(s => s.theme);
 
@@ -23,7 +25,9 @@ export const SessionHeader = ({routineTitle, time, setTime}: SessionheaderProps)
         <Logo />
         <p className='SessionHeader-title'>{routineTitle}</p>
         <div className='SessionHeader-timer'>
-          <Timer time={time} setTime={setTime} showHour />
+          { paused 
+          ? <FormatTime seconds={time} showHour />
+          : <Timer time={time} setTime={setTime} showHour /> }
         </div>
 
       </div>

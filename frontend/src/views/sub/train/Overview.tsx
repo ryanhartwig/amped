@@ -10,11 +10,11 @@ import { RoutineType } from '../../../types/RoutineType';
 import { useAppSelector } from '../../../utility/helpers/hooks';
 import './Overview.css';
 
-// interface OverviewProps {
+interface OverviewProps {
+  inSession?: boolean,
+}
 
-// }
-
-export const Overview = () => { 
+export const Overview = ({inSession}: OverviewProps) => { 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -69,7 +69,7 @@ export const Overview = () => {
           </div>
         </InfoBorder>
       </div>}
-      <PrimaryButton onClick={onStartSession} className='Overview-start' text='Start' icon={'logo'} />
+      {!inSession && <PrimaryButton onClick={onStartSession} className='Overview-start' text='Start' icon={'logo'} />}
     </div>
   )
 }
