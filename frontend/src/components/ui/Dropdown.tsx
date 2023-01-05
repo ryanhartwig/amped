@@ -38,7 +38,7 @@ export const Dropdown = ({label, open, onToggle, initiallyOpen = false, children
   }, [onToggle, open]);
   
   return (
-    <div className={`ui-dropdown ${className || ''}`} {...props} >
+    <div {...props} className={`ui-dropdown ${className || ''}`} >
       <div className='ui-dropdown-toggle' onClick={onClick}>
         <p>{label}</p>
         <BsChevronDown className='ui-dropdown-arrow' style={{rotate: cStyle.rotate}}/>

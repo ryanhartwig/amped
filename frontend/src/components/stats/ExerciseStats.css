@@ -51,6 +51,10 @@
   font-size: 16px;
 }
 
+.ExerciseStats-dropdown p {
+  font-size: 12px;
+}
+
 /* Sets */
 .ExerciseStats-sets {
   font-size: 0.8em;

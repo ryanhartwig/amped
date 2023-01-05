@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addEditRoutineData } from '../../store/slices/workoutDataSlice';
 import { RoutineDataType } from '../../types/RoutineDataType';
@@ -30,6 +30,12 @@ export const WorkoutSummary = ({routineData, onClose}: WorkoutSummaryProps) => {
     notes,
     energy,
   }), [energy, notes, routineData]);
+
+  useEffect(() => {
+    console.log(routineData);
+    setEnergy(routineData.energy);
+    setNotes(routineData.notes || '');
+  }, [routineData, routineData.energy, routineData.notes]);
 
   const onSave = useCallback(() => {
     dispatch(addEditRoutineData(editedRoutineData))

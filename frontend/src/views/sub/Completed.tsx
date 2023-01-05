@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Calendar } from '../../components/calendar/Calendar';
 import { Routine } from '../../components/Routine';
 import { WorkoutSummary } from '../../components/stats/WorkoutSummary';
@@ -14,10 +14,10 @@ export const Completed = () => {
   const today = useAppSelector(selectCompletedToday);
   const allRoutines = useAppSelector(s => s.workouts.routines);
   
-  const [performed] = useState<RoutineDataType[]>(today);
+
   const [summaryData, setSummaryData] = useState<RoutineDataType>();
 
-  const routines = Array.from(new Set(performed.map(p => p.routine_id)))
+  const routines = Array.from(new Set(today.map(p => p.routine_id)))
     .map(id => allRoutines.find(r => r.id === id))
     .filter(r => r !== undefined) as RoutineType[]
   ;
@@ -28,7 +28,7 @@ export const Completed = () => {
         <Calendar showPeriod />
       </div>
       <div className='Completed-routines'>
-        {performed.map(p => 
+        {today.map(p => 
           <Routine routine={routines.find(r => r.id === p.routine_id)!} 
             key={p.id}
             completed 
