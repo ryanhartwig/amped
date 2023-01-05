@@ -5,7 +5,7 @@
  * 
  * @param d Date object (will not mutate)
  */
-export const minMaxDate = (d: Date) => {
+export const minMaxDate = (d: Date): [number, number] => {
   return [
     (() => {
       const min = new Date(d);
@@ -18,10 +18,10 @@ export const minMaxDate = (d: Date) => {
     })(),
     (() => {
       const max = new Date(d);
-      max.setHours(-1);
-      max.setMinutes(-1);
-      max.setSeconds(-1);
-      max.setMilliseconds(-1);
+      max.setHours(23);
+      max.setMinutes(59);
+      max.setSeconds(59);
+      max.setMilliseconds(999);
 
       return max.getTime();
     })(),
