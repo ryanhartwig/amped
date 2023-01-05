@@ -15,6 +15,7 @@ import { RoutineExercise } from '../../../types/RoutineType';
 import { AddSet } from './AddSet';
 import { SetField } from '../../../components/stats/SetField';
 import { RoutineDataType } from '../../../types/RoutineDataType';
+import { Overview } from './Overview';
 
 export const Session = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ export const Session = () => {
   const [exerciseTime, setExerciseTime] = useState<number>(0);
   const [routineTime, setRoutineTime] = useState<number>(0);
   const [setTime, setSetTime] = useState<number>(0);
+  const [paused, setPaused] = useState<boolean>(false);
 
   const exerciseData = useMemo<ExerciseDataType>(() => ({
     duration: exerciseTime,
@@ -70,7 +72,7 @@ export const Session = () => {
   }, [])
 
   useEffect(() => {
-    setsRef.current.scrollTop = setsRef.current.scrollHeight;
+    setsRef.current.scrollTop = setsRef?.current?.scrollHeight;
   }, [sets]);
   
   // Update exerciseData state fields with previous data (if exists)
@@ -83,35 +85,46 @@ export const Session = () => {
   }, [prevExerciseData]);
   
   return (
-    <>
-      {routine && exercise && 
-      <div className='Session'>
-        <SessionHeader time={routineTime} setTime={setRoutineTime} routineTitle={routine.name} />
-        <div className='Session-content'>
-          <InfoBorder background={background} 
-            title={exercise.exercise.name} 
-            buttonText={exercise.exercise.notes ? 'See notes' : undefined}
-            modalHeader='Exercise notes'
-            modalContent={<p style={{whiteSpace: 'pre-wrap'}}>{exercise.exercise.notes}</p>}
-          >
-            <InfoBorder.HeaderLeft>
-              <p className='Session-info'>{position + 1} <span className='Session-of'>of</span> {routine.exercises.length}</p>
-            </InfoBorder.HeaderLeft>
-            <InfoBorder.HeaderRight>
-              <Timer className={'Session-info timer'} time={exerciseTime} setTime={setExerciseTime} />
-            </InfoBorder.HeaderRight>
+    <div className='Session'>
+      <SessionHeader paused={paused} time={routineTime} setTime={setRoutineTime} routineTitle={routine.name} />
+      
+      {paused 
+    ? <div className='Session-paused'>
+        <Overview inSession />
+      </div> 
+    : <div className='Session-content'>
+        <InfoBorder background={background} 
+          title={exercise.exercise.name} 
+          buttonText={exercise.exercise.notes ? 'See notes' : undefined}
+          modalHeader='Exercise notes'
+          modalContent={<p style={{whiteSpace: 'pre-wrap'}}>{exercise.exercise.notes}</p>}
+        >
+          <InfoBorder.HeaderLeft>
+            <p className='Session-info'>{position + 1} <span className='Session-of'>of</span> {routine.exercises.length}</p>
+          </InfoBorder.HeaderLeft>
+          <InfoBorder.HeaderRight>
+            <Timer className={'Session-info timer'} time={exerciseTime} setTime={setExerciseTime} />
+          </InfoBorder.HeaderRight>
 
-            {/* Setlist & Add Set Area */}
-            <div className='Session-content-inner'>
-              <div className='Session-content-sets hidescrollbar' ref={setsRef}>
-                {sets.map(s => <SetField key={s.id} set={s} sets={sets} />)}
-              </div>
-              <AddSet onAddSet={onAddSet} setTime={setTime} setSetTime={setSetTime} exercise_data_id={exerciseData.id} />
+          {/* Setlist & Add Set Area */}
+          <div className='Session-content-inner'>
+            <div className='Session-content-sets hidescrollbar' ref={setsRef}>
+              {sets.map(s => <SetField key={s.id} set={s} sets={sets} />)}
             </div>
-          </InfoBorder>
-        </div>
-        <SessionFooter routineData={routineData} routineTime={routineTime} onNavigate={onNavigate} routine={routine} currentPosition={position} />
+            <AddSet onAddSet={onAddSet} setTime={setTime} setSetTime={setSetTime} exercise_data_id={exerciseData.id} />
+          </div>
+        </InfoBorder>
       </div>}
-      </>
+      
+      <SessionFooter 
+        setPaused={setPaused} 
+        paused={paused} 
+        routineData={routineData} 
+        routineTime={routineTime} 
+        onNavigate={onNavigate} 
+        routine={routine} 
+        currentPosition={position} 
+      />
+    </div>
   )
 }

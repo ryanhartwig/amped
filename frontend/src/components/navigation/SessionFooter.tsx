@@ -6,7 +6,7 @@ import { ReactIconButton } from '../ui/ReactIconButton';
 import { InfoBorder } from '../ui/InfoBorder';
 import { useNavigate } from 'react-router-dom';
 import { RoutineType } from '../../types/RoutineType';
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import { useDispatch } from 'react-redux';
@@ -20,9 +20,11 @@ interface SessionFooterProps {
   onNavigate: (dir: 1 | -1) => void,
   routineTime: number,
   routineData: RoutineDataType,
+  setPaused: React.Dispatch<React.SetStateAction<boolean>>,
+  paused: boolean,
 }
 
-export const SessionFooter = ({currentPosition, routineData, routineTime, onNavigate, routine}: SessionFooterProps) => {
+export const SessionFooter = ({currentPosition, setPaused, paused, routineData, routineTime, onNavigate, routine}: SessionFooterProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -52,10 +54,10 @@ export const SessionFooter = ({currentPosition, routineData, routineTime, onNavi
           </InfoBorder>}
         </div>
         <ReactIconButton 
-          text="Pause" 
+          text={paused ? 'Resume' : 'Pause'}
           buttonSize='55px' fontSize='13px' 
           active
-          onClick={() => navigate('/home/train/overview')}
+          onClick={() => setPaused(p => !p)}
           style={{flex: '0 0'}}
         >
           <IoIosFlash size={30}/>
