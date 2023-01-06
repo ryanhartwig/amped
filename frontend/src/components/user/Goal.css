@@ -12,4 +12,20 @@
 .Goal-left {
   display: flex;
   align-items: center;
+  line-height: 1.2;
+}
+.Goal-left-date {
+  font-size: 10px;
+  opacity: 0.6;
+  margin-left: 10px;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.Goal-completed {
+  display: flex;
+  align-items: center;
+  color: #0094FF;
+  font-size: 12px;
+  opacity: 0.8;
 }

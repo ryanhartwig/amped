@@ -22,9 +22,12 @@ export const Profile = () => {
   const [weeks] = useState<number>(2);
   const [goalModal, setGoalModal] = useState<boolean>(false);
 
+  const [selectedGoal, setSelectedGoal] = useState<GoalType>();
+
   const onSave = useCallback((g: GoalType) => {
     dispatch(addEditGoal(g));
     setGoalModal(false);
+    setSelectedGoal(undefined);
   }, [dispatch]);
 
   return (
@@ -54,7 +57,13 @@ export const Profile = () => {
         <div className='Profile-goals-wrapper hidescrollbar' style={{background}}>
           <div className='Profile-goal'>
             {goals.map(g => 
-              <Goal goal={g} key={g.id} />
+              <Goal goal={g} 
+                key={g.id} 
+                onClick={() => {
+                  setSelectedGoal(g);
+                  setGoalModal(true);
+                }}
+              />
             )}
           </div>
           <p className='Profile-goals-add' onClick={() => setGoalModal(true)}>+ Add training goal</p> 
@@ -63,7 +72,7 @@ export const Profile = () => {
         {/* Add goal modal */}
         <Modal open={goalModal} onClose={() => setGoalModal(false)} closeText='Cancel'>
           <Modal.Header>Add a training goal</Modal.Header>
-          <AddEditGoal onSave={onSave} />
+          <AddEditGoal onSave={onSave} existingGoal={selectedGoal} />
         </Modal>
       </div>
     </div>
