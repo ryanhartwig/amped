@@ -8,19 +8,19 @@ interface CheckboxProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTM
   checked: boolean,
   label?: string,
   reverseLabelPosition?: boolean,
+  checkboxBackground?: string,
 }
 
-export const Checkbox = ({checked, label, reverseLabelPosition: r, ...props}: CheckboxProps) => {
+export const Checkbox = ({checked, checkboxBackground, label, reverseLabelPosition: r, ...props}: CheckboxProps) => {
 
   const { background } = useAppSelector(s => s.theme);
 
   return (
-    <div onClick={props.onClick} className='Checkbox-wrapper' style={{flexDirection: r ? 'row-reverse' : 'row'}}>
-      <div {...props} onClick={undefined} className={'Checkbox ' + props.className ?? ''} style={{background, ...props.style}} >
+    <div {...props} className={'Checkbox ' + props.className ?? ''} style={{...props.style, flexDirection: r ? 'row-reverse' : 'row'}}>
+      <div className='Checkbox-box' style={{background: checkboxBackground ?? background}} >
         {checked && <AiOutlineCheck size={48} className='Checkbox-icon' />}
       </div>
       {label && <p style={{marginLeft: r ? 0 : '', marginRight: r ? '' : 0}} className='Checkbox-label'>{label}</p>}
     </div>
-    
   )
 }

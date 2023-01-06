@@ -68,7 +68,11 @@ export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
           } 
         />
 
-        <Checkbox checked={completed} onClick={() => setCompleted(p => !p)} label='Mark Completed' />
+        <Checkbox checked={completed} 
+          onClick={() => setCompleted(p => !p)} 
+          label='Completed' 
+          style={{marginTop: 25, marginLeft: 10}}
+        />
       </div>
       <PrimaryButton text={e ? 'Save changes' : 'Save goal'}
         icon={'logo'} 
