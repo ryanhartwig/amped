@@ -33,7 +33,8 @@ export const WeeklyTarget = ({...props}: WeeklyTargetProps) => {
           key={`dash-target-${d}`}
         >
           {trained && 
-          <IoIosFlash size={'85%'} className='WeeklyTarget-trained' />}
+          <IoIosFlash size={'60%'} className='WeeklyTarget-trained' />
+          }
 
           <p>{d[0]}</p>
         </div>
