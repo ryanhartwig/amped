@@ -71,7 +71,11 @@ export const Profile = () => {
         
         {/* Add goal modal */}
         <Modal open={goalModal} onClose={() => setGoalModal(false)} closeText='Cancel'>
-          <Modal.Header>Add a training goal</Modal.Header>
+          <Modal.Header>
+            {selectedGoal
+              ? 'Edit training goal'
+              : 'Add a training goal'}
+          </Modal.Header>
           <AddEditGoal onSave={onSave} existingGoal={selectedGoal} />
         </Modal>
       </div>

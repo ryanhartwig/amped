@@ -3,6 +3,7 @@ import { BsCalendar } from 'react-icons/bs';
 import uuid from 'react-uuid';
 import { GoalType } from '../../types/Goal';
 import { zeroTime } from '../../utility/helpers/zeroTime';
+import { Checkbox } from '../ui/Checkbox';
 import { Input } from '../ui/Input';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import './AddEditGoal.css';
@@ -23,7 +24,7 @@ export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
   const [goalInput, setGoalInput] = useState<string>(e?.goal || '');
   const [dateValue, setDateValue] = useState<string>(existingDateString || '');
   const [id] = useState<string>(e?.id || uuid());
-  const [completed] = useState<boolean>(e?.completed ?? false);
+  const [completed, setCompleted] = useState<boolean>(e?.completed ?? false);
 
   const [year, month, day] = useMemo<number[]>(() => dateValue.split('-').map(n => Number(n)), [dateValue]);
   const selectedDate = useMemo<Date>(() => new Date(year, month - 1, day), [day, month, year]);
@@ -67,8 +68,9 @@ export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
           } 
         />
 
+        <Checkbox checked={completed} onClick={() => setCompleted(p => !p)} label='Mark Completed' />
       </div>
-      <PrimaryButton text='Save Goal' 
+      <PrimaryButton text={e ? 'Save changes' : 'Save goal'}
         icon={'logo'} 
         disabled={!valid} 
         onClick={onSaveGoal}
