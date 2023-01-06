@@ -5,11 +5,10 @@ import { useAppSelector } from '../../utility/helpers/hooks';
 import { minMaxDate } from '../../utility/helpers/minMaxDate';
 import './WeeklyTarget.css';
 
-// interface WeeklyTargetProps {
+interface WeeklyTargetProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+}
 
-// }
-
-export const WeeklyTarget = () => {
+export const WeeklyTarget = ({...props}: WeeklyTargetProps) => {
 
   const today = new Date();
   const firstDay = new Date().setDate(today.getDate() - today.getDay());
@@ -17,7 +16,7 @@ export const WeeklyTarget = () => {
   const data = useAppSelector(s => s.workoutData.routineData);
 
   return (
-    <div className='WeeklyTarget'>
+    <div {...props} className={'WeeklyTarget ' + props.className}>
       {days.map((d, i) => {
         const day = new Date(firstDay)
         day.setDate(day.getDate() + i);
