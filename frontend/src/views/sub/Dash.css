@@ -13,29 +13,13 @@
   max-width: 650px;
 }
 
-.Dash p {
-  margin: 4px 0;
-  font-weight: 100;
-}
-
 .Dash-weekly {
-  width: 100%;
-}
-
-.Dash-weekly-target {
   margin: 0 auto;
-  height: clamp(40px, 60px, 7vh);
+  height: fit-content;
   width: calc(100% - 32px);
-}
-.Dash-weekly p {
-  font-size: 14px;
 }
 
 .Dash-train {
   width: 100%;
-  margin-bottom: 10vmin;
-}
-
-.Dash-train p {
-  font-size: 14px;
+  margin-bottom: 10px;
 }
