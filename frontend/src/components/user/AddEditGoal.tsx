@@ -1,7 +1,8 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { BsCalendar } from 'react-icons/bs';
 import uuid from 'react-uuid';
 import { GoalType } from '../../types/Goal';
+import { zeroTime } from '../../utility/helpers/zeroTime';
 import { Input } from '../ui/Input';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import './AddEditGoal.css';
@@ -12,7 +13,7 @@ interface AddEditGoalProps {
 }
 
 const getDateInputFromDate = (d: Date) => {
-  return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+  return `${d.getFullYear()}-${zeroTime(d.getMonth() + 1)}-${zeroTime(d.getDate())}`;
 }
 
 export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
@@ -35,6 +36,10 @@ export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
     id,
   }), [completed, goalInput, id, selectedDate]);
 
+  useEffect(() => {
+    console.log(dateValue)
+  }, [dateValue]);
+
   const onSaveGoal = useCallback(() => {
     onSave(goal);
   }, [goal, onSave]);
@@ -54,6 +59,7 @@ export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
           id='PRF-date'
           onChange={(e) => setDateValue(e.target.value)}
           value={dateValue}
+          placeholder={dateValue}
           icon={
             <div className='Profile-goals-icon'>
               <BsCalendar className='Profile-goals-calendar' size={18} />
