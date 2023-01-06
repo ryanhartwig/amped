@@ -17,7 +17,7 @@ export const Profile = () => {
   const dispatch = useDispatch();
   
   const { background_alt: background } = useAppSelector(s => s.theme);
-  const goals = useAppSelector(s => s.user.goals);
+  const goals = [...useAppSelector(s => s.user.goals)].sort((a, b) => a.deadline - b.deadline);
 
   const [weeks] = useState<number>(2);
   const [goalModal, setGoalModal] = useState<boolean>(false);
@@ -32,7 +32,7 @@ export const Profile = () => {
       {/* Top Section (avatar & name) */}
       <div className='Profile-avatar' style={{background}}>
         <div className='Profile-circle'>
-          <IoPersonOutline size={67} className='Profile-avatar-svg' />
+          <IoPersonOutline className='Profile-avatar-svg' />
         </div>
       </div>
       <h2>Ryan Hartwig</h2>
@@ -54,7 +54,7 @@ export const Profile = () => {
         <div className='Profile-goals-wrapper hidescrollbar' style={{background}}>
           <div className='Profile-goal'>
             {goals.map(g => 
-              <Goal goal={g} />
+              <Goal goal={g} key={g.id} />
             )}
           </div>
           <p className='Profile-goals-add' onClick={() => setGoalModal(true)}>+ Add training goal</p> 
