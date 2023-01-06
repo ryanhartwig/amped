@@ -2,14 +2,20 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GoalType } from "../../types/GoalType";
 import { scheduled, ScheduledState } from "../../types/scheduledState";
 
+export type DaysTrained = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+
 interface UserState {
   scheduled: ScheduledState,
   goals: GoalType[],
+  weeklyTargetReached: number,
+  weeklyTarget: DaysTrained,
 }
 
 const initialState: UserState = {
   scheduled,
   goals: [],
+  weeklyTargetReached: 0,
+  weeklyTarget: 5,
 }
 
 export const userReducer = createSlice({
@@ -24,10 +30,13 @@ export const userReducer = createSlice({
     },
     deleteGoal: (state, action: PayloadAction<string>) => {
       state.goals = state.goals.filter(g => g.id !== action.payload)
-    }
+    },
+    setWeeklyTargetReached: (state, action: PayloadAction<number>) => {
+      state.weeklyTargetReached = action.payload;
+    },
   }
 });
 
-export const { addEditGoal, deleteGoal } = userReducer.actions;
+export const { addEditGoal, deleteGoal, setWeeklyTargetReached } = userReducer.actions;
 
 export default userReducer.reducer;

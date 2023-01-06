@@ -13,7 +13,6 @@ import './Dash.css';
 export const Dash = () => {
   const navigate = useNavigate();
 
-  const [daysLeft] = useState<number>(2);
   const [workouts] = useState<number>(3);
 
   const onTrain = useCallback(() => {
@@ -27,12 +26,7 @@ export const Dash = () => {
       </div>
 
       <div className='Dash-weekly'>
-        <p>This Week</p>
-        <div className='Dash-weekly-target'>
-          <WeeklyTarget />
-
-        </div>
-        <p>{daysLeft} day{daysLeft !== 1 && 's'} left to reach training goal</p>
+        <WeeklyTarget />
       </div>
 
       <div className='Dash-train'>
