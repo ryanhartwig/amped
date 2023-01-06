@@ -9,18 +9,24 @@ import { useCallback, useState } from 'react';
 import { Modal } from '../../components/ui/Modal';
 import { AddEditGoal } from '../../components/user/AddEditGoal';
 import { useDispatch } from 'react-redux';
-import { GoalType } from '../../types/Goal';
+import { GoalType } from '../../types/GoalType';
 import { addEditGoal, deleteGoal } from '../../store/slices/userSlice';
 import { Goal } from '../../components/user/Goal';
+
+
+const tabs = ['My training goals', 'Completed goals']
 
 export const Profile = () => {
   const dispatch = useDispatch();
   
   const { background_alt: background } = useAppSelector(s => s.theme);
-  const goals = [...useAppSelector(s => s.user.goals)].sort((a, b) => a.deadline - b.deadline);
+  const goals = [...useAppSelector(s => s.user.goals)]
+    .sort((a, b) => a.completed && b.completed ? b.deadline - a.deadline : a.deadline - b.deadline);
 
   const [weeks] = useState<number>(2);
   const [goalModal, setGoalModal] = useState<boolean>(false);
+
+  const [tab, setTab] = useState<number>(0);
 
   const [selectedGoal, setSelectedGoal] = useState<GoalType>();
 
@@ -58,11 +64,21 @@ export const Profile = () => {
 
       {/* Training Goals / Milestones */}
       <div className='Profile-goals'>
-        <p>My training goals</p>
+        <div className='Profile-goals-tabs'>
+          {tabs.map((t, i) => 
+          <div className='Profile-goals-tab' 
+            onClick={() => setTab(i)} 
+            key={t}
+            style={{borderBottomColor: i !== tab ? 'transparent' : ''}}
+          >
+            <p style={{opacity: tab === i ? 1 : 0.5}}>{t}</p>
+          </div>
+          )}
+        </div>
         
         <div className='Profile-goals-wrapper hidescrollbar' style={{background}}>
           <div className='Profile-goal'>
-            {goals.map(g => 
+            {goals.map(g => ((tab === 0 && !g.completed) || (tab === 1 && g.completed)) && 
               <Goal goal={g} 
                 key={g.id} 
                 onClick={() => {
@@ -72,7 +88,8 @@ export const Profile = () => {
               />
             )}
           </div>
-          <p className='Profile-goals-add' onClick={() => setGoalModal(true)}>+ Add training goal</p> 
+          {tab === 0 ? <p className='Profile-goals-add' onClick={() => setGoalModal(true)}>+ Add training goal</p> 
+          : goals.filter(g => g.completed).length ? <></> : <p style={{textAlign: 'center', padding: 10, paddingBottom: 14, fontSize: 14, fontWeight: 100}}>No goals to show</p>}
         </div>
         
         {/* Add goal modal */}

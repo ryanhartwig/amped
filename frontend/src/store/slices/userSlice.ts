@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GoalType } from "../../types/Goal";
+import { GoalType } from "../../types/GoalType";
 import { scheduled, ScheduledState } from "../../types/scheduledState";
 
 interface UserState {

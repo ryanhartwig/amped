@@ -1,5 +1,5 @@
 import { AiOutlineCheck } from 'react-icons/ai';
-import { GoalType } from '../../types/Goal';
+import { GoalType } from '../../types/GoalType';
 import { useAppSelector } from '../../utility/helpers/hooks';
 import './Goal.css';
 
