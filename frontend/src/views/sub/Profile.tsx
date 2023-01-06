@@ -10,24 +10,37 @@ import { useCallback, useMemo, useState } from 'react';
 import { Modal } from '../../components/ui/Modal';
 import { Input } from '../../components/ui/Input';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
+import { useDispatch } from 'react-redux';
+import { addEditGoal } from '../../store/slices/userSlice';
+import { Goal } from '../../types/Goal';
+import uuid from 'react-uuid';
 
 export const Profile = () => {
+  const dispatch = useDispatch();
+  
   const { background_alt: background } = useAppSelector(s => s.theme);
 
   const [weeks] = useState<number>(2);
-  const [addGoal, setAddGoal] = useState<boolean>(false);
+  const [goalModal, setGoalModal] = useState<boolean>(false);
   
   // Input values
-  const [goal, setGoal] = useState<string>('');
+  const [goalInput, setGoalInput] = useState<string>('');
   const [dateValue, setDateValue] = useState<string>('');
 
   const [year, month, day] = useMemo<number[]>(() => dateValue.split('-').map(n => Number(n)), [dateValue]);
   const selectedDate = useMemo<Date>(() => new Date(year, month - 1, day), [day, month, year]);
-  const valid = useMemo(() => selectedDate.getTime() >= new Date().getTime() && goal.length, [goal.length, selectedDate]);
+  const valid = useMemo(() => selectedDate.getTime() >= new Date().getTime() && goalInput.length, [goalInput.length, selectedDate]);
+
+  const goal: Goal = useMemo<Goal>(() => ({
+    completed: false,
+    deadline: selectedDate.getTime(),
+    goal: goalInput,
+    id: uuid()
+  }), [goalInput, selectedDate]);
 
   const onSaveGoal = useCallback(() => {
-
-  }, []);
+    dispatch(addEditGoal(goal))
+  }, [dispatch, goal]);
 
   return (
     <div className='Profile'>
@@ -53,19 +66,19 @@ export const Profile = () => {
       <div className='Profile-goals'>
         <p>My training goals</p>
         <div className='Profile-goals-wrapper hidescrollbar' style={{background}}>
-          <p className='Profile-goals-add' onClick={() => setAddGoal(true)}>+ Add training goal</p> 
+          <p className='Profile-goals-add' onClick={() => setGoalModal(true)}>+ Add training goal</p> 
         </div>
         
         {/* Add goal modal */}
-        <Modal open={addGoal} onClose={() => setAddGoal(false)} closeText='Cancel'>
+        <Modal open={goalModal} onClose={() => setGoalModal(false)} closeText='Cancel'>
           <Modal.Header>Add a training goal</Modal.Header>
           <div className='Profile-goals-content'>
             <div className='Profile-goals-inputs'>
               <label htmlFor='PRF-goal'><p className='PRF-label'>Goal label</p></label>
               <Input id='PRF-goal' 
                 placeholder='eg. 200lb 1RM (bench press)' 
-                value={goal}
-                onChange={(e) => setGoal(e.target.value)}
+                value={goalInput}
+                onChange={(e) => setGoalInput(e.target.value)}
               />
 
               <label htmlFor='PRF-date'><p className='PRF-label'>Goal deadline</p></label>
@@ -87,7 +100,7 @@ export const Profile = () => {
               onClick={onSaveGoal}
             />
             <div className='Profile-goals-errors'>
-              {!goal.length && <p>Enter a training goal</p>}
+              {!goalInput.length && <p>Enter a training goal</p>}
               {(!dateValue || selectedDate.getTime() < new Date().getTime()) && <p>Enter a date greater than today</p>}
             </div>
           </div>

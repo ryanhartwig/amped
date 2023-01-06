@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Goal } from "../../types/Goal";
 import { scheduled, ScheduledState } from "../../types/scheduledState";
-
-interface Goal {
-  deadline: number,
-  goal: string,
-  completed: boolean,
-  id: string,
-}
 
 interface UserState {
   scheduled: ScheduledState,
@@ -31,6 +25,6 @@ export const userReducer = createSlice({
   }
 });
 
-// export const {  } = userReducer.actions;
+export const { addEditGoal } = userReducer.actions;
 
 export default userReducer.reducer;
