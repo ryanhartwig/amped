@@ -20,7 +20,7 @@ export const Profile = () => {
   // Input values
   const [goal, setGoal] = useState<string>('');
   const [dateValue, setDateValue] = useState<string>('');
-  
+
   const [year, month, day] = useMemo<number[]>(() => dateValue.split('-').map(n => Number(n)), [dateValue]);
   const selectedDate = useMemo<Date>(() => new Date(year, month - 1, day), [day, month, year]);
   const valid = useMemo(() => selectedDate.getTime() >= new Date().getTime() && goal.length, [goal.length, selectedDate]);
@@ -77,8 +77,11 @@ export const Profile = () => {
               />
 
             </div>
-            
             <PrimaryButton text='Save Goal' icon={'logo'} disabled={!valid} />
+            <div className='Profile-goals-errors'>
+              {!goal.length && <p>Enter a training goal</p>}
+              {selectedDate.getTime() < new Date().getTime() && <p>Enter a date greater than today</p>}
+            </div>
           </div>
         </Modal>
       </div>
