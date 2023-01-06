@@ -1,4 +1,5 @@
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { BiTrash } from 'react-icons/bi';
 import { BsCalendar } from 'react-icons/bs';
 import uuid from 'react-uuid';
 import { GoalType } from '../../types/Goal';
@@ -10,6 +11,7 @@ import './AddEditGoal.css';
 
 interface AddEditGoalProps {
   onSave: (goal: GoalType) => any,
+  onDelete: (id: string) => any,
   existingGoal?: GoalType,
 }
 
@@ -17,7 +19,7 @@ const getDateInputFromDate = (d: Date) => {
   return `${d.getFullYear()}-${zeroTime(d.getMonth() + 1)}-${zeroTime(d.getDate())}`;
 }
 
-export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
+export const AddEditGoal = ({onSave, onDelete, existingGoal: e}: AddEditGoalProps) => {
   const existingDateString = e ? getDateInputFromDate(new Date(e.deadline)) : undefined;
 
   // Input values
@@ -41,10 +43,6 @@ export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
     console.log(dateValue)
   }, [dateValue]);
 
-  const onSaveGoal = useCallback(() => {
-    onSave(goal);
-  }, [goal, onSave]);
-  
   return (
     <div className='AddEditGoal'>
       <div className='AddEditGoal-inputs'>
@@ -77,8 +75,15 @@ export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
       <PrimaryButton text={e ? 'Save changes' : 'Save goal'}
         icon={'logo'} 
         disabled={!valid} 
-        onClick={onSaveGoal}
+        onClick={() => onSave(goal)}
       />
+      {e && 
+      <PrimaryButton text='Delete goal' 
+        icon={BiTrash} 
+        style={{background: '#6F2323', width: '70%', minWidth: 0, height: 40, marginTop: 15, marginBottom: 30}} 
+        fontSize={15} 
+        onClick={() => onDelete(e.id)}
+      /> }
       <div className='AddEditGoal-errors'>
         {!goalInput.length && <p>Enter a training goal</p>}
         {(!dateValue || selectedDate.getTime() < new Date().getTime()) && <p>Enter a date greater than today</p>}
