@@ -44,13 +44,15 @@ export const Completed = () => {
 
       <div className='Completed-routines-wrapper'>
         <div className='Completed-routines hidescrollbar' style={{background}}>
-          {selectedSessions.map(p => 
+          {selectedSessions.length 
+          ? selectedSessions.map(p => 
             <Routine routine={routines.find(r => r.id === p.routine_id)!} 
               key={p.id}
               completed 
               start_date={p.start_date}
               onSelect={() => setSummaryData(p)}
-            />)}
+            />)
+          : <p style={{fontSize: 12, fontWeight: 100, margin: 20}}>No routines perfomed</p>}
         </div>
 
         <Modal onClose={() => setSummaryData(undefined)} open={!!summaryData} closeText='Close'>
