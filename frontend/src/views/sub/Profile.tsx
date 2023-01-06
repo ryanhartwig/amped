@@ -24,12 +24,20 @@ export const Profile = () => {
       <hr className='Profile-hr' />
 
 
-      {/* Goals, weekly target */}
+      {/* Weekly target */}
       <div className='Profile-weekly-target'>
         <p>Weekly training target</p>
         <WeeklyTarget className='Profile-weekly-target-days' />
         <h2 style={{fontSize: 26, marginBottom: 6}}>{weeks} weeks</h2>
         <p style={{fontSize: '0.9em', fontWeight: 100}}>target reached</p>
+      </div>
+
+      {/* Training Goals / Milestones */}
+      <div className='Profile-goals'>
+        <p>My training goals</p>
+        <div className='Profile-goals-wrapper' style={{background}}>
+          <p className='Profile-goals-add'>+ Add training goal</p> 
+        </div>
       </div>
     </div>
   )
