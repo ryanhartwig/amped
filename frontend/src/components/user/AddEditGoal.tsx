@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { BiTrash } from 'react-icons/bi';
 import { BsCalendar } from 'react-icons/bs';
 import uuid from 'react-uuid';
-import { GoalType } from '../../types/Goal';
+import { GoalType } from '../../types/GoalType';
 import { zeroTime } from '../../utility/helpers/zeroTime';
 import { Checkbox } from '../ui/Checkbox';
 import { Input } from '../ui/Input';
