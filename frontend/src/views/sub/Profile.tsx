@@ -5,15 +5,25 @@ import { IoPersonOutline } from 'react-icons/io5';
 
 import { useAppSelector } from '../../utility/helpers/hooks';
 import { WeeklyTarget } from '../../components/stats/WeeklyTarget';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Modal } from '../../components/ui/Modal';
 import { AddEditGoal } from '../../components/user/AddEditGoal';
+import { useDispatch } from 'react-redux';
+import { Goal } from '../../types/Goal';
+import { addEditGoal } from '../../store/slices/userSlice';
 
 export const Profile = () => {
+  const dispatch = useDispatch();
+  
   const { background_alt: background } = useAppSelector(s => s.theme);
 
   const [weeks] = useState<number>(2);
   const [goalModal, setGoalModal] = useState<boolean>(false);
+
+  const onSave = useCallback((g: Goal) => {
+    dispatch(addEditGoal(g));
+    setGoalModal(false);
+  }, [dispatch]);
 
   return (
     <div className='Profile'>
@@ -45,7 +55,7 @@ export const Profile = () => {
         {/* Add goal modal */}
         <Modal open={goalModal} onClose={() => setGoalModal(false)} closeText='Cancel'>
           <Modal.Header>Add a training goal</Modal.Header>
-          <AddEditGoal />
+          <AddEditGoal onSave={onSave} />
         </Modal>
       </div>
     </div>
