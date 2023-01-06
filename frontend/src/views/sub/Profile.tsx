@@ -9,18 +9,20 @@ import { useCallback, useState } from 'react';
 import { Modal } from '../../components/ui/Modal';
 import { AddEditGoal } from '../../components/user/AddEditGoal';
 import { useDispatch } from 'react-redux';
-import { Goal } from '../../types/Goal';
+import { GoalType } from '../../types/Goal';
 import { addEditGoal } from '../../store/slices/userSlice';
+import { Goal } from '../../components/user/Goal';
 
 export const Profile = () => {
   const dispatch = useDispatch();
   
   const { background_alt: background } = useAppSelector(s => s.theme);
+  const goals = useAppSelector(s => s.user.goals);
 
   const [weeks] = useState<number>(2);
   const [goalModal, setGoalModal] = useState<boolean>(false);
 
-  const onSave = useCallback((g: Goal) => {
+  const onSave = useCallback((g: GoalType) => {
     dispatch(addEditGoal(g));
     setGoalModal(false);
   }, [dispatch]);
@@ -48,7 +50,13 @@ export const Profile = () => {
       {/* Training Goals / Milestones */}
       <div className='Profile-goals'>
         <p>My training goals</p>
+        
         <div className='Profile-goals-wrapper hidescrollbar' style={{background}}>
+          <div className='Profile-goal'>
+            {goals.map(g => 
+              <Goal goal={g} />
+            )}
+          </div>
           <p className='Profile-goals-add' onClick={() => setGoalModal(true)}>+ Add training goal</p> 
         </div>
         
