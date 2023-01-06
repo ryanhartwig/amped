@@ -20,6 +20,7 @@
   color: rgb(188, 187, 187);
   position: relative;
   top: 13px;
+  font-size: clamp(40px, 67px, 7vh);
 }
 .Profile-avatar-svg path {
   stroke-width: 12;
@@ -41,7 +42,8 @@
 /* Target */
 /*  */
 .Profile-weekly-target {
-  margin: 18px 0;
+  margin: 4px 0;
+  margin-bottom: 8px;
 }
 .Profile-weekly-target-days.WeeklyTarget {
   margin: 12px auto;
