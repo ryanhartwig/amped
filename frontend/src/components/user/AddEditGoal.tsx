@@ -1,14 +1,13 @@
 import { useState, useMemo, useCallback } from 'react';
 import { BsCalendar } from 'react-icons/bs';
-import { useDispatch } from 'react-redux';
 import uuid from 'react-uuid';
-import { addEditGoal } from '../../store/slices/userSlice';
 import { Goal } from '../../types/Goal';
 import { Input } from '../ui/Input';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import './AddEditGoal.css';
 
 interface AddEditGoalProps {
+  onSave: (goal: Goal) => any,
   existingGoal?: Goal,
 }
 
@@ -16,9 +15,7 @@ const getDateInputFromDate = (d: Date) => {
   return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 }
 
-export const AddEditGoal = ({existingGoal: e}: AddEditGoalProps) => {
-  const dispatch = useDispatch();
-
+export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
   const existingDateString = e ? getDateInputFromDate(new Date(e.deadline)) : undefined;
 
   // Input values
@@ -39,8 +36,8 @@ export const AddEditGoal = ({existingGoal: e}: AddEditGoalProps) => {
   }), [completed, goalInput, id, selectedDate]);
 
   const onSaveGoal = useCallback(() => {
-    dispatch(addEditGoal(goal))
-  }, [dispatch, goal]);
+    onSave(goal);
+  }, [goal, onSave]);
   
   return (
     <div className='Profile-goals-content'>
