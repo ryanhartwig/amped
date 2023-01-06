@@ -37,7 +37,7 @@ export const Dash = () => {
 
       <div className='Dash-train'>
         <p>You have {workouts} workout{workouts !== 1 && 's'} scheduled for today</p>
-        <PrimaryButton icon={'logo'} text={'Train'} onClick={onTrain}/>
+        <PrimaryButton icon={'logo'} text={'Train'} style={{marginTop: 12}} onClick={onTrain}/>
       </div>
     </div>
   )

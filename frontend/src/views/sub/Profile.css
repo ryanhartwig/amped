@@ -28,10 +28,14 @@
 }
 
 /* Target */
-.Profile-weekly-target-days {
-  margin: 0 auto;
-  height: 40px;
+.Profile-weekly-target {
+  margin: 15px 0;
+}
+.Profile-weekly-target-days.WeeklyTarget {
+  margin: 10px auto;
+
+  height: 50px;
 
   width: 95vw;
-  max-width: 370px;
+  max-width: 430px;
 }

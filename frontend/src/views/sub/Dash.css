@@ -28,7 +28,7 @@
   width: calc(100% - 32px);
 }
 .Dash-weekly p {
-  font-size: clamp(13px, 18px, 4vw);
+  font-size: 14px;
 }
 
 .Dash-train {
@@ -37,5 +37,5 @@
 }
 
 .Dash-train p {
-  font-size: clamp(13px, 18px, 4vw);
+  font-size: 14px;
 }
