@@ -6,7 +6,7 @@ import { BsCalendar } from 'react-icons/bs';
 
 import { useAppSelector } from '../../utility/helpers/hooks';
 import { WeeklyTarget } from '../../components/stats/WeeklyTarget';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Modal } from '../../components/ui/Modal';
 import { Input } from '../../components/ui/Input';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
@@ -24,6 +24,10 @@ export const Profile = () => {
   const [year, month, day] = useMemo<number[]>(() => dateValue.split('-').map(n => Number(n)), [dateValue]);
   const selectedDate = useMemo<Date>(() => new Date(year, month - 1, day), [day, month, year]);
   const valid = useMemo(() => selectedDate.getTime() >= new Date().getTime() && goal.length, [goal.length, selectedDate]);
+
+  const onSaveGoal = useCallback(() => {
+
+  }, []);
 
   return (
     <div className='Profile'>
@@ -77,10 +81,14 @@ export const Profile = () => {
               />
 
             </div>
-            <PrimaryButton text='Save Goal' icon={'logo'} disabled={!valid} />
+            <PrimaryButton text='Save Goal' 
+              icon={'logo'} 
+              disabled={!valid} 
+              onClick={onSaveGoal}
+            />
             <div className='Profile-goals-errors'>
               {!goal.length && <p>Enter a training goal</p>}
-              {selectedDate.getTime() < new Date().getTime() && <p>Enter a date greater than today</p>}
+              {(!dateValue || selectedDate.getTime() < new Date().getTime()) && <p>Enter a date greater than today</p>}
             </div>
           </div>
         </Modal>
