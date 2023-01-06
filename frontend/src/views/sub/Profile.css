@@ -1,0 +1,37 @@
+/* Avatar & above hr */
+.Profile-avatar {
+  border-radius: 50%;
+  padding: 2px;
+  margin: 20px auto;
+
+  width: fit-content;
+}
+.Profile-avatar-svg {
+  color: rgb(188, 187, 187);
+  position: relative;
+  top: 13px;
+}
+.Profile-avatar-svg path {
+  stroke-width: 12;
+}
+.Profile-circle {
+  overflow: hidden;
+  border-radius: 50%;
+  margin: 3px;
+  border: 1px solid rgb(181, 181, 181);
+  padding: 3px;
+}
+
+.Profile-hr {
+  margin: 9px 0;
+  opacity: 0.4;
+}
+
+/* Target */
+.Profile-weekly-target-days {
+  margin: 0 auto;
+  height: 40px;
+
+  width: 95vw;
+  max-width: 370px;
+}
