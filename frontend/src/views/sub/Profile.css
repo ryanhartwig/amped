@@ -1,3 +1,11 @@
+.Profile {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  
+  height: 100%;
+}
+
 /* Avatar & above hr */
 .Profile-avatar {
   border-radius: 50%;
@@ -32,10 +40,42 @@
   margin: 18px 0;
 }
 .Profile-weekly-target-days.WeeklyTarget {
-  margin: 15px auto;
+  margin: 12px auto;
 
   height: 50px;
 
   width: 95vw;
   max-width: 430px;
+}
+
+/* Goals */
+.Profile-goals {
+  display: flex;
+  flex-direction: column;
+  
+  overflow: hidden;
+
+  padding: 10px;
+
+  height: 100%;
+}
+
+.Profile-goals-wrapper {
+  text-align: left;
+  
+  max-height: 100%;
+  margin-top: 10px;
+
+  overflow-y: scroll;
+
+  border-radius: 10px;
+}
+.Profile-goals-add {
+  margin: 15px;
+  opacity: 0.5;
+  font-size: 16px;
+  width: fit-content;
+}
+.Profile-goals-add:hover {
+  text-decoration: underline;
 }
