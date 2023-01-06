@@ -22,9 +22,12 @@ export const userReducer = createSlice({
       if (index === -1) state.goals.push(action.payload);
       else state.goals[index] = action.payload;
     },
+    deleteGoal: (state, action: PayloadAction<string>) => {
+      state.goals = state.goals.filter(g => g.id !== action.payload)
+    }
   }
 });
 
-export const { addEditGoal } = userReducer.actions;
+export const { addEditGoal, deleteGoal } = userReducer.actions;
 
 export default userReducer.reducer;

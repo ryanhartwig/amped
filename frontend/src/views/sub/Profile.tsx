@@ -10,7 +10,7 @@ import { Modal } from '../../components/ui/Modal';
 import { AddEditGoal } from '../../components/user/AddEditGoal';
 import { useDispatch } from 'react-redux';
 import { GoalType } from '../../types/Goal';
-import { addEditGoal } from '../../store/slices/userSlice';
+import { addEditGoal, deleteGoal } from '../../store/slices/userSlice';
 import { Goal } from '../../components/user/Goal';
 
 export const Profile = () => {
@@ -28,6 +28,12 @@ export const Profile = () => {
     dispatch(addEditGoal(g));
     setGoalModal(false);
     setSelectedGoal(undefined);
+  }, [dispatch]);
+
+  const onDelete = useCallback((id: string) => {
+    dispatch(deleteGoal(id));
+    setSelectedGoal(undefined);
+    setGoalModal(false);
   }, [dispatch]);
 
   return (
@@ -76,7 +82,7 @@ export const Profile = () => {
               ? 'Edit training goal'
               : 'Add a training goal'}
           </Modal.Header>
-          <AddEditGoal onSave={onSave} existingGoal={selectedGoal} />
+          <AddEditGoal onDelete={onDelete} onSave={onSave} existingGoal={selectedGoal} />
         </Modal>
       </div>
     </div>
