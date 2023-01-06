@@ -101,6 +101,14 @@
   text-align: left;
   margin: 20px 0 5px 5px;
 }
+.Profile-goals-errors {
+  color: rgb(162, 104, 59);
+  font-size: 0.85em;
+  margin-top: 8px;
+}
+.Profile-goals-errors p {
+  margin-bottom: 5px;
+}
 
 /*  */
 /* Hide default calendar logo for date input type and use custom icon */
