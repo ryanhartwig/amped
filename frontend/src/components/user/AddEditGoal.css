@@ -1,0 +1,46 @@
+
+.AddEditGoal {
+  width: 90vw;
+  max-width: 500px;
+  position: relative;
+  margin-bottom: 15px;
+}
+.AddEditGoal-inputs {
+  width: 95%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+.AEG-label {
+  text-align: left;
+  margin: 20px 0 5px 5px;
+}
+.AddEditGoal-errors {
+  color: rgb(162, 104, 59);
+  font-size: 0.85em;
+  margin-top: 8px;
+}
+.AddEditGoal-errors p {
+  margin-bottom: 5px;
+}
+
+/*  */
+/* Hide default calendar logo for date input type and use custom icon */
+/*  */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+.AddEditGoal-icon {
+  pointer-events: none;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  height: 100%;
+  position: absolute;
+  right: 15px;
+}
+.AddEditGoal-calendar {
+  opacity: 0.7;
+}

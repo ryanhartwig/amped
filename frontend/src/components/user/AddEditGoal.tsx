@@ -45,24 +45,24 @@ export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
   }, [goal, onSave]);
   
   return (
-    <div className='Profile-goals-content'>
-      <div className='Profile-goals-inputs'>
-        <label htmlFor='PRF-goal'><p className='PRF-label'>Goal label</p></label>
-        <Input id='PRF-goal' 
+    <div className='AddEditGoal'>
+      <div className='AddEditGoal-inputs'>
+        <label htmlFor='AEG-goal'><p className='AEG-label'>Goal label</p></label>
+        <Input id='AEG-goal' 
           placeholder='eg. 200lb 1RM (bench press)' 
           value={goalInput}
           onChange={(e) => setGoalInput(e.target.value)}
         />
 
-        <label htmlFor='PRF-date'><p className='PRF-label'>Goal deadline</p></label>
+        <label htmlFor='AEG-date'><p className='AEG-label'>Goal deadline</p></label>
         <Input type={'date'} 
-          id='PRF-date'
+          id='AEG-date'
           onChange={(e) => setDateValue(e.target.value)}
           value={dateValue}
           placeholder={dateValue}
           icon={
-            <div className='Profile-goals-icon'>
-              <BsCalendar className='Profile-goals-calendar' size={18} />
+            <div className='AddEditGoal-icon'>
+              <BsCalendar className='AddEditGoal-calendar' size={18} />
             </div>
           } 
         />
@@ -73,7 +73,7 @@ export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
         disabled={!valid} 
         onClick={onSaveGoal}
       />
-      <div className='Profile-goals-errors'>
+      <div className='AddEditGoal-errors'>
         {!goalInput.length && <p>Enter a training goal</p>}
         {(!dateValue || selectedDate.getTime() < new Date().getTime()) && <p>Enter a date greater than today</p>}
       </div>
