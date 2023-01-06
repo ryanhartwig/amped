@@ -6,7 +6,9 @@
   height: 100%;
 }
 
-/* Avatar & above hr */
+/*  */
+/* Avatar & user name */
+/*  */
 .Profile-avatar {
   border-radius: 50%;
   padding: 2px;
@@ -35,7 +37,9 @@
   opacity: 0.4;
 }
 
+/*  */
 /* Target */
+/*  */
 .Profile-weekly-target {
   margin: 18px 0;
 }
@@ -48,7 +52,10 @@
   max-width: 430px;
 }
 
+
+/*  */
 /* Goals */
+/*  */
 .Profile-goals {
   display: flex;
   flex-direction: column;
@@ -59,14 +66,13 @@
 
   height: 100%;
 }
-
 .Profile-goals-wrapper {
   text-align: left;
   
   max-height: 100%;
   margin-top: 10px;
 
-  overflow-y: scroll;
+  overflow-y: auto;
 
   border-radius: 10px;
 }
@@ -75,7 +81,45 @@
   opacity: 0.5;
   font-size: 16px;
   width: fit-content;
+  cursor: pointer;
 }
 .Profile-goals-add:hover {
   text-decoration: underline;
+}
+.Profile-goals-content {
+  width: 90vw;
+  max-width: 500px;
+  position: relative;
+  margin-bottom: 15px;
+}
+.Profile-goals-inputs {
+  width: 95%;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+.PRF-label {
+  text-align: left;
+  margin: 20px 0 5px 5px;
+}
+
+/*  */
+/* Hide default calendar logo for date input type and use custom icon */
+/*  */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+.Profile-goals-icon {
+  pointer-events: none;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  height: 100%;
+  position: absolute;
+  right: 15px;
+}
+.Profile-goals-calendar {
+  opacity: 0.7;
 }
