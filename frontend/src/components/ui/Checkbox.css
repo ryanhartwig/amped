@@ -1,4 +1,4 @@
-.Checkbox-wrapper {
+.Checkbox {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -8,7 +8,7 @@
   cursor: pointer;
 }
 
-.Checkbox {
+.Checkbox-box {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,8 +17,8 @@
   position: relative;
   overflow: hidden;
 
-  height: 20px;
-  width: 20px;
+  height: 14px;
+  width: 14px;
 
 
   border: 1px solid grey;
@@ -30,5 +30,7 @@
 
 .Checkbox-label {
   margin: 0 12px;
+  font-weight: 100;
+  font-size: 17px;
 }
 
