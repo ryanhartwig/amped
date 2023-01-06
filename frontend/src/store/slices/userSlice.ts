@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Goal } from "../../types/Goal";
+import { GoalType } from "../../types/Goal";
 import { scheduled, ScheduledState } from "../../types/scheduledState";
 
 interface UserState {
   scheduled: ScheduledState,
-  goals: Goal[],
+  goals: GoalType[],
 }
 
 const initialState: UserState = {
@@ -16,7 +16,7 @@ export const userReducer = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    addEditGoal: (state, action: PayloadAction<Goal>) => {
+    addEditGoal: (state, action: PayloadAction<GoalType>) => {
       const index = state.goals.findIndex(g => g.id === action.payload.id);
 
       if (index === -1) state.goals.push(action.payload);

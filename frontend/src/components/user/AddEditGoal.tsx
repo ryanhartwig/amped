@@ -1,14 +1,14 @@
 import { useState, useMemo, useCallback } from 'react';
 import { BsCalendar } from 'react-icons/bs';
 import uuid from 'react-uuid';
-import { Goal } from '../../types/Goal';
+import { GoalType } from '../../types/Goal';
 import { Input } from '../ui/Input';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import './AddEditGoal.css';
 
 interface AddEditGoalProps {
-  onSave: (goal: Goal) => any,
-  existingGoal?: Goal,
+  onSave: (goal: GoalType) => any,
+  existingGoal?: GoalType,
 }
 
 const getDateInputFromDate = (d: Date) => {
@@ -28,7 +28,7 @@ export const AddEditGoal = ({onSave, existingGoal: e}: AddEditGoalProps) => {
   const selectedDate = useMemo<Date>(() => new Date(year, month - 1, day), [day, month, year]);
   const valid = useMemo(() => selectedDate.getTime() >= new Date().getTime() && goalInput.length, [goalInput.length, selectedDate]);
 
-  const goal: Goal = useMemo<Goal>(() => ({
+  const goal: GoalType = useMemo<GoalType>(() => ({
     completed,
     deadline: selectedDate.getTime(),
     goal: goalInput,

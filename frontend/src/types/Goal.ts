@@ -1,4 +1,4 @@
-export interface Goal {
+export interface GoalType {
   deadline: number,
   goal: string,
   completed: boolean,
