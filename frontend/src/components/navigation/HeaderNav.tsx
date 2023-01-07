@@ -21,10 +21,10 @@ export const HeaderNav = () => {
         {/* Right side elements */}
         <div className='HeaderNav-buttons'>
           <ReactIconButton buttonSize='45px'>
-            <IoIosNotificationsOutline size={32}/>
+            <IoIosNotificationsOutline size={24}/>
           </ReactIconButton>
           <ReactIconButton buttonSize='45px'>
-            <FiSettings size={25}/>
+            <FiSettings size={19}/>
           </ReactIconButton>
         </div>
       </div>

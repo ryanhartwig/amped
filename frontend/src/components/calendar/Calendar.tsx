@@ -10,7 +10,7 @@ import { days, months } from '../../utility/data/days_months';
 import { minMaxDate } from '../../utility/helpers/minMaxDate';
 
 interface CalendarProps {
-  showPeriod?: boolean,
+  showOptions?: boolean,
   selected?: [number, number],
   onSelect?: ([min, max]: [number, number]) => any,
 }
@@ -19,7 +19,7 @@ interface View {
   year: number,
 }
 
-export const Calendar = ({showPeriod, onSelect, selected}: CalendarProps) => {
+export const Calendar = ({showOptions, onSelect, selected}: CalendarProps) => {
 
   const today = new Date();
   const initDate = new Date();
@@ -72,21 +72,26 @@ export const Calendar = ({showPeriod, onSelect, selected}: CalendarProps) => {
   return (
     <div className='Calendar'>
       {/* Year/Month Select */}
-      { showPeriod && <div className='Calendar-period noselect'>
+      <div className='Calendar-period noselect'>
         <div className='Calendar-period-month'>
-          <ReactIconButton buttonSize='30px' onClick={() => onMonthSwitch(0)} style={{borderRadius: '12px'}}>
-            <AiOutlineLeft size={15}/>
-          </ReactIconButton>
+          {/* Month with < / > inc options when showOptions is true */}
+          {showOptions && 
+            <ReactIconButton buttonSize='30px' onClick={() => onMonthSwitch(0)} style={{borderRadius: '12px'}}>
+              <AiOutlineLeft size={15}/>
+            </ReactIconButton> }
+
           <h2>{months[viewing.month]}</h2>
-          { !blockInc && <ReactIconButton buttonSize='30px' onClick={() => onMonthSwitch(2)} style={{borderRadius: '12px'}}>
-            <AiOutlineRight size={15}/>
-          </ReactIconButton>}
+
+          {!blockInc && showOptions &&  
+            <ReactIconButton buttonSize='30px' onClick={() => onMonthSwitch(2)} style={{borderRadius: '12px'}}>
+              <AiOutlineRight size={15}/>
+            </ReactIconButton>}
         </div>
         <div className='Calendar-reset'>
           <h2>{viewing.year}</h2>
-          <p onClick={reset}>Today</p>
+          {showOptions && <p onClick={reset}>Today</p>}
         </div>
-      </div>}
+      </div>
 
       {/* Day of the Week */}
       <div className='Calendar-days'>

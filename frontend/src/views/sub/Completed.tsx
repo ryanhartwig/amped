@@ -35,7 +35,7 @@ export const Completed = () => {
   return (
     <div className='Completed'>
       <div className='Completed-calendar'>
-        <Calendar showPeriod selected={selected} onSelect={onSelect} />
+        <Calendar showOptions selected={selected} onSelect={onSelect} />
       </div>
 
       <div className='Completed-date'>
