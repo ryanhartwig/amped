@@ -4,13 +4,14 @@ import './Profile.css';
 import { IoPersonOutline } from 'react-icons/io5';
 
 import { useAppSelector } from '../../utility/helpers/hooks';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Modal } from '../../components/ui/Modal';
 import { AddEditGoal } from '../../components/user/AddEditGoal';
 import { useDispatch } from 'react-redux';
 import { GoalType } from '../../types/GoalType';
-import { addEditGoal, deleteGoal } from '../../store/slices/userSlice';
+import { addEditGoal, DaysTrained, deleteGoal, setWeeklyTarget } from '../../store/slices/userSlice';
 import { Goal } from '../../components/user/Goal';
+import { Counter } from '../../components/ui/Counter';
 
 
 const tabs = ['My training goals', 'Completed goals']
@@ -29,6 +30,13 @@ export const Profile = () => {
   const [goalModal, setGoalModal] = useState<boolean>(false);
   const [tab, setTab] = useState<number>(0);
   const [selectedGoal, setSelectedGoal] = useState<GoalType>();
+
+  const weeklyTarget = useAppSelector(s => s.user.weeklyTarget);
+  const [target, setTarget] = useState<number>(weeklyTarget);
+
+  useEffect(() => {
+    dispatch(setWeeklyTarget(target as DaysTrained))
+  }, [dispatch, target]);
 
   const onSave = useCallback((g: GoalType) => {
     dispatch(addEditGoal(g));
@@ -63,42 +71,49 @@ export const Profile = () => {
 
       {/* Training Goals / Milestones */}
       <div className='Profile-goals'>
-        <div className='Profile-goals-tabs'>
-          {tabs.map((t, i) => 
-          <div className='Profile-goals-tab' 
-            onClick={() => setTab(i)} 
-            key={t}
-            style={{borderBottomColor: i !== tab ? 'transparent' : ''}}
-          >
-            <p style={{opacity: tab === i ? 1 : 0.5}}>{t}</p>
-          </div>
-          )}
-        </div>
-        
-        <div className='Profile-goals-wrapper hidescrollbar' style={{background}}>
-          <div className='Profile-goal'>
-            {goals.map(g => ((tab === 0 && !g.completed) || (tab === 1 && g.completed)) 
-              && <Goal goal={g} 
-                  key={g.id} 
-                  onClick={() => {
-                    setSelectedGoal(g);
-                    setGoalModal(true);
-                  }}
-                />
+        <div style={{height: 'calc(100% - 135px'}}>
+          <div className='Profile-goals-tabs'>
+            {tabs.map((t, i) => 
+            <div className='Profile-goals-tab' 
+              onClick={() => setTab(i)} 
+              key={t}
+              style={{borderBottomColor: i !== tab ? 'transparent' : ''}}
+            >
+              <p style={{opacity: tab === i ? 1 : 0.5}}>{t}</p>
+            </div>
             )}
           </div>
-          {tab === 0 
-            ? <p className='Profile-goals-add' onClick={() => setGoalModal(true)}>+ Add training goal</p> 
-            : goals.filter(g => g.completed).length 
-              ? <></> 
-              : <p style={{
-                  textAlign: 'center', 
-                  padding: 10, 
-                  paddingBottom: 14, 
-                  fontSize: 14, 
-                  fontWeight: 100
-                }}>No goals to show</p>
-          }
+          <div className='Profile-goals-wrapper hidescrollbar' style={{background}}>
+            <div className='Profile-goal'>
+              {goals.map(g => ((tab === 0 && !g.completed) || (tab === 1 && g.completed)) 
+                && <Goal goal={g} 
+                    key={g.id} 
+                    onClick={() => {
+                      setSelectedGoal(g);
+                      setGoalModal(true);
+                    }}
+                  />
+              )}
+            </div>
+            {tab === 0 
+              ? <p className='Profile-goals-add' onClick={() => setGoalModal(true)}>+ Add training goal</p> 
+              : goals.filter(g => g.completed).length 
+                ? <></> 
+                : <p style={{
+                    textAlign: 'center', 
+                    padding: 10, 
+                    paddingBottom: 14, 
+                    fontSize: 14, 
+                    fontWeight: 100
+                  }}>No goals to show</p>
+            }
+          </div>
+        </div>
+        
+
+        <div style={{background}} className="Profile-target noselect">
+          <p>Weekly training goal (days)</p>
+          <Counter incrementBy={1} value={target} setValue={setTarget} max={7} min={0} />
         </div>
         
         {/* Add goal modal */}

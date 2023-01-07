@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { BiTrash } from 'react-icons/bi';
 import { BsCalendar } from 'react-icons/bs';
 import uuid from 'react-uuid';
@@ -38,10 +38,6 @@ export const AddEditGoal = ({onSave, onDelete, existingGoal: e}: AddEditGoalProp
     goal: goalInput,
     id,
   }), [completed, goalInput, id, selectedDate]);
-
-  useEffect(() => {
-    console.log(dateValue)
-  }, [dateValue]);
 
   return (
     <div className='AddEditGoal'>
