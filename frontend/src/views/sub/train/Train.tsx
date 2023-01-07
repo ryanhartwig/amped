@@ -78,9 +78,9 @@ export const Train = () => {
           <hr></hr>
         </div>}
         <div >
-          <PrimaryButton ref={triggerRef} onClick={() => setOpen(true)}  text='Select a routine' style={{height: '50px'}} icon={'logo'} />
+          <PrimaryButton ref={triggerRef} onClick={() => setOpen(true)}  text='Select routine' style={{height: '50px', marginBottom: 60}} icon={'logo'} />
         </div>
-        <PrimaryButton text='Start a custom session' altColor style={{height: '50px'}} icon={'logo'} />
+        {/* <PrimaryButton text='Start a custom session' altColor style={{height: '50px'}} icon={'logo'} /> */}
       </div>
 
       <Modal closeText='Close' onClose={() => setOpen(false)} open={open}>
