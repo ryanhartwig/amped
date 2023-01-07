@@ -62,7 +62,9 @@ export const InfoBorder = ({children, modalHeader, modalContent, onClick, isButt
 
       <Modal closeText='Close' open={open} onClose={() => setOpen(false)} >
           <Modal.Header>{modalHeader}</Modal.Header>
-          {modalContent}
+          <div style={{minHeight: 120}}>
+            {modalContent}
+          </div>
       </Modal>
 
       {content}
