@@ -15,7 +15,7 @@ const initialState: UserState = {
   scheduled,
   goals: [],
   weeklyTargetReached: 0,
-  weeklyTarget: 5,
+  weeklyTarget: 3,
 }
 
 export const userReducer = createSlice({
@@ -34,9 +34,12 @@ export const userReducer = createSlice({
     setWeeklyTargetReached: (state, action: PayloadAction<number>) => {
       state.weeklyTargetReached = action.payload;
     },
+    setWeeklyTarget: (state, action: PayloadAction<DaysTrained>) => {
+      state.weeklyTarget = action.payload
+    }, 
   }
 });
 
-export const { addEditGoal, deleteGoal, setWeeklyTargetReached } = userReducer.actions;
+export const { addEditGoal, setWeeklyTarget, deleteGoal, setWeeklyTargetReached } = userReducer.actions;
 
 export default userReducer.reducer;
