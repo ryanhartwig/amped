@@ -6,7 +6,7 @@ export interface SetFieldType {
   /**
    * Related exercise data id
    */
-  exercise_data_id: string,
+  performed_exercise_id: string,
   /**
    * Length of set in seconds
    */

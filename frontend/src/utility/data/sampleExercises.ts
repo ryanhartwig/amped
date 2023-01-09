@@ -8,6 +8,7 @@ export const sampleExercises: ExerciseType[] = [
     muscle_targets: ['chest'],
     id: 'benchpress',
     intensity: 4,
+    favourited: false,
   }, {
     name: 'Chest Fly',
     type: 'Exercise',
@@ -23,6 +24,7 @@ export const sampleExercises: ExerciseType[] = [
     muscle_targets: ['chest'],
     id: 'inclinebenchpress',
     intensity: 5,
+    favourited: false,
   }, {
     name: 'Bicep Curl',
     type: 'Exercise',
@@ -30,6 +32,7 @@ export const sampleExercises: ExerciseType[] = [
     muscle_targets: ['biceps'],
     id: 'bicepcurl',
     intensity: 5,
+    favourited: false,
   }, {
     name: 'Hammer Curl',
     type: 'Exercise',
@@ -45,6 +48,7 @@ export const sampleExercises: ExerciseType[] = [
     muscle_targets: ['quad'],
     id: 'legextension',
     intensity: 5,
+    favourited: false,
   }, {
     name: 'Tricep Extension',
     type: 'Exercise',
@@ -60,6 +64,7 @@ export const sampleExercises: ExerciseType[] = [
     muscle_targets: ['pec major'],
     id: 'floorfly',
     intensity: 5,
+    favourited: false,
   }, {
     name: 'Standing Shoulder Press',
     type: 'Exercise',
@@ -75,6 +80,7 @@ export const sampleExercises: ExerciseType[] = [
     muscle_targets: ['front delts'],
     id: 'frontraise',
     intensity: 5,
+    favourited: false,
   }, {
     name: 'Deadlift',
     type: 'Exercise',
@@ -82,6 +88,7 @@ export const sampleExercises: ExerciseType[] = [
     muscle_targets: ['low back'],
     id: 'deadlift',
     intensity: 5,
+    favourited: false,
   }, {
     name: 'Scissors',
     type: 'Exercise',
@@ -89,5 +96,6 @@ export const sampleExercises: ExerciseType[] = [
     muscle_targets: ['lower abs'],
     id: 'scissors',
     intensity: 4,
+    favourited: false,
   }
 ]

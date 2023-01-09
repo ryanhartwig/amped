@@ -18,7 +18,7 @@ export interface ExerciseDataType {
   /**
    * Id of the performed routine that this data belongs to
    */
-  routine_data_id: string,
+  performed_routine_id: string,
   /**
    * This performed exercise's unique id
    */

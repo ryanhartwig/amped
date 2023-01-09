@@ -25,11 +25,11 @@ export interface RoutineType {
   intensity: Intensity,
   id: string,
   type: 'Routine',
-  favourited?: boolean,
+  favourited: boolean,
   /**
    * User specified tags for quick filtering 
    */
   tags?: string[],
   notes?: string,
-  lastSessionNotes?: string,
+  prev_notes?: string,
 }

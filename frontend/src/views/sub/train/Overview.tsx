@@ -65,10 +65,10 @@ export const Overview = ({inSession}: OverviewProps) => {
             <div className='Overview-exercises hidescrollbar' style={{background: background_alt}}>
               {routine.exercises.map((e, i) => <Exercise key={`${e.position}-${e.exercise}`} selected={inSession && currentPosition === i ? e.exercise : undefined} exercise={e.exercise} />)}
             </div>
-            {routine.lastSessionNotes && <div className='Overview-lastnotes'>
+            {routine.prev_notes && <div className='Overview-lastnotes'>
               <p>Last session's notes</p>
               <div className='Overview-textarea' style={{background: background_alt}}>
-                <p className='Overview-text'>{routine.lastSessionNotes}</p>
+                <p className='Overview-text'>{routine.prev_notes}</p>
               </div>
             </div>}
           </div>

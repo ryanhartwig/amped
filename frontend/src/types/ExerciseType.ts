@@ -14,7 +14,7 @@ export interface ExerciseType {
    */
   muscle_targets: string[],
   type: 'Exercise',
+  favourited: boolean,
   intensity?: Intensity,
-  favourited?: boolean,
   notes?: string,
 }

@@ -9,6 +9,7 @@ export const sampleRoutines: RoutineType[] = [
     intensity: 4,
     tags: ['endurance'],
     id: 'chesttriceps',
+    favourited: false,
     exercises: sampleExercises.filter(ex => ex.muscle_targets.includes('chest'))
       .map((ex, i) => ({exercise: ex, position: i})),
   }, {
@@ -50,6 +51,7 @@ export const sampleRoutines: RoutineType[] = [
     intensity: 3,
     tags: ['push'],
     id: 'Shoulders',
+    favourited: false,
     exercises: sampleExercises.filter(ex => ex.muscle_targets.includes('biceps'))
       .map((ex, i) => ({exercise: ex, position: i})),
     notes: 'do it',
@@ -60,10 +62,11 @@ export const sampleRoutines: RoutineType[] = [
     intensity: 2,
     tags: ['annoying'],
     id: 'Back',
+    favourited: false,
     exercises: sampleExercises.filter(ex => ex.muscle_targets.includes('biceps'))
       .map((ex, i) => ({exercise: ex, position: i})),
     notes: 'do it',
-    lastSessionNotes: `Focus lat contraction
+    prev_notes: `Focus lat contraction
     
     
 Lower weight to challenge proper muscle groups. 

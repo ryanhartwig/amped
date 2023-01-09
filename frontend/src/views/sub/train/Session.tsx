@@ -43,7 +43,7 @@ export const Session = () => {
     exercise_position: position,
     exercise_name: exercise.exercise.name,
     id,
-    routine_data_id: routine.id,
+    performed_routine_id: routine.id,
     sets, 
   }), [exercise.exercise.id, exercise.exercise.name, exerciseTime, id, position, routine.id, sets]);
 
