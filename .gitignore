@@ -1,2 +1,5 @@
-#modules
+# modules
 frontend/node_modules/
+
+# database directory
+database-server/
