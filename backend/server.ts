@@ -1,4 +1,4 @@
-import express from 'express';
+import express  from 'express';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 app.get('/', (_, res) => {
-  res.send('<h1>Express + typescript server</h1>');
+  res.send('<h1>Express  += sd typescript server</h1>');
 });
 
 app.listen(port, () => {
