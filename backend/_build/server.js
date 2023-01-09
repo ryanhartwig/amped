@@ -13,6 +13,7 @@ const app = (0, express_1.default)();
 const port = process.env.PORT || 8000;
 app.use((0, morgan_1.default)('dev'));
 app.use((0, cors_1.default)());
+app.use(express_1.default.json());
 // Mounts routes defined in ./routes/index.ts
 (0, routes_1.default)(app);
 app.listen(port, () => {
