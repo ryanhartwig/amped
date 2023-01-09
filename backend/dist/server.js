@@ -15,9 +15,6 @@ app.use((0, morgan_1.default)('dev'));
 app.use((0, cors_1.default)());
 // Mounts routes defined in ./routes/index.ts
 (0, routes_1.default)(app);
-app.get('/', (_, res) => {
-    res.send('<h1>Express += sd typescript server</h1>');
-});
 app.listen(port, () => {
     console.log('⚡️', `Server is running at http://localhost:${port}`);
 });
