@@ -1,7 +1,7 @@
 import { Express } from 'express';
-import test from "./test";
+import users from './user';
 
 export default (app: Express) => {
-  app.use('/test', test);
+  app.use('/users', users);
   // additional routes here
 }
