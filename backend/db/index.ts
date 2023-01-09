@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 
-export const pool = new Pool({
+export default new Pool({
   user: process.env.USER,
   host: process.env.HOST,
   database: process.env.PG_DB,
