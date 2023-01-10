@@ -31,7 +31,7 @@ exercises.post('/new', async (req, res) => {
   `, params);
 
   if (!response.rowCount) return res.status(500).send('Could not add exercise');
-  res.status(201).json(response.rows);
+  res.status(201).json(response.rows[0]);
 });
 
 /* Edit an existing exercise */

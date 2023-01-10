@@ -37,7 +37,7 @@ exercises.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function*
   `, params);
     if (!response.rowCount)
         return res.status(500).send('Could not add exercise');
-    res.status(201).json(response.rows);
+    res.status(201).json(response.rows[0]);
 }));
 /* Edit an existing exercise */
 exercises.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
