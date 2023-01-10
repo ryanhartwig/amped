@@ -11,6 +11,7 @@ exercise.get('/:performed_routine_id', async (req, res) => {
   if (!performed_routine_id) return res.status(400).send('No performed exercise id provided');
   const response = await db.query('select * from performed_exercise where performed_routine_id = $1', [performed_routine_id]);
 
+  if (!response.rowCount) return res.status(404).send('No exercise data for provided routine id');
   res.status(200).json(response.rows);
 });
 

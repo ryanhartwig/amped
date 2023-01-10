@@ -21,6 +21,8 @@ set.get('/:performed_exercise_id', (req, res) => __awaiter(void 0, void 0, void 
     if (!performed_exercise_id)
         return res.status(400).send('No performed exercise id provided');
     const response = yield db_1.default.query('select * from performed_set where performed_exercise_id = $1', [performed_exercise_id]);
+    if (!response.rowCount)
+        return res.status(404).send('No set data for provided exercise_id');
     res.status(200).json(response.rows);
 }));
 /* Add exercise data */
@@ -55,7 +57,7 @@ set.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
       modifiers = $4,
       position = $5,
       weight = $6,
-      count = $6
+      count = $7
     where id = $1
     returning *
   `, [id, ...params]);

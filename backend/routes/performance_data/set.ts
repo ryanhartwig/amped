@@ -11,6 +11,7 @@ set.get('/:performed_exercise_id', async (req, res) => {
   if (!performed_exercise_id) return res.status(400).send('No performed exercise id provided');
   const response = await db.query('select * from performed_set where performed_exercise_id = $1', [performed_exercise_id]);
 
+  if (!response.rowCount) return res.status(404).send('No set data for provided exercise_id');
   res.status(200).json(response.rows);
 });
 
@@ -59,7 +60,7 @@ set.put('/:id', async (req, res) => {
       modifiers = $4,
       position = $5,
       weight = $6,
-      count = $6
+      count = $7
     where id = $1
     returning *
   `, [id, ...params]);
