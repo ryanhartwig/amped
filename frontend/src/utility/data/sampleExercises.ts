@@ -9,6 +9,7 @@ export const sampleExercises: ExerciseType[] = [
     id: 'benchpress',
     intensity: 4,
     favourited: false,
+    notes: null,
   }, {
     name: 'Chest Fly',
     type: 'Exercise',
@@ -16,6 +17,7 @@ export const sampleExercises: ExerciseType[] = [
     muscle_targets: ['chest'],
     id: 'chestfly',
     favourited: true,
+    notes: null,
     intensity: 4,
   }, {
     name: 'Incline Bench Press',
@@ -25,6 +27,7 @@ export const sampleExercises: ExerciseType[] = [
     id: 'inclinebenchpress',
     intensity: 5,
     favourited: false,
+    notes: null,
   }, {
     name: 'Bicep Curl',
     type: 'Exercise',
@@ -33,6 +36,7 @@ export const sampleExercises: ExerciseType[] = [
     id: 'bicepcurl',
     intensity: 5,
     favourited: false,
+    notes: null,
   }, {
     name: 'Hammer Curl',
     type: 'Exercise',
@@ -40,6 +44,7 @@ export const sampleExercises: ExerciseType[] = [
     muscle_targets: ['brachioradialis', 'biceps'],
     id: 'hammercurl',
     favourited: true,
+    notes: null,
     intensity: 4,
   }, {
     name: 'Leg Extension',
@@ -49,6 +54,7 @@ export const sampleExercises: ExerciseType[] = [
     id: 'legextension',
     intensity: 5,
     favourited: false,
+    notes: null,
   }, {
     name: 'Tricep Extension',
     type: 'Exercise',
@@ -57,6 +63,7 @@ export const sampleExercises: ExerciseType[] = [
     id: 'tricepextension',
     intensity: 4,
     favourited: true,
+    notes: null,
   }, {
     name: 'Floor Fly',
     type: 'Exercise',
@@ -65,6 +72,7 @@ export const sampleExercises: ExerciseType[] = [
     id: 'floorfly',
     intensity: 5,
     favourited: false,
+    notes: null,
   }, {
     name: 'Standing Shoulder Press',
     type: 'Exercise',
@@ -73,6 +81,7 @@ export const sampleExercises: ExerciseType[] = [
     id: 'standingshoulderpress',
     intensity: 5,
     favourited: true,
+    notes: null,
   }, {
     name: 'Front Raise',
     type: 'Exercise',
@@ -81,6 +90,7 @@ export const sampleExercises: ExerciseType[] = [
     id: 'frontraise',
     intensity: 5,
     favourited: false,
+    notes: null,
   }, {
     name: 'Deadlift',
     type: 'Exercise',
@@ -89,6 +99,7 @@ export const sampleExercises: ExerciseType[] = [
     id: 'deadlift',
     intensity: 5,
     favourited: false,
+    notes: null,
   }, {
     name: 'Scissors',
     type: 'Exercise',
@@ -97,5 +108,6 @@ export const sampleExercises: ExerciseType[] = [
     id: 'scissors',
     intensity: 4,
     favourited: false,
+    notes: null,
   }
 ]
