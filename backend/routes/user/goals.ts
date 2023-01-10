@@ -11,7 +11,7 @@ goals.get('/:user_id', async (req, res) => {
 
   if (!user_id) return res.status(400).send('Missing user_id url parameter');
 
-  const response = await db.query('select * from goals where user_id = $1', [user_id]);
+  const response = await db.query('select * from goal where user_id = $1', [user_id]);
 
   if (!response.rowCount) return res.status(404).send('No goals found for provided user id');
   res.status(200).json(response.rows);

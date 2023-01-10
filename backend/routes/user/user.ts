@@ -2,10 +2,12 @@ import PromiseRouter from "express-promise-router";
 import db from "../../db";
 import { User } from "../../types/user";
 import goals from "./goals";
+import scheduled from "./scheduled";
 
 const user = PromiseRouter();
 
 user.use('/goals', goals);
+user.use('/scheduled', scheduled);
 
 user.post('/add', async (req, res) => {
   const { id, name, email, weekly_target } = req.body as User;
