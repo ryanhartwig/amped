@@ -48,7 +48,7 @@ exercises.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     const existing = yield db_1.default.query('select * from exercise where id = $1', [id]);
     if (!existing.rowCount)
         return res.status(404).send('Could not find exercise with given id');
-    const { user_id, name, exercise_goal, muscle_targets, type, favourited, intensity, notes } = Object.assign(Object.assign({}, patch), existing.rows[0]);
+    const { user_id, name, exercise_goal, muscle_targets, type, favourited, intensity, notes } = Object.assign(Object.assign({}, existing.rows[0]), patch);
     const params = [user_id, name, exercise_goal, muscle_targets, type, favourited, intensity, notes];
     const response = yield db_1.default.query(`
     update exercise set

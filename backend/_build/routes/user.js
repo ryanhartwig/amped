@@ -42,12 +42,12 @@ user.put('/:param_id', (req, res) => __awaiter(void 0, void 0, void 0, function*
         return res.status(404).send('A user with the provided id was not found.');
     const { id, name, email, weekly_target } = Object.assign(Object.assign({}, existing.rows[0]), patch);
     const response = yield db_1.default.query(`
-  update users 
-  set name = $2,
+    update users set 
+      name = $2,
       email = $3,
       weekly_target = $4
-  where id = $1
-  returning *
+    where id = $1
+    returning *
   `, [id, name, email, weekly_target]);
     return res.status(200).send(response.rows);
 }));
