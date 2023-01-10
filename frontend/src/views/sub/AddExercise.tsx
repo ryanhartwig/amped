@@ -45,7 +45,7 @@ export const AddExercise = () => {
     intensity,
     type: 'Exercise',
     id: editing?.id || uuid(),
-    notes: notes,
+    notes: notes?.length ? notes : null,
     exercise_goal: goal === 'Select exercise goal' ? 'Other' : goal,
     muscle_targets: Array.from(target),
     favourited,
