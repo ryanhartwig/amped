@@ -15,7 +15,7 @@ export const WeeklyTarget = ({...props}: WeeklyTargetProps) => {
   const firstDay = new Date().setDate(today.getDate() - today.getDay());
 
   const data = useAppSelector(s => s.workoutData.routineData);
-  const weeklyTarget = useAppSelector(s => s.user.weeklyTarget);
+  const weeklyTarget = useAppSelector(s => s.user.weekly_target);
   const daysTrained = getDaysTrained(data, firstDay);
   const daysLeft = Math.max(0, weeklyTarget - daysTrained);
 

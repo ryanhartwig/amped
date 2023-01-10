@@ -31,7 +31,7 @@ export const Profile = () => {
   const [tab, setTab] = useState<number>(0);
   const [selectedGoal, setSelectedGoal] = useState<GoalType>();
 
-  const weeklyTarget = useAppSelector(s => s.user.weeklyTarget);
+  const weeklyTarget = useAppSelector(s => s.user.weekly_target);
   const [target, setTarget] = useState<number>(weeklyTarget);
 
   useEffect(() => {
