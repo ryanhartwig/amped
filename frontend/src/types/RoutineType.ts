@@ -7,14 +7,8 @@ export interface RoutineExercise {
 }
 
 export interface RoutineType {
+  id: string,
   name: string,
-  /**
-   * List of exercises this routine includes
-   * 
-   * This property will not be stored in postgres, but queried and filled after the 
-   * routine is fetched
-   */
-  exercises: RoutineExercise[],
   /**
    * Approximate duration of the exercise
    */
@@ -23,13 +17,19 @@ export interface RoutineType {
    * 1 - 5 intensity rating
    */
   intensity: Intensity,
-  id: string,
   type: 'Routine',
   favourited: boolean,
   /**
    * User specified tags for quick filtering 
    */
-  tags?: string[],
-  notes?: string,
-  prev_notes?: string,
+  tags: string[] | null,
+  notes: string | null,
+  prev_notes: string | null,
+  /**
+   * List of exercises this routine includes
+   * 
+   * This property will not be stored in postgres, but queried and filled after the 
+   * routine is fetched
+   */
+  exercises: RoutineExercise[],
 }

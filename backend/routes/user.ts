@@ -1,14 +1,8 @@
 import PromiseRouter from "express-promise-router";
 import db from "../db";
+import { User } from "../types/user";
 
 const user = PromiseRouter();
-
-interface User {
-  id: string,
-  name: string,
-  email: string,
-  weekly_target: number,
-}
 
 user.post('/add', async (req, res) => {
   const { id, name, email, weekly_target } = req.body as User;
@@ -51,6 +45,7 @@ user.put('/:param_id', async (req, res) => {
   `, [id, name, email, weekly_target]);
 
   return res.status(200).send(response.rows);
-})
+});
+
 
 export default user;

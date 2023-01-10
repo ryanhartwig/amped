@@ -4,6 +4,8 @@ import { sampleExercises } from "./sampleExercises";
 export const sampleRoutines: RoutineType[] = [
   {
     name: 'Chest & Triceps',
+    notes: null,
+    prev_notes: null,
     type: 'Routine',
     est_duration: 50,
     intensity: 4,
@@ -14,6 +16,7 @@ export const sampleRoutines: RoutineType[] = [
       .map((ex, i) => ({exercise: ex, position: i})),
   }, {
     name: 'Biceps',
+    prev_notes: null,
     type: 'Routine',
     est_duration: 40,
     intensity: 5,
@@ -25,6 +28,7 @@ export const sampleRoutines: RoutineType[] = [
     notes: 'Go hard',
   }, {
     name: 'Legs',
+    prev_notes: null,
     type: 'Routine',
     est_duration: 40,
     intensity: 1,
@@ -36,9 +40,11 @@ export const sampleRoutines: RoutineType[] = [
     notes: 'do it',
   }, {
     name: 'Abs',
+    prev_notes: null,
     type: 'Routine',
     est_duration: 40,
     intensity: 5,
+    tags: null,
     id: 'Abs',
     exercises: sampleExercises.filter(ex => ex.muscle_targets.includes('biceps'))
       .map((ex, i) => ({exercise: ex, position: i})),
@@ -46,6 +52,7 @@ export const sampleRoutines: RoutineType[] = [
     notes: 'do it',
   }, {
     name: 'Shoulders',
+    prev_notes: null,
     type: 'Routine',
     est_duration: 40,
     intensity: 3,
