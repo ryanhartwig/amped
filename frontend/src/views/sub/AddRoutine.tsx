@@ -53,14 +53,16 @@ export const AddRoutine = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const routine = useMemo<RoutineType>(() => ({
+    id: editing?.id || uuid(),
     name: routineName || 'Routine name',
-    exercises,
+    est_duration: Number(duration || 1),
     intensity,
     type: 'Routine',
-    tags: Array.from(tags),
-    id: editing?.id || uuid(),
-    est_duration: Number(duration || 1),
     favourited,
+    tags: tags.size ? Array.from(tags) : null,
+    notes: null,
+    prev_notes: null,
+    exercises,
   }), [duration, editing?.id, exercises, favourited, intensity, routineName, tags]);
 
   const onSaveRoutine = useCallback(() => {
