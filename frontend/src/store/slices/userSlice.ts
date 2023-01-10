@@ -7,13 +7,22 @@ export type DaysTrained = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 interface UserState {
   scheduled: ScheduledState,
   goals: GoalType[],
-  weeklyTarget: DaysTrained,
+  weekly_target: DaysTrained,
+  name: string,
+  email: string,
+  id: string,
+  authenticated: boolean,
 }
 
 const initialState: UserState = {
   scheduled,
   goals: [],
-  weeklyTarget: 3,
+  weekly_target: 4,
+  name: 'admin',
+  email: '',
+  id: 'admin',
+  authenticated: true,
+
 }
 
 export const userReducer = createSlice({
@@ -30,7 +39,7 @@ export const userReducer = createSlice({
       state.goals = state.goals.filter(g => g.id !== action.payload)
     },
     setWeeklyTarget: (state, action: PayloadAction<DaysTrained>) => {
-      state.weeklyTarget = action.payload
+      state.weekly_target = action.payload
     }, 
   }
 });
