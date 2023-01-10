@@ -30,6 +30,9 @@ goals.post('/new', async (req, res) => {
       $1, $2, $3, $4, $5
     ) returning *
   `, params);
+
+  if (!response.rowCount) return res.status(500).send('Could not create goal');
+  res.status(201).json(response.rows[0]);
 });
 
 goals.put('/:id', async (req, res) => {

@@ -36,6 +36,9 @@ goals.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
       $1, $2, $3, $4, $5
     ) returning *
   `, params);
+    if (!response.rowCount)
+        return res.status(500).send('Could not create goal');
+    res.status(201).json(response.rows[0]);
 }));
 goals.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
