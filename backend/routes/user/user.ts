@@ -1,8 +1,11 @@
 import PromiseRouter from "express-promise-router";
-import db from "../db";
-import { User } from "../types/user";
+import db from "../../db";
+import { User } from "../../types/user";
+import goals from "./goals";
 
 const user = PromiseRouter();
+
+user.use('/goals', goals);
 
 user.post('/add', async (req, res) => {
   const { id, name, email, weekly_target } = req.body as User;
@@ -46,6 +49,5 @@ user.put('/:param_id', async (req, res) => {
 
   return res.status(200).send(response.rows);
 });
-
 
 export default user;
