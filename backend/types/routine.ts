@@ -6,7 +6,7 @@ export interface Routine {
   intensity: number,
   type: string,
   favourited: boolean,
-  tags?: string,
-  notes?: string,
-  prev_notes?: string,
+  tags: string | null,
+  notes: string | null,
+  prev_notes: string | null,
 }

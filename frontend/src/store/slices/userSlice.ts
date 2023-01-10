@@ -22,7 +22,6 @@ const initialState: UserState = {
   email: '',
   id: 'admin',
   authenticated: true,
-
 }
 
 export const userReducer = createSlice({
