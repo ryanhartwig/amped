@@ -17,7 +17,6 @@ scheduled.get('/:user_id', async (req, res) => {
   res.status(200).json(response.rows);
 });
 
-
 scheduled.post('/new', async (req, res) => {
   const { id, user_id, routine_id, day } = req.body as Scheduled;
   const params = [id, user_id, routine_id, day];
@@ -51,7 +50,7 @@ scheduled.put('/:id', async (req, res) => {
     update scheduled set
       user_id = $2,
       routine_id = $3,
-      day = $4,
+      day = $4
     where id = $1
     returning *
   `, [id, user_id, routine_id, day]);

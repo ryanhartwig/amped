@@ -51,7 +51,7 @@ scheduled.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     update scheduled set
       user_id = $2,
       routine_id = $3,
-      day = $4,
+      day = $4
     where id = $1
     returning *
   `, [id, user_id, routine_id, day]);
