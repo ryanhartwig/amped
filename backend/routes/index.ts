@@ -5,7 +5,8 @@ import routine from './performance_data/routine';
 import set from './performance_data/set';
 import routines from './routines';
 import routine_exercise from './routine_exercise';
-import users from './user';
+import users from './user/user';
+
 
 
 export default (app: Express) => {
