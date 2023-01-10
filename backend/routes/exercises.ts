@@ -45,8 +45,8 @@ exercises.put('/:id', async (req, res) => {
   if (!existing.rowCount) return res.status(404).send('Could not find exercise with given id');
 
   const { user_id, name, exercise_goal, muscle_targets, type, favourited, intensity, notes }: Exercise = {
-    ...patch,
     ...existing.rows[0],
+    ...patch,
   };  
   const params = [user_id, name, exercise_goal, muscle_targets, type, favourited, intensity, notes];
 
@@ -68,7 +68,7 @@ exercises.put('/:id', async (req, res) => {
 
   res.status(200).json(response.rows[0]);
 });
-
+ 
 exercises.delete('/:id', async (req, res) => {
   const { id } = req.params;
 

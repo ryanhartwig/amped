@@ -36,12 +36,12 @@ user.put('/:param_id', async (req, res) => {
   }
 
   const response = await db.query(`
-  update users 
-  set name = $2,
+    update users set 
+      name = $2,
       email = $3,
       weekly_target = $4
-  where id = $1
-  returning *
+    where id = $1
+    returning *
   `, [id, name, email, weekly_target]);
 
   return res.status(200).send(response.rows);
