@@ -14,11 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_promise_router_1 = __importDefault(require("express-promise-router"));
 const db_1 = __importDefault(require("../../db"));
-const goals_1 = __importDefault(require("./goals"));
-const scheduled_1 = __importDefault(require("./scheduled"));
 const user = (0, express_promise_router_1.default)();
-user.use('/goals', goals_1.default);
-user.use('/scheduled', scheduled_1.default);
 user.post('/add', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id, name, email, weekly_target } = req.body;
     const params = [id, name, email, weekly_target];
