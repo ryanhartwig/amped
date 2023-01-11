@@ -21,7 +21,7 @@ import { Modal } from '../../components/ui/Modal';
 import { Search } from '../../components/search/Search';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
-import { useAddNewRoutineMutation, useDeleteRoutineMutation, useEditRoutineMutation } from '../../api/apiSlice';
+import { useAddNewRoutineMutation, useEditRoutineMutation, useDeleteRoutineMutation } from '../../api/injections/routinesSlice';
 
 
 export const AddRoutine = () => {
@@ -128,8 +128,7 @@ export const AddRoutine = () => {
   const onRemoveRoutine = useCallback(() => {
     const remove = async () => {
       try {
-        const a = await deleteRoutine(routine.id).unwrap();
-        console.log(a);
+        await deleteRoutine(routine.id).unwrap();
         navigate('/home/routines');
       } catch(e) {
         console.log(e)
