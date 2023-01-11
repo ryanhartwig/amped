@@ -1,8 +1,6 @@
 import PromiseRouter from "express-promise-router";
 import db from "../../db";
 import { User } from "../../types/user";
-import goals from "./goals";
-import scheduled from "./scheduled";
 
 const user = PromiseRouter();
 

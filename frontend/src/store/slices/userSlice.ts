@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GoalType } from "../../types/GoalType";
-import { scheduled, ScheduledState } from "../../types/scheduledState";
+import { ScheduledRoutine } from "../../types/scheduledState";
 
 export type DaysTrained = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 interface UserState {
-  scheduled: ScheduledState,
+  scheduled: ScheduledRoutine[],
   goals: GoalType[],
   weekly_target: DaysTrained,
   name: string,
@@ -15,7 +15,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  scheduled,
+  scheduled: [],
   goals: [],
   weekly_target: 4,
   name: 'admin',
