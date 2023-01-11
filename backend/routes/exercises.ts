@@ -9,7 +9,7 @@ const exercises = PromiseRouter();
 exercises.get('/:user_id', async (req, res) => {
   const { user_id } = req.params;
 
-  if (!user_id) return res.status(400).send('Missing "user_id" url parameter');
+  if (!user_id) return res.status(400).json('Missing "user_id" url parameter');
 
   const response = await db.query('select * from exercise where user_id = $1', [user_id]);
 
@@ -21,7 +21,7 @@ exercises.post('/new', async (req, res) => {
   const { id, user_id, name, exercise_goal, muscle_targets, type, favourited, intensity, notes } = req.body as Exercise;
   const params = [id, user_id, name, exercise_goal, muscle_targets, type, favourited, intensity, notes];
 
-  if (params.some(p => p === undefined)) return res.status(400).send('Missing parameter(s) in JSON object');
+  if (params.some(p => p === undefined)) return res.status(400).json('Missing parameter(s) in JSON object');
 
   const response = await db.query(`
     insert into exercise
@@ -30,19 +30,19 @@ exercises.post('/new', async (req, res) => {
     ) returning *
   `, params);
 
-  if (!response.rowCount) return res.status(500).send('Could not add exercise');
+  if (!response.rowCount) return res.status(500).json('Could not add exercise');
   res.status(201).json(response.rows[0]);
 });
 
 /* Edit an existing exercise */
 exercises.put('/:id', async (req, res) => {
   const { id } = req.params;
-  if (!id) return res.status(400).send('Missing "id" url parameter');
+  if (!id) return res.status(400).json('Missing "id" url parameter');
 
   const patch = req.body;
   const existing = await db.query('select * from exercise where id = $1', [id]) as QueryResult<Exercise>;
   
-  if (!existing.rowCount) return res.status(404).send('Could not find exercise with given id');
+  if (!existing.rowCount) return res.status(404).json('Could not find exercise with given id');
 
   const { user_id, name, exercise_goal, muscle_targets, type, favourited, intensity, notes }: Exercise = {
     ...existing.rows[0],
@@ -64,7 +64,7 @@ exercises.put('/:id', async (req, res) => {
     returning *
   `, [id, ...params]); 
 
-  if (!response.rowCount) return res.status(500).send('Could not update exercise');
+  if (!response.rowCount) return res.status(500).json('Could not update exercise');
 
   res.status(200).json(response.rows[0]);
 });
@@ -72,13 +72,13 @@ exercises.put('/:id', async (req, res) => {
 exercises.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
-  if (!id) return res.status(400).send('Missing "id" url parameter');
+  if (!id) return res.status(400).json('Missing "id" url parameter');
 
   const response = await db.query('delete from exercise where id = $1 returning *', [id]);
 
-  if (!response.rowCount) return res.status(404).send('Could not find exercise with given id');
+  if (!response.rowCount) return res.status(404).json('Could not find exercise with given id');
 
-  res.status(200).send(`Successfully deleted exercise: "${response.rows[0].name}"`);
+  res.status(200).json(`Successfully deleted exercise: "${response.rows[0].name}"`);
 })
 
 

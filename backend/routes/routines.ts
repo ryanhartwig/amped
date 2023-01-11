@@ -8,7 +8,7 @@ const routines = PromiseRouter();
 routines.get('/:user_id', async (req, res) => {
   const { user_id } = req.params;
 
-  if (!user_id) return res.status(400).send('No user id provided');
+  if (!user_id) return res.status(400).json('No user id provided');
   const response = await db.query('select * from routine where user_id = $1', [user_id]);
 
   res.status(200).json(response.rows);
@@ -22,7 +22,7 @@ routines.post('/new', async (req, res) => {
   const params = [id, user_id, name, est_duration, intensity, type, favourited, tags, notes, prev_notes];
 
   if (params.some(v => v === undefined)) 
-    return res.status(400).send('Missing properties in JSON object')
+    return res.status(400).json('Missing properties in JSON object')
  
   const response = await db.query(`
     insert into routine values (
@@ -30,8 +30,8 @@ routines.post('/new', async (req, res) => {
     ) returning *
   `, params);
 
-  if (!response.rowCount) return res.status(500).send('Could not create routine');
-  res.status(201).send(response.rows[0]);
+  if (!response.rowCount) return res.status(500).json('Could not create routine');
+  res.status(201).json(response.rows[0]);
 });
 
 /* Edit an existing routine */
@@ -42,7 +42,7 @@ routines.put('/:id', async (req, res) => {
   const select = await db.query('select * from routine where id = $1', [id]);
   const existing: Routine = select.rows[0];
 
-  if (!existing) return res.status(404).send('Could not find routine with given id');
+  if (!existing) return res.status(404).json('Could not find routine with given id');
 
   const {
     user_id, name, est_duration, intensity, type, favourited, tags, notes, prev_notes
@@ -67,7 +67,7 @@ routines.put('/:id', async (req, res) => {
     returning *
   `, [id, ...params]);
 
-  if (!response.rowCount) return res.status(500).send('Could not update routine');
+  if (!response.rowCount) return res.status(500).json('Could not update routine');
 
   res.status(200).json(response.rows[0]);
 });
@@ -76,13 +76,15 @@ routines.put('/:id', async (req, res) => {
 routines.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
-  if (!id) return res.status(400).send('No id provided');
+  if (!id) return res.status(400).json('No id provided');
 
   const response = await db.query('delete from routine where id = $1 returning *', [id]);
 
-  if (!response.rowCount) return res.status(404).send('No routine with provided id exists');
+  if (!response.rowCount) return res.status(404).json('No routine with provided id exists');
 
-  return res.status(200).send(`Successfully deleted routine: '${response.rows[0].name}'`);
-})
+  // res.status(200).json(`Successfully deleted routine: '${response.rows[0].name}'`);
+  res.status(200).json('Successfully deleted routine with id: ' + response.rows[0].id);
+  // res.status(204).json();
+})  
 
-export default routines;  
+export default routines;     

@@ -19,17 +19,17 @@ const goals = (0, express_promise_router_1.default)();
 goals.get('/:user_id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user_id } = req.params;
     if (!user_id)
-        return res.status(400).send('Missing user_id url parameter');
+        return res.status(400).json('Missing user_id url parameter');
     const response = yield db_1.default.query('select * from goal where user_id = $1', [user_id]);
     if (!response.rowCount)
-        return res.status(404).send('No goals found for provided user id');
+        return res.status(404).json('No goals found for provided user id');
     res.status(200).json(response.rows);
 }));
 goals.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id, user_id, deadline, completed, goal } = req.body;
     const params = [id, user_id, deadline, completed, goal];
     if (params.some(p => p === undefined))
-        return res.status(400).send("Missing parameter(s) in JSON object");
+        return res.status(400).json("Missing parameter(s) in JSON object");
     const response = yield db_1.default.query(`
     insert into goal
     values (
@@ -37,13 +37,13 @@ goals.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     ) returning *
   `, params);
     if (!response.rowCount)
-        return res.status(500).send('Could not create goal');
+        return res.status(500).json('Could not create goal');
     res.status(201).json(response.rows[0]);
 }));
 goals.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     if (!id)
-        return res.status(400).send('Missing id url parameter');
+        return res.status(400).json('Missing id url parameter');
     const existing = yield db_1.default.query('select * from goal where id = $1', [id]);
     const patch = req.body;
     const { user_id, deadline, completed, goal } = Object.assign(Object.assign({}, existing.rows[0]), patch);
@@ -57,16 +57,16 @@ goals.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     returning *
   `, [id, user_id, deadline, completed, goal]);
     if (!response.rowCount)
-        return res.status(500).send('Could not update goal');
+        return res.status(500).json('Could not update goal');
     res.status(200).json(response.rows[0]);
 }));
 goals.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     if (!id)
-        return res.status(400).send('Missing id url parameter');
+        return res.status(400).json('Missing id url parameter');
     const response = yield db_1.default.query('delete from goal where id = $1 returning *', [id]);
     if (!response.rowCount)
-        return res.status(404).send('A goal with the provided id does not exist');
-    res.status(200).send(`Successfully deleted goal with id: ${response.rows[0].id}`);
+        return res.status(404).json('A goal with the provided id does not exist');
+    res.status(200).json(`Successfully deleted goal with id: ${response.rows[0].id}`);
 }));
 exports.default = goals;

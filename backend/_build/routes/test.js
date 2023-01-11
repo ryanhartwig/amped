@@ -17,6 +17,6 @@ const db_1 = __importDefault(require("../db"));
 const test = (0, express_promise_router_1.default)();
 test.get('/read', (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield db_1.default.query(`DELETE from users where name='ryan'`);
-    res.send(response.rows);
+    res.json(response.rows);
 }));
 exports.default = test;
