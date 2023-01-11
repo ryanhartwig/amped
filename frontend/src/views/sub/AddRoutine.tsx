@@ -24,6 +24,7 @@ import { addWorkout, editWorkout, removeWorkout } from '../../store/slices/worko
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
 
+
 export const AddRoutine = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -42,15 +43,12 @@ export const AddRoutine = () => {
   const [favourited, setFavourited ] = useState<boolean>(editing?.favourited || false);
   const [duration, setDuration] = useState<string>(editing?.est_duration?.toString() || '');
   const [intensity, setIntensity] = useState<Intensity>(editing?.intensity || 0);
+  const [selectExerciseOpen, setSelectExerciseOpen] = useState<boolean>(false);
 
   // Array of selected exercises (contains duplicates)
   const [exerciseList, setExerciseList] = useState<ExerciseType[]>(editing?.exercises.map(e => e.exercise) || []);
-
   // Array of index-positioned exercise (duplicates are therefore uniquely identifiable)
   const [exercises, setExercises] = useState<RoutineExercise[]>(exerciseList.map((ex, i) => ({exercise: ex, position: i})));
-
-  // Select exercises modal state
-  const [open, setOpen] = useState<boolean>(false);
 
   const routine = useMemo<RoutineType>(() => ({
     id: editing?.id || uuid(),
@@ -86,7 +84,7 @@ export const AddRoutine = () => {
 
   const onSaveSelection = useCallback((exercises: ExerciseType[]) => {
     setExerciseList(p => [...p, ...exercises]);
-    setOpen(false);
+    setSelectExerciseOpen(false);
   }, []);
 
   const onAddTag = useCallback(() => {
@@ -108,11 +106,14 @@ export const AddRoutine = () => {
   }, []);
 
   const onSelectExercises = useCallback(() => {
-    setOpen(true);
+    setSelectExerciseOpen(true);
   }, []);
 
   const onRemoveRoutine = useCallback(() => {
     if (!editing) return;
+    //fetch
+    // if data exsists then dispatch
+    // elxe 
     dispatch(removeWorkout(editing));
     navigate('/home/routines');
   }, [dispatch, editing, navigate]);
@@ -212,8 +213,8 @@ export const AddRoutine = () => {
       </form>
       
       <Modal closeText='Cancel'
-        open={open} 
-        onClose={() => setOpen(false)} 
+        open={selectExerciseOpen} 
+        onClose={() => setSelectExerciseOpen(false)} 
       >
         <Modal.Header>Select Exercises</Modal.Header>
         <div className='AddRoutine-search'>
