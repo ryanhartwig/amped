@@ -10,7 +10,7 @@ import { AiOutlineLeft } from 'react-icons/ai';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useGetRoutinesQuery } from '../api/apiSlice';
 import { useDispatch } from 'react-redux';
-import { addWorkout } from '../store/slices/workoutsSlice';
+import { setRoutines } from '../store/slices/workoutsSlice';
 import { RoutineType } from '../types/RoutineType';
 
 
@@ -35,26 +35,21 @@ export const Home = () => {
     }
   }, [cancel, navigate]);
 
-
   const {
     data: fetchedRoutine,
   } = useGetRoutinesQuery('admin');
 
-  const routines = useMemo<RoutineType[] | undefined>(() => {
-    if (!fetchedRoutine) return undefined;
+  const routines = useMemo<RoutineType[]>(() => {
+    if (!fetchedRoutine) return [];
     return fetchedRoutine.map((r: RoutineType) => ({
       ...r,
       exercises: [],
     }))
   }, [fetchedRoutine]);
-  
+   
   useEffect(() => {
-    if (!routines) return;
-    routines.forEach(r => dispatch(addWorkout(r)));
+    dispatch(setRoutines(routines));
   }, [dispatch, routines]);
-
-
-
 
   return (
     <div className='Home'>

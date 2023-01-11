@@ -40,9 +40,15 @@ export const workoutsReducer = createSlice({
         state.exercises[index] = action.payload;      
       }
     },
+    setRoutines: (state, action: PayloadAction<RoutineType[]>) => {
+      state.routines = action.payload;
+    },
+    setExercises: (state, action: PayloadAction<ExerciseType[]>) => {
+      state.exercises = action.payload;
+    },
   }
 });
 
-export const { addWorkout, removeWorkout, editWorkout } = workoutsReducer.actions;
+export const { addWorkout, removeWorkout, editWorkout, setRoutines, setExercises } = workoutsReducer.actions;
 
 export default workoutsReducer.reducer;
