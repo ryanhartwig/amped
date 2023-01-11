@@ -10,13 +10,15 @@ import scheduled from './user/scheduled';
 import user from './user/user';
 
 export default (app: Express) => {
-  app.use('/user', user);
-  app.use('/user/goals', goals);
-  app.use('/user/scheduled', scheduled);
-  app.use('/routines', routines);
-  app.use('/exercises', exercises);
-  app.use('/routine_exercise', routine_exercise)
-  app.use('/data/routine', routine);
-  app.use('/data/exercise', exercise);
-  app.use('/data/set', set);
+  app.use('api/user', user);
+  app.use('api/user/goals', goals);
+  app.use('api/user/scheduled', scheduled);
+
+  app.use('api/routines', routines);
+  app.use('api/exercises', exercises);
+  app.use('api/routine_exercise', routine_exercise);
+  
+  app.use('api/data/routine', routine);
+  app.use('api/data/exercise', exercise);
+  app.use('api/data/set', set);
 }
