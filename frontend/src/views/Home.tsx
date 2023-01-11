@@ -8,10 +8,9 @@ import { useView } from '../utility/helpers/hooks/useView';
 /* React icons */
 import { AiOutlineLeft } from 'react-icons/ai';
 import { useCallback, useEffect, useMemo } from 'react';
-import { useGetRoutinesQuery } from '../api/apiSlice';
 import { useDispatch } from 'react-redux';
 import { setRoutines } from '../store/slices/workoutsSlice';
-import { RoutineType } from '../types/RoutineType';
+import { useGetRoutinesQuery } from '../api/injections/routinesSlice';
 
 
 export const Home = () => {
@@ -36,21 +35,14 @@ export const Home = () => {
   }, [cancel, navigate]);
 
   const {
-    data: fetchedRoutine,
+    data: routines,
+    isLoading,
   } = useGetRoutinesQuery('admin');
 
-  const routines = useMemo<RoutineType[]>(() => {
-    if (!fetchedRoutine) return [];
-    return fetchedRoutine.map((r: any) => ({
-      ...r,
-      tags: r.tags?.split('-'),
-      exercises: [],
-    }))
-  }, [fetchedRoutine]);
-   
   useEffect(() => {
+    if (isLoading) return;
     dispatch(setRoutines(routines));
-  }, [dispatch, routines]);
+  }, [dispatch, isLoading, routines]);
 
   return (
     <div className='Home'>
