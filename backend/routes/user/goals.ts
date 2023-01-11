@@ -9,11 +9,11 @@ const goals = PromiseRouter();
 goals.get('/:user_id', async (req, res) => {
   const { user_id } = req.params;
 
-  if (!user_id) return res.status(400).send('Missing user_id url parameter');
+  if (!user_id) return res.status(400).json('Missing user_id url parameter');
 
   const response = await db.query('select * from goal where user_id = $1', [user_id]);
 
-  if (!response.rowCount) return res.status(404).send('No goals found for provided user id');
+  if (!response.rowCount) return res.status(404).json('No goals found for provided user id');
   res.status(200).json(response.rows);
 });
 
@@ -22,7 +22,7 @@ goals.post('/new', async (req, res) => {
   const { id, user_id, deadline, completed, goal } = req.body as Goal;
   const params = [id, user_id, deadline, completed, goal];
 
-  if (params.some(p => p === undefined)) return res.status(400).send("Missing parameter(s) in JSON object");
+  if (params.some(p => p === undefined)) return res.status(400).json("Missing parameter(s) in JSON object");
 
   const response = await db.query(`
     insert into goal
@@ -31,13 +31,13 @@ goals.post('/new', async (req, res) => {
     ) returning *
   `, params);
 
-  if (!response.rowCount) return res.status(500).send('Could not create goal');
+  if (!response.rowCount) return res.status(500).json('Could not create goal');
   res.status(201).json(response.rows[0]);
 });
 
 goals.put('/:id', async (req, res) => {
   const { id } = req.params;
-  if (!id) return res.status(400).send('Missing id url parameter');
+  if (!id) return res.status(400).json('Missing id url parameter');
 
   const existing = await db.query('select * from goal where id = $1', [id]) as QueryResult<Goal>;
   const patch = req.body as Partial<Goal>;
@@ -57,19 +57,19 @@ goals.put('/:id', async (req, res) => {
     returning *
   `, [id, user_id, deadline, completed, goal]);
 
-  if (!response.rowCount) return res.status(500).send('Could not update goal');
+  if (!response.rowCount) return res.status(500).json('Could not update goal');
   res.status(200).json(response.rows[0]);
 });
 
 goals.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
-  if (!id) return res.status(400).send('Missing id url parameter');
+  if (!id) return res.status(400).json('Missing id url parameter');
 
   const response = await db.query('delete from goal where id = $1 returning *', [id]);
 
-  if (!response.rowCount) return res.status(404).send('A goal with the provided id does not exist');
-  res.status(200).send(`Successfully deleted goal with id: ${response.rows[0].id}`);
+  if (!response.rowCount) return res.status(404).json('A goal with the provided id does not exist');
+  res.status(200).json(`Successfully deleted goal with id: ${response.rows[0].id}`);
 });
 
 export default goals;

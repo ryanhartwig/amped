@@ -19,21 +19,17 @@ import { Exercise } from '../../components/Exercise';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { Modal } from '../../components/ui/Modal';
 import { Search } from '../../components/search/Search';
-import { useDispatch } from 'react-redux';
-import { editWorkout, removeWorkout } from '../../store/slices/workoutsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
-import { useAddNewRoutineMutation } from '../../api/apiSlice';
+import { useAddNewRoutineMutation, useDeleteRoutineMutation, useEditRoutineMutation } from '../../api/apiSlice';
 
 
 export const AddRoutine = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const editing: RoutineType | undefined = location.state?.edit;
 
-  const [addNewRoutine] = useAddNewRoutineMutation();
   
   const { background_alt: background } = useAppSelector(s => s.theme);
   const user_id = useAppSelector(s => s.user.id);
@@ -68,14 +64,20 @@ export const AddRoutine = () => {
     exercises,
   }), [duration, editing?.id, exercises, favourited, intensity, routineName, tags, user_id]);
 
+  
+  const [addNewRoutine] = useAddNewRoutineMutation();
+  const [editRoutine] = useEditRoutineMutation();
+  const [deleteRoutine] = useDeleteRoutineMutation();
+  
   const onSaveRoutine = useCallback(() => {
-    if (editing) {
-      dispatch(editWorkout(routine));
-      navigate('/home/routines', { state: { }})
-      return;
-    } 
-
-    // dispatch(addWorkout(routine));
+    const edit = async () => {
+      try {
+        await editRoutine(routine).unwrap();
+        navigate('/home/routines', { state: {}});
+      } catch(e) {
+        console.log(e);
+      }
+    }
     const add = async () => {
       try {
         await addNewRoutine(routine).unwrap();
@@ -85,8 +87,8 @@ export const AddRoutine = () => {
       }
     }
 
-    add();
-  }, [addNewRoutine, dispatch, editing, navigate, routine, routineName]);
+    editing ? edit() : add();
+  }, [addNewRoutine, editRoutine, editing, navigate, routine, routineName]);
 
   useEffect(() => {
     setExercises(exerciseList.map((ex, i) => ({exercise: ex, position: i})))
@@ -122,15 +124,20 @@ export const AddRoutine = () => {
   const onSelectExercises = useCallback(() => {
     setSelectExerciseOpen(true);
   }, []);
-
+  
   const onRemoveRoutine = useCallback(() => {
-    if (!editing) return;
-    //fetch
-    // if data exsists then dispatch
-    // elxe 
-    dispatch(removeWorkout(editing));
-    navigate('/home/routines');
-  }, [dispatch, editing, navigate]);
+    const remove = async () => {
+      try {
+        const a = await deleteRoutine(routine.id).unwrap();
+        console.log(a);
+        navigate('/home/routines');
+      } catch(e) {
+        console.log(e)
+      }
+    }
+
+    remove();
+  }, [deleteRoutine, navigate, routine.id]);
 
   return (
     <div className='AddRoutine'>
