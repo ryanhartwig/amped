@@ -23,7 +23,7 @@ routines.post('/new', async (req, res) => {
 
   if (params.some(v => v === undefined)) 
     return res.status(400).send('Missing properties in JSON object')
-
+ 
   const response = await db.query(`
     insert into routine values (
       $1, $2, $3, $4, $5, $6, $7, $8, $9, $10

@@ -9,6 +9,7 @@ export interface RoutineExercise {
 export interface RoutineType {
   id: string,
   name: string,
+  user_id: string,
   /**
    * Approximate duration of the exercise
    */

@@ -24,6 +24,7 @@ export const Routines = () => {
   const [tab, setTab] = useState<'Routines' | 'Exercises'>(location.state?.tag || 'Routines');
   const [selected, setSelected] = useState<RoutineType | ExerciseType>();
 
+
   return (
     <div className='Routines'>
       {/* Tabs navigation */}
