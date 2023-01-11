@@ -20,9 +20,10 @@ import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { Modal } from '../../components/ui/Modal';
 import { Search } from '../../components/search/Search';
 import { useDispatch } from 'react-redux';
-import { addWorkout, editWorkout, removeWorkout } from '../../store/slices/workoutsSlice';
+import { editWorkout, removeWorkout } from '../../store/slices/workoutsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
+import { useAddNewRoutineMutation } from '../../api/apiSlice';
 
 
 export const AddRoutine = () => {
@@ -31,6 +32,8 @@ export const AddRoutine = () => {
   const location = useLocation();
 
   const editing: RoutineType | undefined = location.state?.edit;
+
+  const [addNewRoutine] = useAddNewRoutineMutation();
   
   const { background_alt: background } = useAppSelector(s => s.theme);
   const user_id = useAppSelector(s => s.user.id);
@@ -72,9 +75,18 @@ export const AddRoutine = () => {
       return;
     } 
 
-    dispatch(addWorkout(routine));
-    navigate('/home/routines', { state: { name: routineName || 'Routine Name' }})
-  }, [dispatch, editing, navigate, routine, routineName]);
+    // dispatch(addWorkout(routine));
+    const add = async () => {
+      try {
+        await addNewRoutine(routine).unwrap();
+        navigate('/home/routines', { state: { name: routineName || 'Routine Name' }})
+      } catch(e) {
+        console.log(e);
+      }
+    }
+
+    add();
+  }, [addNewRoutine, dispatch, editing, navigate, routine, routineName]);
 
   useEffect(() => {
     setExercises(exerciseList.map((ex, i) => ({exercise: ex, position: i})))

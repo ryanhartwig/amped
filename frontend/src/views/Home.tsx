@@ -37,12 +37,14 @@ export const Home = () => {
 
   const {
     data: fetchedRoutine,
+    refetch,
   } = useGetRoutinesQuery('admin');
 
   const routines = useMemo<RoutineType[]>(() => {
     if (!fetchedRoutine) return [];
-    return fetchedRoutine.map((r: RoutineType) => ({
+    return fetchedRoutine.map((r: any) => ({
       ...r,
+      tags: r.tags?.split('-'),
       exercises: [],
     }))
   }, [fetchedRoutine]);
