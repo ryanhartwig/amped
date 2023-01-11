@@ -4,6 +4,7 @@ import { sampleExercises } from "./sampleExercises";
 export const sampleRoutines: RoutineType[] = [
   {
     name: 'Chest & Triceps',
+    user_id: 'admin',
     notes: null,
     prev_notes: null,
     type: 'Routine',
@@ -16,6 +17,7 @@ export const sampleRoutines: RoutineType[] = [
       .map((ex, i) => ({exercise: ex, position: i})),
   }, {
     name: 'Biceps',
+    user_id: 'admin',
     prev_notes: null,
     type: 'Routine',
     est_duration: 40,
@@ -28,6 +30,7 @@ export const sampleRoutines: RoutineType[] = [
     notes: 'Go hard',
   }, {
     name: 'Legs',
+    user_id: 'admin',
     prev_notes: null,
     type: 'Routine',
     est_duration: 40,
@@ -40,6 +43,7 @@ export const sampleRoutines: RoutineType[] = [
     notes: 'do it',
   }, {
     name: 'Abs',
+    user_id: 'admin',
     prev_notes: null,
     type: 'Routine',
     est_duration: 40,
@@ -52,6 +56,7 @@ export const sampleRoutines: RoutineType[] = [
     notes: 'do it',
   }, {
     name: 'Shoulders',
+    user_id: 'admin',
     prev_notes: null,
     type: 'Routine',
     est_duration: 40,
@@ -64,6 +69,7 @@ export const sampleRoutines: RoutineType[] = [
     notes: 'do it',
   }, {
     name: 'Back',
+    user_id: 'admin',
     type: 'Routine',
     est_duration: 40,
     intensity: 2,

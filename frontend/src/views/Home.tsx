@@ -7,10 +7,16 @@ import { useView } from '../utility/helpers/hooks/useView';
 
 /* React icons */
 import { AiOutlineLeft } from 'react-icons/ai';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
+import { useGetRoutinesQuery } from '../api/apiSlice';
+import { useDispatch } from 'react-redux';
+import { addWorkout } from '../store/slices/workoutsSlice';
+import { RoutineType } from '../types/RoutineType';
 
 
 export const Home = () => {
+  const dispatch = useDispatch();
+  
   const navigate = useNavigate();
   const location = useLocation();
   const cancel = ['add-rt', 'add-ex'].some(str => location.pathname.includes(str));
@@ -28,6 +34,26 @@ export const Home = () => {
       navigate(-1);
     }
   }, [cancel, navigate]);
+
+
+  const {
+    data: fetchedRoutine,
+  } = useGetRoutinesQuery('admin');
+
+  const routines = useMemo<RoutineType[] | undefined>(() => {
+    if (!fetchedRoutine) return undefined;
+    return fetchedRoutine.map((r: RoutineType) => ({
+      ...r,
+      exercises: [],
+    }))
+  }, [fetchedRoutine]);
+  
+  useEffect(() => {
+    if (!routines) return;
+    routines.forEach(r => dispatch(addWorkout(r)));
+  }, [dispatch, routines]);
+
+
 
 
   return (

@@ -33,6 +33,7 @@ export const AddRoutine = () => {
   const editing: RoutineType | undefined = location.state?.edit;
   
   const { background_alt: background } = useAppSelector(s => s.theme);
+  const user_id = useAppSelector(s => s.user.id);
 
   // Input value
   const [tag, setTag] = useState<string>('');
@@ -53,6 +54,7 @@ export const AddRoutine = () => {
   const routine = useMemo<RoutineType>(() => ({
     id: editing?.id || uuid(),
     name: routineName || 'Routine name',
+    user_id,
     est_duration: Number(duration || 1),
     intensity,
     type: 'Routine',
@@ -61,7 +63,7 @@ export const AddRoutine = () => {
     notes: null,
     prev_notes: null,
     exercises,
-  }), [duration, editing?.id, exercises, favourited, intensity, routineName, tags]);
+  }), [duration, editing?.id, exercises, favourited, intensity, routineName, tags, user_id]);
 
   const onSaveRoutine = useCallback(() => {
     if (editing) {
