@@ -10,7 +10,6 @@ import { setPosition, setSelectedRoutine, setSummaryData } from '../../../store/
 import { selectCompletedToday } from '../../../store/slices/workoutDataSlice';
 import { ExerciseType } from '../../../types/ExerciseType';
 import { RoutineType } from '../../../types/RoutineType';
-import { ScheduledState } from '../../../types/scheduledState';
 import { days } from '../../../utility/data/days_months';
 import { useAppSelector } from '../../../utility/helpers/hooks';
 import './Train.css';
@@ -24,7 +23,8 @@ export const Train = () => {
   const { background_alt: background } = useAppSelector(s => s.theme);
   const triggerRef = useRef<any>(undefined!);
 
-  const scheduled = useAppSelector(s => s.user.scheduled[days[date.getDay()].toLowerCase() as keyof ScheduledState])
+  const routines = useAppSelector(s => s.workouts.routines);
+  const scheduled = useAppSelector(s => s.user.scheduled).filter(s => s.day === days[date.getDay()].toLowerCase());
   const scheduledIds = scheduled.map(s => s.id);
   const allCompletedToday = useAppSelector(selectCompletedToday);
   const scheduledCompleted = allCompletedToday.filter(r => scheduledIds.includes(r.routine_id));
@@ -63,8 +63,8 @@ export const Train = () => {
       {!!scheduled.length && 
       <div className='Train-scheduled'>
         <div className='Train-scheduled-workouts hidescrollbar' style={{background}}>
-          {scheduled.map((r, i) => 
-            <Routine selected={selected} setSelected={setSelected} key={`${r}-${i}`} completed={scheduledCompleted.some(s => s.routine_id === r.id)} routine={r} />
+          {scheduled.map((s, i) => 
+            <Routine selected={selected} setSelected={setSelected} key={s.id} completed={scheduledCompleted.some(c => c.routine_id === s.routine_id)} routine={routines.find(r => r.id === s.routine_id)!} />
           )}
         </div>
       </div> 
