@@ -74,8 +74,6 @@ routines.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function
     const response = yield db_1.default.query('delete from routine where id = $1 returning *', [id]);
     if (!response.rowCount)
         return res.status(404).json('No routine with provided id exists');
-    // res.status(200).json(`Successfully deleted routine: '${response.rows[0].name}'`);
     res.status(200).json('Successfully deleted routine with id: ' + response.rows[0].id);
-    // res.status(204).json();
 }));
 exports.default = routines;

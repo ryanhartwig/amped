@@ -82,9 +82,7 @@ routines.delete('/:id', async (req, res) => {
 
   if (!response.rowCount) return res.status(404).json('No routine with provided id exists');
 
-  // res.status(200).json(`Successfully deleted routine: '${response.rows[0].name}'`);
   res.status(200).json('Successfully deleted routine with id: ' + response.rows[0].id);
-  // res.status(204).json();
 })  
 
 export default routines;     
