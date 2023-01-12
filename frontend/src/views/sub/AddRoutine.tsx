@@ -89,9 +89,9 @@ export const AddRoutine = () => {
       try {
         await addNewRoutine(routine).unwrap();
         await Promise.allSettled(routine.exercises
-          .map(e => addNewRoutineExercise({
+          .map((e, i) => addNewRoutineExercise({
             id: uuid(),
-            routine_id: routine.id,
+            routine_id: i === 2 ? '_' : routine.id,
             user_id,
             exercise_id: e.exercise.id,
             position: e.position,
@@ -105,17 +105,21 @@ export const AddRoutine = () => {
       } catch(e) {
         console.log(e);
 
-        // Clean up existing relations
+        // Clean up existing relations / routine
         if (added.length) {
-          added.forEach(id => deleteRoutineExercise(id));
+          await Promise.all(added.map(async id => await deleteRoutineExercise(id).unwrap()));
         }
+        // Delete routine if exists
+        try { await deleteRoutine(routine.id);
+        } catch(_) {} // 404 no routine exists
+        
       } finally {
         console.log('added routineexercise ids: ', added);
       }
     }
 
     editing ? edit() : add();
-  }, [addNewRoutine, addNewRoutineExercise, deleteRoutineExercise, editRoutine, editing, navigate, routine, routineName, user_id]);
+  }, [addNewRoutine, addNewRoutineExercise, deleteRoutine, deleteRoutineExercise, editRoutine, editing, navigate, routine, routineName, user_id]);
 
   useEffect(() => {
     setExercises(exerciseList.map((ex, i) => ({exercise: ex, position: i})))
