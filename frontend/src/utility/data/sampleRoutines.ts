@@ -1,3 +1,4 @@
+import uuid from "react-uuid";
 import { RoutineType } from "../../types/RoutineType";
 import { sampleExercises } from "./sampleExercises";
 
@@ -14,7 +15,7 @@ export const sampleRoutines: RoutineType[] = [
     id: 'chesttriceps',
     favourited: false,
     exercises: sampleExercises.filter(ex => ex.muscle_targets.includes('chest'))
-      .map((ex, i) => ({exercise: ex, position: i})),
+      .map((ex, i) => ({exercise: ex, position: i, exercise_id: ex.id, id: uuid(), routine_id: 'chesttriceps', user_id: 'admin'})),
   }, {
     name: 'Biceps',
     user_id: 'admin',
@@ -25,7 +26,7 @@ export const sampleRoutines: RoutineType[] = [
     tags: ['short', 'pull'],
     id: 'biceps',
     exercises: sampleExercises.filter(ex => ex.muscle_targets.includes('biceps'))
-      .map((ex, i) => ({exercise: ex, position: i})),
+      .map((ex, i) => ({exercise: ex, position: i, exercise_id: ex.id, id: uuid(), routine_id: 'biceps', user_id: 'admin'})),
     favourited: true,
     notes: 'Go hard',
   }, {
@@ -38,7 +39,7 @@ export const sampleRoutines: RoutineType[] = [
     tags: ['push'],
     id: 'Legs',
     exercises: sampleExercises.filter(ex => ex.muscle_targets.includes('biceps'))
-      .map((ex, i) => ({exercise: ex, position: i})),
+      .map((ex, i) => ({exercise: ex, position: i, exercise_id: ex.id, id: uuid(), routine_id: 'Legs', user_id: 'admin'})),
     favourited: true,
     notes: 'do it',
   }, {
@@ -51,7 +52,7 @@ export const sampleRoutines: RoutineType[] = [
     tags: null,
     id: 'Abs',
     exercises: sampleExercises.filter(ex => ex.muscle_targets.includes('biceps'))
-      .map((ex, i) => ({exercise: ex, position: i})),
+      .map((ex, i) => ({exercise: ex, position: i, exercise_id: ex.id, id: uuid(), routine_id: 'Abs', user_id: 'admin'})),
     favourited: true,
     notes: 'do it',
   }, {
@@ -65,7 +66,7 @@ export const sampleRoutines: RoutineType[] = [
     id: 'Shoulders',
     favourited: false,
     exercises: sampleExercises.filter(ex => ex.muscle_targets.includes('biceps'))
-      .map((ex, i) => ({exercise: ex, position: i})),
+      .map((ex, i) => ({exercise: ex, position: i, exercise_id: ex.id, id: uuid(), routine_id: 'Shoulders', user_id: 'admin'})),
     notes: 'do it',
   }, {
     name: 'Back',
@@ -77,7 +78,7 @@ export const sampleRoutines: RoutineType[] = [
     id: 'Back',
     favourited: false,
     exercises: sampleExercises.filter(ex => ex.muscle_targets.includes('biceps'))
-      .map((ex, i) => ({exercise: ex, position: i})),
+      .map((ex, i) => ({exercise: ex, position: i, exercise_id: ex.id, id: uuid(), routine_id: 'Back', user_id: 'admin'})),
     notes: 'do it',
     prev_notes: `Focus lat contraction
     

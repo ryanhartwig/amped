@@ -49,8 +49,8 @@ export const Home = () => {
       updated = updated.map((r): RoutineType => ({
         ...r,
         exercises: relations.filter(rtex => rtex.routine_id === r.id).map(rtex => ({
+          ...rtex,
           exercise: exercises.find(e => e.id === rtex.exercise_id)!,
-          position: rtex.position,
         }))
       }))
     }
