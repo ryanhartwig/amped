@@ -13,7 +13,6 @@ goals.get('/:user_id', async (req, res) => {
 
   const response = await db.query('select * from goal where user_id = $1', [user_id]);
 
-  if (!response.rowCount) return res.status(404).json('No goals found for provided user id');
   res.status(200).json(response.rows);
 });
 
