@@ -3,6 +3,7 @@ import { BiTrash } from 'react-icons/bi';
 import { BsCalendar } from 'react-icons/bs';
 import uuid from 'react-uuid';
 import { GoalType } from '../../types/GoalType';
+import { useAppSelector } from '../../utility/helpers/hooks';
 import { zeroTime } from '../../utility/helpers/zeroTime';
 import { Checkbox } from '../ui/Checkbox';
 import { Input } from '../ui/Input';
@@ -32,12 +33,15 @@ export const AddEditGoal = ({onSave, onDelete, existingGoal: e}: AddEditGoalProp
   const selectedDate = useMemo<Date>(() => new Date(year, month - 1, day), [day, month, year]);
   const valid = useMemo(() => selectedDate.getTime() >= new Date().getTime() && goalInput.length, [goalInput.length, selectedDate]);
 
+  const user_id = useAppSelector(s => s.user.id);
+  
   const goal: GoalType = useMemo<GoalType>(() => ({
     completed,
     deadline: selectedDate.getTime(),
     goal: goalInput,
+    user_id,
     id,
-  }), [completed, goalInput, id, selectedDate]);
+  }), [completed, goalInput, id, selectedDate, user_id]);
 
   return (
     <div className='AddEditGoal'>
