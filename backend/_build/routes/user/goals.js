@@ -21,8 +21,6 @@ goals.get('/:user_id', (req, res) => __awaiter(void 0, void 0, void 0, function*
     if (!user_id)
         return res.status(400).json('Missing user_id url parameter');
     const response = yield db_1.default.query('select * from goal where user_id = $1', [user_id]);
-    if (!response.rowCount)
-        return res.status(404).json('No goals found for provided user id');
     res.status(200).json(response.rows);
 }));
 goals.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
