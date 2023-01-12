@@ -4,23 +4,18 @@ import './Profile.css';
 import { IoPersonOutline } from 'react-icons/io5';
 
 import { useAppSelector } from '../../utility/helpers/hooks';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Modal } from '../../components/ui/Modal';
 import { AddEditGoal } from '../../components/user/AddEditGoal';
-import { useDispatch } from 'react-redux';
 import { GoalType } from '../../types/GoalType';
-import { DaysTrained, setWeeklyTarget } from '../../store/slices/userSlice';
 import { Goal } from '../../components/user/Goal';
 import { Counter } from '../../components/ui/Counter';
 import { useAddNewGoalMutation, useDeleteGoalMutation, useEditGoalMutation } from '../../api/injections/user/goalsSlice';
 import { SecondaryButton } from '../../components/ui/SecondaryButton';
 
-
 const tabs = ['My training goals', 'Completed goals']
 
 export const Profile = () => {
-  const dispatch = useDispatch();
-  
   const { background_alt: background } = useAppSelector(s => s.theme);
   const goals = [...useAppSelector(s => s.user.goals)]
     .sort((a, b) => 
@@ -36,11 +31,14 @@ export const Profile = () => {
   const weeklyTarget = useAppSelector(s => s.user.weekly_target);
   const [target, setTarget] = useState<number>(weeklyTarget);
 
+  const onSaveWeeklyTarget = useCallback(() => {
+    (async () => {
+      
+    })()
+  }, []);
   // useEffect(() => {
   //   dispatch(setWeeklyTarget(target as DaysTrained))
   // }, [dispatch, target]);
-
-
 
   const [[addGoal], [updateGoal], [deleteGoal]] = [
     useAddNewGoalMutation(),
@@ -88,14 +86,6 @@ export const Profile = () => {
       <h2>Ryan Hartwig</h2>
       <hr className='Profile-hr' />
 
-
-      {/* Weekly target */}
-      {/* <div className='Profile-weekly-target'>
-        <WeeklyTarget style={{marginBottom: 15}} />
-        <h2 style={{fontSize: 26, marginBottom: 6}}>{weeks} weeks</h2>
-        <p style={{fontSize: '0.9em', fontWeight: 100}}>target reached</p>
-      </div> */}
-
       {/* Training Goals / Milestones */}
       <div className='Profile-goals'>
         <div style={{height: weeklyTarget !== target ? 'calc(100% - 165px' : 'calc(100% - 135px'}}>
@@ -142,7 +132,19 @@ export const Profile = () => {
           <p>Weekly training goal (days)</p>
           <div className='Profile-target-counter'>
             <Counter incrementBy={1} value={target} setValue={setTarget} max={7} min={0} />
-            {weeklyTarget !== target && <SecondaryButton style={{width: 80, height: 30, minWidth: 0, justifyContent: 'center', marginTop: 5}} className='Profile-target-save' text='Save' />}
+            {weeklyTarget !== target && 
+              <SecondaryButton 
+                style={{
+                  width: 80, 
+                  height: 30, 
+                  minWidth: 0, 
+                  justifyContent: 'center', 
+                  marginTop: 5
+                }} 
+                className='Profile-target-save' 
+                text='Save' 
+                onClick={onSaveWeeklyTarget}
+              />}
           </div>
         </div>
         
