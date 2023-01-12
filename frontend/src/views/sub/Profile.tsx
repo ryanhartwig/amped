@@ -13,6 +13,7 @@ import { DaysTrained, setWeeklyTarget } from '../../store/slices/userSlice';
 import { Goal } from '../../components/user/Goal';
 import { Counter } from '../../components/ui/Counter';
 import { useAddNewGoalMutation, useDeleteGoalMutation, useEditGoalMutation } from '../../api/injections/user/goalsSlice';
+import { SecondaryButton } from '../../components/ui/SecondaryButton';
 
 
 const tabs = ['My training goals', 'Completed goals']
@@ -35,9 +36,11 @@ export const Profile = () => {
   const weeklyTarget = useAppSelector(s => s.user.weekly_target);
   const [target, setTarget] = useState<number>(weeklyTarget);
 
-  useEffect(() => {
-    dispatch(setWeeklyTarget(target as DaysTrained))
-  }, [dispatch, target]);
+  // useEffect(() => {
+  //   dispatch(setWeeklyTarget(target as DaysTrained))
+  // }, [dispatch, target]);
+
+
 
   const [[addGoal], [updateGoal], [deleteGoal]] = [
     useAddNewGoalMutation(),
@@ -95,7 +98,7 @@ export const Profile = () => {
 
       {/* Training Goals / Milestones */}
       <div className='Profile-goals'>
-        <div style={{height: 'calc(100% - 135px'}}>
+        <div style={{height: weeklyTarget !== target ? 'calc(100% - 165px' : 'calc(100% - 135px'}}>
           <div className='Profile-goals-tabs'>
             {tabs.map((t, i) => 
             <div className='Profile-goals-tab' 
@@ -137,7 +140,10 @@ export const Profile = () => {
 
         <div style={{background}} className="Profile-target noselect">
           <p>Weekly training goal (days)</p>
-          <Counter incrementBy={1} value={target} setValue={setTarget} max={7} min={0} />
+          <div className='Profile-target-counter'>
+            <Counter incrementBy={1} value={target} setValue={setTarget} max={7} min={0} />
+            {weeklyTarget !== target && <SecondaryButton style={{width: 80, height: 30, minWidth: 0, justifyContent: 'center', marginTop: 5}} className='Profile-target-save' text='Save' />}
+          </div>
         </div>
         
         {/* Add goal modal */}
