@@ -4,7 +4,7 @@ import './Profile.css';
 import { IoPersonOutline } from 'react-icons/io5';
 
 import { useAppSelector } from '../../utility/helpers/hooks';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Modal } from '../../components/ui/Modal';
 import { AddEditGoal } from '../../components/user/AddEditGoal';
 import { GoalType } from '../../types/GoalType';
@@ -12,6 +12,7 @@ import { Goal } from '../../components/user/Goal';
 import { Counter } from '../../components/ui/Counter';
 import { useAddNewGoalMutation, useDeleteGoalMutation, useEditGoalMutation } from '../../api/injections/user/goalsSlice';
 import { SecondaryButton } from '../../components/ui/SecondaryButton';
+import { useEditUserMutation } from '../../api/injections/user/userSlice';
 
 const tabs = ['My training goals', 'Completed goals']
 
@@ -29,16 +30,26 @@ export const Profile = () => {
   const [selectedGoal, setSelectedGoal] = useState<GoalType>();
 
   const weeklyTarget = useAppSelector(s => s.user.weekly_target);
+  const name = useAppSelector(s => s.user.name);
   const [target, setTarget] = useState<number>(weeklyTarget);
+
+  useEffect(() => { setTarget(weeklyTarget)}, [weeklyTarget]);
+
+  const [editUser] = useEditUserMutation();
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   const onSaveWeeklyTarget = useCallback(() => {
     (async () => {
-      
+      setDisabled(true);
+      await editUser({
+        id: 'admin',
+        patch: {
+          weekly_target: target
+        }
+      }).unwrap();
+      setDisabled(false);
     })()
-  }, []);
-  // useEffect(() => {
-  //   dispatch(setWeeklyTarget(target as DaysTrained))
-  // }, [dispatch, target]);
+  }, [editUser, target]);
 
   const [[addGoal], [updateGoal], [deleteGoal]] = [
     useAddNewGoalMutation(),
@@ -83,7 +94,7 @@ export const Profile = () => {
           <IoPersonOutline className='Profile-avatar-svg' />
         </div>
       </div>
-      <h2>Ryan Hartwig</h2>
+      <h2>{name}</h2>
       <hr className='Profile-hr' />
 
       {/* Training Goals / Milestones */}
@@ -141,6 +152,7 @@ export const Profile = () => {
                   justifyContent: 'center', 
                   marginTop: 5
                 }} 
+                disabled={disabled}
                 className='Profile-target-save' 
                 text='Save' 
                 onClick={onSaveWeeklyTarget}

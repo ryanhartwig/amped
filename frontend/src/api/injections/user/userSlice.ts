@@ -4,7 +4,7 @@ export interface DB_User {
   id: string,
   name: string,
   email: string,
-  weekly_target: string,
+  weekly_target: number,
 }
 
 export const extendedApiSlice = apiSlice.injectEndpoints({

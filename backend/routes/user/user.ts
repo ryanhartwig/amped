@@ -11,8 +11,8 @@ user.post('/add', async (req, res) => {
   if (params.some(p => p === undefined)) return res.status(400).json('Missing parameters in request body');
   const response = await db.query('insert into users values ($1, $2, $3, $4) returning *', params);
 
-  if (response.rows) return res.status(201).json(response.rows);
-  else return res.status(500).json(response);
+  if (!response.rowCount) return res.status(500).json('Could not create user');
+  res.status(201).json(response.rows[0]);
 });
 
 user.get('/:id', async (req, res) => {
@@ -20,7 +20,7 @@ user.get('/:id', async (req, res) => {
 
   const response = await db.query('select * from users where id = $1', [id]);
   if (!response.rowCount) return res.status(404).json('No user found');
-  else return res.json(response.rows);
+  else return res.json(response.rows[0]);
 });
 
 user.put('/:user_id', async (req, res) => {
@@ -44,7 +44,7 @@ user.put('/:user_id', async (req, res) => {
     returning *
   `, [id, name, email, weekly_target]);
 
-  return res.status(200).json(response.rows);
+  return res.status(200).json(response.rows[0]);
 });
 
 
