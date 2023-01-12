@@ -12,7 +12,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         },
         body: {
           ...exercise,
-          muscle_targets: exercise.muscle_targets.join('-'),
+          muscle_targets: exercise.muscle_targets?.join('-') || null,
         }
       }),
       invalidatesTags: ['Exercises'],
@@ -23,7 +23,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       transformResponse: (res: any) => {
         return res.map((e: any) => ({
           ...e,
-          muscle_targets: e.split('-'),
+          muscle_targets: e.muscle_targets?.split('-') || [],
         }))
       }
     }),
