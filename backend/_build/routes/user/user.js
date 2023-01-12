@@ -34,10 +34,10 @@ user.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     else
         return res.json(response.rows);
 }));
-user.put('/:param_id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { param_id } = req.params;
+user.put('/:user_id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { user_id } = req.params;
     const patch = req.body;
-    const existing = yield db_1.default.query('select * from users where id = $1', [param_id]);
+    const existing = yield db_1.default.query('select * from users where id = $1', [user_id]);
     if (!existing.rowCount)
         return res.status(404).json('A user with the provided id was not found.');
     const { id, name, email, weekly_target } = Object.assign(Object.assign({}, existing.rows[0]), patch);
@@ -50,15 +50,5 @@ user.put('/:param_id', (req, res) => __awaiter(void 0, void 0, void 0, function*
     returning *
   `, [id, name, email, weekly_target]);
     return res.status(200).json(response.rows);
-}));
-user.put('/weekly_target/:user_id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { user_id } = req.params;
-    const { weekly_target } = req.body;
-    if (weekly_target === undefined)
-        return res.status(400).send('Missing weekly_target parameter');
-    const response = yield db_1.default.query('update users set weekly_target = $1 where id = $2 returning *', [weekly_target, user_id]);
-    if (!response.rowCount)
-        return res.status(500).send('Could not update weekly target');
-    return res.status(200).json(response.rows[0]);
 }));
 exports.default = user;
