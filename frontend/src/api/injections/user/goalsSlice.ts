@@ -1,10 +1,9 @@
-import { ExerciseType } from "../../../types/ExerciseType";
 import { GoalType } from "../../../types/GoalType";
 import { apiSlice } from "../../apiSlice";
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    addNewExercise: builder.mutation({
+    addNewGoal: builder.mutation({
       query: (goal: GoalType) => ({
         url: '/user/goals/new',
         method: 'POST',
@@ -15,11 +14,11 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Goals'],
     }),
-    getExercises: builder.query({
+    getGoals: builder.query({
       query: (user_id: string) => `/user/goals/${user_id}`,
       providesTags: ['Goals'],
     }),
-    editExercise: builder.mutation({
+    editGoal: builder.mutation({
       query: (goal: GoalType) => ({
         url: `/user/goals/${goal.user_id}`,
         method: 'PUT',
@@ -30,7 +29,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Goals'],
     }),
-    deleteExercise: builder.mutation({
+    deleteGoal: builder.mutation({
       query: (id: string) => ({
         url: `/user/goals/${id}`,
         method: 'DELETE',
@@ -41,8 +40,8 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useAddNewExerciseMutation,
-  useGetExercisesQuery,
-  useEditExerciseMutation,
-  useDeleteExerciseMutation,
+  useAddNewGoalMutation,
+  useGetGoalsQuery,
+  useEditGoalMutation,
+  useDeleteGoalMutation,
 } = extendedApiSlice;
