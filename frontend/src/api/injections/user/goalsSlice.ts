@@ -17,10 +17,14 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     getGoals: builder.query({
       query: (user_id: string) => `/user/goals/${user_id}`,
       providesTags: ['Goals'],
+      transformResponse: (res: GoalType[]) => res.map(g => ({
+        ...g, 
+        deadline: Number(g.deadline)
+      }))
     }),
     editGoal: builder.mutation({
       query: (goal: GoalType) => ({
-        url: `/user/goals/${goal.user_id}`,
+        url: `/user/goals/${goal.id}`,
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
