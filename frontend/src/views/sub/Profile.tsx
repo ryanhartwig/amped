@@ -9,9 +9,10 @@ import { Modal } from '../../components/ui/Modal';
 import { AddEditGoal } from '../../components/user/AddEditGoal';
 import { useDispatch } from 'react-redux';
 import { GoalType } from '../../types/GoalType';
-import { addEditGoal, DaysTrained, deleteGoal, setWeeklyTarget } from '../../store/slices/userSlice';
+import { DaysTrained, setWeeklyTarget } from '../../store/slices/userSlice';
 import { Goal } from '../../components/user/Goal';
 import { Counter } from '../../components/ui/Counter';
+import { useAddNewGoalMutation, useDeleteGoalMutation, useEditGoalMutation } from '../../api/injections/user/goalsSlice';
 
 
 const tabs = ['My training goals', 'Completed goals']
@@ -38,17 +39,40 @@ export const Profile = () => {
     dispatch(setWeeklyTarget(target as DaysTrained))
   }, [dispatch, target]);
 
+  const [[addGoal], [updateGoal], [deleteGoal]] = [
+    useAddNewGoalMutation(),
+    useEditGoalMutation(),
+    useDeleteGoalMutation(),
+  ]
+
   const onSave = useCallback((g: GoalType) => {
-    dispatch(addEditGoal(g));
-    setGoalModal(false);
-    setSelectedGoal(undefined);
-  }, [dispatch]);
+    (async () => {
+      try {
+        // update
+        if (goals.find(goal => goal.id === g.id)) {
+          await updateGoal(g).unwrap();
+
+        // create
+        } else {
+          await addGoal(g).unwrap();
+        }
+      } catch(e) {
+        console.log(e);
+      } finally {
+        setGoalModal(false);
+        setSelectedGoal(undefined);
+      }
+    })()
+    
+  }, [addGoal, updateGoal, goals]);
 
   const onDelete = useCallback((id: string) => {
-    dispatch(deleteGoal(id));
-    setSelectedGoal(undefined);
-    setGoalModal(false);
-  }, [dispatch]);
+    (async () => {
+      await deleteGoal(id).unwrap();
+      setSelectedGoal(undefined);
+      setGoalModal(false);
+    })()
+  }, [deleteGoal]);
 
   return (
     <div className='Profile'>
@@ -117,7 +141,10 @@ export const Profile = () => {
         </div>
         
         {/* Add goal modal */}
-        <Modal open={goalModal} onClose={() => setGoalModal(false)} closeText='Cancel'>
+        <Modal open={goalModal} onClose={() => {
+          setGoalModal(false);
+          setSelectedGoal(undefined);
+        }} closeText='Cancel'>
           <Modal.Header>
             {selectedGoal
               ? 'Edit training goal'
