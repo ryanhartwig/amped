@@ -1,5 +1,5 @@
-import { RoutineType } from "../../types/RoutineType";
-import { apiSlice } from "../apiSlice";
+import { RoutineType } from "../../../types/RoutineType";
+import { apiSlice } from "../../apiSlice";
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -42,14 +42,14 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           tags: routine.tags?.join('-') || null,
         }
       }),
-      invalidatesTags: ['Routines'],
+      invalidatesTags: ['Routines', 'RtEx'],
     }),
     deleteRoutine: builder.mutation({
       query: (id: string) => ({
         url: `/routines/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Routines'],
+      invalidatesTags: ['Routines', 'RtEx'],
     }),
   })
 });

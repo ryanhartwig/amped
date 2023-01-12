@@ -16,24 +16,23 @@ const express_promise_router_1 = __importDefault(require("express-promise-router
 const db_1 = __importDefault(require("../db"));
 const routine_exercise = (0, express_promise_router_1.default)();
 /* Get all exercises belonging provided routine_id */
-routine_exercise.get('/:routine_id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { routine_id } = req.params;
-    if (!routine_id)
-        return res.status(400).json('Missing routine_id url parameter');
-    const response = yield db_1.default.query('select * from routines_exercises where routine_id = $1', [routine_id]);
-    if (!response.rowCount)
-        return res.status(404).json('No exercises found for specified routine id');
+routine_exercise.get('/:user_id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { user_id } = req.params;
+    if (!user_id)
+        return res.status(400).json('Missing user_id url parameter');
+    const response = yield db_1.default.query('select * from routines_exercises where user_id = $1', [user_id]);
+    // if (!response.rowCount) return res.status(404).json('No exercises found for specified user id');
     res.status(200).json(response.rows);
 }));
 routine_exercise.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id, routine_id, exercise_id, position } = req.body;
-    const params = [id, routine_id, exercise_id, position];
+    const { id, routine_id, exercise_id, position, user_id } = req.body;
+    const params = [id, routine_id, exercise_id, position, user_id];
     if (params.some(p => p === undefined))
         return res.status(400).json('Missing parameters in JSON object');
     const response = yield db_1.default.query(`
     insert into routines_exercises
     values (
-      $1, $2, $3, $4
+      $1, $2, $3, $4, $5
     ) returning *
   `, params);
     if (!response.rowCount)

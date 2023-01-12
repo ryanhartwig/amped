@@ -1,5 +1,5 @@
-import { ExerciseType } from "../../types/ExerciseType";
-import { apiSlice } from "../apiSlice";
+import { ExerciseType } from "../../../types/ExerciseType";
+import { apiSlice } from "../../apiSlice";
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -46,7 +46,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         url: `/exercises/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Exercises'],
+      invalidatesTags: ['Exercises', 'RtEx'],
     }),
   })
 });

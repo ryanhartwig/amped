@@ -35,7 +35,7 @@ export const Overview = ({inSession}: OverviewProps) => {
       navigate('/home/train');
       return;
     };
-
+    console.log(selectedRoutine.exercises)
     setRoutine(selectedRoutine);
     setIntensity(Array(selectedRoutine.intensity).fill(true));
   }, [navigate, selectedRoutine]);

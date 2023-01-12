@@ -21,7 +21,8 @@ import { Modal } from '../../components/ui/Modal';
 import { Search } from '../../components/search/Search';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
-import { useAddNewRoutineMutation, useEditRoutineMutation, useDeleteRoutineMutation } from '../../api/injections/routinesSlice';
+import { useAddNewRoutineMutation, useEditRoutineMutation, useDeleteRoutineMutation } from '../../api/injections/workouts/routinesSlice';
+import { DB_RoutineExercise, useAddRoutineExerciseMutation, useDeleteRoutineExerciseMutation } from '../../api/injections/workouts/relationsSlice';
 
 
 export const AddRoutine = () => {
@@ -64,10 +65,14 @@ export const AddRoutine = () => {
     exercises,
   }), [duration, editing?.id, exercises, favourited, intensity, routineName, tags, user_id]);
 
-  
+  // Routine
   const [addNewRoutine] = useAddNewRoutineMutation();
   const [editRoutine] = useEditRoutineMutation();
   const [deleteRoutine] = useDeleteRoutineMutation();
+
+  // Exercises belonging to routine
+  const [addNewRoutineExercise] = useAddRoutineExerciseMutation();
+  const [deleteRoutineExercise] = useDeleteRoutineExerciseMutation();
   
   const onSaveRoutine = useCallback(() => {
     const edit = async () => {
@@ -78,17 +83,39 @@ export const AddRoutine = () => {
         console.log(e);
       }
     }
+    
     const add = async () => {
+      const added: string[] = [];
       try {
         await addNewRoutine(routine).unwrap();
+        await Promise.allSettled(routine.exercises
+          .map(e => addNewRoutineExercise({
+            id: uuid(),
+            routine_id: routine.id,
+            user_id,
+            exercise_id: e.exercise.id,
+            position: e.position,
+          }).unwrap()))
+          .then(results => results.forEach(r => {
+            if (r.status === 'fulfilled') added.push((r.value as DB_RoutineExercise).id)
+            else throw new Error('An exercise was not added');
+          }))
+
         navigate('/home/routines', { state: { name: routineName || 'Routine Name' }})
       } catch(e) {
         console.log(e);
+
+        // Clean up existing relations
+        if (added.length) {
+          added.forEach(id => deleteRoutineExercise(id));
+        }
+      } finally {
+        console.log('added routineexercise ids: ', added);
       }
     }
 
     editing ? edit() : add();
-  }, [addNewRoutine, editRoutine, editing, navigate, routine, routineName]);
+  }, [addNewRoutine, addNewRoutineExercise, deleteRoutineExercise, editRoutine, editing, navigate, routine, routineName, user_id]);
 
   useEffect(() => {
     setExercises(exerciseList.map((ex, i) => ({exercise: ex, position: i})))
