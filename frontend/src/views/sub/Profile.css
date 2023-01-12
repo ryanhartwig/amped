@@ -41,25 +41,16 @@
 /*  */
 /* Target */
 /*  */
-.Profile-weekly-target {
-  margin: 4px auto;
-  margin-bottom: 8px;
-
-  width: 95%;
-}
-.Profile-weekly-target-days.WeeklyTarget {
-  margin: 12px auto;
-
-  height: 50px;
-  width: 95vw;
-  max-width: 430px;
-}
-
 .Profile-target {
   border-radius: 10px;
   padding: 5px;
 }
-
+.Profile-target-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
 /*  */
 /* Goals */
