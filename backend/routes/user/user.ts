@@ -47,4 +47,16 @@ user.put('/:param_id', async (req, res) => {
   return res.status(200).json(response.rows);
 });
 
+user.put('/weekly_target/:user_id', async (req, res) => {
+  const { user_id } = req.params;
+  const { weekly_target } = req.body;
+
+  if (weekly_target === undefined) return res.status(400).send('Missing weekly_target parameter');
+
+  const response = await db.query('update users set weekly_target = $1 where id = $2 returning *', [weekly_target, user_id]);
+
+  if (!response.rowCount) return res.status(500).send('Could not update weekly target');
+  return res.status(200).json(response.rows[0]);
+})
+
 export default user;
