@@ -38,11 +38,14 @@ export const userReducer = createSlice({
       state.goals = state.goals.filter(g => g.id !== action.payload)
     },
     setWeeklyTarget: (state, action: PayloadAction<DaysTrained>) => {
-      state.weekly_target = action.payload
+      state.weekly_target = action.payload;
     }, 
+    setGoals: (state, action: PayloadAction<GoalType[]>) => {
+      state.goals = action.payload;
+    }
   }
 });
 
-export const { addEditGoal, setWeeklyTarget, deleteGoal } = userReducer.actions;
+export const { addEditGoal, setWeeklyTarget, deleteGoal, setGoals } = userReducer.actions;
 
 export default userReducer.reducer;

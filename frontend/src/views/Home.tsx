@@ -15,6 +15,9 @@ import { useGetRoutinesQuery } from '../api/injections/workouts/routinesSlice';
 import { RoutineType } from '../types/RoutineType';
 import { DB_RoutineExercise, useGetRoutineExercisesQuery } from '../api/injections/workouts/relationsSlice';
 import { ExerciseType } from '../types/ExerciseType';
+import { useGetGoalsQuery } from '../api/injections/user/goalsSlice';
+import { GoalType } from '../types/GoalType';
+import { setGoals } from '../store/slices/userSlice';
 
 
 export const Home = () => {
@@ -41,6 +44,7 @@ export const Home = () => {
   const { data: routines = [] } = useGetRoutinesQuery('admin') as { data: RoutineType[] };
   const { data: exercises = [] } = useGetExercisesQuery('admin') as { data: ExerciseType[] };
   const { data: relations = [] } = useGetRoutineExercisesQuery('admin') as { data: DB_RoutineExercise[] };
+  const { data: goals = [] } = useGetGoalsQuery('admin') as { data: GoalType[] };
 
   // Fill routines store state
   useEffect(() => {
@@ -61,6 +65,10 @@ export const Home = () => {
   useEffect(() => {
     dispatch(setExercises(exercises));
   }, [dispatch, exercises]);
+
+  useEffect(() => {
+    dispatch(setGoals(goals));
+  }, [dispatch, goals]);
 
   return (
     <div className='Home'>
