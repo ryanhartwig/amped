@@ -78,6 +78,7 @@ export const AddRoutine = () => {
   const onSaveRoutine = useCallback(() => {
     const edit = async () => {
       try {
+        console.log(routineExerciseDeltas);
         await editRoutine(routine).unwrap();
         await Promise.all(Array.from(routineExerciseDeltas, ([_, value]) => value)
           .map(d => {
@@ -86,6 +87,7 @@ export const AddRoutine = () => {
             } else return addNewRoutineExercise(d).unwrap();
           }))
         navigate('/home/routines', { state: {}});
+        routineExerciseDeltas.clear();
       } catch(e) {
         console.log(e);
       }
@@ -139,18 +141,26 @@ export const AddRoutine = () => {
       routine_id: routine.id,
       user_id,
     }));
+
     setExercises(p => [...p, ...routineExercises].map((e, i) => ({...e, position: i})));
     routineExercises.forEach(e => routineExerciseDeltas.set(e.id, [{...e}].map(e => ({...e, exercise: undefined}))[0]))
     setSelectExerciseOpen(false);
   }, [routineExerciseDeltas, routine.id, user_id]);
 
   // On remove exercise
-  const onRemoveExercise = useCallback((exercise: RoutineExercise) => {
-    if (routineExerciseDeltas.has(exercise.id)) routineExerciseDeltas.delete(exercise.id)
-    else routineExerciseDeltas.set(exercise.id, exercise.id);
-    setExercises(p => [...p.slice(0, exercise.position), ...p.slice(exercise.position + 1)]
-      .map((e, i) => ({ ...e, position: i })));
-  }, [routineExerciseDeltas]);
+  const onRemoveExercise = useCallback((rtex: RoutineExercise) => {
+    if (routineExerciseDeltas.has(rtex.id)) {
+      routineExerciseDeltas.delete(rtex.id)
+    }
+    else {
+      routineExerciseDeltas.set(rtex.id, rtex.id)
+    }
+
+    const index = exercises.findIndex(e => e.id === rtex.id);
+    setExercises(p => 
+      [...p.slice(0, index), ...p.slice(index + 1)].map((e, i) => ({ ...e, position: i }))
+    );
+  }, [exercises, routineExerciseDeltas]);
 
   const onAddTag = useCallback(() => {
     if (!tag.length) return;
