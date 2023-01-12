@@ -17,7 +17,7 @@ import { Exercise } from '../../components/Exercise';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
-import { useAddNewExerciseMutation, useDeleteExerciseMutation, useEditExerciseMutation } from '../../api/injections/exercisesSlice';
+import { useAddNewExerciseMutation, useDeleteExerciseMutation, useEditExerciseMutation } from '../../api/injections/workouts/exercisesSlice';
 
 export const AddExercise = () => {
   const navigate = useNavigate();

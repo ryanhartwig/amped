@@ -10,8 +10,11 @@ import { AiOutlineLeft } from 'react-icons/ai';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { setExercises, setRoutines } from '../store/slices/workoutsSlice';
-import { useGetRoutinesQuery } from '../api/injections/routinesSlice';
-import { useGetExercisesQuery } from '../api/injections/exercisesSlice';
+import { useGetExercisesQuery } from '../api/injections/workouts/exercisesSlice';
+import { useGetRoutinesQuery } from '../api/injections/workouts/routinesSlice';
+import { RoutineType } from '../types/RoutineType';
+import { DB_RoutineExercise, useGetRoutineExercisesQuery } from '../api/injections/workouts/relationsSlice';
+import { ExerciseType } from '../types/ExerciseType';
 
 
 export const Home = () => {
@@ -35,24 +38,29 @@ export const Home = () => {
     }
   }, [cancel, navigate]);
 
-  const {
-    data: routines = [],
-    isLoading: isLoadingRoutines,
-  } = useGetRoutinesQuery('admin');
-  const { 
-    data: exercises = [],
-    isLoading: isLoadingExercises,
-  } = useGetExercisesQuery('admin');
+  const { data: routines = [] } = useGetRoutinesQuery('admin') as { data: RoutineType[] };
+  const { data: exercises = [] } = useGetExercisesQuery('admin') as { data: ExerciseType[] };
+  const { data: relations = [] } = useGetRoutineExercisesQuery('admin') as { data: DB_RoutineExercise[] };
 
   // Fill routines store state
   useEffect(() => {
-    dispatch(setRoutines(routines));
-  }, [dispatch, isLoadingRoutines, routines]);
+    let updated: RoutineType[] = routines;
+    if (relations.length && routines.length && exercises.length) {
+      updated = updated.map((r): RoutineType => ({
+        ...r,
+        exercises: relations.filter(rtex => rtex.routine_id === r.id).map(rtex => ({
+          exercise: exercises.find(e => e.id === rtex.exercise_id)!,
+          position: rtex.position,
+        }))
+      }))
+    }
+    dispatch(setRoutines(updated));
+  }, [dispatch, exercises, relations, routines]);
 
   // Fill exercises store state
   useEffect(() => {
     dispatch(setExercises(exercises));
-  }, [dispatch, exercises, isLoadingExercises]);
+  }, [dispatch, exercises]);
 
   return (
     <div className='Home'>
