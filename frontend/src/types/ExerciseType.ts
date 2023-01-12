@@ -2,6 +2,7 @@ import { Intensity } from ".";
 
 export interface ExerciseType {
   id: string, // primary key
+  user_id: string,
   name: string,
   /**
    * Training type / goal, eg

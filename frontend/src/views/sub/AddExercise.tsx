@@ -15,19 +15,18 @@ import { Intensity } from '../../types';
 import { ExerciseType } from '../../types/ExerciseType';
 import { Exercise } from '../../components/Exercise';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
-import { useDispatch } from 'react-redux';
-import { addWorkout, editWorkout, removeWorkout } from '../../store/slices/workoutsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
+import { useAddNewExerciseMutation, useDeleteExerciseMutation, useEditExerciseMutation } from '../../api/injections/exercisesSlice';
 
 export const AddExercise = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const editing: ExerciseType | undefined = location.state?.edit;
   
   const { background_alt: background } = useAppSelector(s => s.theme);
+  const user_id = useAppSelector(s => s.user.id);
 
   // Input value
   const [tag, setTag] = useState<string>('');
@@ -42,6 +41,7 @@ export const AddExercise = () => {
 
   const exercise = useMemo<ExerciseType>(() => ({
     name: exerciseName || 'Exercise name',
+    user_id: user_id,
     intensity,
     type: 'Exercise',
     id: editing?.id || uuid(),
@@ -49,18 +49,32 @@ export const AddExercise = () => {
     exercise_goal: goal === 'Select exercise goal' ? 'Other' : goal,
     muscle_targets: Array.from(target),
     favourited,
-  }), [exerciseName, intensity, editing?.id, notes, goal, target, favourited]);
+  }), [editing?.id, exerciseName, favourited, goal, intensity, notes, target, user_id]);
+
+  const [addExercise] = useAddNewExerciseMutation();
+  const [editExercise] = useEditExerciseMutation();
+  const [removeExercise] = useDeleteExerciseMutation();
 
   const onSaveExercise = useCallback(() => {
-    if (editing) {
-      dispatch(editWorkout(exercise));
-      navigate('/home/routines', { state: { tag: 'Exercises' }})
-      return;
-    } 
+    const edit = async () => {
+      try {
+        editExercise(exercise);
+        navigate('/home/routines', { state: { tag: 'Exercises' }})
+      } catch(e) {
+        console.log(e)
+      }
+    }
+    const add = async () => {
+      try {
+        addExercise(exercise);
+        navigate('/home/routines', { state: { name: exerciseName || 'Exercise Name', tag: 'Exercises' }})
+      } catch(e) {
+        console.log(e);
+      }
+    }
 
-    dispatch(addWorkout(exercise));
-    navigate('/home/routines', { state: { name: exerciseName || 'Exercise Name', tag: 'Exercises' }})
-  }, [dispatch, editing, navigate, exercise, exerciseName]);
+    editing ? edit() : add();
+  }, [addExercise, editExercise, editing, exercise, exerciseName, navigate]);
 
   const onAddTag = useCallback(() => {
     if (!tag.length) return;
@@ -81,10 +95,18 @@ export const AddExercise = () => {
   }, []);
 
   const onRemoveExercise = useCallback(() => {
-    if (!editing) return;
-    dispatch(removeWorkout(editing));
-    navigate('/home/routines', { state: { tag: 'Exercises' }});
-  }, [dispatch, editing, navigate]);
+    const remove = async () => {
+      try {
+        removeExercise(exercise.id);
+        navigate('/home/routines', { state: { tag: 'Exercises' }});
+
+      } catch(e) {
+        console.log(e);
+      }
+    }
+    
+    remove();
+  }, [exercise.id, navigate, removeExercise]);
 
   return (
     <div className='AddExercise'>

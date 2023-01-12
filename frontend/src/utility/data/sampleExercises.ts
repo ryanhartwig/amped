@@ -3,6 +3,7 @@ import { ExerciseType } from "../../types/ExerciseType";
 export const sampleExercises: ExerciseType[] = [
   {
     name: 'Bench Press',
+    user_id: 'admin',
     type: 'Exercise',
     exercise_goal: 'strength',
     muscle_targets: ['chest'],
@@ -12,6 +13,7 @@ export const sampleExercises: ExerciseType[] = [
     notes: null,
   }, {
     name: 'Chest Fly',
+    user_id: 'admin',
     type: 'Exercise',
     exercise_goal: 'hypertrophy',
     muscle_targets: ['chest'],
@@ -21,6 +23,7 @@ export const sampleExercises: ExerciseType[] = [
     intensity: 4,
   }, {
     name: 'Incline Bench Press',
+    user_id: 'admin',
     type: 'Exercise',
     exercise_goal: 'power',
     muscle_targets: ['chest'],
@@ -30,6 +33,7 @@ export const sampleExercises: ExerciseType[] = [
     notes: null,
   }, {
     name: 'Bicep Curl',
+    user_id: 'admin',
     type: 'Exercise',
     exercise_goal: 'strength',
     muscle_targets: ['biceps'],
@@ -39,6 +43,7 @@ export const sampleExercises: ExerciseType[] = [
     notes: null,
   }, {
     name: 'Hammer Curl',
+    user_id: 'admin',
     type: 'Exercise',
     exercise_goal: 'hypertrophy',
     muscle_targets: ['brachioradialis', 'biceps'],
@@ -48,6 +53,7 @@ export const sampleExercises: ExerciseType[] = [
     intensity: 4,
   }, {
     name: 'Leg Extension',
+    user_id: 'admin',
     type: 'Exercise',
     exercise_goal: 'endurance',
     muscle_targets: ['quad'],
@@ -57,6 +63,7 @@ export const sampleExercises: ExerciseType[] = [
     notes: null,
   }, {
     name: 'Tricep Extension',
+    user_id: 'admin',
     type: 'Exercise',
     exercise_goal: 'strength',
     muscle_targets: ['triceps'],
@@ -66,6 +73,7 @@ export const sampleExercises: ExerciseType[] = [
     notes: null,
   }, {
     name: 'Floor Fly',
+    user_id: 'admin',
     type: 'Exercise',
     exercise_goal: 'hypertrophy',
     muscle_targets: ['pec major'],
@@ -75,6 +83,7 @@ export const sampleExercises: ExerciseType[] = [
     notes: null,
   }, {
     name: 'Standing Shoulder Press',
+    user_id: 'admin',
     type: 'Exercise',
     exercise_goal: 'power',
     muscle_targets: ['front delts'],
@@ -84,6 +93,7 @@ export const sampleExercises: ExerciseType[] = [
     notes: null,
   }, {
     name: 'Front Raise',
+    user_id: 'admin',
     type: 'Exercise',
     exercise_goal: 'hypertrophy',
     muscle_targets: ['front delts'],
@@ -93,6 +103,7 @@ export const sampleExercises: ExerciseType[] = [
     notes: null,
   }, {
     name: 'Deadlift',
+    user_id: 'admin',
     type: 'Exercise',
     exercise_goal: 'strength',
     muscle_targets: ['low back'],
@@ -102,6 +113,7 @@ export const sampleExercises: ExerciseType[] = [
     notes: null,
   }, {
     name: 'Scissors',
+    user_id: 'admin',
     type: 'Exercise',
     exercise_goal: 'endurance',
     muscle_targets: ['lower abs'],
