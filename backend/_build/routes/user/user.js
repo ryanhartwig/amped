@@ -21,10 +21,9 @@ user.post('/add', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (params.some(p => p === undefined))
         return res.status(400).json('Missing parameters in request body');
     const response = yield db_1.default.query('insert into users values ($1, $2, $3, $4) returning *', params);
-    if (response.rows)
-        return res.status(201).json(response.rows);
-    else
-        return res.status(500).json(response);
+    if (!response.rowCount)
+        return res.status(500).json('Could not create user');
+    res.status(201).json(response.rows[0]);
 }));
 user.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
@@ -32,7 +31,7 @@ user.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!response.rowCount)
         return res.status(404).json('No user found');
     else
-        return res.json(response.rows);
+        return res.json(response.rows[0]);
 }));
 user.put('/:user_id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user_id } = req.params;
@@ -49,6 +48,6 @@ user.put('/:user_id', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     where id = $1
     returning *
   `, [id, name, email, weekly_target]);
-    return res.status(200).json(response.rows);
+    return res.status(200).json(response.rows[0]);
 }));
 exports.default = user;

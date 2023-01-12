@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { DB_User } from "../../api/injections/user/userSlice";
 import { GoalType } from "../../types/GoalType";
 import { ScheduledRoutine } from "../../types/scheduledState";
-
-export type DaysTrained = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 interface UserState {
   scheduled: ScheduledRoutine[],
   goals: GoalType[],
-  weekly_target: DaysTrained,
+  weekly_target: number,
   name: string,
   email: string,
   id: string,
@@ -17,11 +16,11 @@ interface UserState {
 const initialState: UserState = {
   scheduled: [],
   goals: [],
-  weekly_target: 4,
-  name: 'admin',
+  weekly_target: 0,
+  name: '',
   email: '',
-  id: 'admin',
-  authenticated: true,
+  id: '',
+  authenticated: false,
 }
 
 export const userReducer = createSlice({
@@ -37,15 +36,26 @@ export const userReducer = createSlice({
     deleteGoal: (state, action: PayloadAction<string>) => {
       state.goals = state.goals.filter(g => g.id !== action.payload)
     },
-    setWeeklyTarget: (state, action: PayloadAction<DaysTrained>) => {
+    setWeeklyTarget: (state, action: PayloadAction<number>) => {
       state.weekly_target = action.payload;
     }, 
     setGoals: (state, action: PayloadAction<GoalType[]>) => {
       state.goals = action.payload;
+    },
+    setUser: (state, action: PayloadAction<DB_User>) => {
+      const { weekly_target, email, id, name } = action.payload;
+      console.log( weekly_target, email, id, name);
+      return {
+        ...state,
+        weekly_target,
+        email,
+        id,
+        name
+      }
     }
   }
 });
 
-export const { addEditGoal, setWeeklyTarget, deleteGoal, setGoals } = userReducer.actions;
+export const { addEditGoal, setWeeklyTarget, deleteGoal, setGoals, setUser } = userReducer.actions;
 
 export default userReducer.reducer;
