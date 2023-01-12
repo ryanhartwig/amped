@@ -44,7 +44,6 @@ export const userReducer = createSlice({
     },
     setUser: (state, action: PayloadAction<DB_User>) => {
       const { weekly_target, email, id, name } = action.payload;
-      console.log( weekly_target, email, id, name);
       return {
         ...state,
         weekly_target,
