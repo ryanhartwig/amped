@@ -7,7 +7,7 @@ import { VscFlame } from 'react-icons/vsc';
 
 import { Routine } from '../../components/Routine';
 import { useAppSelector } from '../../utility/helpers/hooks';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Input } from '../../components/ui/Input';
 import { Tag } from '../../components/ui/Tag';
 import { RoutineExercise, RoutineType } from '../../types/RoutineType';
@@ -47,9 +47,7 @@ export const AddRoutine = () => {
   const [selectExerciseOpen, setSelectExerciseOpen] = useState<boolean>(false);
 
   // Array of selected exercises (contains duplicates)
-  const [exerciseList, setExerciseList] = useState<ExerciseType[]>(editing?.exercises.map(e => e.exercise) || []);
-  // Array of index-positioned exercise (duplicates are therefore uniquely identifiable)
-  const [exercises, setExercises] = useState<RoutineExercise[]>(exerciseList.map((ex, i) => ({exercise: ex, position: i})));
+  const [exercises, setExercises] = useState<RoutineExercise[]>(editing?.exercises || []);
 
   const routine = useMemo<RoutineType>(() => ({
     id: editing?.id || uuid(),
@@ -73,11 +71,20 @@ export const AddRoutine = () => {
   // Exercises belonging to routine
   const [addNewRoutineExercise] = useAddRoutineExerciseMutation();
   const [deleteRoutineExercise] = useDeleteRoutineExerciseMutation();
+
+  // Add / removal of routine's exercise in edit mode, queues fetches to be made when saving (posts / deletes)
+  const routineExerciseDeltas = useMemo<Map<string, DB_RoutineExercise | string>>(() => new Map(), []);  
   
   const onSaveRoutine = useCallback(() => {
     const edit = async () => {
       try {
         await editRoutine(routine).unwrap();
+        await Promise.all(Array.from(routineExerciseDeltas, ([_, value]) => value)
+          .map(d => {
+            if (typeof d === 'string') {
+              return deleteRoutineExercise(d).unwrap();
+            } else return addNewRoutineExercise(d).unwrap();
+          }))
         navigate('/home/routines', { state: {}});
       } catch(e) {
         console.log(e);
@@ -91,7 +98,7 @@ export const AddRoutine = () => {
         await Promise.allSettled(routine.exercises
           .map((e, i) => addNewRoutineExercise({
             id: uuid(),
-            routine_id: i === 2 ? '_' : routine.id,
+            routine_id: routine.id,
             user_id,
             exercise_id: e.exercise.id,
             position: e.position,
@@ -119,20 +126,31 @@ export const AddRoutine = () => {
     }
 
     editing ? edit() : add();
-  }, [addNewRoutine, addNewRoutineExercise, deleteRoutine, deleteRoutineExercise, editRoutine, editing, navigate, routine, routineName, user_id]);
+  }, [addNewRoutine, addNewRoutineExercise, deleteRoutine, deleteRoutineExercise, routineExerciseDeltas, editRoutine, editing, navigate, routine, routineName, user_id]);
 
-  useEffect(() => {
-    setExercises(exerciseList.map((ex, i) => ({exercise: ex, position: i})))
-  }, [exerciseList]);
 
-  const onRemoveExercise = useCallback((exercise: RoutineExercise) => {
-    setExerciseList(p => [...p.slice(0, exercise.position), ...p.slice(exercise.position + 1)])
-  }, []);
-
+  // On add exercises
   const onSaveSelection = useCallback((exercises: ExerciseType[]) => {
-    setExerciseList(p => [...p, ...exercises]);
+    const routineExercises = exercises.map((e): RoutineExercise => ({
+      id: uuid(),
+      exercise: e,
+      exercise_id: e.id,
+      position: 0,
+      routine_id: routine.id,
+      user_id,
+    }));
+    setExercises(p => [...p, ...routineExercises].map((e, i) => ({...e, position: i})));
+    routineExercises.forEach(e => routineExerciseDeltas.set(e.id, [{...e}].map(e => ({...e, exercise: undefined}))[0]))
     setSelectExerciseOpen(false);
-  }, []);
+  }, [routineExerciseDeltas, routine.id, user_id]);
+
+  // On remove exercise
+  const onRemoveExercise = useCallback((exercise: RoutineExercise) => {
+    if (routineExerciseDeltas.has(exercise.id)) routineExerciseDeltas.delete(exercise.id)
+    else routineExerciseDeltas.set(exercise.id, exercise.id);
+    setExercises(p => [...p.slice(0, exercise.position), ...p.slice(exercise.position + 1)]
+      .map((e, i) => ({ ...e, position: i })));
+  }, [routineExerciseDeltas]);
 
   const onAddTag = useCallback(() => {
     if (!tag.length) return;
@@ -239,7 +257,7 @@ export const AddRoutine = () => {
 
         <div className='AddRoutine-exercises hidescrollbar' style={{background}}>
           {exercises.map(e => 
-            <div key={e.exercise.id + '' + e.position} className='AddRoutine-exercise'>
+            <div key={e.id} className='AddRoutine-exercise'>
               <Exercise exercise={e.exercise} />
               <div className='AddRoutine-exercise-remove' onClick={() => onRemoveExercise(e)}>
                 <IoTrash />

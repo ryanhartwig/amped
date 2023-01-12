@@ -2,7 +2,11 @@ import { Intensity } from ".";
 import { ExerciseType } from "./ExerciseType";
 
 export interface RoutineExercise {
+  id: string,
   position: number,
+  user_id: string,
+  routine_id: string,
+  exercise_id: string,
   exercise: ExerciseType,
 }
 
