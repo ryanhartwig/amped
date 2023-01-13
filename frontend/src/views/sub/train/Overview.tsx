@@ -35,7 +35,6 @@ export const Overview = ({inSession}: OverviewProps) => {
       navigate('/home/train');
       return;
     };
-    console.log(selectedRoutine.exercises)
     setRoutine(selectedRoutine);
     setIntensity(Array(selectedRoutine.intensity).fill(true));
   }, [navigate, selectedRoutine]);
@@ -57,13 +56,13 @@ export const Overview = ({inSession}: OverviewProps) => {
           </InfoBorder.HeaderRight>
           <InfoBorder.FooterLeft>
             <div className='Overview-info' style={{color: 'rgb(107, 77, 59)'}}>
-              {intensity.map((x, i) => <VscFlame key={i} />)}
+              {intensity.map((_, i) => <VscFlame key={i} />)}
             </div>
           </InfoBorder.FooterLeft>
 
           <div className='Overview-content'>
             <div className='Overview-exercises hidescrollbar' style={{background: background_alt}}>
-              {routine.exercises.map((e, i) => <Exercise key={`${e.position}-${e.exercise}`} selected={inSession && currentPosition === i ? e.exercise : undefined} exercise={e.exercise} />)}
+              {routine.exercises.map((e, i) => <Exercise key={`${e.id}`} selected={inSession && currentPosition === i ? e.exercise : undefined} exercise={e.exercise} />)}
             </div>
             {routine.prev_notes && <div className='Overview-lastnotes'>
               <p>Last session's notes</p>

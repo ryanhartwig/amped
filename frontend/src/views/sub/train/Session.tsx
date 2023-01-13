@@ -9,13 +9,13 @@ import { ExerciseDataType } from '../../../types/ExerciseDataType';
 import { Timer } from '../../../components/stats/Timer';
 import { InfoBorder } from '../../../components/ui/InfoBorder';
 import { useDispatch } from 'react-redux';
-import { setExerciseData, setPosition } from '../../../store/slices/sessionSlice';
 import { SetFieldType } from '../../../types/SetFieldType';
 import { RoutineExercise } from '../../../types/RoutineType';
 import { AddSet } from './AddSet';
 import { SetField } from '../../../components/stats/SetField';
 import { RoutineDataType } from '../../../types/RoutineDataType';
 import { Overview } from './Overview';
+import { addEditExerciseData, setPosition } from '../../../store/slices/sessionSlice';
 
 export const Session = () => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export const Session = () => {
   const [setTime, setSetTime] = useState<number>(0);
   const [paused, setPaused] = useState<boolean>(false);
 
-  const exerciseData = useMemo<ExerciseDataType>(() => ({
+  const currentExerciseData = useMemo<ExerciseDataType>(() => ({
     duration: exerciseTime,
     exercise_id: exercise.exercise.id,
     exercise_position: position,
@@ -53,10 +53,12 @@ export const Session = () => {
     routine_id: session.routine_id,
     start_date: session.sessionStartDate,
     exerciseData: session.exerciseData,
+    notes: null,
+    energy: null,
   }), [routineTime, session.exerciseData, session.routine_id, session.sessionStartDate, session.session_id]);
 
   const onNavigate = useCallback((dir: 1 | -1) => {
-    dispatch(setExerciseData(exerciseData));
+    dispatch(addEditExerciseData(currentExerciseData));
     if (position + dir === routine.exercises.length) return; 
 
     dispatch(setPosition(position + dir));
@@ -65,7 +67,7 @@ export const Session = () => {
     setId(uuid());
     setSets([]);
     setSetTime(0);
-  }, [dispatch, exerciseData, position, routine.exercises.length]);
+  }, [dispatch, currentExerciseData, position, routine.exercises.length]);
 
   const onAddSet = useCallback((set: Partial<SetFieldType>) => {
     setSets(p => [...p, set].map((s, i) => ({...s, position: i})) as SetFieldType[]);
@@ -111,7 +113,7 @@ export const Session = () => {
             <div className='Session-content-sets hidescrollbar' ref={setsRef}>
               {sets.map(s => <SetField key={s.id} set={s} sets={sets} />)}
             </div>
-            <AddSet onAddSet={onAddSet} setTime={setTime} setSetTime={setSetTime} exercise_data_id={exerciseData.id} />
+            <AddSet onAddSet={onAddSet} setTime={setTime} setSetTime={setSetTime} exercise_data_id={currentExerciseData.id} />
           </div>
         </InfoBorder>
       </div>}

@@ -21,7 +21,7 @@ export const WorkoutSummary = ({routineData, onClose}: WorkoutSummaryProps) => {
 
   const { background_alt, background } = useAppSelector(s => s.theme);
 
-  const [energy, setEnergy] = useState<number | undefined>(routineData.energy);
+  const [energy, setEnergy] = useState<number | null>(routineData.energy);
   const [notes, setNotes] = useState<string>(routineData.notes || '');
   const [notesOpen, setNotesOpen] = useState<boolean>(false);
 
