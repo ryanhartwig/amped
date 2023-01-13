@@ -23,10 +23,25 @@ export const Completed = () => {
     data.filter(d => selected[0] <= d.start_date && selected[1] >= d.start_date
   ),[data, selected]);
 
-  const routines = Array.from(new Set(selectedSessions.map(p => p.routine_id)))
-    .map(id => allRoutines.find(r => r.id === id))
-    .filter(r => r !== undefined) as RoutineType[]
+  const routines = 
+    Array.from(new Set(selectedSessions.map(p => p.routine_id)))
+      .map(id => allRoutines.find(r => r.id === id))
+      .filter(r => r !== undefined) as RoutineType[]
   ;
+
+  const anonRoutine: RoutineType = {
+    est_duration: 0,
+    exercises: [],
+    favourited: false,
+    id: '',
+    intensity: 0,
+    name: 'Anonymous Routine',
+    notes: '',
+    prev_notes: '',
+    tags: [],
+    type: 'Routine',
+    user_id: '',
+  }
 
   const onSelect = useCallback(([min, max]: [number, number]) => {
     setSelected([min, max]);
@@ -46,14 +61,14 @@ export const Completed = () => {
         <div className='Completed-routines hidescrollbar' style={{background}}>
           {selectedSessions.length 
           ? selectedSessions.map(p => {
-            const routine = routines.find(r => r.id === p.routine_id);
-
-            return routine ? <Routine routine={routine}
+            const routine = routines.find(r => r.id === p.routine_id) || anonRoutine;
+            console.log(p);
+            return <Routine routine={routine}
               key={p.id}
               completed 
               start_date={p.start_date}
               onSelect={() => setSummaryData(p)}
-            /> : <></>
+            />
           }
             )
           : <p style={{fontSize: 12, fontWeight: 100, margin: 20}}>No routines perfomed</p>}

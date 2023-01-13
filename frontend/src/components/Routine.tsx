@@ -93,10 +93,10 @@ export const Routine = ({routine, setUserTags, onSelect, start_date, activeTags,
             <p>complete</p>
           </div>}
 
-          {latest && 
+          {(latest || start_date) &&  
           <div className='Routine-latest-data'>
-            <p>{getDateTime(start_date || latest.start_date)} •</p>
-            <p style={{marginLeft: '5px'}}>{getDuration(latest.duration)}</p>
+            <p>{getDateTime(start_date || latest.start_date)}</p>
+            {latest && <p style={{marginLeft: '5px'}}>• {getDuration(latest.duration)}</p>}
           </div>}
         </div>
       </div> }
