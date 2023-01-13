@@ -11,7 +11,6 @@ routine.get('/:user_id', async (req, res) => {
   if (!user_id) return res.status(400).json('No performed routine id provided');
   const response = await db.query('select * from performed_routine where user_id = $1', [user_id]);
 
-  if (!response.rowCount) return res.status(404).json('No routine data for provided user id');
   res.status(200).json(response.rows);
 });
 
