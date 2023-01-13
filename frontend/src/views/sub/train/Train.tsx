@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Routine } from '../../../components/Routine';
@@ -6,9 +6,10 @@ import { Search } from '../../../components/search/Search';
 import { WorkoutSummary } from '../../../components/stats/WorkoutSummary';
 import { Modal } from '../../../components/ui/Modal';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { setPosition, setSelectedRoutine, setSummaryData } from '../../../store/slices/sessionSlice';
+import { setPosition, setSelectedRoutine, setRoutineSummaryId } from '../../../store/slices/sessionSlice';
 import { selectCompletedToday } from '../../../store/slices/workoutDataSlice';
 import { ExerciseType } from '../../../types/ExerciseType';
+import { RoutineDataType } from '../../../types/RoutineDataType';
 import { RoutineType } from '../../../types/RoutineType';
 import { days } from '../../../utility/data/days_months';
 import { useAppSelector } from '../../../utility/helpers/hooks';
@@ -34,7 +35,9 @@ export const Train = () => {
   const [selected, setSelected] = useState<RoutineType | ExerciseType>();
   const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
 
-  const summaryData = useAppSelector(s => s.session.summaryData);
+  const routineDataId = useAppSelector(s => s.session.routineSummaryId);
+  const routineData = useAppSelector(s => s.workoutData.routineData);
+  const summaryData = useMemo<RoutineDataType | undefined>(() => routineData.find(r => r.id === routineDataId), [routineData, routineDataId]);
 
   useEffect(() => {
     setHighlighted(undefined);
@@ -91,9 +94,9 @@ export const Train = () => {
         <PrimaryButton onClick={onContinue} style={{marginTop: 8}} text={highlighted ? 'Continue' : 'Select a routine'} disabled={!highlighted} />
       </Modal>
 
-      <Modal onClose={() => dispatch(setSummaryData(undefined))} open={!!summaryData} closeText='Close' >
+      <Modal onClose={() => dispatch(setRoutineSummaryId(undefined))} open={!!summaryData} closeText='Close' >
         <Modal.Header>Summary</Modal.Header>
-        {summaryData && <WorkoutSummary routineData={summaryData} onClose={() => dispatch(setSummaryData(undefined))} />}
+        {summaryData && <WorkoutSummary routineData={summaryData} onClose={() => dispatch(setRoutineSummaryId(undefined))} />}
       </Modal>
     </div>
   )

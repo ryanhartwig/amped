@@ -27,16 +27,24 @@ set.get('/:performed_exercise_id', (req, res) => __awaiter(void 0, void 0, void 
 set.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id, performed_exercise_id, duration, modifiers, position, weight, count } = req.body;
     const params = [id, performed_exercise_id, duration, modifiers, position, weight, count];
-    if (params.some(v => v === undefined))
-        return res.status(400).json('Missing properties in JSON object');
-    const response = yield db_1.default.query(`
+    const missing = [];
+    for (const key in req.body) {
+        if (req.body[key] === undefined)
+            missing.push([key, req.body[key]]);
+        if (missing.length)
+            return res.status(400).json({
+                message: 'Missing properties in JSON object',
+                properties: missing,
+            });
+        const response = yield db_1.default.query(`
     insert into performed_set values (
       $1, $2, $3, $4, $5, $6, $7
     ) returning *
   `, params);
-    if (!response.rowCount)
-        return res.status(500).json('Could not create set data');
-    res.status(201).json(response.rows[0]);
+        if (!response.rowCount)
+            return res.status(500).json('Could not create set data');
+        res.status(201).json(response.rows[0]);
+    }
 }));
 /* Edit existing exercise data */
 set.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

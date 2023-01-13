@@ -9,7 +9,7 @@ import { useToggleSet } from '../../../utility/helpers/hooks/useToggleSet';
 import './AddSet.css';
 
 interface AddSetProps {
-  onAddSet: (set: Partial<SetFieldType>) => void,
+  onAddSet: (set: SetFieldType) => void,
   exercise_data_id: string,
   setTime: number,
   setSetTime: React.Dispatch<React.SetStateAction<number>>,
@@ -26,11 +26,12 @@ export const AddSet = ({onAddSet, setTime, setSetTime, exercise_data_id}: AddSet
   const [reps, setReps] = useState<number>(5);
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
 
-  const setField: Partial<SetFieldType> = useMemo(() => ({
+  const setField: SetFieldType = useMemo(() => ({
     id,
     count: reps,
     duration: setTime,
-    exercise_data_id,
+    performed_exercise_id: exercise_data_id,
+    position: 0,
     modifiers: Array.from(activeTags) as Modifier[],
     weight,
   }), [activeTags, exercise_data_id, id, reps, setTime, weight]);

@@ -44,9 +44,9 @@ export const Session = () => {
     exercise_position: position,
     exercise_name: exercise.exercise.name,
     id,
-    performed_routine_id: routine.id,
+    performed_routine_id: session.session_id,
     sets, 
-  }), [exercise.exercise.id, exercise.exercise.name, exerciseTime, id, position, routine.id, sets]);
+  }), [exercise.exercise.id, exercise.exercise.name, exerciseTime, id, position, session.session_id, sets]);
 
   const routineData: RoutineDataType = useMemo(() => ({
     duration: routineTime,
@@ -71,7 +71,7 @@ export const Session = () => {
     setSetTime(0);
   }, [dispatch, currentExerciseData, position, routine.exercises.length]);
 
-  const onAddSet = useCallback((set: Partial<SetFieldType>) => {
+  const onAddSet = useCallback((set: SetFieldType) => {
     setSets(p => [...p, set].map((s, i) => ({...s, position: i})) as SetFieldType[]);
   }, [])
 
