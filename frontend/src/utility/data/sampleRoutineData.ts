@@ -6,6 +6,7 @@ export const sampleRoutineData: RoutineDataType[] = [
     id: '80608a1b-1729-7d21-a1ca-24f858fd6106',
     routine_id: 'Shoulders',
     start_date: 1672666568301,
+    user_id: 'admin',
     exerciseData: [
       {
         duration: 0,
@@ -34,6 +35,7 @@ export const sampleRoutineData: RoutineDataType[] = [
     id: '63fea63a-25d4-0df6-a2ed-5becfd538ac1',
     routine_id: 'biceps',
     start_date: 1672752968301,
+    user_id: 'admin',
     exerciseData: [
       {
         duration: 0,
@@ -62,6 +64,7 @@ export const sampleRoutineData: RoutineDataType[] = [
     id: 'a883a41b-bf69-4e98-0ab4-5aa5906030ee',
     routine_id: 'Back',
     start_date: 1672839368301,
+    user_id: 'admin',
     exerciseData: [
       {
         duration: 0,
@@ -127,6 +130,7 @@ export const sampleRoutineData: RoutineDataType[] = [
     id: '6c949119-d9b3-f64d-8422-2daceab7b260',
     routine_id: 'Back',
     start_date: 1672926290388,
+    user_id: 'admin',
     exerciseData: [
       {
         duration: 1,
