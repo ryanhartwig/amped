@@ -25,10 +25,13 @@ export const workoutDataReducer = createSlice({
         state.routineData[index] = action.payload;
       }
     },
+    setRoutineData: (state, action: PayloadAction<RoutineDataType[]>) => {
+      state.routineData = action.payload;
+    }
   }
 });
 
-export const { addEditRoutineData } = workoutDataReducer.actions;
+export const { addEditRoutineData, setRoutineData } = workoutDataReducer.actions;
 
 export const selectCompletedToday = (s: RootState) => {
   const now = new Date();

@@ -19,6 +19,9 @@ import { useGetGoalsQuery } from '../api/injections/user/goalsSlice';
 import { GoalType } from '../types/GoalType';
 import { setGoals, setUser } from '../store/slices/userSlice';
 import { useGetUserQuery } from '../api/injections/user/userSlice';
+import { useGetRoutineDataQuery } from '../api/injections/data/routineDataSlice';
+import { RoutineDataType } from '../types/RoutineDataType';
+import { setRoutineData } from '../store/slices/workoutDataSlice';
 
 
 export const Home = () => {
@@ -47,6 +50,8 @@ export const Home = () => {
   const { data: exercises = [] } = useGetExercisesQuery('admin') as { data: ExerciseType[] };
   const { data: relations = [] } = useGetRoutineExercisesQuery('admin') as { data: DB_RoutineExercise[] };
   const { data: goals = [] } = useGetGoalsQuery('admin') as { data: GoalType[] };
+  const { data: routineData = [] } = useGetRoutineDataQuery('admin') as { data: RoutineDataType[] };
+
 
   // Initialize user state 
   useEffect(() => {
@@ -54,8 +59,13 @@ export const Home = () => {
 
     dispatch(setUser(userData));
   }, [dispatch, userData]);
+
+  // Initialize goals state
+  useEffect(() => {
+    dispatch(setGoals(goals));
+  }, [dispatch, goals]);
   
-  // Fill routines store state
+  // Initialize routines state
   useEffect(() => {
     let updated: RoutineType[] = routines;
     if (relations.length && routines.length && exercises.length) {
@@ -70,14 +80,15 @@ export const Home = () => {
     dispatch(setRoutines(updated));
   }, [dispatch, exercises, relations, routines]);
 
-  // Fill exercises store state
+  // Initialize exercises state
   useEffect(() => {
     dispatch(setExercises(exercises));
   }, [dispatch, exercises]);
 
+  // Initialize routineData state
   useEffect(() => {
-    dispatch(setGoals(goals));
-  }, [dispatch, goals]);
+    dispatch(setRoutineData(routineData))
+  }, [dispatch, routineData]);
 
   return (
     <div className='Home'>
