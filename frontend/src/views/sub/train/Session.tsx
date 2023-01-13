@@ -29,6 +29,7 @@ export const Session = () => {
   const exercise = useMemo<RoutineExercise>(() => routine.exercises[position], [position, routine.exercises]);
   const prevExerciseData = useAppSelector(s => s.session.exerciseData.find(e => e.exercise_position === position));
   const session = useAppSelector(s => s.session);
+  const user_id = useAppSelector(s => s.user.id);
 
   const [id, setId] = useState<string>(uuid());
   const [sets, setSets] = useState<SetFieldType[]>([]);
@@ -49,13 +50,14 @@ export const Session = () => {
 
   const routineData: RoutineDataType = useMemo(() => ({
     duration: routineTime,
+    user_id,
     id: session.session_id,
     routine_id: session.routine_id,
     start_date: session.sessionStartDate,
     exerciseData: session.exerciseData,
     notes: null,
     energy: null,
-  }), [routineTime, session.exerciseData, session.routine_id, session.sessionStartDate, session.session_id]);
+  }), [routineTime, session.exerciseData, session.routine_id, session.sessionStartDate, session.session_id, user_id]);
 
   const onNavigate = useCallback((dir: 1 | -1) => {
     dispatch(addEditExerciseData(currentExerciseData));
