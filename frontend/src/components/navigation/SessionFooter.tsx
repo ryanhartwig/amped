@@ -9,10 +9,10 @@ import { RoutineType } from '../../types/RoutineType';
 import React, { useCallback, useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { PrimaryButton } from '../ui/PrimaryButton';
-import { useDispatch } from 'react-redux';
-import { setSummaryData } from '../../store/slices/sessionSlice';
 import { RoutineDataType } from '../../types/RoutineDataType';
-import { addEditRoutineData } from '../../store/slices/workoutDataSlice';
+import { useAddRoutineDataMutation, useDeleteRoutineDataMutation } from '../../api/injections/data/routineDataSlice';
+import { useAddExerciseDataMutation } from '../../api/injections/data/exerciseDataSlice';
+import { useAddSetDataMutation } from '../../api/injections/data/setDataSlice';
 
 interface SessionFooterProps {
   currentPosition: number,
@@ -26,7 +26,6 @@ interface SessionFooterProps {
 
 export const SessionFooter = ({currentPosition, setPaused, paused, routineData, routineTime, onNavigate, routine}: SessionFooterProps) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const { foreground: background } = useAppSelector(s => s.theme);
   const nextExercise = routine.exercises[currentPosition + 1]?.exercise.name || null;
@@ -34,13 +33,41 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
 
   const [open, setOpen] = useState<boolean>(false);
 
-  const onFinish = useCallback(() => {
-    dispatch(setSummaryData(routineData));
-    dispatch(addEditRoutineData(routineData));
+  const [addRoutineData] = useAddRoutineDataMutation();
+  const [deleteRoutineData] = useDeleteRoutineDataMutation();
 
-    setOpen(false); 
-    navigate('/home/train');
-  }, [dispatch, navigate, routineData]);
+  const [addExerciseData] = useAddExerciseDataMutation();
+  const [addSetData] = useAddSetDataMutation();
+
+  const onFinish = useCallback(() => {
+    (async () => {
+      let routineId: string | undefined;
+      try {
+        // Add routineData
+        const { id } = await addRoutineData(routineData).unwrap();
+        routineId = id;
+        console.log(routineId);
+
+        // Add exerciseData & setData
+        await Promise.all(routineData.exerciseData.map(async (e) => {
+          await addExerciseData(e).unwrap();
+          await Promise.all(e.sets.map(async (s) => {
+            console.log(s);
+            await addSetData(s).unwrap();
+          }))
+
+        }))
+        
+        setOpen(false); 
+        navigate('/home/train');
+      } catch(e) {
+        if (routineId) {
+          // This deletion cascades, therefore any created exercise / set data will also be deleted
+          await deleteRoutineData(routineId).unwrap();
+        }
+      }
+    })()
+  }, [addExerciseData, addRoutineData, addSetData, deleteRoutineData, navigate, routineData]);
   
   return (
     <div className='SessionFooter' style={{background}}>

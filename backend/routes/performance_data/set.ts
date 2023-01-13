@@ -21,8 +21,14 @@ set.post('/new', async (req, res) => {
   } = req.body as PerformedSet;
   const params = [id, performed_exercise_id, duration, modifiers, position, weight, count];
 
-  if (params.some(v => v === undefined)) 
-    return res.status(400).json('Missing properties in JSON object')
+  const missing: [string, PerformedSet][] = [];
+  for (const key in req.body) {
+    if (req.body[key] === undefined) missing.push([key, req.body[key]])
+
+  if (missing.length) return res.status(400).json({
+    message: 'Missing properties in JSON object',
+    properties: missing,
+  })
 
   const response = await db.query(`
     insert into performed_set values (
