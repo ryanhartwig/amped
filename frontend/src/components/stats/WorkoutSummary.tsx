@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useGetExerciseDataQuery } from '../../api/injections/data/exerciseDataSlice';
-import { addEditRoutineData } from '../../store/slices/workoutDataSlice';
+import { useEditRoutineDataMutation } from '../../api/injections/data/routineDataSlice';
 import { ExerciseDataType } from '../../types/ExerciseDataType';
 import { RoutineDataType } from '../../types/RoutineDataType';
 import { getDuration } from '../../utility/helpers/getDuration';
@@ -19,7 +18,6 @@ interface WorkoutSummaryProps {
 }
 
 export const WorkoutSummary = ({routineData, onClose}: WorkoutSummaryProps) => {
-  const dispatch = useDispatch();
 
   const { background_alt, background } = useAppSelector(s => s.theme);
 
@@ -40,10 +38,16 @@ export const WorkoutSummary = ({routineData, onClose}: WorkoutSummaryProps) => {
     setNotes(routineData.notes || '');
   }, [routineData, routineData.energy, routineData.notes]);
 
+  const [editRoutineData] = useEditRoutineDataMutation();
+
   const onSave = useCallback(() => {
-    dispatch(addEditRoutineData(editedRoutineData))
-    onClose && onClose();
-  }, [dispatch, editedRoutineData, onClose]);
+    (async () => {
+      if (notes !== routineData.notes || energy !== routineData.energy) {
+        await editRoutineData(editedRoutineData).unwrap();
+      }
+      onClose && onClose();
+    })()
+  }, [editRoutineData, editedRoutineData, energy, notes, onClose, routineData.energy, routineData.notes]);
 
   return (
     <div className='WorkoutSummary'>

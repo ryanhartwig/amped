@@ -45,13 +45,17 @@ export const Completed = () => {
       <div className='Completed-routines-wrapper'>
         <div className='Completed-routines hidescrollbar' style={{background}}>
           {selectedSessions.length 
-          ? selectedSessions.map(p => 
-            <Routine routine={routines.find(r => r.id === p.routine_id)!} 
+          ? selectedSessions.map(p => {
+            const routine = routines.find(r => r.id === p.routine_id);
+
+            return routine ? <Routine routine={routine}
               key={p.id}
               completed 
               start_date={p.start_date}
               onSelect={() => setSummaryData(p)}
-            />)
+            /> : <></>
+          }
+            )
           : <p style={{fontSize: 12, fontWeight: 100, margin: 20}}>No routines perfomed</p>}
         </div>
 
