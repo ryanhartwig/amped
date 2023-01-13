@@ -132,6 +132,7 @@ export const AddExercise = () => {
         <div className='AddExercise-goal'>
           <select id="exercise-goal" value={goal} onChange={(e) => setGoal(e.target.value)}>
             <option value="Select exercise goal" disabled>Select exercise goal</option>
+            <option value="Strength">Strength</option>
             <option value="Hypertrophy">Hypertrophy</option>
             <option value="Power">Power</option>
             <option value="Speed">Speed</option>

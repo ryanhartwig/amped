@@ -21,7 +21,7 @@ routine.post('/new', async (req, res) => {
   } = req.body as PerformedRoutine;
   const params = [id, user_id, routine_id, duration, start_date, notes, energy];
 
-  if (params.some(v => v === undefined)) 
+  if (params.some(v => v === undefined))  
     return res.status(400).json('Missing properties in JSON object')
 
   const response = await db.query(`

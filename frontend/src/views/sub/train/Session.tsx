@@ -72,7 +72,7 @@ export const Session = () => {
   }, [dispatch, currentExerciseData, position, routine.exercises.length]);
 
   const onAddSet = useCallback((set: SetFieldType) => {
-    setSets(p => [...p, set].map((s, i) => ({...s, position: i})) as SetFieldType[]);
+    setSets(p => [...p, set].map((s, i) => ({...s, id: uuid(), position: i})) as SetFieldType[]);
   }, [])
 
   useEffect(() => {
