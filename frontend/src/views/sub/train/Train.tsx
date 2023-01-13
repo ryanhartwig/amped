@@ -28,7 +28,7 @@ export const Train = () => {
   const scheduled = useAppSelector(s => s.user.scheduled).filter(s => s.day === days[date.getDay()].toLowerCase());
   const scheduledIds = scheduled.map(s => s.id);
   const allCompletedToday = useAppSelector(selectCompletedToday);
-  const scheduledCompleted = allCompletedToday.filter(r => scheduledIds.includes(r.routine_id));
+  const scheduledCompleted = allCompletedToday.filter(r => scheduledIds.includes(r.routine_id || ''));
 
 
   const [open, setOpen] = useState<boolean>(false);
