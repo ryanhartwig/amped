@@ -23,6 +23,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
 import { useAddNewRoutineMutation, useEditRoutineMutation, useDeleteRoutineMutation } from '../../api/injections/workouts/routinesSlice';
 import { DB_RoutineExercise, useAddRoutineExerciseMutation, useDeleteRoutineExerciseMutation } from '../../api/injections/workouts/relationsSlice';
+import { useEditRoutineDataMutation } from '../../api/injections/data/routineDataSlice';
 
 
 export const AddRoutine = () => {
@@ -34,6 +35,7 @@ export const AddRoutine = () => {
   
   const { background_alt: background } = useAppSelector(s => s.theme);
   const user_id = useAppSelector(s => s.user.id);
+  const routineData = useAppSelector(s => s.workoutData.routineData);
 
   // Input value
   const [tag, setTag] = useState<string>('');
@@ -182,9 +184,17 @@ export const AddRoutine = () => {
     setSelectExerciseOpen(true);
   }, []);
   
+
+  const [editRoutineData] = useEditRoutineDataMutation();
   const onRemoveRoutine = useCallback(() => {
     const remove = async () => {
+      const performed = routineData.filter(d => d.routine_id === routine.id);
       try {
+        if (performed.length) {
+          await Promise.all(performed.map(async (p) => {
+            await editRoutineData({...p, routine_id: null}).unwrap();
+          }))
+        }
         await deleteRoutine(routine.id).unwrap();
         navigate('/home/routines');
       } catch(e) {
@@ -193,7 +203,7 @@ export const AddRoutine = () => {
     }
 
     remove();
-  }, [deleteRoutine, navigate, routine.id]);
+  }, [deleteRoutine, editRoutineData, navigate, routine.id, routineData]);
 
   return (
     <div className='AddRoutine'>
