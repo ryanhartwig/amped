@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useGetSetDataQuery } from '../../api/injections/data/setDataSlice';
 import { ExerciseDataType } from '../../types/ExerciseDataType';
+import { SetFieldType } from '../../types/SetFieldType';
 import { useAppSelector } from '../../utility/helpers/hooks';
 import { Dropdown } from '../ui/Dropdown';
 import { FormatTime } from '../ui/FormatTime';
@@ -14,6 +16,8 @@ export const ExerciseStats = ({exerciseData: d}: ExerciseStatsProps) => {
 
   const { background_routine: background } = useAppSelector(s => s.theme);
   const [showSets, setShowSets] = useState<boolean>(false);
+
+  const { data: sets = [] } = useGetSetDataQuery(d.id) as { data: SetFieldType[] }; 
 
   return (
     <div className='ExerciseStats' style={{background}}>
@@ -38,8 +42,8 @@ export const ExerciseStats = ({exerciseData: d}: ExerciseStatsProps) => {
       </div>
       {showSets && 
       <div className='ExerciseStats-sets'>
-        {d.sets.length 
-          ? d.sets.map(s => <SetField set={s} sets={d.sets} key={s.id} />)
+        {sets?.length 
+          ? sets.map(s => <SetField set={s} sets={sets} key={s.id} />)
           : <p>No sets</p>
         }
       </div> }

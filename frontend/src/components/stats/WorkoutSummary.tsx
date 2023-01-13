@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useGetExerciseDataQuery } from '../../api/injections/data/exerciseDataSlice';
 import { addEditRoutineData } from '../../store/slices/workoutDataSlice';
+import { ExerciseDataType } from '../../types/ExerciseDataType';
 import { RoutineDataType } from '../../types/RoutineDataType';
 import { getDuration } from '../../utility/helpers/getDuration';
 import { useAppSelector } from '../../utility/helpers/hooks';
@@ -24,6 +26,8 @@ export const WorkoutSummary = ({routineData, onClose}: WorkoutSummaryProps) => {
   const [energy, setEnergy] = useState<number | null>(routineData.energy);
   const [notes, setNotes] = useState<string>(routineData.notes || '');
   const [notesOpen, setNotesOpen] = useState<boolean>(false);
+
+  const { data: exerciseData = [] } = useGetExerciseDataQuery(routineData.id) as { data: ExerciseDataType[] };  
 
   const editedRoutineData: RoutineDataType = useMemo(() => ({
     ...routineData,
@@ -55,7 +59,8 @@ export const WorkoutSummary = ({routineData, onClose}: WorkoutSummaryProps) => {
 
       {/* Exercise data & sets dropdowns */}
       <div className='WorkoutSummary-exerciselist hidescrollbar' style={{background: background_alt}}>
-        {routineData.exerciseData.map(data => 
+        {/* Add loading spinner here */}
+        {exerciseData.map(data => 
           <ExerciseStats exerciseData={data} key={data.id} />
         )}
       </div>

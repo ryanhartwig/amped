@@ -16,8 +16,8 @@ export const Completed = () => {
   const allRoutines = useAppSelector(s => s.workouts.routines);
   const { background_alt: background } = useAppSelector(s => s.theme);
 
-  const [summaryData, setSummaryData] = useState<RoutineDataType>();
   const [selected, setSelected] = useState<[number, number]>([todayMin, todayMax]);
+  const [summaryData, setSummaryData] = useState<RoutineDataType>();
 
   const selectedSessions = useMemo<RoutineDataType[]>(() => 
     data.filter(d => selected[0] <= d.start_date && selected[1] >= d.start_date
@@ -27,7 +27,7 @@ export const Completed = () => {
     .map(id => allRoutines.find(r => r.id === id))
     .filter(r => r !== undefined) as RoutineType[]
   ;
-  
+
   const onSelect = useCallback(([min, max]: [number, number]) => {
     setSelected([min, max]);
   }, []);
