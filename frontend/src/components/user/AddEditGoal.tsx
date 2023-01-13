@@ -31,7 +31,7 @@ export const AddEditGoal = ({onSave, onDelete, existingGoal: e}: AddEditGoalProp
 
   const [year, month, day] = useMemo<number[]>(() => dateValue.split('-').map(n => Number(n)), [dateValue]);
   const selectedDate = useMemo<Date>(() => new Date(year, month - 1, day), [day, month, year]);
-  const valid = useMemo(() => selectedDate.getTime() >= new Date().getTime() && goalInput.length, [goalInput.length, selectedDate]);
+  const valid = useMemo(() => goalInput.length, [goalInput.length]);
 
   const user_id = useAppSelector(s => s.user.id);
   
@@ -86,7 +86,6 @@ export const AddEditGoal = ({onSave, onDelete, existingGoal: e}: AddEditGoalProp
       /> }
       <div className='AddEditGoal-errors'>
         {!goalInput.length && <p>Enter a training goal</p>}
-        {(!dateValue || selectedDate.getTime() < new Date().getTime()) && <p>Enter a date greater than today</p>}
       </div>
     </div>
   )
