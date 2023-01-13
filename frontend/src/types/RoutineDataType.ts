@@ -23,9 +23,9 @@ export interface RoutineDataType {
   /**
    * User entered notes for this specific session
    */
-  notes?: string,
+  notes: string | null,
   /**
    * User entered energy for this specific session
    */
-  energy?: number,
+  energy: number | null,
 }

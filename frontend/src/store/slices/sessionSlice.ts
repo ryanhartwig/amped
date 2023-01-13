@@ -3,11 +3,9 @@ import uuid from "react-uuid";
 import { ExerciseDataType } from "../../types/ExerciseDataType";
 import { RoutineDataType } from "../../types/RoutineDataType";
 import { sampleSessionData } from "../../utility/data/sampleSession";
-import { RootState } from "../store";
 
 export interface SessionState {
   selectedRoutineId: string,
-  session_duration: number,
   session_id: string,
   routine_id: string,
   currentPosition: number,
@@ -18,7 +16,6 @@ export interface SessionState {
 
 const initialState: SessionState = {
   selectedRoutineId: '',
-  session_duration: 0,
   session_id: '',
   routine_id: '',
   currentPosition: 0,
@@ -36,13 +33,9 @@ export const sessionReducer = createSlice({
     setPosition: (state, action: PayloadAction<number>) => {
       state.currentPosition = action.payload
     },
-    setDuration: (state, action: PayloadAction<number>) => {
-      state.session_duration = action.payload;
-    },
     initializeSession: (state) => {
       state.session_id = uuid();
       state.currentPosition = 0;
-      state.session_duration = 0;
       state.routine_id = state.selectedRoutineId;
       state.sessionStartDate = (new Date()).getTime();
       state.exerciseData = [];
@@ -50,9 +43,7 @@ export const sessionReducer = createSlice({
     clearSession: () => {
       return initialState;
     },
-    setExerciseData: (state, action: PayloadAction<ExerciseDataType>) => {
-      if (!state.exerciseData) return;
-
+    addEditExerciseData: (state, action: PayloadAction<ExerciseDataType>) => {
       const index = state.exerciseData.findIndex(ex => ex.id === action.payload.id);
 
       if (index === -1) {
@@ -67,15 +58,6 @@ export const sessionReducer = createSlice({
   }
 });
 
-export const { setSelectedRoutine, setSummaryData, setPosition, initializeSession, clearSession, setExerciseData, setDuration } = sessionReducer.actions;
-
-export const selectSessionData = (s: RootState) => ({
-  selectedRoutineId: s.session.selectedRoutineId,
-  session_duration: s.session.session_duration,
-  session_id: s.session.session_id,
-  sessionStartDate: s.session.sessionStartDate,
-  exerciseData: s.session.exerciseData,
-  routine_id: s.session.routine_id,
-})
+export const { setSelectedRoutine, setSummaryData, setPosition, initializeSession, clearSession, addEditExerciseData } = sessionReducer.actions;
 
 export default sessionReducer.reducer;

@@ -26,7 +26,8 @@ export const sampleRoutineData: RoutineDataType[] = [
         sets: []
       }
     ],
-    notes: ''
+    notes: null,
+    energy: null,
   },
   {
     duration: 1,
@@ -53,7 +54,8 @@ export const sampleRoutineData: RoutineDataType[] = [
         sets: []
       }
     ],
-    notes: ''
+    notes: null,
+    energy: null,
   },
   {
     duration: 2,
@@ -117,7 +119,8 @@ export const sampleRoutineData: RoutineDataType[] = [
         ]
       }
     ],
-    notes: ''
+    notes: null,
+    energy: null,
   },
   {
     duration: 2,
@@ -144,6 +147,7 @@ export const sampleRoutineData: RoutineDataType[] = [
         sets: []
       }
     ],
-    notes: ''
+    notes: null,
+    energy: null,
   }
 ]

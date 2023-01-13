@@ -122,8 +122,6 @@ export const AddRoutine = () => {
         try { await deleteRoutine(routine.id);
         } catch(_) {} // 404 no routine exists
         
-      } finally {
-        console.log('added routineexercise ids: ', added);
       }
     }
 

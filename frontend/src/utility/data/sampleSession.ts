@@ -2,7 +2,6 @@ import { SessionState } from "../../store/slices/sessionSlice";
 
 export const sampleSessionData: SessionState = {
   selectedRoutineId: 'Abs',
-  session_duration: 2450,
   session_id: '7b8a9b40-333e-1108-0567-048740fb50d6',
   routine_id: 'Abs',
   currentPosition: 1,
@@ -17,7 +16,7 @@ export const sampleSessionData: SessionState = {
       performed_routine_id: 'Abs',
       sets: [
         {
-          id: '103de953-d20c-0e18-6c60-16a454a00208',
+          id: '103de953-d20c-0e18-6c60-16a454a00208', 
           count: 5,
           duration: 1,
           performed_exercise_id: '41c1f0a7-ddc4-3df0-ef03-905f543e4e85',

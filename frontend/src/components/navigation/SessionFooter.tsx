@@ -10,7 +10,7 @@ import React, { useCallback, useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import { useDispatch } from 'react-redux';
-import { setDuration, setSummaryData } from '../../store/slices/sessionSlice';
+import { setSummaryData } from '../../store/slices/sessionSlice';
 import { RoutineDataType } from '../../types/RoutineDataType';
 import { addEditRoutineData } from '../../store/slices/workoutDataSlice';
 
@@ -35,12 +35,12 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
   const [open, setOpen] = useState<boolean>(false);
 
   const onFinish = useCallback(() => {
-    setOpen(false);
-    dispatch(setDuration(routineTime))
     dispatch(setSummaryData(routineData));
     dispatch(addEditRoutineData(routineData));
+
+    setOpen(false); 
     navigate('/home/train');
-  }, [dispatch, navigate, routineTime, routineData]);
+  }, [dispatch, navigate, routineData]);
   
   return (
     <div className='SessionFooter' style={{background}}>
