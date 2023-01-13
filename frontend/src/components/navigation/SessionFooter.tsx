@@ -46,23 +46,24 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
         // Add routineData
         const { id } = await addRoutineData(routineData).unwrap();
         routineId = id;
-        console.log(routineId);
 
-        // Add exerciseData & setData
+        // Add exerciseData
         await Promise.all(routineData.exerciseData.map(async (e) => {
-          await addExerciseData(e).unwrap();
-          await Promise.all(e.sets.map(async (s) => {
-            console.log(s);
-            await addSetData(s).unwrap();
-          }))
+          return await addExerciseData(e).unwrap();
+        }))
 
+        // Add setData
+        await Promise.all(routineData.exerciseData.map(async (e) => {
+          return await Promise.all(e.sets.map(async (s) => {
+            return await addSetData(s).unwrap();
+          }))
         }))
         
         setOpen(false); 
         navigate('/home/train');
       } catch(e) {
         if (routineId) {
-          // This deletion cascades, therefore any created exercise / set data will also be deleted
+          // cascades, therefore any created exercise / set data will also be deleted
           await deleteRoutineData(routineId).unwrap();
         }
       }
