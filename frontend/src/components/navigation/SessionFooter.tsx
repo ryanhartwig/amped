@@ -39,8 +39,11 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
   const [addExerciseData] = useAddExerciseDataMutation();
   const [addSetData] = useAddSetDataMutation();
 
+  const [disabled, setDisabled] = useState<boolean>(false);
+
   const onFinish = useCallback(() => {
     (async () => {
+      setDisabled(true);
       let routineId: string | undefined;
       try {
         // Add routineData
@@ -66,6 +69,8 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
           // cascades, therefore any created exercise / set data will also be deleted
           await deleteRoutineData(routineId).unwrap();
         }
+      } finally {
+        setDisabled(false);
       }
     })()
   }, [addExerciseData, addRoutineData, addSetData, deleteRoutineData, navigate, routineData]);
@@ -117,7 +122,7 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
         <Modal.Header>Finish workout?</Modal.Header>
         <div className='SessionFooter-finish'>
           <p style={{fontSize: '0.8em', opacity: 0.6}}>You will not be able to return</p>
-          <PrimaryButton icon={'logo'} text='Finish' className='SessionFooter-finish-button' />
+          <PrimaryButton disabled={disabled} icon={'logo'} text='Finish' className='SessionFooter-finish-button' />
         </div>
       </Modal>
     </div>
