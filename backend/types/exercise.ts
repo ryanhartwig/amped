@@ -8,4 +8,4 @@ export interface Exercise {
   favourited: string,
   intensity: number,
   notes: string | null,
-}
+} 

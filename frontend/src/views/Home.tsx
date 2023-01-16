@@ -22,16 +22,16 @@ import { useGetUserQuery } from '../api/injections/user/userSlice';
 import { useGetRoutineDataQuery } from '../api/injections/data/routineDataSlice';
 import { RoutineDataType } from '../types/RoutineDataType';
 import { setRoutineData } from '../store/slices/workoutDataSlice';
+import { useAppSelector } from '../utility/helpers/hooks';
 
 
 export const Home = () => {
   const dispatch = useDispatch();
-  
   const navigate = useNavigate();
   const location = useLocation();
-  const cancel = ['add-rt', 'add-ex'].some(str => location.pathname.includes(str));
-
   const route = useView();
+
+  const cancel = ['add-rt', 'add-ex'].some(str => location.pathname.includes(str));
 
   const back = useMemo(() => {
     return !['dash', 'routines', 'train', 'finished', 'profile'].includes(route[route.length - 1]);
@@ -45,12 +45,15 @@ export const Home = () => {
     }
   }, [cancel, navigate]);
 
-  const { data: userData  } = useGetUserQuery('admin');
-  const { data: routines = [] } = useGetRoutinesQuery('admin') as { data: RoutineType[] };
-  const { data: exercises = [] } = useGetExercisesQuery('admin') as { data: ExerciseType[] };
-  const { data: relations = [] } = useGetRoutineExercisesQuery('admin') as { data: DB_RoutineExercise[] };
-  const { data: goals = [] } = useGetGoalsQuery('admin') as { data: GoalType[] };
-  const { data: routineData = [] } = useGetRoutineDataQuery('admin') as { data: RoutineDataType[] };
+  
+  const skip = useAppSelector(s => !s.user.authenticated);
+
+  const { data: userData  } = useGetUserQuery('admin', { skip });
+  const { data: routines = [] } = useGetRoutinesQuery('admin', { skip }) as { data: RoutineType[] };
+  const { data: exercises = [] } = useGetExercisesQuery('admin', { skip }) as { data: ExerciseType[] };
+  const { data: relations = [] } = useGetRoutineExercisesQuery('admin', { skip }) as { data: DB_RoutineExercise[] };
+  const { data: goals = [] } = useGetGoalsQuery('admin', { skip }) as { data: GoalType[] };
+  const { data: routineData = [] } = useGetRoutineDataQuery('admin', { skip }) as { data: RoutineDataType[] };
 
 
   // Initialize user state 
