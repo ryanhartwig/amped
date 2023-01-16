@@ -17,22 +17,34 @@ app.use(cors());
 
 app.use(morgan('dev'));
 
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-  secret: 'sample secret text',
-  saveUninitialized: true,
+  secret: 'sample secret', 
+  saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60,
+    sameSite: false,
+    maxAge: 1000 * 60 * 60 * 24,
   },
   resave: false,
 }));
 
-app.use(passport.authenticate('session'));
+app.use((_, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Credentials', 'true');
+
+  next();
+})
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+// app.use(passport.authenticate('session'));
+
 
 // Mounts routes defined in ./routes/index.ts
 mount(app);

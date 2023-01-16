@@ -16,7 +16,7 @@ export const Login = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await fetch('http://localhost:8000/api/currentuser');
+        const res = await fetch('http://localhost:8000/api/currentuser', { credentials: 'include'});
         const json = await res.json();
         console.log(json);
       } catch(e) {
@@ -48,6 +48,11 @@ export const Login = () => {
       <br></br>
       <br></br>
       <br></br>
+
+      <button onClick={() => fetch('http://localhost:8000/api/currentuser/logout', {
+        method: 'POST',
+      })}>logout</button>
+
     </div>
   )
 }
