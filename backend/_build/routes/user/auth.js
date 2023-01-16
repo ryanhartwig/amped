@@ -48,6 +48,7 @@ passport_1.default.use(new passport_facebook_1.Strategy({
                     return cb(err);
                 if (!res.rowCount)
                     return cb(null, false);
+                console.log(res.rows[0]);
                 return cb(null, res.rows[0]);
             });
         }
@@ -75,15 +76,22 @@ auth.get('/oauth2/redirect/facebook', passport_1.default.authenticate('facebook'
 }));
 auth.get('/currentuser', (req, res) => {
     const user = req.user;
+    console.log(req.isAuthenticated());
     if (!user)
         return res.status(404).json('no user');
     return res.status(200).json(user);
 });
-auth.post('/logout', (req, res, next) => {
-    req.logout(err => {
+auth.post('/currentuser/logout', (req, res, next) => {
+    req.logout((err) => {
         if (err)
             return next(err);
-        res.redirect('/');
+        res.redirect('http://localhost:3000/login');
     });
 });
+// auth.post('/logout', (req, res, next) => {
+//   req.logout(err => { 
+//     if (err) return next(err);
+//     res.redirect('/');
+//   });
+// });
 exports.default = auth;

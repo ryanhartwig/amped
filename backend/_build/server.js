@@ -20,16 +20,22 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
 app.use((0, express_session_1.default)({
-    secret: 'sample secret text',
-    saveUninitialized: true,
+    secret: 'sample secret',
+    saveUninitialized: false,
     cookie: {
-        maxAge: 1000 * 60 * 60,
+        sameSite: false,
+        maxAge: 1000 * 60 * 60 * 24,
     },
     resave: false,
 }));
-app.use(passport_1.default.authenticate('session'));
+app.use((_, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+});
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
+// app.use(passport.authenticate('session'));
 // Mounts routes defined in ./routes/index.ts
 (0, routes_1.default)(app);
 app.listen(port, () => {
