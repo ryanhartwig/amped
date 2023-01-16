@@ -1,5 +1,7 @@
 import { useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setUser } from '../store/slices/userSlice';
 import './Login.css';
 
 // interface LoginProps {
@@ -8,6 +10,8 @@ import './Login.css';
 
 export const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
 
   const onAuth = useCallback(() => {
     navigate('http://localhost:8000/api/login/federated/facebook');
@@ -17,8 +21,17 @@ export const Login = () => {
     const getUser = async () => {
       try {
         const res = await fetch('http://localhost:8000/api/currentuser', { credentials: 'include'});
-        const json = await res.json();
-        console.log(json);
+        const data = await res.json();
+        
+        if (!data?.id) return;
+        dispatch(setUser({
+          email: data.email,
+          id: data.id,
+          name: data.name,
+          weekly_target: data.weekly_target,
+        }));
+
+        navigate('/home/dash');
       } catch(e) {
         console.log(e);
       }

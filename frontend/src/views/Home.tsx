@@ -46,22 +46,15 @@ export const Home = () => {
   }, [cancel, navigate]);
 
   
-  const skip = useAppSelector(s => !s.user.authenticated);
+  const skip = false;
 
-  const { data: userData  } = useGetUserQuery('admin', { skip });
-  const { data: routines = [] } = useGetRoutinesQuery('admin', { skip }) as { data: RoutineType[] };
-  const { data: exercises = [] } = useGetExercisesQuery('admin', { skip }) as { data: ExerciseType[] };
-  const { data: relations = [] } = useGetRoutineExercisesQuery('admin', { skip }) as { data: DB_RoutineExercise[] };
-  const { data: goals = [] } = useGetGoalsQuery('admin', { skip }) as { data: GoalType[] };
-  const { data: routineData = [] } = useGetRoutineDataQuery('admin', { skip }) as { data: RoutineDataType[] };
+  const id = useAppSelector(s => s.user.id);
 
-
-  // Initialize user state 
-  useEffect(() => {
-    if (!userData) return;
-
-    dispatch(setUser(userData));
-  }, [dispatch, userData]);
+  const { data: routines = [] } = useGetRoutinesQuery(id, { skip }) as { data: RoutineType[] };
+  const { data: exercises = [] } = useGetExercisesQuery(id, { skip }) as { data: ExerciseType[] };
+  const { data: relations = [] } = useGetRoutineExercisesQuery(id, { skip }) as { data: DB_RoutineExercise[] };
+  const { data: goals = [] } = useGetGoalsQuery(id, { skip }) as { data: GoalType[] };
+  const { data: routineData = [] } = useGetRoutineDataQuery(id, { skip }) as { data: RoutineDataType[] };
 
   // Initialize goals state
   useEffect(() => {
