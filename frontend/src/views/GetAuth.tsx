@@ -4,14 +4,14 @@ import { useAppSelector } from '../utility/helpers/hooks';
 import './GetAuth.css';
 
 export const GetAuth = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const authenticated = useAppSelector(s => s.user.authenticated);
-  useEffect(() => {
-    if (!authenticated) {
-      navigate('/login');
-    }
-  }, [authenticated, navigate]);
+  // const authenticated = useAppSelector(s => s.user.authenticated);
+  // useEffect(() => {
+  //   if (!authenticated) {
+  //     navigate('/login');
+  //   }
+  // }, [authenticated, navigate]);
 
 
   return (
