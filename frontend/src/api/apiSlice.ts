@@ -14,9 +14,13 @@ export const apiSlice = createApi({
     'ExerciseData',
     'SetData',
   ],
-  endpoints: () => ({
+  endpoints: builder => ({
+    getAuth: builder.query({
+      query: () => '/login/federated/facebook',
+    })
   }),
 })
 
-// export const { 
-// } = apiSlice;
+export const { 
+  useGetAuthQuery,
+} = apiSlice;

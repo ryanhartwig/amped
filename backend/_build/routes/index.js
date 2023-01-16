@@ -9,10 +9,12 @@ const routine_1 = __importDefault(require("./performance_data/routine"));
 const set_1 = __importDefault(require("./performance_data/set"));
 const routines_1 = __importDefault(require("./routines"));
 const routine_exercise_1 = __importDefault(require("./routine_exercise"));
+const auth_1 = __importDefault(require("./user/auth"));
 const goals_1 = __importDefault(require("./user/goals"));
 const scheduled_1 = __importDefault(require("./user/scheduled"));
 const user_1 = __importDefault(require("./user/user"));
 exports.default = (app) => {
+    app.use('/api/', auth_1.default);
     app.use('/api/user', user_1.default);
     app.use('/api/user/goals', goals_1.default);
     app.use('/api/user/scheduled', scheduled_1.default);
