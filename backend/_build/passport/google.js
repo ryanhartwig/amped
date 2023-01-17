@@ -4,15 +4,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const crypto_1 = require("crypto");
-const passport_facebook_1 = require("passport-facebook");
+const passport_google_oauth20_1 = require("passport-google-oauth20");
 const db_1 = __importDefault(require("../db"));
 exports.default = (passport) => {
-    passport.use(new passport_facebook_1.Strategy({
-        clientID: process.env.FACEBOOK_CLIENT_ID,
-        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL: '/api/oauth2/redirect/facebook',
+    passport.use(new passport_google_oauth20_1.Strategy({
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: '/api/oauth2/redirect/google'
     }, (_accessToken, _refreshToken, profile, cb) => {
-        db_1.default.query('select * from federated_credentials where provider = $1 and subject = $2', ['https://www.facebook.com', profile.id], (err, res) => {
+        db_1.default.query('select * from federated_credentials where provider = $1 and subject = $2', ['https://www.google.com', profile.id], (err, res) => {
             if (err)
                 return cb(err);
             const userId = (0, crypto_1.randomUUID)();
@@ -26,7 +26,7 @@ exports.default = (passport) => {
                     const fcId = (0, crypto_1.randomUUID)();
                     db_1.default.query(`insert into federated_credentials values (
                   $1, $2, $3, $4
-                )`, [fcId, userId, 'https://www.facebook.com', profile.id], (err) => {
+                )`, [fcId, userId, 'https://www.google.com', profile.id], (err) => {
                         if (err)
                             return cb(err);
                         const user = {
@@ -45,7 +45,7 @@ exports.default = (passport) => {
                     if (err)
                         return cb(err);
                     if (!res.rowCount)
-                        return cb(null, false);
+                        return cb('no user', undefined);
                     return cb(null, res.rows[0]);
                 });
             }

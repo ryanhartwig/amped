@@ -64,6 +64,7 @@ export const Home = () => {
   // Update user state 
   useEffect(() => {
     dispatch(setUser(user))
+    console.log(user);
   }, [dispatch, user]);
 
   // Initialize goals state

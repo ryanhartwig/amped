@@ -1,17 +1,17 @@
 import { randomUUID } from "crypto";
 import { PassportStatic } from "passport";
-import { Strategy as FacebookStrategy } from "passport-facebook";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import db from "../db";
 
 export default (passport: PassportStatic) => {
-  passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_CLIENT_ID!,
-    clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
-    callbackURL: '/api/oauth2/redirect/facebook',
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID!,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    callbackURL: '/api/oauth2/redirect/google'
   }, (_accessToken, _refreshToken, profile, cb) => {
     db.query(
       'select * from federated_credentials where provider = $1 and subject = $2', 
-      ['https://www.facebook.com', profile.id], 
+      ['https://www.google.com', profile.id], 
       (err, res) => {
         if (err) return cb(err);
         const userId = randomUUID();
@@ -31,7 +31,7 @@ export default (passport: PassportStatic) => {
                 `insert into federated_credentials values (
                   $1, $2, $3, $4
                 )`,
-                [fcId, userId, 'https://www.facebook.com', profile.id],
+                [fcId, userId, 'https://www.google.com', profile.id],
                 (err) => {
                   if (err) return cb(err);
                   const user = {
@@ -55,12 +55,12 @@ export default (passport: PassportStatic) => {
             [res.rows[0].user_id],
             (err, res) => {
               if (err) return cb(err);
-              if (!res.rowCount) return cb(null, false);
+              if (!res.rowCount) return cb('no user', undefined);
               return cb(null, res.rows[0]);
             }
           );
         }
       }
     )
-  }));
+  }))
 }
