@@ -1,5 +1,6 @@
 import passport from 'passport';
 import express from 'express';
+import { mountRedirects } from '../../passport/redirects';
 
 const auth = express.Router();
 
@@ -20,29 +21,8 @@ passport.deserializeUser((user: Express.User, cb) => {
   });
 }); 
 
-auth.get('/login/federated/facebook', passport.authenticate('facebook', { scope: ['user_friends'] }));
-auth.get('/oauth2/redirect/facebook', passport.authenticate('facebook', {
-  successReturnToOrRedirect: 'http://localhost:3000/login',
-  failureRedirect: 'http://localhost:3000/login',
-})); 
-
-auth.get('/login/federated/google', passport.authenticate('google', { 
-  scope: [
-    'email',
-    'profile',
-    'openid',
-  ] 
-}));
-auth.get('/oauth2/redirect/google', passport.authenticate('google', {
-  successReturnToOrRedirect: 'http://localhost:3000/login',
-  failureRedirect: 'http://localhost:3000/login',
-}));
-
-auth.get('/login/federated/twitter', passport.authenticate('twitter'));
-auth.get('/oauth2/redirect/twitter', passport.authenticate('twitter', {
-  successReturnToOrRedirect: 'http://localhost:3000/login',
-  failureRedirect: 'http://localhost:3000/login',
-})); 
+// Handle oauth redirects for each strategy
+mountRedirects(auth, passport);
 
 auth.get('/currentuser', (req, res) => {
   if (!req.user) return res.status(404).json('no user');
