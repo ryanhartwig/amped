@@ -45,7 +45,7 @@ export const Login = () => {
       <br></br>
       <br></br>
       <br></br>
-      <a href='http://localhost:8000/api/login/federated/twitter' >loign with googlwe</a>
+      <a href='http://localhost:8000/api/login/federated/twitter' >loign with tweeter</a>
       <br></br>
       <br></br>
       <br></br>

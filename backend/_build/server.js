@@ -14,6 +14,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const passport_1 = __importDefault(require("passport"));
 const facebook_1 = __importDefault(require("./passport/facebook"));
 const google_1 = __importDefault(require("./passport/google"));
+const twitter_1 = __importDefault(require("./passport/twitter"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8000;
 app.use((0, cors_1.default)());
@@ -37,10 +38,11 @@ app.use((_, res, next) => {
 });
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
-// Mount strategies
+// Mount strategies to passport
 (0, facebook_1.default)(passport_1.default);
 (0, google_1.default)(passport_1.default);
-// Mounts routes defined in ./routes/index.ts
+(0, twitter_1.default)(passport_1.default);
+// Mounts routes defined in ./routes/index.ts to app
 (0, routes_1.default)(app);
 app.listen(port, () => {
     console.log('⚡️', `Server is running at http://localhost:${port}`);
