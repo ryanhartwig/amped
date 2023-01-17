@@ -1,12 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Input } from '../components/ui/Input';
 import { setUser } from '../store/slices/userSlice';
 import './Login.css';
 
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   useEffect(() => {
     const getUser = async () => {
@@ -30,26 +34,19 @@ export const Login = () => {
 
   return (
     <div className='Login'>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      {/* <button onClick={onAuth}>Login with facebook</button> */}
-      <a href='http://localhost:8000/api/login/federated/facebook' >loign with facebook</a>
-      <br></br>
-      <br></br>
-    <br></br>
-      <br></br>
-      <a href='http://localhost:8000/api/login/federated/google' >loign with googlwe</a>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <a href='http://localhost:8000/api/login/federated/twitter' >loign with tweeter</a>
-      <br></br>
-      <br></br>
-      <br></br>
-
+      <div className='Login-form'>
+        <div className='Login-oauth'>
+          <a href='http://localhost:8000/api/login/federated/facebook' >loign with facebook</a>
+          <a href='http://localhost:8000/api/login/federated/google' >loign with googlwe</a>
+          <a href='http://localhost:8000/api/login/federated/twitter' >loign with tweeter</a>
+        </div>
+        <div>
+          <p>login</p>
+          <Input placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} />
+          <Input placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} type='password' />
+        </div>
+        <a href='http://localhost:3000/login/new'>create account</a>
+      </div>
     </div>
   )
 }

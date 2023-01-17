@@ -4,7 +4,7 @@ import { User } from "../../types/user";
 
 const user = PromiseRouter();
 
-user.post('/add', async (req, res) => {
+user.post('/new', async (req, res) => {
   const { id, name, email, weekly_target } = req.body as User;
   const params = [id, name, email, weekly_target];
 
