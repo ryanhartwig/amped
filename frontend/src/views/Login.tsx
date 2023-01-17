@@ -38,14 +38,14 @@ export const Login = () => {
       <a href='http://localhost:8000/api/login/federated/facebook' >loign with facebook</a>
       <br></br>
       <br></br>
+    <br></br>
+      <br></br>
+      <a href='http://localhost:8000/api/login/federated/google' >loign with googlwe</a>
       <br></br>
       <br></br>
-      <button>Login with google</button>
       <br></br>
       <br></br>
-      <br></br>
-      <br></br>
-      <button>Login with twitter</button>
+      <a href='http://localhost:8000/api/login/federated/twitter' >loign with googlwe</a>
       <br></br>
       <br></br>
       <br></br>

@@ -9,6 +9,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import facebook from './passport/facebook';
+import google from './passport/google';
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -45,6 +46,7 @@ app.use(passport.session());
 
 // Mount strategies
 facebook(passport);
+google(passport);
 
 // Mounts routes defined in ./routes/index.ts
 mount(app);

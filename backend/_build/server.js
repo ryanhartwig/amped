@@ -13,6 +13,7 @@ const express_session_1 = __importDefault(require("express-session"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const passport_1 = __importDefault(require("passport"));
 const facebook_1 = __importDefault(require("./passport/facebook"));
+const google_1 = __importDefault(require("./passport/google"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8000;
 app.use((0, cors_1.default)());
@@ -38,6 +39,7 @@ app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
 // Mount strategies
 (0, facebook_1.default)(passport_1.default);
+(0, google_1.default)(passport_1.default);
 // Mounts routes defined in ./routes/index.ts
 (0, routes_1.default)(app);
 app.listen(port, () => {

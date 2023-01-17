@@ -26,6 +26,17 @@ auth.get('/oauth2/redirect/facebook', passport_1.default.authenticate('facebook'
     successReturnToOrRedirect: 'http://localhost:3000/login',
     failureRedirect: 'http://localhost:3000/login',
 }));
+auth.get('/login/federated/google', passport_1.default.authenticate('google', {
+    scope: [
+        'email',
+        'profile',
+        'openid',
+    ]
+}));
+auth.get('/oauth2/redirect/google', passport_1.default.authenticate('google', {
+    successReturnToOrRedirect: 'http://localhost:3000/login',
+    failureRedirect: 'http://localhost:3000/login',
+}));
 auth.get('/currentuser', (req, res) => {
     if (!req.user)
         return res.status(404).json('no user');
