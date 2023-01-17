@@ -104,7 +104,7 @@ auth.get('/currentuser', (req, res) => {
 auth.post('/currentuser/logout', (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
-    res.redirect('http://localhost:3000/login');
+    return res.status(200).json("logged out");
   });
 })
 

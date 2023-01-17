@@ -1,21 +1,12 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from '../store/slices/userSlice';
 import './Login.css';
 
-// interface LoginProps {
-
-// }
-
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-
-  const onAuth = useCallback(() => {
-    navigate('http://localhost:8000/api/login/federated/facebook');
-  }, [navigate]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -38,7 +29,7 @@ export const Login = () => {
     }
 
     getUser();
-  }, []);
+  }, [dispatch, navigate]);
 
   return (
     <div className='Login'>
