@@ -28,6 +28,7 @@ auth.get('/oauth2/redirect/facebook', passport.authenticate('facebook', {
 
 auth.get('/currentuser', (req, res) => {
   if (!req.user) return res.status(404).json('no user');
+
   return res.status(200).json(req.user);
 })
 
