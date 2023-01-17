@@ -42,12 +42,6 @@ app.use((_, res, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-// app.use(passport.authenticate('session'));
-
-
-
-
 // Mounts routes defined in ./routes/index.ts
 mount(app);
 

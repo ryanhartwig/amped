@@ -96,21 +96,14 @@ auth.get('/currentuser', (req, res) => {
   return res.status(200).json(req.user);
 })
 
-// auth.post('/currentuser/logout', (req, res, next) => {
-//   req.logout((err) => {
-//     if (err) return next(err);
-//     req.session.destroy((err) => {
-//       if (err) return next(err);
-//       return res.status(200).json("logged out");
-//     })
-//   });
-// })
-
-// auth.post('/logout', (req, res, next) => {
-//   req.logout(err => { 
-//     if (err) return next(err);
-//     res.redirect('/');
-//   });
-// });
+auth.get('/api/currentuser/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    req.session.destroy((err) => {
+      if (err) return next(err);
+      return res.status(200).json("logged out");
+    })
+  });
+})
 
 export default auth;

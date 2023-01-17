@@ -7,14 +7,11 @@ import { useAppSelector } from '../../utility/helpers/hooks';
 import { ReactIconButton } from '../ui/ReactIconButton';
 import { Logo } from '../ui/Logo';
 import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
 
 export const HeaderNav = () => {
   const navigate = useNavigate();
   const { foreground: background } = useAppSelector(s => s.theme);
-
 
   const onLogout = useCallback(() => {
     ;(async () => {

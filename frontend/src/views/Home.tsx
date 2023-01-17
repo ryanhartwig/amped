@@ -44,7 +44,7 @@ export const Home = () => {
   }, [cancel, navigate]);
 
   
-  const { data: currentUser, isError } = useGetCurrentUserQuery(null);
+  const { data: currentUser, isError, isFetching } = useGetCurrentUserQuery(null);
   const id = useMemo(() => currentUser?.id, [currentUser]);
 
   const { data: user } = useGetUserByIdQuery(id, { skip: !id });
@@ -55,8 +55,11 @@ export const Home = () => {
   const { data: routineData = [] } = useGetRoutineDataQuery(id, { skip: !id }) as { data: RoutineDataType[] };
 
   useEffect(() => {
-    if (isError) dispatch(setUser());
-  }, [dispatch, id, isError])
+    if (!isError || isFetching) return;
+
+    dispatch(setUser());
+    navigate('/login');
+  }, [dispatch, isError, isFetching, navigate])
 
   // Update user state 
   useEffect(() => {
