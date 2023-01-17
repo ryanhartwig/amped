@@ -36,9 +36,6 @@ export const HeaderNav = () => {
           <ReactIconButton buttonSize='40px' onClick={onLogout}>
             <FiLogOut size={20}/>
           </ReactIconButton>
-          {/* <ReactIconButton buttonSize='45px'>
-            <FiSettings size={19}/>
-          </ReactIconButton> */}
         </div>
       </div>
     </div>
