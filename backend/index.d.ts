@@ -1,11 +1,11 @@
+import { User as DB_User } from './types/user';
+
 export declare global {
   namespace Express {
-    // Merge User declaration
-    interface User {
-      id: string,
-      name: string,
-      email: string,
-      weekly_target: string,
+    // Merge Express.User declaration with existing User interface
+    interface User extends DB_User {}
+    interface Request {
+      user?: DB_User,
     }
   }
 }
