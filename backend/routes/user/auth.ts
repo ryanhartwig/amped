@@ -7,7 +7,7 @@ import { randomUUID } from "crypto";
 
 const auth = express.Router();
 
- 
+
 
 passport.serializeUser((user, cb) => {
   process.nextTick(() => {
@@ -37,7 +37,7 @@ auth.get('/currentuser', (req, res) => {
   return res.status(200).json(req.user);
 })
 
-auth.get('/api/currentuser/logout', (req, res, next) => {
+auth.get('/currentuser/logout', (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
     req.session.destroy((err) => {
@@ -46,5 +46,6 @@ auth.get('/api/currentuser/logout', (req, res, next) => {
     })
   });
 })
+
 
 export default auth;

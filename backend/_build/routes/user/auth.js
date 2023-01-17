@@ -31,7 +31,7 @@ auth.get('/currentuser', (req, res) => {
         return res.status(404).json('no user');
     return res.status(200).json(req.user);
 });
-auth.get('/api/currentuser/logout', (req, res, next) => {
+auth.get('/currentuser/logout', (req, res, next) => {
     req.logout((err) => {
         if (err)
             return next(err);
