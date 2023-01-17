@@ -1,6 +1,6 @@
 import passport from 'passport';
 import express from 'express';
-import { mountRedirects } from '../../passport/redirects';
+import { authenticateStrategies } from '../../passport/authenticateStrategies';
 
 const auth = express.Router();
 
@@ -21,8 +21,8 @@ passport.deserializeUser((user: Express.User, cb) => {
   });
 }); 
 
-// Handle oauth redirects for each strategy
-mountRedirects(auth, passport);
+// Handle authentication for each strategy & redirects
+authenticateStrategies(auth, passport);
 
 auth.get('/currentuser', (req, res) => {
   if (!req.user) return res.status(404).json('no user');

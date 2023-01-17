@@ -1,0 +1,40 @@
+.Login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+.Login a {
+  color: white;
+  text-decoration: underline;
+}
+
+.Login-form {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  
+  max-width: 500px;
+  min-width: 320px;
+  max-height: 700px;
+  min-height: 400px;
+
+  width: 70vw;
+  height: 70vh;
+
+  margin: 0 auto;
+
+  border: 1px solid rgba(128, 128, 128, 0.289);
+  border-radius: 20px;
+}
+
+.Login-oauth {
+  display: flex;
+  flex-direction: column;
+}
+
+.Login-oauth a {
+  margin: 20px 0;
+}

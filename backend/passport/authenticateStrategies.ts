@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { PassportStatic } from "passport";
 
-export const mountRedirects = (auth: Router, passport: PassportStatic) => {
+export const authenticateStrategies = (auth: Router, passport: PassportStatic) => {
   // Facebook
   auth.get('/login/federated/facebook', passport.authenticate('facebook', { scope: ['user_friends'] }));
   auth.get('/oauth2/redirect/facebook', passport.authenticate('facebook', {

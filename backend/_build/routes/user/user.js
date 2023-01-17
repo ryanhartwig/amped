@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_promise_router_1 = __importDefault(require("express-promise-router"));
 const db_1 = __importDefault(require("../../db"));
 const user = (0, express_promise_router_1.default)();
-user.post('/add', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+user.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id, name, email, weekly_target } = req.body;
     const params = [id, name, email, weekly_target];
     if (params.some(p => p === undefined))

@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const passport_1 = __importDefault(require("passport"));
 const express_1 = __importDefault(require("express"));
-const redirects_1 = require("../../passport/redirects");
+const authenticateStrategies_1 = require("../../passport/authenticateStrategies");
 const auth = express_1.default.Router();
 passport_1.default.serializeUser((user, cb) => {
     process.nextTick(() => {
@@ -22,8 +22,8 @@ passport_1.default.deserializeUser((user, cb) => {
         return cb(null, user);
     });
 });
-// Handle oauth redirects for each strategy
-(0, redirects_1.mountRedirects)(auth, passport_1.default);
+// Handle authentication for each strategy & redirects
+(0, authenticateStrategies_1.authenticateStrategies)(auth, passport_1.default);
 auth.get('/currentuser', (req, res) => {
     if (!req.user)
         return res.status(404).json('no user');
