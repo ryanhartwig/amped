@@ -42,7 +42,9 @@ export const userReducer = createSlice({
     setGoals: (state, action: PayloadAction<GoalType[]>) => {
       state.goals = action.payload;
     },
-    setUser: (state, action: PayloadAction<DB_User>) => {
+    setUser: (state, action: PayloadAction<DB_User | undefined>) => {
+      if (!action.payload) return initialState;
+      
       const { weekly_target, email, id, name } = action.payload;
       return {
         ...state,
