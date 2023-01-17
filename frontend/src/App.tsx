@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Login } from './views/Login';
 import { Home } from './views/Home';
 import { Dash } from './views/sub/Dash';
 import { NotFound } from './views/NotFound';
@@ -14,6 +13,9 @@ import { AddRoutine } from './views/sub/AddRoutine';
 import { Overview } from './views/sub/train/Overview';
 import { Session } from './views/sub/train/Session';
 import { GetAuth } from './views/GetAuth';
+import { Login } from './views/login/Login';
+import { SignIn } from './views/login/SignIn';
+import { SignUp } from './views/login/SignUp';
 
 function App() {
 
@@ -24,7 +26,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<GetAuth />}>
-            <Route path="login" element={<Login />} />
+            <Route path="login" element={<Login />}>
+              <Route path="" element={<SignIn />} />
+              <Route path="new" element={<SignUp />} />
+            </Route>
             <Route path="home" element={<Home />}>
               <Route path="dash" element={<Dash />} />
               <Route path="routines" element={<Routines />} />
