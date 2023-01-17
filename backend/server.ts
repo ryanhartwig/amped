@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import facebook from './passport/facebook';
 import google from './passport/google';
+import twitter from './passport/twitter';
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -18,8 +19,6 @@ const port = process.env.PORT || 8000;
 app.use(cors());
 
 app.use(morgan('dev'));
-
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -44,11 +43,12 @@ app.use((_, res, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Mount strategies
+// Mount strategies to passport
 facebook(passport);
 google(passport);
+twitter(passport);
 
-// Mounts routes defined in ./routes/index.ts
+// Mounts routes defined in ./routes/index.ts to app
 mount(app);
 
 app.listen(port, () => {

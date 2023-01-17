@@ -37,6 +37,11 @@ auth.get('/oauth2/redirect/google', passport_1.default.authenticate('google', {
     successReturnToOrRedirect: 'http://localhost:3000/login',
     failureRedirect: 'http://localhost:3000/login',
 }));
+auth.get('/login/federated/twitter', passport_1.default.authenticate('twitter'));
+auth.get('/oauth2/redirect/twitter', passport_1.default.authenticate('twitter', {
+    successReturnToOrRedirect: 'http://localhost:3000/login',
+    failureRedirect: 'http://localhost:3000/login',
+}));
 auth.get('/currentuser', (req, res) => {
     if (!req.user)
         return res.status(404).json('no user');
