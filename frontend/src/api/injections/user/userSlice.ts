@@ -14,7 +14,11 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         url: '/currentuser',
         credentials: 'include',
       }),
-      providesTags: ['User'],
+      // All requests will invalidate this query, thus every request will require the user to exist
+      providesTags: [
+        "ExerciseData", "Exercises", "Goals", "RoutineData", "Routines",
+        "RtEx", "SetData", "User",
+      ],
     }),
     getUserById: builder.query({
       query: (user_id: string) => `/user/${user_id}`,

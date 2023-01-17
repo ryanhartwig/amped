@@ -35,7 +35,6 @@ app.use((_, res, next) => {
 });
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
-// app.use(passport.authenticate('session'));
 // Mounts routes defined in ./routes/index.ts
 (0, routes_1.default)(app);
 app.get('/api/currentuser/logout', (req, res, next) => {
