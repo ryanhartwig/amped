@@ -92,21 +92,19 @@ auth.get('/oauth2/redirect/facebook', passport.authenticate('facebook', {
 }));
 
 auth.get('/currentuser', (req, res) => {
-  const user = req.user;
-
-  console.log(req.isAuthenticated());
-
-  if (!user) return res.status(404).json('no user');
-  
-  return res.status(200).json(user);
+  if (!req.user) return res.status(404).json('no user');
+  return res.status(200).json(req.user);
 })
 
-auth.post('/currentuser/logout', (req, res, next) => {
-  req.logout((err) => {
-    if (err) return next(err);
-    return res.status(200).json("logged out");
-  });
-})
+// auth.post('/currentuser/logout', (req, res, next) => {
+//   req.logout((err) => {
+//     if (err) return next(err);
+//     req.session.destroy((err) => {
+//       if (err) return next(err);
+//       return res.status(200).json("logged out");
+//     })
+//   });
+// })
 
 // auth.post('/logout', (req, res, next) => {
 //   req.logout(err => { 

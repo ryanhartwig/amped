@@ -8,24 +8,25 @@ import { ReactIconButton } from '../ui/ReactIconButton';
 import { Logo } from '../ui/Logo';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../store/slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 export const HeaderNav = () => {
-  const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { foreground: background } = useAppSelector(s => s.theme);
+
 
   const onLogout = useCallback(() => {
     ;(async () => {
-      const response = await fetch('http://localhost:8000/api/currentuser/logout', {
-        method: 'POST'
-      })
-      if (response.ok) {
-        dispatch(setUser());
+      const res = await fetch('http://localhost:8000/api/currentuser/logout', {
+        credentials: 'include',
+      });
+
+      if (res.ok) {
+        navigate('/login');
       }
     })()
-  }, [dispatch]);
+  }, [navigate]);
 
   return (
     <div className='HeaderNav' style={{background}}>

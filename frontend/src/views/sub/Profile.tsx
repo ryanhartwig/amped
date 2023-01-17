@@ -32,6 +32,7 @@ export const Profile = () => {
   const weeklyTarget = useAppSelector(s => s.user.weekly_target);
   const name = useAppSelector(s => s.user.name);
   const [target, setTarget] = useState<number>(weeklyTarget);
+  const id = useAppSelector(s => s.user.id);
 
   useEffect(() => { setTarget(weeklyTarget)}, [weeklyTarget]);
 
@@ -42,14 +43,14 @@ export const Profile = () => {
     (async () => {
       setDisabled(true);
       await editUser({
-        id: 'admin',
+        id,
         patch: {
           weekly_target: target
         }
       }).unwrap();
       setDisabled(false);
     })()
-  }, [editUser, target]);
+  }, [editUser, id, target]);
 
   const [[addGoal], [updateGoal], [deleteGoal]] = [
     useAddNewGoalMutation(),
