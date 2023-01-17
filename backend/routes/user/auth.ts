@@ -1,15 +1,9 @@
-import db from "../../db";
-
 import passport from 'passport';
-import { Strategy as FacebookStrategy } from 'passport-facebook'
 import express from 'express';
-import { randomUUID } from "crypto";
 
 const auth = express.Router();
 
-
-
-passport.serializeUser((user, cb) => {
+passport.serializeUser((user: Express.User, cb) => {
   process.nextTick(() => {
     cb(null, {
       id: user.id,
