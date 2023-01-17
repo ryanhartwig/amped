@@ -8,6 +8,7 @@ import mount from './routes';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
+import facebook from './passport/facebook';
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -42,18 +43,11 @@ app.use((_, res, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Mount strategies
+facebook(passport);
+
 // Mounts routes defined in ./routes/index.ts
 mount(app);
-
-app.get('/api/currentuser/logout', (req, res, next) => {
-  req.logout((err) => {
-    if (err) return next(err);
-    req.session.destroy((err) => {
-      if (err) return next(err);
-      return res.status(200).json("logged out");
-    })
-  });
-})
 
 app.listen(port, () => {
   console.log('⚡️', `Server is running at http://localhost:${port}`);
