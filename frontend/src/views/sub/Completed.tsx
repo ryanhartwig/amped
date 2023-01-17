@@ -62,7 +62,6 @@ export const Completed = () => {
           {selectedSessions.length 
           ? selectedSessions.map(p => {
             const routine = routines.find(r => r.id === p.routine_id) || anonRoutine;
-            console.log(p);
             return <Routine routine={routine}
               key={p.id}
               completed 

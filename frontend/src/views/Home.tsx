@@ -18,12 +18,10 @@ import { ExerciseType } from '../types/ExerciseType';
 import { useGetGoalsQuery } from '../api/injections/user/goalsSlice';
 import { GoalType } from '../types/GoalType';
 import { setGoals, setUser } from '../store/slices/userSlice';
-import { useGetUserQuery } from '../api/injections/user/userSlice';
+import { useGetCurrentUserQuery, useGetUserByIdQuery } from '../api/injections/user/userSlice';
 import { useGetRoutineDataQuery } from '../api/injections/data/routineDataSlice';
 import { RoutineDataType } from '../types/RoutineDataType';
 import { setRoutineData } from '../store/slices/workoutDataSlice';
-import { useAppSelector } from '../utility/helpers/hooks';
-
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -46,15 +44,24 @@ export const Home = () => {
   }, [cancel, navigate]);
 
   
-  const skip = false;
+  const { data: currentUser, isError } = useGetCurrentUserQuery(null);
+  const id = useMemo(() => currentUser?.id, [currentUser]);
 
-  const id = useAppSelector(s => s.user.id);
+  const { data: user } = useGetUserByIdQuery(id, { skip: !id });
+  const { data: routines = [] } = useGetRoutinesQuery(id, { skip: !id }) as { data: RoutineType[] };
+  const { data: exercises = [] } = useGetExercisesQuery(id, { skip: !id }) as { data: ExerciseType[] };
+  const { data: relations = [] } = useGetRoutineExercisesQuery(id, { skip: !id }) as { data: DB_RoutineExercise[] };
+  const { data: goals = [] } = useGetGoalsQuery(id, { skip: !id }) as { data: GoalType[] };
+  const { data: routineData = [] } = useGetRoutineDataQuery(id, { skip: !id }) as { data: RoutineDataType[] };
 
-  const { data: routines = [] } = useGetRoutinesQuery(id, { skip }) as { data: RoutineType[] };
-  const { data: exercises = [] } = useGetExercisesQuery(id, { skip }) as { data: ExerciseType[] };
-  const { data: relations = [] } = useGetRoutineExercisesQuery(id, { skip }) as { data: DB_RoutineExercise[] };
-  const { data: goals = [] } = useGetGoalsQuery(id, { skip }) as { data: GoalType[] };
-  const { data: routineData = [] } = useGetRoutineDataQuery(id, { skip }) as { data: RoutineDataType[] };
+  useEffect(() => {
+    if (isError) dispatch(setUser());
+  }, [dispatch, id, isError])
+
+  // Update user state 
+  useEffect(() => {
+    dispatch(setUser(user))
+  }, [dispatch, user]);
 
   // Initialize goals state
   useEffect(() => {

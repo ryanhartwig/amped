@@ -16,10 +16,7 @@ export const Login = () => {
         
         if (!data?.id) return;
         dispatch(setUser({
-          email: data.email,
           id: data.id,
-          name: data.name,
-          weekly_target: data.weekly_target,
         }));
 
         navigate('/home/dash');
@@ -52,10 +49,6 @@ export const Login = () => {
       <br></br>
       <br></br>
       <br></br>
-
-      <button onClick={() => fetch('http://localhost:8000/api/currentuser/logout', {
-        method: 'POST',
-      })}>logout</button>
 
     </div>
   )

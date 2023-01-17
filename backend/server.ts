@@ -46,9 +46,20 @@ app.use(passport.session());
 // app.use(passport.authenticate('session'));
 
 
+
+
 // Mounts routes defined in ./routes/index.ts
 mount(app);
 
+app.get('/api/currentuser/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    req.session.destroy((err) => {
+      if (err) return next(err);
+      return res.status(200).json("logged out");
+    })
+  });
+})
 
 app.listen(port, () => {
   console.log('⚡️', `Server is running at http://localhost:${port}`);

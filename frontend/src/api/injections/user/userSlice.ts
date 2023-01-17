@@ -9,7 +9,14 @@ export interface DB_User {
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    getUser: builder.query({
+    getCurrentUser: builder.query({
+      query: () => ({
+        url: '/currentuser',
+        credentials: 'include',
+      }),
+      providesTags: ['User'],
+    }),
+    getUserById: builder.query({
       query: (user_id: string) => `/user/${user_id}`,
       providesTags: ['User'],
     }),
@@ -29,5 +36,6 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useEditUserMutation,
-  useGetUserQuery,
+  useGetUserByIdQuery,
+  useGetCurrentUserQuery,
 } = extendedApiSlice;

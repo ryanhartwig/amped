@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DB_User } from "../../api/injections/user/userSlice";
 import { GoalType } from "../../types/GoalType";
 import { ScheduledRoutine } from "../../types/scheduledState";
 
@@ -42,16 +41,12 @@ export const userReducer = createSlice({
     setGoals: (state, action: PayloadAction<GoalType[]>) => {
       state.goals = action.payload;
     },
-    setUser: (state, action: PayloadAction<DB_User | undefined>) => {
+    setUser: (state, action: PayloadAction<Partial<UserState> | undefined>) => {
       if (!action.payload) return initialState;
       
-      const { weekly_target, email, id, name } = action.payload;
       return {
         ...state,
-        weekly_target,
-        email,
-        id,
-        name
+        ...action.payload,
       }
     }
   }
