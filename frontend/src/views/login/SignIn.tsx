@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { Input } from "../../components/ui/Input"
 import { useNavigate } from 'react-router-dom';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
+import { useSignInLocalMutation } from '../../api/injections/user/authSlice';
 
 export const SignIn = () => {
   const navigate = useNavigate();
@@ -11,24 +12,29 @@ export const SignIn = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  const [signIn] = useSignInLocalMutation();
+
   const onSignIn = useCallback(() => {
     console.log('fe');
     ;(async () => {
-      const response = await fetch('http://localhost:8000/api/login/local', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          password
-        })
-      })
+      // const response = await fetch('http://localhost:8000/api/login/local', {
+      //   method: 'POST',
+      //   credentials: 'include',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     username,
+      //     password
+      //   })
+      // })
 
-      if (!response.ok) {
-        return;
-      };
+      try {
+        const data = await signIn({username, password}).unwrap();
+        console.log('responded with ', data);
+      } catch(e) {
+        console.log('rejected: ', e);
+      }
 
       const user = await fetch('http://localhost:8000/api/currentuser', {
         credentials: 'include',
@@ -39,7 +45,7 @@ export const SignIn = () => {
       }
 
     })()
-  }, [navigate, password, username]);
+  }, [navigate, password, signIn, username]);
 
   return (
     <>

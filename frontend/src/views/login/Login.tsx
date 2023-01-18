@@ -1,36 +1,7 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { useGetCurrentUserQuery } from '../../api/injections/user/userSlice';
-import { setUser } from '../../store/slices/userSlice';
+import { Outlet } from 'react-router-dom';
 import './Login.css';
 
 export const Login = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  // const { data: currentUser, isError, isFetching } = useGetCurrentUserQuery(null);
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const res = await fetch('http://localhost:8000/api/currentuser', { credentials: 'include'});
-        if (!res.ok) return;
-
-        const data = await res.json();
-
-        dispatch(setUser({
-          id: data.id,
-        }));
-
-        navigate('/home/dash');
-      } catch(e) {
-        console.log(e);
-      }
-    }
-
-    getUser();
-  }, [dispatch, navigate]);
 
   return (
     <div className='Login'>
