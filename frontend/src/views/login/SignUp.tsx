@@ -7,6 +7,14 @@ import uuid from 'react-uuid';
 import { useCreateNewUserMutation, useDeleteUserMutation } from '../../api/injections/user/userSlice';
 import { useAddCredentialsMutation } from '../../api/injections/user/authSlice';
 
+export const Li = ({text, valid}: {text: string, valid: boolean}) => {
+  return (
+    <>
+      {!valid && <li><p>{text}</p></li>}
+    </>
+  )
+}
+
 export const SignUp = () => {
   const navigate = useNavigate();
 
@@ -17,19 +25,16 @@ export const SignUp = () => {
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
 
-  // Input validation
   const nameValid = useMemo(() => name.length >= 5 && name.length < 15, [name]);
-  const p1Valid = useMemo(() => {
-    const split = p1.split('');
-
-    return p1.length >= 6 
-    && p1.length <= 30 
-    && split.some(c => isNaN(Number(c)) && c.toUpperCase() === c.toLowerCase()) // has non-alphanumeric characters
-    && split.some(c => c.toUpperCase() !== c.toLowerCase() && c === c.toUpperCase()) // has uppercase letter
-    && split.some(c => c.toUpperCase() !== c.toLowerCase() && c === c.toLowerCase()) // has lowercase letter    
-  }, [p1]);
-  const p2Valid = useMemo(() => p1 === p2, [p1, p2]);
   const emailValid = useMemo(() => !email.length || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email), [email]);
+
+  const split = useMemo(() => p1.split(''), [p1]);
+  const p1Length = useMemo(() => p1.length >= 6, [p1.length]);
+  const p1Special = useMemo(() => split.some(c => isNaN(Number(c)) && c.toUpperCase() === c.toLowerCase()), [split]); // has non-alphanumeric characters)
+  const p1Upper = useMemo(() => split.some(c => c.toUpperCase() !== c.toLowerCase() && c === c.toUpperCase()), [split]); // has uppercase letter
+  const p1Valid = useMemo(() => p1Length && p1Special && p1Upper, [p1Length, p1Special, p1Upper]);
+  const p2Valid = useMemo(() => p1 === p2, [p1, p2]);
+
   const allValid = useMemo(() => nameValid && p1Valid && p2Valid && emailValid && unique, [emailValid, nameValid, p1Valid, p2Valid, unique]);
 
   const onVerifyUsername = useCallback((e: any) => {
@@ -68,16 +73,27 @@ export const SignUp = () => {
     })()
   }, [addCredentials, createUser, deleteUser, email, name, navigate, p1]);
 
+
   return (
     <>
       <p>Welcome to amped!</p>
-      <div className="SignUp-creds">
-        <Input disabled={inputsDisabled} value={name} placeholder='username' onBlur={onVerifyUsername} onChange={(e) => setName(e.target.value)}/>
-        <Input disabled={inputsDisabled} value={email} placeholder='email (optional)' onChange={(e) => setEmail(e.target.value)}/>
-        <Input disabled={inputsDisabled} value={p1} placeholder='password' type='password' onChange={(e) => setP1(e.target.value)}/>
-        <Input disabled={inputsDisabled} value={p2} placeholder='confirm password' type='password' onChange={(e) => setP2(e.target.value)}/>
+      <div className="SignUp-creds" style={{width: '100%'}}>
+        <Input className='SignUp-input' disabled={inputsDisabled} value={name} placeholder='username' onBlur={onVerifyUsername} onChange={(e) => setName(e.target.value)}/>
+        <Input className='SignUp-input' disabled={inputsDisabled} value={email} placeholder='email (optional)' onChange={(e) => setEmail(e.target.value)}/>
+        <Input className='SignUp-input' disabled={inputsDisabled} value={p1} placeholder='password' type='password' onChange={(e) => setP1(e.target.value)}/>
+        <Input className='SignUp-input' disabled={inputsDisabled} value={p2} placeholder='confirm password' type='password' onChange={(e) => setP2(e.target.value)}/>
+        <div className='SignUp-feedback'>
+          <ul style={{marginTop: 12}}>
+            <Li text='username must be between 5 and 15 characters' valid={nameValid} />
+            <Li text='please enter a valid email address' valid={emailValid} />
+            <Li text='password must be minimum 6 characters in length' valid={p1Length} />
+            <Li text='password must include at least one special character' valid={p1Special} />
+            <Li text='password must include at least one uppercase character' valid={p1Upper} />
+            {p1Valid && <Li text='passwords must match' valid={p2Valid} />}
+          </ul>
+        </div>
       </div>
-      <PrimaryButton onClick={onSignUp} icon={'logo'} altColor disabled={!allValid} text='Sign up' />
+      <PrimaryButton style={{minWidth: 0}} onClick={onSignUp} icon={'logo'} altColor disabled={!allValid} text='Sign up' />
       <p className="Login-create" onClick={() => navigate('/login')}>back</p>
     </>
   )
