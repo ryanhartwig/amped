@@ -29,7 +29,7 @@ export const authenticateStrategies = (auth: Router, passport: PassportStatic) =
   function(req, res) {
     console.log(req.isAuthenticated());
     const user = req.user;
-    if (!user) return res.status(500).send('no auth');
+    if (!user) return res.status(500).json('no auth');
 
     res.status(200).send();
   });

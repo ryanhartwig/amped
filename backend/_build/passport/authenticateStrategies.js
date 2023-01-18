@@ -25,7 +25,7 @@ const authenticateStrategies = (auth, passport) => {
         console.log(req.isAuthenticated());
         const user = req.user;
         if (!user)
-            return res.status(500).send('no auth');
+            return res.status(500).json('no auth');
         res.status(200).send();
     });
 };

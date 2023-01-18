@@ -15,35 +15,13 @@ export const SignIn = () => {
   const [signIn] = useSignInLocalMutation();
 
   const onSignIn = useCallback(() => {
-    console.log('fe');
     ;(async () => {
-      // const response = await fetch('http://localhost:8000/api/login/local', {
-      //   method: 'POST',
-      //   credentials: 'include',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     username,
-      //     password
-      //   })
-      // })
-
       try {
-        const data = await signIn({username, password}).unwrap();
-        console.log('responded with ', data);
+        await signIn({username, password}).unwrap();
+        navigate('/home/dash');
       } catch(e) {
         console.log('rejected: ', e);
       }
-
-      const user = await fetch('http://localhost:8000/api/currentuser', {
-        credentials: 'include',
-      })
-
-      if (user.ok) {
-        navigate('/home/dash');
-      }
-
     })()
   }, [navigate, password, signIn, username]);
 
