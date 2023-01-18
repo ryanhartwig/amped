@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { useGetCurrentUserQuery } from '../../api/injections/user/userSlice';
 import { setUser } from '../../store/slices/userSlice';
 import './Login.css';
 
@@ -8,6 +9,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // const { data: currentUser, isError, isFetching } = useGetCurrentUserQuery(null);
 
   useEffect(() => {
     const getUser = async () => {
@@ -21,7 +23,7 @@ export const Login = () => {
           id: data.id,
         }));
 
-        // navigate('/home/dash');
+        navigate('/home/dash');
       } catch(e) {
         console.log(e);
       }
