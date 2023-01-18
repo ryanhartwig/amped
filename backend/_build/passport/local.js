@@ -12,12 +12,12 @@ exports.default = (passport) => {
             if (err)
                 return done(err);
             if (!res.rowCount)
-                return done(null, false);
+                return done(null, false, { message: 'No credentials for username' });
             const comp = res.rows[0];
             bcrypt_1.default.compare(password, comp.hash)
                 .then(matches => {
                 if (!matches)
-                    return done(null, false);
+                    return done(null, false, { message: 'Invalid credentials' });
                 db_1.default.query('select * from users where id = $1', [comp.user_id], (err, res) => {
                     if (err)
                         return done(null, false);

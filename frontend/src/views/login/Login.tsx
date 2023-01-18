@@ -21,7 +21,7 @@ export const Login = () => {
           id: data.id,
         }));
 
-        navigate('/home/dash');
+        // navigate('/home/dash');
       } catch(e) {
         console.log(e);
       }

@@ -51,7 +51,7 @@ export const SignUp = () => {
         },
         body: JSON.stringify({
           id: id,
-          name: '',
+          name,
           email: '',
           weekly_target: 0,
         })

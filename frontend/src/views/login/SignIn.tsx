@@ -1,14 +1,45 @@
 import './SignIn.css'
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Input } from "../../components/ui/Input"
 import { useNavigate } from 'react-router-dom';
+import { PrimaryButton } from '../../components/ui/PrimaryButton';
 
 export const SignIn = () => {
   const navigate = useNavigate();
   
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
+  const onSignIn = useCallback(() => {
+    console.log('fe');
+    ;(async () => {
+      const response = await fetch('http://localhost:8000/api/login/local', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          password
+        })
+      })
+
+      if (!response.ok) {
+        return;
+      };
+
+      const user = await fetch('http://localhost:8000/api/currentuser', {
+        credentials: 'include',
+      })
+
+      if (user.ok) {
+        navigate('/home/dash');
+      }
+
+    })()
+  }, [navigate, password, username]);
 
   return (
     <>
@@ -21,6 +52,7 @@ export const SignIn = () => {
         <p>login</p>
         <Input placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} />
         <Input placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} type='password' />
+        <PrimaryButton onClick={onSignIn} text='Sign in' disabled={!username || !password} style={{marginTop: 12}} />
       </div>
       <p className="Login-create" onClick={() => navigate('/login/new')}>Create an account</p>
     </>

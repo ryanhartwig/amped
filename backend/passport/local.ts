@@ -18,19 +18,16 @@ export default (passport: PassportStatic) => {
         [username], 
         (err, res) => {
           if (err) return done(err);
-          if (!res.rowCount) return done(null, false);
+          if (!res.rowCount) return done(null, false, { message: 'No credentials for username' });
           const comp = res.rows[0] as DB_Credential;
-
           bcrypt.compare(password, comp.hash)
             .then(matches => {
-              if (!matches) return done(null, false);
-              
+              if (!matches) return done(null, false, { message: 'Invalid credentials'});
               db.query(
                 'select * from users where id = $1',
                 [comp.user_id],
                 (err, res) => {
                   if (err) return done(null, false);
-
                   const user = res.rows[0] as User;
                   return done(null, user);
                 }

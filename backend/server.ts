@@ -11,18 +11,22 @@ import passport from 'passport';
 import facebook from './passport/facebook';
 import google from './passport/google';
 import twitter from './passport/twitter';
+import local from './passport/local';
 
 const app = express();
 const port = process.env.PORT || 8000;
 
 
-app.use(cors());
 
 app.use(morgan('dev'));
 
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:3000',
+}));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(session({
   secret: 'sample secret', 
   saveUninitialized: false,
@@ -40,13 +44,30 @@ app.use((_, res, next) => {
   next();
 })
 
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Mount strategies to passport
+local(passport);
 facebook(passport);
 google(passport);
 twitter(passport);
+
+app.use((req, res, next) => {
+  console.log(`
+  cookies:
+  
+  `)
+  console.log(req.cookies);
+
+  console.log(req.headers);
+
+  console.log(req.session)
+  console.log(req.body)
+
+  next(); 
+})
 
 // Mounts routes defined in ./routes/index.ts to app
 mount(app);
