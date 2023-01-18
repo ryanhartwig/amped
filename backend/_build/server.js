@@ -47,17 +47,16 @@ app.use(passport_1.default.session());
 (0, facebook_1.default)(passport_1.default);
 (0, google_1.default)(passport_1.default);
 (0, twitter_1.default)(passport_1.default);
-app.use((req, res, next) => {
-    console.log(`
-  cookies:
-  
-  `);
-    console.log(req.cookies);
-    console.log(req.headers);
-    console.log(req.session);
-    console.log(req.body);
-    next();
-});
+// app.use((req, res, next) => {
+//   console.log(`
+//   cookies:
+//   `)
+//   console.log(req.cookies);
+//   console.log(req.headers);
+//   console.log(req.session)
+//   console.log(req.body)
+//   next(); 
+// })
 // Mounts routes defined in ./routes/index.ts to app
 (0, routes_1.default)(app);
 app.listen(port, () => {

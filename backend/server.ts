@@ -54,20 +54,20 @@ facebook(passport);
 google(passport);
 twitter(passport);
 
-app.use((req, res, next) => {
-  console.log(`
-  cookies:
+// app.use((req, res, next) => {
+//   console.log(`
+//   cookies:
   
-  `)
-  console.log(req.cookies);
+//   `)
+//   console.log(req.cookies);
 
-  console.log(req.headers);
+//   console.log(req.headers);
 
-  console.log(req.session)
-  console.log(req.body)
+//   console.log(req.session)
+//   console.log(req.body)
 
-  next(); 
-})
+//   next(); 
+// })
 
 // Mounts routes defined in ./routes/index.ts to app
 mount(app);
