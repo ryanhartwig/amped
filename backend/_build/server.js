@@ -15,6 +15,8 @@ const facebook_1 = __importDefault(require("./passport/facebook"));
 const google_1 = __importDefault(require("./passport/google"));
 const twitter_1 = __importDefault(require("./passport/twitter"));
 const local_1 = __importDefault(require("./passport/local"));
+const memorystore_1 = __importDefault(require("memorystore"));
+const MemoryStore = (0, memorystore_1.default)(express_session_1.default);
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8000;
 app.use((0, morgan_1.default)('dev'));
@@ -32,6 +34,9 @@ app.use((0, express_session_1.default)({
         maxAge: 1000 * 60 * 60 * 24,
     },
     resave: false,
+    store: new MemoryStore({
+        checkPeriod: 86400000 // prune expired entries every 24h
+    }),
 }));
 app.use((_, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
