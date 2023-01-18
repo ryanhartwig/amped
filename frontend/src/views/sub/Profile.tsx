@@ -30,7 +30,6 @@ export const Profile = () => {
   const [selectedGoal, setSelectedGoal] = useState<GoalType>();
 
   const weeklyTarget = useAppSelector(s => s.user.weekly_target);
-  const name = useAppSelector(s => s.user.name);
   const [target, setTarget] = useState<number>(weeklyTarget);
   const id = useAppSelector(s => s.user.id);
 
@@ -40,7 +39,7 @@ export const Profile = () => {
   const [disabled, setDisabled] = useState<boolean>(false);
 
   const onSaveWeeklyTarget = useCallback(() => {
-    (async () => {
+    ;(async () => {
       setDisabled(true);
       await editUser({
         id,
@@ -59,7 +58,7 @@ export const Profile = () => {
   ]
 
   const onSave = useCallback((g: GoalType) => {
-    (async () => {
+    ;(async () => {
       try {
         // update
         if (goals.find(goal => goal.id === g.id)) {
@@ -80,7 +79,7 @@ export const Profile = () => {
   }, [addGoal, updateGoal, goals]);
 
   const onDelete = useCallback((id: string) => {
-    (async () => {
+    ;(async () => {
       await deleteGoal(id).unwrap();
       setSelectedGoal(undefined);
       setGoalModal(false);
@@ -95,7 +94,7 @@ export const Profile = () => {
           <IoPersonOutline className='Profile-avatar-svg' />
         </div>
       </div>
-      <h2>{name}</h2>
+      <h2>Profile</h2>
       <hr className='Profile-hr' />
 
       {/* Training Goals / Milestones */}

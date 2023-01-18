@@ -41,7 +41,7 @@ export const WorkoutSummary = ({routineData, onClose}: WorkoutSummaryProps) => {
   const [editRoutineData] = useEditRoutineDataMutation();
 
   const onSave = useCallback(() => {
-    (async () => {
+    ;(async () => {
       if (notes !== routineData.notes || energy !== routineData.energy) {
         await editRoutineData(editedRoutineData).unwrap();
       }

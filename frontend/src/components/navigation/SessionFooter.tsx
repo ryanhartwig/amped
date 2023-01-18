@@ -42,7 +42,7 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
   const [disabled, setDisabled] = useState<boolean>(false);
 
   const onFinish = useCallback(() => {
-    (async () => {
+    ;(async () => {
       setDisabled(true);
       let routineId: string | undefined;
       try {

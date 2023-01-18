@@ -19,7 +19,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         body: {
           id: id,
           name,
-          email: '',
+          email,
           weekly_target: 0,
         }
       })

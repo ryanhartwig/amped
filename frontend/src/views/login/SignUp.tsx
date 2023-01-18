@@ -15,6 +15,7 @@ export const SignUp = () => {
   const [p2, setP2] = useState<string>('');
   const [unique, setUnique] = useState<boolean>(false);
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
 
   // Input validation
   const nameValid = useMemo(() => name.length >= 5 && name.length < 15, [name]);
@@ -28,7 +29,8 @@ export const SignUp = () => {
     && split.some(c => c.toUpperCase() !== c.toLowerCase() && c === c.toLowerCase()) // has lowercase letter    
   }, [p1]);
   const p2Valid = useMemo(() => p1 === p2, [p1, p2]);
-  const allValid = useMemo(() => nameValid && p1Valid && p2Valid && unique, [nameValid, p1Valid, p2Valid, unique]);
+  const emailValid = useMemo(() => !email.length || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email), [email]);
+  const allValid = useMemo(() => nameValid && p1Valid && p2Valid && emailValid && unique, [emailValid, nameValid, p1Valid, p2Valid, unique]);
 
   const onVerifyUsername = useCallback((e: any) => {
     if (!nameValid) return;
@@ -52,7 +54,7 @@ export const SignUp = () => {
       const id = uuid();
       let createdUser = false;
       try {
-        const user = await createUser({id, name, email: '', weekly_target: 0}).unwrap();
+        const user = await createUser({id, name, email, weekly_target: 0}).unwrap();
         createdUser = true;
         await addCredentials({ password: p1, user_id: user.id, username: name }).unwrap();
 
@@ -64,15 +66,16 @@ export const SignUp = () => {
         setInputsDisabled(false);
       }
     })()
-  }, [addCredentials, createUser, deleteUser, name, navigate, p1]);
+  }, [addCredentials, createUser, deleteUser, email, name, navigate, p1]);
 
   return (
     <>
       <p>Welcome to amped!</p>
       <div className="SignUp-creds">
-        <Input disabled={inputsDisabled} placeholder='username' onBlur={onVerifyUsername} onChange={(e) => setName(e.target.value)}/>
-        <Input disabled={inputsDisabled} placeholder='password' type='password' onChange={(e) => setP1(e.target.value)}/>
-        <Input disabled={inputsDisabled} placeholder='confirm password' type='password' onChange={(e) => setP2(e.target.value)}/>
+        <Input disabled={inputsDisabled} value={name} placeholder='username' onBlur={onVerifyUsername} onChange={(e) => setName(e.target.value)}/>
+        <Input disabled={inputsDisabled} value={email} placeholder='email (optional)' onChange={(e) => setEmail(e.target.value)}/>
+        <Input disabled={inputsDisabled} value={p1} placeholder='password' type='password' onChange={(e) => setP1(e.target.value)}/>
+        <Input disabled={inputsDisabled} value={p2} placeholder='confirm password' type='password' onChange={(e) => setP2(e.target.value)}/>
       </div>
       <PrimaryButton onClick={onSignUp} icon={'logo'} altColor disabled={!allValid} text='Sign up' />
       <p className="Login-create" onClick={() => navigate('/login')}>back</p>
