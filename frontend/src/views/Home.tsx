@@ -7,7 +7,7 @@ import { useView } from '../utility/helpers/hooks/useView';
 
 /* React icons */
 import { AiOutlineLeft } from 'react-icons/ai';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { setExercises, setRoutines } from '../store/slices/workoutsSlice';
 import { useGetExercisesQuery } from '../api/injections/workouts/exercisesSlice';
@@ -64,7 +64,6 @@ export const Home = () => {
 
   // Update user state 
   useEffect(() => {
-    console.log(user);
     dispatch(setUser(user))
   }, [dispatch, user]);
 

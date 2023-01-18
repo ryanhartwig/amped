@@ -59,9 +59,6 @@ export const SignUp = () => {
 
       if (!response.ok) {
         setInputsDisabled(false);
-        console.log('error in first request:');
-        console.log(response.statusText);
-        console.log(await response.text());
         return;
       }
 
@@ -82,13 +79,8 @@ export const SignUp = () => {
       if (!credResponse.ok) {
         await fetch(`http://localhost:8000/api/user/${user.id}`, { method: 'DELETE' });
         setInputsDisabled(false);
-        console.log(await credResponse.text());
         return;
       }
-
-      const user_id = await credResponse.json();
-
-      console.log('success!', user_id);
     })()
   }, [name, p1]);
 
