@@ -50,4 +50,11 @@ user.put('/:user_id', (req, res) => __awaiter(void 0, void 0, void 0, function* 
   `, [id, name, email, weekly_target]);
     return res.status(200).json(response.rows[0]);
 }));
+user.delete('/:user_id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { user_id } = req.params;
+    const response = yield db_1.default.query('delete from users where id = $1 returning *', [user_id]);
+    if (!response.rowCount)
+        return res.status(500).json('Could not delete user or does not exist');
+    return res.status(200).json('Successfully deleted user with id: ' + user_id);
+}));
 exports.default = user;

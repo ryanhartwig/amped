@@ -47,5 +47,14 @@ user.put('/:user_id', async (req, res) => {
   return res.status(200).json(response.rows[0]);
 });
 
+user.delete('/:user_id', async (req, res) => {
+  const { user_id } = req.params;
+
+  const response = await db.query('delete from users where id = $1 returning *', [user_id]);
+
+  if (!response.rowCount) return res.status(500).json('Could not delete user or does not exist');
+  return res.status(200).json('Successfully deleted user with id: ' + user_id);
+})
+
 
 export default user;
