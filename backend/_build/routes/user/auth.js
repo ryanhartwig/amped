@@ -22,7 +22,7 @@ passport_1.default.deserializeUser((user, cb) => {
         return cb(null, user);
     });
 });
-// Handle authentication for each strategy & redirects
+// Handle authentication for each strategy & redirect
 (0, authenticateStrategies_1.authenticateStrategies)(auth, passport_1.default);
 auth.get('/currentuser', (req, res) => {
     if (!req.user)

@@ -22,4 +22,17 @@ export const authenticateStrategies = (auth: Router, passport: PassportStatic) =
     successReturnToOrRedirect: 'http://localhost:3000/login',
     failureRedirect: 'http://localhost:3000/login',
   })); 
+
+  // Local
+  auth.post('/login/local', 
+  passport.authenticate('local', {}),
+  function(req, res) {
+    console.log(req.isAuthenticated());
+    const user = req.user;
+    if (!user) return res.status(500).send('no auth');
+
+    res.status(200).send();
+  });
+
 }
+

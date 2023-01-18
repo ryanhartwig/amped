@@ -15,13 +15,17 @@ const passport_1 = __importDefault(require("passport"));
 const facebook_1 = __importDefault(require("./passport/facebook"));
 const google_1 = __importDefault(require("./passport/google"));
 const twitter_1 = __importDefault(require("./passport/twitter"));
+const local_1 = __importDefault(require("./passport/local"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8000;
-app.use((0, cors_1.default)());
 app.use((0, morgan_1.default)('dev'));
+app.use((0, cors_1.default)({
+    credentials: true,
+    origin: 'http://localhost:3000',
+}));
+app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
-app.use((0, cookie_parser_1.default)());
 app.use((0, express_session_1.default)({
     secret: 'sample secret',
     saveUninitialized: false,
@@ -39,9 +43,21 @@ app.use((_, res, next) => {
 app.use(passport_1.default.initialize());
 app.use(passport_1.default.session());
 // Mount strategies to passport
+(0, local_1.default)(passport_1.default);
 (0, facebook_1.default)(passport_1.default);
 (0, google_1.default)(passport_1.default);
 (0, twitter_1.default)(passport_1.default);
+app.use((req, res, next) => {
+    console.log(`
+  cookies:
+  
+  `);
+    console.log(req.cookies);
+    console.log(req.headers);
+    console.log(req.session);
+    console.log(req.body);
+    next();
+});
 // Mounts routes defined in ./routes/index.ts to app
 (0, routes_1.default)(app);
 app.listen(port, () => {

@@ -21,7 +21,7 @@ passport.deserializeUser((user: Express.User, cb) => {
   });
 }); 
 
-// Handle authentication for each strategy & redirects
+// Handle authentication for each strategy & redirect
 authenticateStrategies(auth, passport);
 
 auth.get('/currentuser', (req, res) => {
