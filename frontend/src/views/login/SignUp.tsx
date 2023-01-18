@@ -4,6 +4,8 @@ import { useCallback, useMemo, useState } from 'react';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
 import uuid from 'react-uuid';
+import { useCreateNewUserMutation, useDeleteUserMutation } from '../../api/injections/user/userSlice';
+import { useAddCredentialsMutation } from '../../api/injections/user/authSlice';
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -39,50 +41,30 @@ export const SignUp = () => {
     })()
   }, [name, nameValid]);
 
+  const [createUser] = useCreateNewUserMutation();
+  const [addCredentials] = useAddCredentialsMutation();
+  const [deleteUser] = useDeleteUserMutation();
+
   const onSignUp = useCallback(() => {
     ;(async () => {
       setInputsDisabled(true);
 
       const id = uuid();
-      const response = await fetch('http://localhost:8000/api/user/new', {
-        method: 'POST', 
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: id,
-          name,
-          email: '',
-          weekly_target: 0,
-        })
-      });
+      let createdUser = false;
+      try {
+        const user = await createUser({id, name, email: '', weekly_target: 0}).unwrap();
+        createdUser = true;
+        await addCredentials({ password: p1, user_id: user.id, username: name }).unwrap();
 
-      if (!response.ok) {
+        navigate('/login');
+
+      } catch(e) {
+        console.log(e);
+        if (createdUser) await deleteUser(id);
         setInputsDisabled(false);
-        return;
-      }
-
-      const user = await response.json();
-
-      const credResponse = await fetch('http://localhost:8000/api/credentials/new', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: name,
-          password: p1,
-          user_id: user.id,
-        }),
-      })
-
-      if (!credResponse.ok) {
-        await fetch(`http://localhost:8000/api/user/${user.id}`, { method: 'DELETE' });
-        setInputsDisabled(false);
-        return;
       }
     })()
-  }, [name, p1]);
+  }, [addCredentials, createUser, deleteUser, name, navigate, p1]);
 
   return (
     <>

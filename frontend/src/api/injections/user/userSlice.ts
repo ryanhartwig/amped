@@ -9,6 +9,21 @@ export interface DB_User {
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
+    createNewUser: builder.mutation({
+      query: ({id, name, email, weekly_target}: DB_User) => ({
+        url: '/user/new',
+        method: 'POST', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: {
+          id: id,
+          name,
+          email: '',
+          weekly_target: 0,
+        }
+      })
+    }),
     getCurrentUser: builder.query({
       query: () => ({
         url: '/currentuser',
@@ -35,11 +50,19 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User'],
     }),
+    deleteUser: builder.mutation({
+      query: (id: string) => ({
+        url: `/user/${id}`,
+        method: 'DELETE',
+      })
+    }),
   })
 });
 
 export const {
+  useCreateNewUserMutation,
   useEditUserMutation,
   useGetUserByIdQuery,
   useGetCurrentUserQuery,
+  useDeleteUserMutation,
 } = extendedApiSlice;
