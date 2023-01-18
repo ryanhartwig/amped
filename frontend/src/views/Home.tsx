@@ -7,7 +7,7 @@ import { useView } from '../utility/helpers/hooks/useView';
 
 /* React icons */
 import { AiOutlineLeft } from 'react-icons/ai';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setExercises, setRoutines } from '../store/slices/workoutsSlice';
 import { useGetExercisesQuery } from '../api/injections/workouts/exercisesSlice';
@@ -44,7 +44,31 @@ export const Home = () => {
   }, [cancel, navigate]);
 
   
-  const { data: currentUser, isError, isFetching } = useGetCurrentUserQuery(null);
+  // const { data: currentUser, isError, isFetching } = useGetCurrentUserQuery(null);
+
+
+  const [currentUser, setCurrentUser] = useState<any>();
+
+  useEffect(() => {
+    let thisreq = true;
+    
+    ;(async() => {
+
+      const response = await fetch('http://localhost:8000/api/currentuser', { credentials: 'include' });
+      if (!response.ok) {
+        console.log('no user  yet');
+        return;
+      }
+
+      const user = await response.json();
+      console.log(user);
+      setCurrentUser(user);
+
+    })()
+
+    return () => { thisreq = false }
+  }, []);
+
   const id = useMemo(() => currentUser?.id, [currentUser]);
 
   const { data: user } = useGetUserByIdQuery(id, { skip: !id });
@@ -54,17 +78,17 @@ export const Home = () => {
   const { data: goals = [] } = useGetGoalsQuery(id, { skip: !id }) as { data: GoalType[] };
   const { data: routineData = [] } = useGetRoutineDataQuery(id, { skip: !id }) as { data: RoutineDataType[] };
 
-  useEffect(() => {
-    if (!isError || isFetching) return;
+  // useEffect(() => {
+  //   if (!isError || isFetching) return;
 
-    dispatch(setUser());
-    navigate('/login');
-  }, [dispatch, isError, isFetching, navigate])
+  //   dispatch(setUser());
+  //   navigate('/login');
+  // }, [dispatch, isError, isFetching, navigate])
 
   // Update user state 
   useEffect(() => {
-    dispatch(setUser(user))
     console.log(user);
+    dispatch(setUser(user))
   }, [dispatch, user]);
 
   // Initialize goals state
