@@ -27,7 +27,6 @@ export const authenticateStrategies = (auth: Router, passport: PassportStatic) =
   auth.post('/login/local', 
   passport.authenticate('local', {}),
   function(req, res) {
-    console.log(req.isAuthenticated());
     const user = req.user;
     if (!user) return res.status(500).json('no auth');
 
