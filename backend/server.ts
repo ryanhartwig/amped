@@ -12,10 +12,11 @@ import google from './passport/google';
 import twitter from './passport/twitter';
 import local from './passport/local';
 
+import createMemoryStore from 'memorystore';
+const MemoryStore = createMemoryStore(session);
+
 const app = express();
 const port = process.env.PORT || 8000;
-
-
 
 app.use(morgan('dev'));
 
@@ -33,6 +34,9 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24,
   },
   resave: false,
+  store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  }) as any,
 }));
 
 app.use((_, res, next) => {
