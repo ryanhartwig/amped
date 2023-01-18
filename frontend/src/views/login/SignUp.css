@@ -1,0 +1,12 @@
+.SignUp-feedback {
+  width: 80%;
+  margin: 0 auto;
+}
+.SignUp-feedback li {
+  font-size: 0.8em;
+  color: rgb(212, 159, 89);
+}
+.SignUp-input {
+  width: 90%;
+  margin: 0 auto;
+}
