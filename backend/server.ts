@@ -6,7 +6,6 @@ import morgan from 'morgan';
 import cors from 'cors';
 import mount from './routes';
 import session from 'express-session';
-import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import facebook from './passport/facebook';
 import google from './passport/google';
@@ -24,7 +23,6 @@ app.use(cors({
   credentials: true,
   origin: 'http://localhost:3000',
 }));
-app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({

@@ -10,7 +10,6 @@ const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const routes_1 = __importDefault(require("./routes"));
 const express_session_1 = __importDefault(require("express-session"));
-const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const passport_1 = __importDefault(require("passport"));
 const facebook_1 = __importDefault(require("./passport/facebook"));
 const google_1 = __importDefault(require("./passport/google"));
@@ -23,7 +22,6 @@ app.use((0, cors_1.default)({
     credentials: true,
     origin: 'http://localhost:3000',
 }));
-app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, express_session_1.default)({
