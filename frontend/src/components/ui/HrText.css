@@ -1,0 +1,29 @@
+.HrText {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 20px;
+  width: 100%;
+}
+
+.HrText hr {
+  width:100%;
+}
+
+.HrText-front {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+
+  width: 100%;
+
+  bottom: 3px;
+}
+
+.HrText-front p {
+  padding: 0 12px;
+}

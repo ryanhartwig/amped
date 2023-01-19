@@ -10,9 +10,13 @@ import { LoginButton } from '../../components/ui/LoginButton';
 import { ReactComponent as Facebook } from '../../assets/brand_logos/facebook.svg';
 import { ReactComponent as Google } from '../../assets/brand_logos/google.svg';
 import { ReactComponent as Twitter } from '../../assets/brand_logos/twitter.svg';
+import { HrText } from '../../components/ui/HrText';
+import { useAppSelector } from '../../utility/helpers/hooks';
 
 export const SignIn = () => {
   const navigate = useNavigate();
+
+  const { background } = useAppSelector(s => s.theme);
   
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -33,6 +37,11 @@ export const SignIn = () => {
 
   return (
     <>
+      <HrText text="sign in with" 
+        background={background} 
+        textFontSize={17}
+        textBottomOffset={2}
+      />
       <div className='SignIn-oauth'>
         <LoginButton 
           onClick={() => window.location.href='http://localhost:8000/api/login/federated/facebook'}
