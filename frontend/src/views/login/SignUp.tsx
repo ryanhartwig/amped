@@ -28,6 +28,14 @@ export const SignUp = () => {
   const [awaitFetch, setAwaitFetch] = useState<boolean>(false);
 
   useEffect(() => { setAwaitFetch(true) }, [name]);
+
+  const [slideIndex, setSlideIndex] = useState<number>(0);
+
+  // const ref = useRef<any>();
+  // useEffect(() => {
+  //   clearInterval(ref.current);
+  //   ref.current = setInterval(() => {setSlideIndex(p => (p + 1) % 4)}, 2000);
+  // }, []);
   
   const nameValid = useMemo(() => name.length >= 5 && name.length < 15, [name]);
   const emailValid = useMemo(() => !email.length || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email), [email]);
@@ -97,23 +105,49 @@ export const SignUp = () => {
   return (
     <div className='SignUp'>
       <div className="SignUp-creds" style={{width: '100%'}}>
-        <Input className='SignUp-input' disabled={inputsDisabled} value={name} placeholder='username' onChange={(e) => setName(e.target.value)}/>
-        <Input className='SignUp-input' disabled={inputsDisabled} value={email} placeholder='email (optional)' onChange={(e) => setEmail(e.target.value)}/>
-        <Input className='SignUp-input' disabled={inputsDisabled} value={p1} placeholder='password' type='password' onChange={(e) => setP1(e.target.value)}/>
-        <Input className='SignUp-input' disabled={inputsDisabled} value={p2} placeholder='confirm password' type='password' onChange={(e) => setP2(e.target.value)}/>
-        <div className='SignUp-feedback'>
-          <ul style={{marginTop: 12}}>
-            {nameValid && <Li text='this username is taken' valid={unique} />}
-            <Li text='username must be between 5 and 15 characters' valid={nameValid} />
-            <Li text='please enter a valid email address' valid={emailValid} />
-            <Li text='password must be minimum 6 characters in length' valid={p1Length} />
-            <Li text='password must include at least one special character' valid={p1Special} />
-            <Li text='password must include at least one uppercase character' valid={p1Upper} />
-            {p1Valid && <Li text='passwords must match' valid={p2Valid} />}
-          </ul>
+        <p>Welcome</p>
+        <div className='SignUp-slides-container' style={{left: -1 * (slideIndex * 280)}}>
+          <div className='SignUp-slide'>
+            <Input className='SignUp-input' disabled={inputsDisabled} value={name} placeholder='username' onChange={(e) => setName(e.target.value)}/>
+            <div className='SignUp-feedback'>
+              <ul style={{marginTop: 12}}>
+                {nameValid && <Li text='this username is taken' valid={unique} />}
+                <Li text='username must be between 5 and 15 characters' valid={nameValid} />
+              </ul>
+            </div>
+          </div>
+          <div className='SignUp-slide'>
+            <Input className='SignUp-input' disabled={inputsDisabled} value={p1} placeholder='password' type='password' onChange={(e) => setP1(e.target.value)}/>
+            <div className='SignUp-feedback'>
+              <ul style={{marginTop: 12}}>
+                <Li text='password must be minimum 6 characters in length' valid={p1Length} />
+                <Li text='password must include at least one special character' valid={p1Special} />
+                <Li text='password must include at least one uppercase character' valid={p1Upper} />
+              </ul>
+            </div>
+          </div>
+          <div className='SignUp-slide'>
+            <Input className='SignUp-input' disabled={inputsDisabled} value={p2} placeholder='confirm password' type='password' onChange={(e) => setP2(e.target.value)}/>
+            <div className='SignUp-feedback'>
+              <ul style={{marginTop: 12}}>
+                {p1Valid && <Li text='passwords must match' valid={p2Valid} />}
+              </ul>
+            </div>
+          </div>
+          <div className='SignUp-slide'>
+            <Input className='SignUp-input' disabled={inputsDisabled} value={email} placeholder='email (optional)' onChange={(e) => setEmail(e.target.value)}/>
+            <div className='SignUp-feedback'>
+              <ul style={{marginTop: 12}}>
+                <Li text='please enter a valid email address' valid={emailValid} />
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-      <p className="Login-create" onClick={() => navigate('/login')}>back</p>
+        
+      <div className='SignUp-cancel'>
+        <p onClick={() => navigate('/login')}>cancel</p>
+      </div>
     </div>
   )
 }
