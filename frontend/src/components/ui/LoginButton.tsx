@@ -1,16 +1,18 @@
 import './LoginButton.css';
 
-// interface LoginButtonProps {
+interface LoginButtonProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  text?: string,
+}
 
-// }
-
-export const LoginButton = () => {
-
+export const LoginButton: React.FC<LoginButtonProps> = ({children, text, ...props}) => {
 
 
   return (
-    <div>
-      
+    <div {...props} className={`LoginButton ${props.className ?? ''}`}>
+      <div className='LoginButton-logo'>
+        {children}
+      </div>
+      <p>{text}</p>
     </div>
   )
 }

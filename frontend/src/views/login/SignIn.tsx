@@ -5,6 +5,11 @@ import { Input } from "../../components/ui/Input"
 import { useNavigate } from 'react-router-dom';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { useSignInLocalMutation } from '../../api/injections/user/authSlice';
+import { LoginButton } from '../../components/ui/LoginButton';
+
+import { ReactComponent as Facebook } from '../../assets/brand_logos/facebook.svg';
+import { ReactComponent as Google } from '../../assets/brand_logos/google.svg';
+import { ReactComponent as Twitter } from '../../assets/brand_logos/twitter.svg';
 
 export const SignIn = () => {
   const navigate = useNavigate();
@@ -25,12 +30,22 @@ export const SignIn = () => {
     })()
   }, [navigate, password, signIn, username]);
 
+
   return (
     <>
-      <div className='Login-oauth'>
-        <a href='http://localhost:8000/api/login/federated/facebook' >loign with facebook</a>
-        <a href='http://localhost:8000/api/login/federated/google' >loign with googlwe</a>
-        <a href='http://localhost:8000/api/login/federated/twitter' >loign with tweeter</a>
+      <div className='SignIn-oauth'>
+        <LoginButton 
+          onClick={() => window.location.href='http://localhost:8000/api/login/federated/facebook'}
+          text='Login with Facebook'
+        ><Facebook style={{width: 30, height: 30}} /></LoginButton>
+        <LoginButton 
+          onClick={() => window.location.href='http://localhost:8000/api/login/federated/google'}
+          text='Login with Google'
+        ><Google style={{width: 30, height: 30}} /></LoginButton>
+        <LoginButton 
+          onClick={() => window.location.href='http://localhost:8000/api/login/federated/twitter'}
+          text='Login with Twitter'
+        ><Twitter style={{width: 30, height: 30}} /></LoginButton>
       </div>
       <div>
         <p>login</p>
@@ -38,7 +53,7 @@ export const SignIn = () => {
         <Input placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} type='password' />
         <PrimaryButton onClick={onSignIn} text='Sign in' disabled={!username || !password} style={{marginTop: 12}} />
       </div>
-      <p className="Login-create" onClick={() => navigate('/login/new')}>Create an account</p>
+      <p className="SignIn-create" onClick={() => navigate('/login/new')}>Create an account</p>
     </>
   )
 }
