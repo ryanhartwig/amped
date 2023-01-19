@@ -1,7 +1,6 @@
 import './SignUp.css';
 import { Input } from "../../components/ui/Input"
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
 import uuid from 'react-uuid';
 import { useCreateNewUserMutation, useDeleteUserMutation } from '../../api/injections/user/userSlice';
@@ -28,8 +27,7 @@ export const SignUp = () => {
   const unique = useMemo(() => !!requests[requests.length - 1], [requests]);
   const [awaitFetch, setAwaitFetch] = useState<boolean>(false);
 
-  useEffect(() => {console.log(awaitFetch)}, [awaitFetch]);
-  useEffect(() => {setAwaitFetch(true)}, [name]);
+  useEffect(() => { setAwaitFetch(true) }, [name]);
   
   const nameValid = useMemo(() => name.length >= 5 && name.length < 15, [name]);
   const emailValid = useMemo(() => !email.length || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email), [email]);
@@ -45,6 +43,7 @@ export const SignUp = () => {
 
   const counterRef = useRef<number>(0);
   const timeoutRef = useRef<NodeJS.Timeout>();
+  
   useEffect(() => {
     if (!nameValid) return;
     clearTimeout(timeoutRef.current);
@@ -68,18 +67,6 @@ export const SignUp = () => {
       getUnique(counterRef.current);
     }, 1000);
   }, [name, nameValid]);
-  
-
-  // const onVerifyUsername = useCallback((e: any) => {
-  //   if (!nameValid) return;
-
-  //   ;(async() => {
-  //     const response = await fetch(`http://localhost:8000/api/credentials/unique/${name}`);
-  //     const data = await response.json();
-
-  //     setUnique(!data);
-  //   })()
-  // }, [name, nameValid]);
 
   const [createUser] = useCreateNewUserMutation();
   const [addCredentials] = useAddCredentialsMutation();
@@ -108,8 +95,7 @@ export const SignUp = () => {
 
 
   return (
-    <>
-      <p>Welcome to amped!</p>
+    <div className='SignUp'>
       <div className="SignUp-creds" style={{width: '100%'}}>
         <Input className='SignUp-input' disabled={inputsDisabled} value={name} placeholder='username' onChange={(e) => setName(e.target.value)}/>
         <Input className='SignUp-input' disabled={inputsDisabled} value={email} placeholder='email (optional)' onChange={(e) => setEmail(e.target.value)}/>
@@ -127,8 +113,7 @@ export const SignUp = () => {
           </ul>
         </div>
       </div>
-      <PrimaryButton style={{minWidth: 0}} onClick={onSignUp} icon={'logo'} altColor disabled={!allValid || awaitFetch} text='Sign up' />
       <p className="Login-create" onClick={() => navigate('/login')}>back</p>
-    </>
+    </div>
   )
 }

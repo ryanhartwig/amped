@@ -1,9 +1,13 @@
+.SignIn {
+  width: 280px;
+  height: 414px;
+}
+
 .SignIn-oauth {
   display: flex;
   flex-direction: column;
-  width: 280px;
+  width: 100%;
 }
-
 .SignIn-oauth > .LoginButton {
   margin-bottom: 12px;
 }
@@ -13,7 +17,7 @@
 
 /* Local Signin section */
 .SignIn-local {
-  width: 280px;
+  width: 100%;
 }
 .SignIn-local .SignIn-input {
   height: 40px;
