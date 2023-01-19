@@ -1,5 +1,28 @@
 .SignUp {
   width: 280px;
+  height: 414px;
+
+  position: relative;
+
+  overflow: hidden;
+
+}
+
+/* Slides / presentation */
+.SignUp-slides-container {
+  display: flex;
+  position: relative;
+  overflow: visible;
+
+  transition: left 0.5s;
+  top: 155px;
+}
+.SignUp-slide {
+  width: 280px;
+  height: 200px;
+
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .SignUp-feedback {
@@ -13,4 +36,22 @@
 .SignUp-input {
   width: 90%;
   margin: 0 auto;
+}
+
+/* Go back / cancel button */
+.SignUp-cancel {
+  position: absolute; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  bottom: 0px;
+  width: 100%;
+}
+.SignUp-cancel p {
+  cursor: pointer;
+  width: 80px;
+}
+.SignUp-cancel p:hover {
+  text-decoration: underline;
 }
