@@ -132,12 +132,12 @@ export const AddExercise = () => {
         <div className='AddExercise-goal'>
           <select id="exercise-goal" value={goal} onChange={(e) => setGoal(e.target.value)}>
             <option value="Select exercise goal" disabled>Select exercise goal</option>
-            <option value="Strength">Strength</option>
-            <option value="Hypertrophy">Hypertrophy</option>
-            <option value="Power">Power</option>
-            <option value="Speed">Speed</option>
-            <option value="Endurance">Endurance</option>
-            <option value="Other">Other</option>
+            <option value="strength">Strength</option>
+            <option value="hypertrophy">Hypertrophy</option>
+            <option value="power">Power</option>
+            <option value="speed">Speed</option>
+            <option value="endurance">Endurance</option>
+            <option value="other">Other</option>
           </select>
         </div>
 
