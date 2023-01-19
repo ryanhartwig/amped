@@ -32,9 +32,8 @@ export const SignIn = () => {
 
 
   return (
-    <>
+    <div className='SignIn'>
       <div className='SignIn-oauth'>
-
         <LoginButton 
           onClick={() => window.location.href='http://localhost:8000/api/login/federated/facebook'}
           text='Login with Facebook'
@@ -73,6 +72,6 @@ export const SignIn = () => {
       </div>
       
       <p className="SignIn-create" onClick={() => navigate('/login/new')}>Create an account</p>
-    </>
+    </div>
   )
 }
