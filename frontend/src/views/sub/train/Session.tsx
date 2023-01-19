@@ -89,7 +89,7 @@ export const Session = () => {
   }, [prevExerciseData]);
   
   return (
-    <div className='Session'>
+    <div className='Session' style={{background}}> 
       <SessionHeader paused={paused} time={routineTime} setTime={setRoutineTime} routineTitle={routine.name} />
       
       {paused 

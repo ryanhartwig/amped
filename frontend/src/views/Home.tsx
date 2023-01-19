@@ -22,6 +22,7 @@ import { useGetCurrentUserQuery, useGetUserByIdQuery } from '../api/injections/u
 import { useGetRoutineDataQuery } from '../api/injections/data/routineDataSlice';
 import { RoutineDataType } from '../types/RoutineDataType';
 import { setRoutineData } from '../store/slices/workoutDataSlice';
+import { useAppSelector } from '../utility/helpers/hooks';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ export const Home = () => {
   const route = useView();
 
   const cancel = ['add-rt', 'add-ex'].some(str => location.pathname.includes(str));
+  const { background } = useAppSelector(s => s.theme);
 
   const back = useMemo(() => {
     return !['dash', 'routines', 'train', 'finished', 'profile'].includes(route[route.length - 1]);
@@ -98,7 +100,7 @@ export const Home = () => {
   }, [dispatch, routineData]);
 
   return (
-    <div className='Home'>
+    <div className='Home' style={{background}}>
       {/* Top navigation bar */}
       <HeaderNav />
 
