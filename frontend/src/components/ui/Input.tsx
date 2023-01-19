@@ -12,7 +12,7 @@ export const Input: React.FC<InputProps> = ({onEnter, icon, className = '', mini
   return (
     <div className='Input' style={{width: '100%'}}>
       <input {...props} 
-        className={`${className} ${mini ? 'mini' : ''}`}
+        className={`${className ?? ''} ${mini ? 'mini' : ''}`}
         onKeyDown={(e) => e.key === 'Enter' && onEnter && onEnter()}/>
       {icon}
     </div>

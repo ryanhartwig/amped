@@ -2,12 +2,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: url('https://images.unsplash.com/photo-1605296867304-46d5465a13f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-x: -80vh;
+  background-position-y: center;
+
   width: 100vw;
   height: 100vh;
-}
-.Login a {
-  color: white;
-  text-decoration: underline;
 }
 
 .Login-form {
@@ -15,6 +17,8 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  background: rgba(0, 0, 0, 0.73);
   
   max-width: 400px;
   min-width: 300px;
@@ -25,10 +29,11 @@
   height: fit-content;
 
   margin: 0 auto;
-  padding: 28px 18px;
+  padding: 24px 18px;
 
   border: 1px solid rgba(128, 128, 128, 0.289);
   border-radius: 5px;
+  z-index: 5;
 }
 
 @media only screen and (max-width: 330px) {
