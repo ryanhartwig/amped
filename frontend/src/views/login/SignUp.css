@@ -5,21 +5,26 @@
   position: relative;
 
   overflow: hidden;
-
+}
+.SignUp-creds {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
 }
 
 /* Slides / presentation */
 .SignUp-slides-container {
   display: flex;
+  align-items: center;
   position: relative;
   overflow: visible;
 
   transition: left 0.5s;
-  top: 155px;
 }
 .SignUp-slide {
   width: 280px;
-  height: 200px;
+  height: fit-content;
 
   flex-grow: 0;
   flex-shrink: 0;
@@ -38,9 +43,28 @@
   margin: 0 auto;
 }
 
+.SignUp-tip {
+  margin-bottom: 12px;
+}
+
 /* Go back / cancel button */
+.SignUp-back {
+  position: relative;
+  height: 0px;
+}
+.SignUp-back-arrow {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  cursor: pointer;
+  
+  left: 10px;
+  top: 15px;
+
+  opacity: 0.8;
+}
+
 .SignUp-cancel {
-  position: absolute; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,3 +79,4 @@
 .SignUp-cancel p:hover {
   text-decoration: underline;
 }
+

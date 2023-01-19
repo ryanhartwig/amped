@@ -4,11 +4,11 @@ import * as bcrypt from 'bcrypt';
 
 const credentials = PromiseRouter();
 
-credentials.get('/unique/:username', async (req, res) => {
+credentials.get('/exists/:username', async (req, res) => {
   const { username } = req.params;
   const response = await db.query('select * from local_credentials where username = $1', [username]);
 
-  return res.status(200).json(!!response.rowCount)
+  return res.status(200).json(response.rows[0]?.username || null)
 });
 
 credentials.post('/new', async (req, res) => {

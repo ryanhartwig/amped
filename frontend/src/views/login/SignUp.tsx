@@ -4,7 +4,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import uuid from 'react-uuid';
 import { useCreateNewUserMutation, useDeleteUserMutation } from '../../api/injections/user/userSlice';
-import { useAddCredentialsMutation } from '../../api/injections/user/authSlice';
+import { useAddCredentialsMutation, useSignInLocalMutation } from '../../api/injections/user/authSlice';
+import { LoginButton } from '../../components/ui/LoginButton';
+import { IoIosArrowRoundBack } from 'react-icons/io';
 
 export const Li = ({text, valid}: {text: string, valid: boolean}) => {
   return (
@@ -17,29 +19,24 @@ export const Li = ({text, valid}: {text: string, valid: boolean}) => {
 export const SignUp = () => {
   const navigate = useNavigate();
 
+  const [signIn] = useSignInLocalMutation();
+  const [createUser] = useCreateNewUserMutation();
+  const [addCredentials] = useAddCredentialsMutation();
+  const [deleteUser] = useDeleteUserMutation();
+
   const [name, setName] = useState<string>('');
+  const [taken, setTaken] = useState<string>('');
   const [p1, setP1] = useState<string>('');
   const [p2, setP2] = useState<string>('');
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
-
-  const [requests, setRequests] = useState<any[]>([true]);
-  const unique = useMemo(() => !!requests[requests.length - 1], [requests]);
-  const [awaitFetch, setAwaitFetch] = useState<boolean>(false);
-
-  useEffect(() => { setAwaitFetch(true) }, [name]);
-
+  const [validating, setValidating] = useState<boolean>(false);
   const [slideIndex, setSlideIndex] = useState<number>(0);
+  const [error, setError] = useState<boolean>(false);
+  const [slideChange, setSlideChange] = useState<boolean>(false);
 
-  // const ref = useRef<any>();
-  // useEffect(() => {
-  //   clearInterval(ref.current);
-  //   ref.current = setInterval(() => {setSlideIndex(p => (p + 1) % 4)}, 2000);
-  // }, []);
-  
   const nameValid = useMemo(() => name.length >= 5 && name.length < 15, [name]);
   const emailValid = useMemo(() => !email.length || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email), [email]);
-
   const split = useMemo(() => p1.split(''), [p1]);
   const p1Length = useMemo(() => p1.length >= 6, [p1.length]);
   const p1Special = useMemo(() => split.some(c => isNaN(Number(c)) && c.toUpperCase() === c.toLowerCase()), [split]); // has non-alphanumeric characters)
@@ -47,41 +44,47 @@ export const SignUp = () => {
   const p1Valid = useMemo(() => p1Length && p1Special && p1Upper, [p1Length, p1Special, p1Upper]);
   const p2Valid = useMemo(() => p1 === p2, [p1, p2]);
 
-  const allValid = useMemo(() => nameValid && p1Valid && p2Valid && emailValid && unique, [emailValid, nameValid, p1Valid, p2Valid, unique]);
+  const nameRef = useRef<HTMLDivElement>(undefined!);
+  const p1Ref = useRef<HTMLDivElement>(undefined!);
+  const p2Ref = useRef<HTMLDivElement>(undefined!);
+  const emailRef = useRef<HTMLDivElement>(undefined!);
 
-  const counterRef = useRef<number>(0);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const nameInput = useRef<HTMLInputElement>(undefined!);
+  const p1Input = useRef<HTMLInputElement>(undefined!);
+  const p2Input = useRef<HTMLInputElement>(undefined!);
+  const emailInput = useRef<HTMLInputElement>(undefined!);
+  const inputRefs = useMemo(() => [nameInput, p1Input, p2Input, emailInput], []);
   
   useEffect(() => {
-    if (!nameValid) return;
-    clearTimeout(timeoutRef.current);
+    setSlideChange(true);
+    setTimeout(() => {
+      inputRefs[slideIndex].current.focus();
+      setSlideChange(false);
+    }, 500);
+  }, [inputRefs, slideIndex]);
 
-    const getUnique = async (prio: number) => {
-      const response = await fetch(`http://localhost:8000/api/credentials/unique/${name}`);
-      const data = await response.json();
-
-      setAwaitFetch(false);
-
-      setRequests(p => {
-        let prev = [...p];
-        prev[prio] = !data;
-
-        return prev;
-      })
-    }
-
-    timeoutRef.current = setTimeout(() => {
-      counterRef.current = counterRef.current + 1;
-      getUnique(counterRef.current);
-    }, 1000);
-  }, [name, nameValid]);
-
-  const [createUser] = useCreateNewUserMutation();
-  const [addCredentials] = useAddCredentialsMutation();
-  const [deleteUser] = useDeleteUserMutation();
-
-  const onSignUp = useCallback(() => {
+  const onCheckUsername = useCallback(() => {
     ;(async () => {
+      setValidating(true);
+
+      const response = await fetch(`http://localhost:8000/api/credentials/exists/${name}`);
+      const existing = await response.json();
+
+      setValidating(false);
+
+      if (existing !== null) {
+        setTaken(existing);
+      } else {
+        setSlideIndex(1);
+        setTaken('');
+      }
+    })()
+  }, [name]);
+
+  const onSubmit = useCallback(() => {
+    ;(async () => {
+      setValidating(true);
+      setError(false);
       setInputsDisabled(true);
 
       const id = uuid();
@@ -91,16 +94,18 @@ export const SignUp = () => {
         createdUser = true;
         await addCredentials({ password: p1, user_id: user.id, username: name }).unwrap();
 
-        navigate('/login');
+        await signIn({username: name, password: p1}).unwrap()
+        navigate('/home/dash');
 
       } catch(e) {
         console.log(e);
         if (createdUser) await deleteUser(id);
+        setValidating(false);
+        setError(true);
         setInputsDisabled(false);
       }
     })()
-  }, [addCredentials, createUser, deleteUser, email, name, navigate, p1]);
-
+  }, [addCredentials, createUser, deleteUser, email, name, navigate, p1, signIn]);
 
   return (
     <div className='SignUp'>
@@ -108,16 +113,19 @@ export const SignUp = () => {
         <p>Welcome</p>
         <div className='SignUp-slides-container' style={{left: -1 * (slideIndex * 280)}}>
           <div className='SignUp-slide'>
-            <Input className='SignUp-input' disabled={inputsDisabled} value={name} placeholder='username' onChange={(e) => setName(e.target.value)}/>
+            <p className='SignUp-tip'>Enter a username</p>
+            <Input ref={nameInput} onEnter={() => nameRef.current.click()} tabIndex={-1} className='SignUp-input' disabled={inputsDisabled} value={name} placeholder='username' onChange={(e) => setName(e.target.value)}/>
             <div className='SignUp-feedback'>
               <ul style={{marginTop: 12}}>
-                {nameValid && <Li text='this username is taken' valid={unique} />}
+                <Li text={`username ${taken} is taken`} valid={!taken} />
                 <Li text='username must be between 5 and 15 characters' valid={nameValid} />
               </ul>
             </div>
+            <LoginButton ref={nameRef} onClick={!nameValid ? undefined : onCheckUsername} text='Continue' style={{width: '90%', margin: '30px auto 0 auto'}} disabled={validating || !nameValid} />
           </div>
           <div className='SignUp-slide'>
-            <Input className='SignUp-input' disabled={inputsDisabled} value={p1} placeholder='password' type='password' onChange={(e) => setP1(e.target.value)}/>
+            <p className='SignUp-tip'>Enter a password</p>
+            <Input ref={p1Input} onEnter={() => p1Ref.current.click()} tabIndex={-1} className='SignUp-input' disabled={inputsDisabled} value={p1} placeholder='password' type='password' onChange={(e) => setP1(e.target.value)}/>
             <div className='SignUp-feedback'>
               <ul style={{marginTop: 12}}>
                 <Li text='password must be minimum 6 characters in length' valid={p1Length} />
@@ -125,29 +133,56 @@ export const SignUp = () => {
                 <Li text='password must include at least one uppercase character' valid={p1Upper} />
               </ul>
             </div>
+            <LoginButton ref={p1Ref} onClick={!p1Valid ? undefined : () => setSlideIndex(2)} text='Continue' style={{width: '90%', margin: '30px auto 0 auto'}} disabled={!p1Valid} />
+            <div className='SignUp-back'>
+              <div className='SignUp-back-arrow' onClick={slideChange ? undefined : () => setSlideIndex(p => p - 1)}>
+                <IoIosArrowRoundBack size={24} />
+                <p>back</p>
+              </div>
+            </div>
           </div>
           <div className='SignUp-slide'>
-            <Input className='SignUp-input' disabled={inputsDisabled} value={p2} placeholder='confirm password' type='password' onChange={(e) => setP2(e.target.value)}/>
+            <p className='SignUp-tip'>Confirm password</p>
+            <Input ref={p2Input} onEnter={() => p2Ref.current.click()} tabIndex={-1} className='SignUp-input' disabled={inputsDisabled} value={p2} placeholder='confirm password' type='password' onChange={(e) => setP2(e.target.value)}/>
             <div className='SignUp-feedback'>
               <ul style={{marginTop: 12}}>
                 {p1Valid && <Li text='passwords must match' valid={p2Valid} />}
               </ul>
             </div>
+            <LoginButton ref={p2Ref} onClick={!p2Valid ? undefined : () => setSlideIndex(3)} text='Continue' style={{width: '90%', margin: '30px auto 0 auto'}} disabled={!p2Valid} />
+            <div className='SignUp-back'>
+              <div className='SignUp-back-arrow' onClick={slideChange ? undefined : () => setSlideIndex(p => p - 1)}>
+                <IoIosArrowRoundBack size={24} />
+                <p>back</p>
+              </div>
+            </div>
           </div>
           <div className='SignUp-slide'>
-            <Input className='SignUp-input' disabled={inputsDisabled} value={email} placeholder='email (optional)' onChange={(e) => setEmail(e.target.value)}/>
+            <p className='SignUp-tip'>Enter email (optional)</p>
+            <p className='SignUp-tip' style={{fontSize: '0.8em'}}>(used to reset password)</p>
+            <Input ref={emailInput} onEnter={() => emailRef.current.click()} tabIndex={-1} className='SignUp-input' disabled={inputsDisabled} value={email} placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
             <div className='SignUp-feedback'>
               <ul style={{marginTop: 12}}>
                 <Li text='please enter a valid email address' valid={emailValid} />
+                <Li text='something went wrong (check input fields or try again)' valid={!error} />
               </ul>
+            </div>
+            <LoginButton ref={emailRef} onClick={!emailValid ? undefined : onSubmit} text='Continue' style={{width: '90%', margin: '30px auto 0 auto'}} disabled={!emailValid} />
+            <div className='SignUp-back'>
+              <div className='SignUp-back-arrow' onClick={slideChange ? undefined : () => setSlideIndex(p => p - 1)}>
+                <IoIosArrowRoundBack size={24} />
+                <p>back</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
         
-      <div className='SignUp-cancel'>
-        <p onClick={() => navigate('/login')}>cancel</p>
+        <div className='SignUp-cancel'>
+          <p onClick={() => navigate('/login')}>cancel</p>
+        </div>
       </div>
+      
+      
     </div>
   )
 }
