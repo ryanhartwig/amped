@@ -1,4 +1,19 @@
-.Login-create {
+.SignIn-oauth {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.SignIn-oauth > .LoginButton {
+  margin-bottom: 10px;
+}
+
+
+.SignIn-oauth a {
+  margin: 20px 0;
+}
+
+.SignIn-create {
   text-decoration: underline;
   cursor: pointer;
   

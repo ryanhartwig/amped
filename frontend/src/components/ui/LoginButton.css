@@ -1,0 +1,34 @@
+.LoginButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+
+  border: 1px solid grey;
+  border-radius: 5px;
+  
+  width: 100%;
+  height: 40px;
+  
+  transition: background-color 0.2s;
+}
+
+.LoginButton:hover {
+  background-color: rgba(128, 128, 128, 0.148);
+}
+
+
+.LoginButton-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  left: 7px;
+  
+  margin: 0;
+  padding: 0;
+}
