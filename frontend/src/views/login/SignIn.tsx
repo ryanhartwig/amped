@@ -37,12 +37,14 @@ export const SignIn = () => {
 
   return (
     <>
-      <HrText text="sign in with" 
-        background={background} 
-        textFontSize={17}
-        textBottomOffset={2}
-      />
+      
       <div className='SignIn-oauth'>
+        <HrText text="sign in with" 
+          style={{width: '75%', margin: '0 auto 12px auto'}}
+          background={background} 
+          textFontSize={17}
+          textBottomOffset={2}
+        />
         <LoginButton 
           onClick={() => window.location.href='http://localhost:8000/api/login/federated/facebook'}
           text='Login with Facebook'
@@ -57,10 +59,19 @@ export const SignIn = () => {
         ><Twitter style={{width: 30, height: 30}} /></LoginButton>
       </div>
       <div>
-        <p>login</p>
+        <HrText text="or log in" 
+          style={{width: '75%', margin: '30px auto 12px auto'}}
+          background={background} 
+          textFontSize={17}
+          textBottomOffset={2}
+        />
         <Input placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} />
         <Input placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} type='password' />
-        <PrimaryButton onClick={onSignIn} text='Sign in' disabled={!username || !password} style={{marginTop: 12}} />
+        <LoginButton 
+          onClick={onSignIn}
+          disabled={!username || !password}
+          text='Login'
+        ></LoginButton>
       </div>
       <p className="SignIn-create" onClick={() => navigate('/login/new')}>Create an account</p>
     </>
