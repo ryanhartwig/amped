@@ -3,7 +3,6 @@ import './SignIn.css'
 import { useCallback, useState } from "react";
 import { Input } from "../../components/ui/Input"
 import { useNavigate } from 'react-router-dom';
-import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { useSignInLocalMutation } from '../../api/injections/user/authSlice';
 import { LoginButton } from '../../components/ui/LoginButton';
 
@@ -37,7 +36,6 @@ export const SignIn = () => {
 
   return (
     <>
-      
       <div className='SignIn-oauth'>
         <HrText text="sign in with" 
           style={{width: '75%', margin: '0 auto 12px auto'}}

@@ -21,10 +21,11 @@
   max-height: 600px;
   min-height: 400px;
 
-  width: 95vw;
-  height: 95vh;
+  width: fit-content;
+  height: fit-content;
 
   margin: 0 auto;
+  padding: 25px;
 
   border: 1px solid rgba(128, 128, 128, 0.289);
   border-radius: 20px;
