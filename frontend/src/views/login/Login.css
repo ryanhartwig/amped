@@ -12,7 +12,7 @@
 
 .Login-form {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   
@@ -30,11 +30,9 @@
   border-radius: 20px;
 }
 
-.Login-oauth {
-  display: flex;
-  flex-direction: column;
-}
-
-.Login-oauth a {
-  margin: 20px 0;
+@media only screen and (max-width: 330px) {
+  .Login-form {
+    width: 100vw;
+    min-width: 0;
+  }
 }
