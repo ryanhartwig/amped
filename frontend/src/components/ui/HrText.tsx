@@ -1,8 +1,8 @@
 import './HrText.css';
 
 interface HrTextProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  text: string,
-  background: string,
+  text?: string,
+  background?: string,
   textFontSize?: number | string,
   textBottomOffset?: number,
 }

@@ -5,16 +5,15 @@
 }
 
 .SignIn-oauth > .LoginButton {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-
-.SignIn-oauth a {
-  margin: 20px 0;
+.SignIn-local {
+  width: 280px;
 }
 
 .SignIn-create {
-  text-decoration: underline;
   cursor: pointer;
-  
+  font-weight: 300;
 }
+
