@@ -13,7 +13,7 @@
   width: 100%;
   height: 40px;
   
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, opacity 0.2s;
 }
 
 .LoginButton:hover {
@@ -21,7 +21,7 @@
 }
 
 .LoginButton.disabled {
-  opacity: 0.5 !important;
+  opacity: 0.3 !important;
   cursor: not-allowed !important;
 }
 .LoginButton.disabled:hover {

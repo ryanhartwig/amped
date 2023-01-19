@@ -7,7 +7,6 @@ import { Routines } from './views/sub/Routines';
 import { Train } from './views/sub/train/Train';
 import { Completed } from './views/sub/Completed';
 import { Profile } from './views/sub/Profile';
-import { useAppSelector } from './utility/helpers/hooks';
 import { AddExercise } from './views/sub/AddExercise';
 import { AddRoutine } from './views/sub/AddRoutine';
 import { Overview } from './views/sub/train/Overview';
@@ -19,10 +18,8 @@ import { SignUp } from './views/login/SignUp';
 
 function App() {
 
-  const { background } = useAppSelector(s => s.theme);
-
   return (
-    <div className='App' style={{background}}>
+    <div className='App' style={{background: 'black'}}>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<GetAuth />}>
