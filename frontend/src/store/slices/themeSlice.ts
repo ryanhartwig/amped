@@ -19,7 +19,7 @@ export interface ThemeState {
 }
 
 export const initialState: ThemeState = {
-  background: '#262424',
+  background: '#202020', // #262424
   background_alt: '#302D2D',
   background_routine: '#232323',
   foreground: '#0C2E4E',
