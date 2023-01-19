@@ -39,10 +39,11 @@ const express_promise_router_1 = __importDefault(require("express-promise-router
 const db_1 = __importDefault(require("../../db"));
 const bcrypt = __importStar(require("bcrypt"));
 const credentials = (0, express_promise_router_1.default)();
-credentials.get('/unique/:username', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+credentials.get('/exists/:username', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const { username } = req.params;
     const response = yield db_1.default.query('select * from local_credentials where username = $1', [username]);
-    return res.status(200).json(!!response.rowCount);
+    return res.status(200).json(((_a = response.rows[0]) === null || _a === void 0 ? void 0 : _a.username) || null);
 }));
 credentials.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { password, user_id, username } = req.body;

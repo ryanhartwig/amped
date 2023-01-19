@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import React from 'react';
 import './LoginButton.css';
 
 interface LoginButtonProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -6,11 +7,11 @@ interface LoginButtonProps extends React.DetailedHTMLProps<React.HTMLAttributes<
   disabled?: boolean,
 }
 
-export const LoginButton: React.FC<LoginButtonProps> = ({children, disabled, text, ...props}) => {
-  const { className } = props;
+export const LoginButton = React.forwardRef((props: LoginButtonProps, ref?: React.ForwardedRef<HTMLDivElement>) => {
+  const { className, children, disabled, text, ...rest } = props;
 
   return (
-    <div {...props} className={clsx('LoginButton', {className: !!className}, {'disabled': disabled})}>
+    <div {...rest} ref={ref} className={clsx('LoginButton', {className: !!className}, {'disabled': disabled})}>
       
 
       <div className='LoginButton-logo'>
@@ -19,4 +20,4 @@ export const LoginButton: React.FC<LoginButtonProps> = ({children, disabled, tex
       <p>{text}</p>
     </div>
   )
-}
+})
