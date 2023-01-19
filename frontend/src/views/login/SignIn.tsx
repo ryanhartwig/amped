@@ -49,7 +49,7 @@ export const SignIn = () => {
         ><Twitter style={{width: 25, height: 25}} /></LoginButton>
       </div>
       <div className='SignIn-local'>
-        <HrText text="or log in" 
+        <HrText text="or sign in" 
           style={{width: '75%', margin: '14px auto 10px auto'}}
           background={'black'} 
           textFontSize={15}
