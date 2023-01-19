@@ -2,17 +2,20 @@ import './Logo.css';
 
 /* React Icons */
 import { IoIosFlash } from 'react-icons/io';
+import { CSSProperties } from 'react';
 
-// interface LogoProps {
+interface LogoProps {
+  hideLogo?: boolean,
+  style?: CSSProperties,
+}
 
-// }
+export const Logo: React.FC<LogoProps> = ({hideLogo, style}) => {
 
-export const Logo = () => {
 
   return (
-    <div className='Logo noselect'>
+    <div className='Logo noselect' style={style}>
       <h1>AMP<span className='logo-thin'>ED</span></h1>
-      <IoIosFlash />
+      {!hideLogo && <IoIosFlash />}
     </div>
   )
 }
