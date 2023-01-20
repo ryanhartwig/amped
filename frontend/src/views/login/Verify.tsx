@@ -20,15 +20,16 @@ export const Verify = () => {
     setFetching(true);
     setSuccess(false);
     ;(async () => {
-      try {
-        const response = await fetch(`http://localhost:8000/api/credentials/verify/${email}`);
-        if (response.ok) {
-          setSuccess(true);
-        }
-      } catch(e) { 
-        console.log(e)
-      } finally {
+      const response = await fetch(`http://localhost:8000/api/credentials/verify/${email}`);
+      if (response.ok) {
+        setSuccess(true);
         setFetching(false);
+      } else {
+        // Simulate duration
+        setTimeout(() => {
+          setSuccess(true);
+          setFetching(false);
+        }, 1200);
       }
     })()
   }, [email]);
@@ -37,21 +38,19 @@ export const Verify = () => {
     <div className='Verify'>
       <p>Forgot Password</p>
 
-      <div className='Verify-input'>
+      {success ? <p className='Verify-success'>If an account exists with the provided email, the email has been sent.<br /><br /> Be sure to check your junk / spam folder.</p> : <div className='Verify-input'>
         <p>Enter your email address</p>
         <Input disabled={fetching} tabIndex={-1} className='Verify-email' value={email} placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
         <div className='SignUp-feedback'>
           <ul style={{marginTop: 12}}>
             <Li text='enter a valid email address' valid={emailValid} />
-            <Li className='Verify-success' text='if an account exists with the provided email, an email has been sent' valid={!success} />
           </ul>
         </div>
         <LoginButton onClick={onSubmit} style={{marginTop: 15}} disabled={!emailValid || fetching} text='Submit' />
-        
-      </div>
+      </div>}
       
       <div className='SignUp-cancel'>
-        <p onClick={() => navigate('/login')}>cancel</p>
+        <p onClick={() => navigate('/login')}>back</p>
       </div>
     </div>
   )

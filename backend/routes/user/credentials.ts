@@ -33,7 +33,7 @@ credentials.get('/verify/:email', async (req, res) => {
   const { email } = req.params;
   const response = await db.query('select * from users where email = $1', [email]);
 
-  if (!response.rowCount) return res.status(200).send();
+  if (!response.rowCount) return res.status(404).send();
   
   const user_id = response.rows[0].id;
   const reset_id = uuid();
@@ -56,7 +56,7 @@ credentials.get('/verify/:email', async (req, res) => {
     from: 'reset.amped@gmail.com',
     to: email,
     subject: 'AMPED | Password Reset Link',
-    html: `<p>Click the link below to reset your password.</p><br><br><a href="http://localhost:3000/login/reset/${reset_id}">http://localhost:3000/login/reset/${reset_id}</a><br><br><br><p>Please do not reply to this email.</br>`, 
+    html: `<p>Follow the link below to reset your password.</p><br><br><a href="http://localhost:3000/login/reset/${reset_id}">http://localhost:3000/login/reset/${reset_id}</a><br><p>If you did not request a password reset, please disregard this email.</p>`, 
   }, (err, info) => { 
     if (err) {
       console.log(err);
@@ -80,7 +80,7 @@ credentials.get('/reset/:reset_id', async (req, res) => {
 });
 // For password resets, this route updates the user's password
 credentials.put('/password', async (req, res) => {
-  const { user_id, password } = req.body;
+  const { user_id, password } = req.body; // send reset id to verify link still exists
 
   const hash = await bcrypt.hash(password, 12);
   const response = await db.query(`
