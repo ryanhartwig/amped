@@ -100,24 +100,26 @@ export const SignUp = () => {
       let createdUser = false;
 
       /* Validate email is unique */
-      try {
-        const response = await fetch(`http://localhost:8000/api/credentials/email/exists/${email}`);
-        const exists = await response.json();
-        
-        if (exists) {
+      if (email) {
+        try {
+          const response = await fetch(`http://localhost:8000/api/credentials/email/exists/${email}`);
+          const exists = await response.json();
+          
+          if (exists) {
+            setValidating(false);
+            setInputsDisabled(false);
+            setEmailTaken(true);
+            usedEmails.add(exists);
+            setTimeout(() => emailInput.current.focus(), 100);
+            return;
+          }
+        } catch(e) {
+          console.log(e);
           setValidating(false);
           setInputsDisabled(false);
-          setEmailTaken(true);
-          usedEmails.add(exists);
-          setTimeout(() => emailInput.current.focus(), 100);
+          setError(true);
           return;
         }
-      } catch(e) {
-        console.log(e);
-        setValidating(false);
-        setInputsDisabled(false);
-        setError(true);
-        return;
       }
       
       /* Create new user and login */
