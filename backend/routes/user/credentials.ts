@@ -22,7 +22,7 @@ credentials.get('/exists/:username', async (req, res) => {
 });
 
 credentials.get('/email/exists/:email', async (req, res) => {
-  const { email } = req.params;
+  const { email } = req.params; 
   const response = await db.query('select * from users where email = $1', [email]);
 
   return res.status(200).json(response.rows[0]?.email || null);
@@ -89,7 +89,7 @@ credentials.put('/password', async (req, res) => {
     reset_id = null,
     reset_deadline = null
     where user_id = $2
-    returning *`,
+    returning *`, 
     [hash, user_id]
   );
 
