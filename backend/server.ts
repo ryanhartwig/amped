@@ -56,21 +56,6 @@ facebook(passport);
 google(passport);
 twitter(passport);
 
-// app.use((req, res, next) => {
-//   console.log(`
-//   cookies:
-  
-//   `)
-//   console.log(req.cookies);
-
-//   console.log(req.headers);
-
-//   console.log(req.session)
-//   console.log(req.body)
-
-//   next(); 
-// })
-
 // Mounts routes defined in ./routes/index.ts to app
 mount(app);
 

@@ -50,7 +50,6 @@ const transporter = nodemailer_1.default.createTransport({
 });
 credentials.get('/exists/:username', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    console.log('checkusername');
     const { username } = req.params;
     const response = yield db_1.default.query('select * from local_credentials where username = $1', [username]);
     return res.status(200).json(((_a = response.rows[0]) === null || _a === void 0 ? void 0 : _a.username) || null);
@@ -61,7 +60,8 @@ credentials.get('/email/exists/:email', (req, res) => __awaiter(void 0, void 0, 
     const response = yield db_1.default.query('select * from users where email = $1', [email]);
     return res.status(200).json(((_b = response.rows[0]) === null || _b === void 0 ? void 0 : _b.email) || null);
 }));
-credentials.get('/reset/:email', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+// For password resets, this route handles the email entry portion, creates a reset_id & reset_deadline, and sends a reset email
+credentials.get('/verify/:email', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email } = req.params;
     const response = yield db_1.default.query('select * from users where email = $1', [email]);
     if (!response.rowCount)
@@ -82,7 +82,7 @@ credentials.get('/reset/:email', (req, res) => __awaiter(void 0, void 0, void 0,
         from: 'reset.amped@gmail.com',
         to: email,
         subject: 'AMPED | Password Reset Link',
-        html: `<h2>Click the link below to reset your password.</h2><br><br><a href="http://localhost:3000/login/reset/${reset_id}">Reset Password</a>`,
+        html: `<p>Click the link below to reset your password.</p><br><br><a href="http://localhost:3000/login/reset/${reset_id}">http://localhost:3000/login/reset/${reset_id}</a><br><br><br><p>Please do not reply to this email.</br>`,
     }, (err, info) => {
         if (err) {
             console.log(err);
@@ -92,6 +92,30 @@ credentials.get('/reset/:email', (req, res) => __awaiter(void 0, void 0, void 0,
         else
             return res.status(204).send();
     });
+}));
+// For password resets, this route verifies the equality & deadline of the link that the user clicks on to reset password
+credentials.get('/reset/:reset_id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { reset_id } = req.params;
+    const response = yield db_1.default.query('select * from local_credentials where reset_id = $1', [reset_id]);
+    if (!response.rowCount)
+        return res.status(404).send('Not found');
+    const { reset_deadline, reset_id: received_id } = response.rows[0];
+    if (reset_id !== received_id || reset_deadline < Date.now())
+        return res.status(401).send('Invalid or expired');
+    return res.status(200).json(response.rows[0].user_id);
+}));
+// For password resets, this route updates the user's password
+credentials.put('/password', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { user_id, password } = req.body;
+    const hash = yield bcrypt.hash(password, 12);
+    const response = yield db_1.default.query(`
+    update local_credentials
+    set hash = $1
+    where user_id = $2
+    returning *`, [hash, user_id]);
+    if (!response.rowCount)
+        return res.status(500).send();
+    return res.status(204).send();
 }));
 credentials.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { password, user_id, username } = req.body;

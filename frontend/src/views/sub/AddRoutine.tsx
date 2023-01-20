@@ -80,7 +80,6 @@ export const AddRoutine = () => {
   const onSaveRoutine = useCallback(() => {
     const edit = async () => {
       try {
-        console.log(routineExerciseDeltas);
         await editRoutine(routine).unwrap();
         await Promise.all(Array.from(routineExerciseDeltas, ([_, value]) => value)
           .map(d => {
