@@ -30,10 +30,14 @@ export const SignUp = () => {
   const [p2, setP2] = useState<string>('');
   const [inputsDisabled, setInputsDisabled] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
+  const [emailTaken, setEmailTaken] = useState<boolean>(false);
   const [validating, setValidating] = useState<boolean>(false);
   const [slideIndex, setSlideIndex] = useState<number>(0);
   const [error, setError] = useState<boolean>(false);
   const [slideChange, setSlideChange] = useState<boolean>(false);
+
+  // cache server responses of used emails
+  const usedEmails = useMemo(() => new Set<string>(''), []);
 
   const nameValid = useMemo(() => name.length >= 5 && name.length < 15, [name]);
   const emailValid = useMemo(() => !email.length || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email), [email]);
@@ -54,6 +58,11 @@ export const SignUp = () => {
   const p2Input = useRef<HTMLInputElement>(undefined!);
   const emailInput = useRef<HTMLInputElement>(undefined!);
   const inputRefs = useMemo(() => [nameInput, p1Input, p2Input, emailInput], []);
+
+  useEffect(() => {
+    setEmailTaken(false);
+    if (usedEmails.has(email)) setEmailTaken(true);
+  }, [email, usedEmails])
   
   useEffect(() => {
     setSlideChange(true);
@@ -89,11 +98,33 @@ export const SignUp = () => {
 
       const id = uuid();
       let createdUser = false;
+
+      /* Validate email is unique */
+      try {
+        const response = await fetch(`http://localhost:8000/api/credentials/email/exists/${email}`);
+        const exists = await response.json();
+        
+        if (exists) {
+          setValidating(false);
+          setInputsDisabled(false);
+          setEmailTaken(true);
+          usedEmails.add(exists);
+          setTimeout(() => emailInput.current.focus(), 100);
+          return;
+        }
+      } catch(e) {
+        console.log(e);
+        setValidating(false);
+        setInputsDisabled(false);
+        setError(true);
+        return;
+      }
+      
+      /* Create new user and login */
       try {
         const user = await createUser({id, name, email, weekly_target: 0}).unwrap();
         createdUser = true;
         await addCredentials({ password: p1, user_id: user.id, username: name }).unwrap();
-
         await signIn({username: name, password: p1}).unwrap()
         navigate('/home/dash');
 
@@ -105,7 +136,7 @@ export const SignUp = () => {
         setInputsDisabled(false);
       }
     })()
-  }, [addCredentials, createUser, deleteUser, email, name, navigate, p1, signIn]);
+  }, [addCredentials, createUser, deleteUser, email, name, navigate, p1, signIn, usedEmails]);
 
   return (
     <div className='SignUp'>
@@ -158,16 +189,17 @@ export const SignUp = () => {
             </div>
           </div>
           <div className='SignUp-slide'>
-            <p className='SignUp-tip'>Enter email (optional)</p>
-            <p className='SignUp-tip' style={{fontSize: '0.8em'}}>(used to reset password)</p>
+            <p className='SignUp-tip'>Enter email</p>
+            <p className='SignUp-tip' style={{fontSize: '0.8em'}}>(will be used to reset password)</p>
             <Input ref={emailInput} onEnter={() => emailRef.current.click()} tabIndex={-1} className='SignUp-input' disabled={inputsDisabled} value={email} placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
             <div className='SignUp-feedback'>
               <ul style={{marginTop: 12}}>
+                <Li text='this email address is already in use' valid={!emailTaken} />
                 <Li text='please enter a valid email address' valid={emailValid} />
                 <Li text='something went wrong (check input fields or try again)' valid={!error} />
               </ul>
             </div>
-            <LoginButton ref={emailRef} onClick={!emailValid ? undefined : onSubmit} text='Continue' style={{width: '90%', margin: '30px auto 0 auto'}} disabled={!emailValid} />
+            <LoginButton ref={emailRef} onClick={!emailValid ? undefined : onSubmit} text={!email.length ? 'Skip' : 'Continue'} style={{width: '90%', margin: '30px auto 0 auto'}} disabled={!emailValid} />
             <div className='SignUp-back'>
               <div className='SignUp-back-arrow' onClick={slideChange ? undefined : () => setSlideIndex(p => p - 1)}>
                 <IoIosArrowRoundBack size={24} />
