@@ -1,0 +1,16 @@
+.Verify {
+  width: 280px;
+  height: 414px;
+
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.Verify-email {
+  margin-top: 15px;
+}
+
+.Verify-success {
+  color: rgb(82, 165, 85) !important;
+}

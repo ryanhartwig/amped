@@ -15,6 +15,7 @@ import { GetAuth } from './views/GetAuth';
 import { Login } from './views/login/Login';
 import { SignIn } from './views/login/SignIn';
 import { SignUp } from './views/login/SignUp';
+import { Verify } from './views/login/Verify';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
             <Route path="login" element={<Login />}>
               <Route path="" element={<SignIn />} />
               <Route path="new" element={<SignUp />} />
+              <Route path="verify" element={<Verify />} />
             </Route>
             <Route path="home" element={<Home />}>
               <Route path="dash" element={<Dash />} />

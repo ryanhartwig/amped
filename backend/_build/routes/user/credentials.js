@@ -39,6 +39,7 @@ const express_promise_router_1 = __importDefault(require("express-promise-router
 const db_1 = __importDefault(require("../../db"));
 const bcrypt = __importStar(require("bcrypt"));
 const nodemailer_1 = __importDefault(require("nodemailer"));
+const uuid_1 = require("uuid");
 const credentials = (0, express_promise_router_1.default)();
 const transporter = nodemailer_1.default.createTransport({
     service: 'gmail',
@@ -49,6 +50,7 @@ const transporter = nodemailer_1.default.createTransport({
 });
 credentials.get('/exists/:username', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
+    console.log('checkusername');
     const { username } = req.params;
     const response = yield db_1.default.query('select * from local_credentials where username = $1', [username]);
     return res.status(200).json(((_a = response.rows[0]) === null || _a === void 0 ? void 0 : _a.username) || null);
@@ -64,16 +66,31 @@ credentials.get('/reset/:email', (req, res) => __awaiter(void 0, void 0, void 0,
     const response = yield db_1.default.query('select * from users where email = $1', [email]);
     if (!response.rowCount)
         return res.status(200).send();
+    const user_id = response.rows[0].id;
+    const reset_id = (0, uuid_1.v4)();
+    const expiryDelta = 1000 * 60 * 60 * 6; // 6 hours
+    const expiryDate = new Date().getTime() + expiryDelta;
+    const idResponse = yield db_1.default.query(`update local_credentials
+    set 
+      reset_id = $1,
+      reset_deadline = $2
+    where user_id = $3
+    returning *`, [reset_id, expiryDate, user_id]);
+    if (!idResponse.rowCount)
+        return res.status(500).send();
     transporter.sendMail({
-        from: process.env.MAIL_ADDR,
+        from: 'reset.amped@gmail.com',
         to: email,
         subject: 'AMPED | Password Reset Link',
-        text: 'Test',
-    }, (err) => {
-        if (err)
+        html: `<h2>Click the link below to reset your password.</h2><br><br><a href="http://localhost:3000/login/reset/${reset_id}">Reset Password</a>`,
+    }, (err, info) => {
+        if (err) {
+            console.log(err);
+            console.log(info);
             return res.status(500).json(err);
+        }
         else
-            return res.status(200).send();
+            return res.status(204).send();
     });
 }));
 credentials.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

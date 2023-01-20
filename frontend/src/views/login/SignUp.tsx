@@ -8,10 +8,10 @@ import { useAddCredentialsMutation, useSignInLocalMutation } from '../../api/inj
 import { LoginButton } from '../../components/ui/LoginButton';
 import { IoIosArrowRoundBack } from 'react-icons/io';
 
-export const Li = ({text, valid}: {text: string, valid: boolean}) => {
+export const Li = ({text, valid, className = ''}: {text: string, valid: boolean, className?: string}) => {
   return (
     <>
-      {!valid && <li><p>{text}</p></li>}
+      {!valid && <li className={className}><p>{text}</p></li>}
     </>
   )
 }

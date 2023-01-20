@@ -2,6 +2,7 @@ import PromiseRouter from 'express-promise-router';
 import db from '../../db';
 import * as bcrypt from 'bcrypt';
 import nodemailer from 'nodemailer';
+import { v4 as uuid } from 'uuid';
 
 const credentials = PromiseRouter();
 
@@ -14,6 +15,8 @@ const transporter = nodemailer.createTransport({
 });
 
 credentials.get('/exists/:username', async (req, res) => {
+  console.log('checkusername')
+  
   const { username } = req.params;
   const response = await db.query('select * from local_credentials where username = $1', [username]);
 
@@ -32,15 +35,36 @@ credentials.get('/reset/:email', async (req, res) => {
   const response = await db.query('select * from users where email = $1', [email]);
 
   if (!response.rowCount) return res.status(200).send();
+  
+  const user_id = response.rows[0].id;
+  const reset_id = uuid();
+  const expiryDelta = 1000 * 60 * 60 * 6 // 6 hours
+  const expiryDate = new Date().getTime() + expiryDelta;
 
+  const idResponse = await db.query(
+    `update local_credentials
+    set 
+      reset_id = $1,
+      reset_deadline = $2
+    where user_id = $3
+    returning *`,
+    [reset_id, expiryDate, user_id]
+  );
+
+  if (!idResponse.rowCount) return res.status(500).send();
+  
   transporter.sendMail({
-    from: process.env.MAIL_ADDR,
+    from: 'reset.amped@gmail.com',
     to: email,
     subject: 'AMPED | Password Reset Link',
-    text: 'Test',
-  }, (err) => {
-    if (err) return res.status(500).json(err);
-    else return res.status(200).send();
+    html: `<h2>Click the link below to reset your password.</h2><br><br><a href="http://localhost:3000/login/reset/${reset_id}">Reset Password</a>`, 
+  }, (err, info) => { 
+    if (err) {
+      console.log(err);
+      console.log(info);
+      return res.status(500).json(err);
+    }
+    else return res.status(204).send();
   })
 })
 
