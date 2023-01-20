@@ -16,6 +16,7 @@ import { Login } from './views/login/Login';
 import { SignIn } from './views/login/SignIn';
 import { SignUp } from './views/login/SignUp';
 import { Verify } from './views/login/Verify';
+import { Reset } from './views/login/Reset';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
               <Route path="" element={<SignIn />} />
               <Route path="new" element={<SignUp />} />
               <Route path="verify" element={<Verify />} />
+              <Route path="reset/:reset_id" element={<Reset />} />
             </Route>
             <Route path="home" element={<Home />}>
               <Route path="dash" element={<Dash />} />
