@@ -85,7 +85,9 @@ credentials.put('/password', async (req, res) => {
   const hash = await bcrypt.hash(password, 12);
   const response = await db.query(`
     update local_credentials
-    set hash = $1
+    set hash = $1, 
+    reset_id = null,
+    reset_deadline = null
     where user_id = $2
     returning *`,
     [hash, user_id]

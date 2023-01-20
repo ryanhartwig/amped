@@ -110,7 +110,9 @@ credentials.put('/password', (req, res) => __awaiter(void 0, void 0, void 0, fun
     const hash = yield bcrypt.hash(password, 12);
     const response = yield db_1.default.query(`
     update local_credentials
-    set hash = $1
+    set hash = $1, 
+    reset_id = null,
+    reset_deadline = null
     where user_id = $2
     returning *`, [hash, user_id]);
     if (!response.rowCount)

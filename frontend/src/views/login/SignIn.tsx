@@ -10,6 +10,7 @@ import { ReactComponent as Facebook } from '../../assets/brand_logos/facebook.sv
 import { ReactComponent as Google } from '../../assets/brand_logos/google.svg';
 import { ReactComponent as Twitter } from '../../assets/brand_logos/twitter.svg';
 import { HrText } from '../../components/ui/HrText';
+import { useRef } from 'react';
 
 export const SignIn = () => {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ export const SignIn = () => {
   const [error, setError] = useState<boolean>(false);
 
   const [signIn] = useSignInLocalMutation();
+
+  const submitRef = useRef<HTMLDivElement>(undefined!);
 
   const onSignIn = useCallback(() => {
     setError(false);
@@ -56,10 +59,11 @@ export const SignIn = () => {
           textFontSize={15}
           textBottomOffset={3}
         />
-        <Input className='SignIn-input' placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} />
-        <Input className='SignIn-input' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} type='password' />
+        <Input onEnter={username.length && password.length ? () => submitRef.current.click() : undefined} className='SignIn-input' placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} />
+        <Input onEnter={username.length && password.length ? () => submitRef.current.click() : undefined} className='SignIn-input' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} type='password' />
         <LoginButton 
           onClick={onSignIn}
+          ref={submitRef}
           style={{marginTop: 6}}
           disabled={!username || !password}
           text='Login'

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { Input } from '../../components/ui/Input';
 import { LoginButton } from '../../components/ui/LoginButton';
@@ -15,6 +15,8 @@ export const Verify = () => {
   const [success, setSuccess] = useState<boolean>(false);
 
   const emailValid = useMemo(() => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email), [email]);
+
+  const submitRef = useRef<HTMLDivElement>(undefined!);
 
   const onSubmit = useCallback(() => {
     setFetching(true);
@@ -40,13 +42,13 @@ export const Verify = () => {
 
       {success ? <p className='Verify-success'>If an account exists with the provided email, the email has been sent.<br /><br /> Be sure to check your junk / spam folder.</p> : <div className='Verify-input'>
         <p>Enter your email address</p>
-        <Input disabled={fetching} tabIndex={-1} className='Verify-email' value={email} placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
+        <Input onEnter={emailValid ? () => submitRef.current.click() : undefined} disabled={fetching} tabIndex={-1} className='Verify-email' value={email} placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
         <div className='SignUp-feedback'>
           <ul style={{marginTop: 12}}>
             <Li text='enter a valid email address' valid={emailValid} />
           </ul>
         </div>
-        <LoginButton onClick={onSubmit} style={{marginTop: 15}} disabled={!emailValid || fetching} text='Submit' />
+        <LoginButton ref={submitRef} onClick={onSubmit} style={{marginTop: 15}} disabled={!emailValid || fetching} text='Submit' />
       </div>}
       
       <div className='SignUp-cancel'>

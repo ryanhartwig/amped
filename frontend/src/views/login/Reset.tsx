@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 import { Input } from '../../components/ui/Input';
@@ -28,6 +29,7 @@ export const Reset = () => {
   const p1Valid = useMemo(() => p1Length && p1Special && p1Upper, [p1Length, p1Special, p1Upper]);
   const p2Valid = useMemo(() => p1 === p2, [p1, p2]);
 
+  const submitRef = useRef<HTMLDivElement>(undefined!);
 
   useEffect(() => {
     if (!reset_id) navigate('/login')
@@ -80,8 +82,8 @@ export const Reset = () => {
 
       {valid && (success ? <div><p>Your password has been updated.</p></div> 
     : <div>
-        <Input className='SignUp-input' disabled={inputsDisabled} value={p1} placeholder='password' type='password' onChange={(e) => setP1(e.target.value)}/>
-        <Input className='SignUp-input' disabled={inputsDisabled} value={p2} placeholder='confirm password' type='password' onChange={(e) => setP2(e.target.value)}/>
+        <Input onEnter={p1Valid && p2Valid ? () => submitRef.current.click() : undefined} className='SignUp-input' disabled={inputsDisabled} value={p1} placeholder='password' type='password' onChange={(e) => setP1(e.target.value)}/>
+        <Input onEnter={p1Valid && p2Valid ? () => submitRef.current.click() : undefined} className='SignUp-input' disabled={inputsDisabled} value={p2} placeholder='confirm password' type='password' onChange={(e) => setP2(e.target.value)}/>
         <div className='SignUp-feedback'>
           <ul style={{marginTop: 12}}>
             <Li text='something went wrong, please try again' valid={!error} />
@@ -91,7 +93,7 @@ export const Reset = () => {
             {p1Valid && <Li text='passwords must match' valid={p2Valid} />}
           </ul>
         </div>
-        <LoginButton style={{marginTop: 15}} onClick={onSubmit} disabled={!p2Valid || !p1Valid || inputsDisabled} text={'Submit'} />
+        <LoginButton ref={submitRef} style={{marginTop: 15}} onClick={onSubmit} disabled={!p2Valid || !p1Valid || inputsDisabled} text={'Submit'} />
       </div>)}
       
       
