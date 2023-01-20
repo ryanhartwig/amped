@@ -21,7 +21,7 @@ export const Verify = () => {
     setSuccess(false);
     ;(async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/credentials/reset/${email}`);
+        const response = await fetch(`http://localhost:8000/api/credentials/verify/${email}`);
         if (response.ok) {
           setSuccess(true);
         }

@@ -15,9 +15,7 @@ const transporter = nodemailer.createTransport({
 });
 
 credentials.get('/exists/:username', async (req, res) => {
-  console.log('checkusername')
-  
-  const { username } = req.params;
+  const { username } = req.params;  
   const response = await db.query('select * from local_credentials where username = $1', [username]);
 
   return res.status(200).json(response.rows[0]?.username || null) 
@@ -30,7 +28,8 @@ credentials.get('/email/exists/:email', async (req, res) => {
   return res.status(200).json(response.rows[0]?.email || null);
 });
 
-credentials.get('/reset/:email', async (req, res) => {
+// For password resets, this route handles the email entry portion, creates a reset_id & reset_deadline, and sends a reset email
+credentials.get('/verify/:email', async (req, res) => {
   const { email } = req.params;
   const response = await db.query('select * from users where email = $1', [email]);
 
@@ -57,7 +56,7 @@ credentials.get('/reset/:email', async (req, res) => {
     from: 'reset.amped@gmail.com',
     to: email,
     subject: 'AMPED | Password Reset Link',
-    html: `<h2>Click the link below to reset your password.</h2><br><br><a href="http://localhost:3000/login/reset/${reset_id}">Reset Password</a>`, 
+    html: `<p>Click the link below to reset your password.</p><br><br><a href="http://localhost:3000/login/reset/${reset_id}">http://localhost:3000/login/reset/${reset_id}</a><br><br><br><p>Please do not reply to this email.</br>`, 
   }, (err, info) => { 
     if (err) {
       console.log(err);
@@ -66,7 +65,36 @@ credentials.get('/reset/:email', async (req, res) => {
     }
     else return res.status(204).send();
   })
-})
+});
+// For password resets, this route verifies the equality & deadline of the link that the user clicks on to reset password
+credentials.get('/reset/:reset_id', async (req, res) => {
+  const { reset_id } = req.params;
+  
+  const response = await db.query('select * from local_credentials where reset_id = $1', [reset_id]);
+  if (!response.rowCount) return res.status(404).send('Not found');
+
+  const { reset_deadline, reset_id: received_id } = response.rows[0];
+  if (reset_id !== received_id || reset_deadline < Date.now()) return res.status(401).send('Invalid or expired');
+
+  return res.status(200).json(response.rows[0].user_id);
+});
+// For password resets, this route updates the user's password
+credentials.put('/password', async (req, res) => {
+  const { user_id, password } = req.body;
+
+  const hash = await bcrypt.hash(password, 12);
+  const response = await db.query(`
+    update local_credentials
+    set hash = $1
+    where user_id = $2
+    returning *`,
+    [hash, user_id]
+  );
+
+  if (!response.rowCount) return res.status(500).send();
+  return res.status(204).send();
+});
+
 
 credentials.post('/new', async (req, res) => {
   const { password, user_id, username } = req.body;
