@@ -62,7 +62,7 @@ export const SignIn = () => {
           disabled={!username || !password}
           text='Login'
         ></LoginButton>
-        <p className="SignIn-forgot" onClick={() => navigate('/login/new')}>Forgot password</p>
+        <p className="SignIn-forgot" onClick={() => navigate('/login/verify')}>Forgot password</p>
         <HrText
           style={{width: '75%', margin: '5px auto 4px auto'}}
           textFontSize={17}
