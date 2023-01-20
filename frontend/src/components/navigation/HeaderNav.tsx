@@ -29,7 +29,7 @@ export const HeaderNav = () => {
     <div className='HeaderNav' style={{background}}>
       <div className='HeaderNav-items'>
         {/* Left side */}
-        <Logo />
+        <Logo hideLogo />
 
         {/* Right side elements */}
         <div className='HeaderNav-buttons'>
