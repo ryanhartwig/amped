@@ -16,20 +16,22 @@ export const SignIn = () => {
 
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<boolean>(false);
 
   const [signIn] = useSignInLocalMutation();
 
   const onSignIn = useCallback(() => {
+    setError(false);
     ;(async () => {
       try {
         await signIn({username, password}).unwrap();
         navigate('/home/dash');
       } catch(e) {
         console.log('rejected: ', e);
+        setError(true);
       }
     })()
   }, [navigate, password, signIn, username]);
-
 
   return (
     <div className='SignIn'>
@@ -62,13 +64,13 @@ export const SignIn = () => {
           disabled={!username || !password}
           text='Login'
         ></LoginButton>
+        {error && <p className='SignIn-invalid'>Invalid credentials</p>}
         <p className="SignIn-forgot" onClick={() => navigate('/login/verify')}>Forgot password</p>
         <HrText
           style={{width: '75%', margin: '5px auto 4px auto'}}
           textFontSize={17}
           textBottomOffset={2}
         />
-
       </div>
       
       <p className="SignIn-create" onClick={() => navigate('/login/new')}>Create an account</p>

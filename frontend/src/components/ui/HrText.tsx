@@ -5,15 +5,19 @@ interface HrTextProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLD
   background?: string,
   textFontSize?: number | string,
   textBottomOffset?: number,
+  children?: React.ReactNode,
 }
 
-export const HrText: React.FC<HrTextProps> = ({text, textBottomOffset, background, textFontSize, ...props}) => {
+export const HrText: React.FC<HrTextProps> = ({text, textBottomOffset, background, children, textFontSize, ...props}) => {
 
   return (
     <div {...props} className={"HrText " + props.className ?? ''} >
       <hr></hr>
       <div className='HrText-front' style={{bottom: textBottomOffset}} >
-        <p style={{fontSize: textFontSize, background}}>{text}</p>
+        {children 
+          ? children 
+          : <p style={{fontSize: textFontSize, background}}>{text}</p>
+        }
       </div>
     </div>
   )

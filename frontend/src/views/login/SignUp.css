@@ -13,6 +13,13 @@
   height: 100%;
 }
 
+@media only screen and (max-width: 340px) {
+  .SignUp {
+    width: 85vw;
+  }
+}
+
+
 /* Slides / presentation */
 .SignUp-slides-container {
   display: flex;
