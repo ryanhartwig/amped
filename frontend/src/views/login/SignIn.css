@@ -1,6 +1,11 @@
 .SignIn {
   width: 280px;
-  height: 414px;
+  height: fit-content;
+}
+@media only screen and (max-width: 340px) {
+  .SignIn {
+    width: 85vw;
+  }
 }
 
 .SignIn-oauth {
@@ -47,4 +52,12 @@
 .SignIn-create {
   cursor: pointer;
   font-weight: 300;
+}
+
+.SignIn-invalid {
+  font-size: 0.8em;
+  font-weight: 300;
+
+  margin-top: 14px;
+  color: rgb(198, 93, 93);
 }

@@ -78,7 +78,7 @@ export const Reset = () => {
     <div className='Reset'>
       <p>{valid === undefined ? 'Validating link...' : valid ? 'Enter a new password' : 'Invalid or expired link'}</p>
 
-      {valid && (success ? <div><p>Success! Your password has been updated.</p></div> 
+      {valid && (success ? <div><p>Your password has been updated.</p></div> 
     : <div>
         <Input className='SignUp-input' disabled={inputsDisabled} value={p1} placeholder='password' type='password' onChange={(e) => setP1(e.target.value)}/>
         <Input className='SignUp-input' disabled={inputsDisabled} value={p2} placeholder='confirm password' type='password' onChange={(e) => setP2(e.target.value)}/>
