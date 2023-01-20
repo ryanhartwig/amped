@@ -65,7 +65,7 @@ credentials.get('/verify/:email', (req, res) => __awaiter(void 0, void 0, void 0
     const { email } = req.params;
     const response = yield db_1.default.query('select * from users where email = $1', [email]);
     if (!response.rowCount)
-        return res.status(200).send();
+        return res.status(404).send();
     const user_id = response.rows[0].id;
     const reset_id = (0, uuid_1.v4)();
     const expiryDelta = 1000 * 60 * 60 * 6; // 6 hours
@@ -82,7 +82,7 @@ credentials.get('/verify/:email', (req, res) => __awaiter(void 0, void 0, void 0
         from: 'reset.amped@gmail.com',
         to: email,
         subject: 'AMPED | Password Reset Link',
-        html: `<p>Click the link below to reset your password.</p><br><br><a href="http://localhost:3000/login/reset/${reset_id}">http://localhost:3000/login/reset/${reset_id}</a><br><br><br><p>Please do not reply to this email.</br>`,
+        html: `<p>Follow the link below to reset your password.</p><br><br><a href="http://localhost:3000/login/reset/${reset_id}">http://localhost:3000/login/reset/${reset_id}</a><br><p>If you did not request a password reset, please disregard this email.</p>`,
     }, (err, info) => {
         if (err) {
             console.log(err);
@@ -106,7 +106,7 @@ credentials.get('/reset/:reset_id', (req, res) => __awaiter(void 0, void 0, void
 }));
 // For password resets, this route updates the user's password
 credentials.put('/password', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { user_id, password } = req.body;
+    const { user_id, password } = req.body; // send reset id to verify link still exists
     const hash = yield bcrypt.hash(password, 12);
     const response = yield db_1.default.query(`
     update local_credentials
