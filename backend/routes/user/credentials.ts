@@ -1,5 +1,5 @@
 import PromiseRouter from 'express-promise-router';
-import db from '../../db';
+import db from '../../node_modules';
 import * as bcrypt from 'bcrypt';
 import nodemailer from 'nodemailer';
 import { v4 as uuid } from 'uuid';

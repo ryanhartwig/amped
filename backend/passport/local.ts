@@ -1,7 +1,7 @@
 import { PassportStatic } from "passport";
 import { Strategy as LocalStrategy } from 'passport-local';
 import bcrypt from 'bcrypt';
-import db from "../db";
+import db from "../node_modules";
 import { User } from "../types/user";
 
 interface DB_Credential {

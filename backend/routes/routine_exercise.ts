@@ -1,5 +1,5 @@
 import PromiseRouter from "express-promise-router";
-import db from "../db";
+import db from "../node_modules";
 
 interface RoutineExercise {
   id: string,

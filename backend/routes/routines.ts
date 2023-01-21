@@ -1,5 +1,5 @@
 import PromiseRouter from "express-promise-router";
-import db from "../db";
+import db from "../node_modules";
 import { Routine } from "../types/routine";
 
 const routines = PromiseRouter();

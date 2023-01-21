@@ -1,5 +1,5 @@
 import PromiseRouter from "express-promise-router";
-import db from "../../db";
+import db from "../../node_modules";
 import { PerformedSet } from "../../types/performed_set";
 
 const set = PromiseRouter();
