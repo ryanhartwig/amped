@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import { PassportStatic } from "passport";
 import { Strategy as TwitterStrategy } from "passport-twitter";
-import db from "../node_modules";
+import db from "../db";
 
 export default (passport: PassportStatic) => {
   passport.use(new TwitterStrategy({

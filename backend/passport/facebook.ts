@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import { PassportStatic } from "passport";
 import { Strategy as FacebookStrategy } from "passport-facebook";
-import db from "../node_modules";
+import db from "../db";
 
 export default (passport: PassportStatic) => {
   passport.use(new FacebookStrategy({

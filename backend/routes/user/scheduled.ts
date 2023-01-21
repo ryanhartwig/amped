@@ -1,6 +1,6 @@
 import PromiseRouter from "express-promise-router";
 import { QueryResult } from "pg";
-import db from "../../node_modules";
+import db from "../../db";
 import { Scheduled } from "../../types/scheduled";
 
 const scheduled = PromiseRouter();
