@@ -54,7 +54,7 @@ app.use(passport.session());
 local(passport);
 facebook(passport);
 google(passport);
-twitter(passport);
+twitter(passport); 
 
 // Mounts routes defined in ./routes/index.ts to app
 mount(app);
