@@ -35,7 +35,7 @@ export const Reset = () => {
     if (!reset_id) navigate('/login')
 
     ;(async () => {
-      const response = await fetch(`http://localhost:8000/api/credentials/reset/${reset_id}`);
+      const response = await fetch(`https://amped.herokuapp.com/api/credentials/reset/${reset_id}`);
       if (response.ok) {
         const data = await response.json();
         setUser_id(data);
@@ -52,14 +52,14 @@ export const Reset = () => {
 
     ;(async () => {
       // Re-verify reset_id and time
-      const resetLink = await fetch(`http://localhost:8000/api/credentials/reset/${reset_id}`);
+      const resetLink = await fetch(`https://amped.herokuapp.com/api/credentials/reset/${reset_id}`);
       if (!resetLink.ok) {
         return setValid(false);
       }
       
       
       try {
-        const response = await fetch('http://localhost:8000/api/credentials/password', {
+        const response = await fetch('https://amped.herokuapp.com/api/credentials/password', {
           method: "PUT",
           headers: {
             'Content-Type': 'application/json',

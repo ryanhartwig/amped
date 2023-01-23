@@ -76,7 +76,7 @@ export const SignUp = () => {
     ;(async () => {
       setValidating(true);
 
-      const response = await fetch(`http://localhost:8000/api/credentials/exists/${name}`);
+      const response = await fetch(`https://amped.herokuapp.com/api/credentials/exists/${name}`);
       const existing = await response.json();
 
       setValidating(false);
@@ -102,7 +102,7 @@ export const SignUp = () => {
       /* Validate email is unique */
       if (email) {
         try {
-          const response = await fetch(`http://localhost:8000/api/credentials/email/exists/${email}`);
+          const response = await fetch(`https://amped.herokuapp.com/api/credentials/email/exists/${email}`);
           const exists = await response.json();
           
           if (exists) {
