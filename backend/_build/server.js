@@ -52,6 +52,10 @@ app.use(passport_1.default.session());
 (0, twitter_1.default)(passport_1.default);
 // Mounts routes defined in ./routes/index.ts to app
 (0, routes_1.default)(app);
+app.get('/api/test', (_, res, next) => {
+    res.status(200).send('Received request');
+    next();
+});
 app.listen(port, () => {
     console.log('⚡️', `Server is running at http://localhost:${port}`);
 });
