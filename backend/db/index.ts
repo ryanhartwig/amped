@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 
 export default new Pool({
-  ssl: process.env.NODE_ENV !== 'production' ? false : {
+  ssl: {
     rejectUnauthorized: false,
   },
   user: process.env.USER,
