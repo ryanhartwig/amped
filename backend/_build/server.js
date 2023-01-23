@@ -53,7 +53,7 @@ app.use(passport_1.default.session());
 // Mounts routes defined in ./routes/index.ts to app
 (0, routes_1.default)(app);
 app.get('/api/test', (_, res, next) => {
-    res.status(200).send('Received request');
+    res.status(200).send('Received request and updates');
     next();
 });
 app.listen(port, () => {
