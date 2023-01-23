@@ -56,7 +56,7 @@ credentials.get('/verify/:email', async (req, res) => {
     from: 'reset.amped@gmail.com',
     to: email,
     subject: 'AMPED | Password Reset Link',
-    html: `<p>Follow the link below to reset your password.</p><br><br><a href="http://localhost:3000/login/reset/${reset_id}">http://localhost:3000/login/reset/${reset_id}</a><br><p>If you did not request a password reset, please disregard this email.</p>`, 
+    html: `<p>Follow the link below to reset your password.</p><br><br><a href="https://ampedpro.netlify.app/login/reset/${reset_id}">https://ampedpro.netlify.app/login/reset/${reset_id}</a><br><p>If you did not request a password reset, please disregard this email.</p>`, 
   }, (err, info) => { 
     if (err) {
       console.log(err);

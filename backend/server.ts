@@ -22,7 +22,7 @@ app.use(morgan('dev'));
 
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:3000',
+  origin: 'https://ampedpro.netlify.app',
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -40,7 +40,7 @@ app.use(session({
 }));
 
 app.use((_, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Origin', 'https://ampedpro.netlify.app');
   res.header('Access-Control-Allow-Credentials', 'true');
 
   next();
@@ -65,5 +65,5 @@ app.get('/api/test', (_, res, next) => {
 })
 
 app.listen(port, () => {
-  console.log('⚡️', `Server is running at http://localhost:${port}`);
+  console.log('⚡️', `Server is running. (port: ${port}, base url: amped.herokuapp.com)`);
 });
