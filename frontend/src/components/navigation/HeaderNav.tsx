@@ -15,7 +15,7 @@ export const HeaderNav = () => {
 
   const onLogout = useCallback(() => {
     ;(async () => {
-      const res = await fetch('http://localhost:8000/api/currentuser/logout', {
+      const res = await fetch('https://amped.herokuapp.com/api/currentuser/logout', {
         credentials: 'include',
       });
 

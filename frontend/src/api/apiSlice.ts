@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ 
-    baseUrl: 'http://localhost:8000/api', 
+    baseUrl: 'https://amped.herokuapp.com/api', 
   }),
   tagTypes: [
     'Routines', 

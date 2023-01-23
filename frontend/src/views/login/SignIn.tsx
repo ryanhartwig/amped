@@ -40,15 +40,15 @@ export const SignIn = () => {
     <div className='SignIn'>
       <div className='SignIn-oauth'>
         <LoginButton 
-          onClick={() => window.location.href='http://localhost:8000/api/login/federated/facebook'}
+          onClick={() => window.location.href='https://amped.herokuapp.com/api/login/federated/facebook'}
           text='Login with Facebook'
         ><Facebook style={{width: 25, height: 25}} /></LoginButton>
         <LoginButton 
-          onClick={() => window.location.href='http://localhost:8000/api/login/federated/google'}
+          onClick={() => window.location.href='https://amped.herokuapp.com/api/login/federated/google'}
           text='Login with Google'
         ><Google style={{width: 25, height: 25}} /></LoginButton>
         <LoginButton 
-          onClick={() => window.location.href='http://localhost:8000/api/login/federated/twitter'}
+          onClick={() => window.location.href='https://amped.herokuapp.com/api/login/federated/twitter'}
           text='Login with Twitter'
         ><Twitter style={{width: 25, height: 25}} /></LoginButton>
       </div>

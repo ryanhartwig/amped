@@ -22,7 +22,7 @@ export const Verify = () => {
     setFetching(true);
     setSuccess(false);
     ;(async () => {
-      const response = await fetch(`http://localhost:8000/api/credentials/verify/${email}`);
+      const response = await fetch(`https://amped.herokuapp.com/api/credentials/verify/${email}`);
       if (response.ok) {
         setSuccess(true);
         setFetching(false);
