@@ -7,3 +7,5 @@ backend/node_modules/
 
 # environment variables
 backend/.env
+# Local Netlify folder
+.netlify
