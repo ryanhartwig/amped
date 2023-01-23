@@ -60,7 +60,7 @@ twitter(passport);
 mount(app);
 
 app.get('/api/test', (_, res, next) => {
-  res.status(200).send('Received request');
+  res.status(200).send('Received request and updates');
   next();
 })
 
