@@ -20,6 +20,8 @@ const port = process.env.PORT || 8000;
 
 app.use(morgan('dev'));
 
+app.set("trust proxy", 1); // 
+
 app.use(cors({
   credentials: true,
   origin: 'https://ampedpro.netlify.app',
@@ -34,7 +36,7 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24,
     secure: true,
   },
-  resave: false,
+  resave: true,
   store: new MemoryStore({
     checkPeriod: 86400000 // prune expired entries every 24h
   }) as any,
