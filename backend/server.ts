@@ -32,6 +32,7 @@ app.use(session({
   cookie: {
     sameSite: false,
     maxAge: 1000 * 60 * 60 * 24,
+    domain: 'https://ampedpro.netlify.app',
   },
   resave: false,
   store: new MemoryStore({
