@@ -1,1 +1,1 @@
-netlify deploy --prod
+sudo netlify deploy --prod

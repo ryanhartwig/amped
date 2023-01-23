@@ -30,9 +30,10 @@ app.use(session({
   secret: 'sample secret', 
   saveUninitialized: false,
   cookie: {
-    sameSite: false,
+    sameSite: 'none',
     maxAge: 1000 * 60 * 60 * 24,
-    domain: 'https://ampedpro.netlify.app',
+    httpOnly: true,
+    secure: true,
   },
   resave: false,
   store: new MemoryStore({
