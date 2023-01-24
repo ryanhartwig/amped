@@ -6,6 +6,9 @@
   display: flex;
   justify-content: center;
   width: 100%;
+
+  max-width: 650px;
+  margin: 0 auto;
 }
 .SessionFooter-items > * {
   width: 100%;

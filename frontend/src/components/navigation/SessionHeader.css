@@ -8,6 +8,8 @@
 .SessionHeader-items {
   display: flex;
   justify-content: space-between;
+  max-width: 650px;
+  margin: 0 auto;
 }
 
 .SessionHeader-title {
