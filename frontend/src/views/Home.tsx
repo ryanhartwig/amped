@@ -45,7 +45,6 @@ export const Home = () => {
     }
   }, [cancel, navigate]);
 
-  
   const { data: currentUser, isError, isFetching } = useGetCurrentUserQuery(null);
 
   const id = useMemo(() => currentUser?.id, [currentUser]);

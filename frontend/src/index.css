@@ -4,11 +4,6 @@
   box-sizing: border-box;
 }
 
-/* For mobile */
-/* html {
-  overflow:hidden;
-} */
-
 body, input, select, option {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -16,7 +11,10 @@ body, input, select, option {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  overflow:hidden; 
 }
+
 
 select, option {
   outline: none;
