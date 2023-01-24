@@ -60,7 +60,7 @@ export const Home = () => {
     if (!isError || isFetching) return;
 
     dispatch(setUser());
-    navigate('/login');
+    // navigate('/login');
   }, [dispatch, isError, isFetching, navigate])
 
   // Update user state 

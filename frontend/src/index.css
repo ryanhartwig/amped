@@ -11,9 +11,9 @@ body, input, select, option {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  overflow:hidden; 
 }
+
+
 
 
 select, option {
@@ -123,4 +123,9 @@ h2 {
 ::selection {
   color: rgb(1, 1, 1);
   background: rgb(75, 75, 75);
+}
+
+/* Prevent swiping on mobile */
+body {
+  overflow: hidden;
 }
