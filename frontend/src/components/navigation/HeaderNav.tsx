@@ -8,6 +8,7 @@ import { ReactIconButton } from '../ui/ReactIconButton';
 import { Logo } from '../ui/Logo';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { baseUrl } from '../../utility/data/baseUrl';
 
 export const HeaderNav = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const HeaderNav = () => {
 
   const onLogout = useCallback(() => {
     ;(async () => {
-      const res = await fetch('https://amped.herokuapp.com/api/currentuser/logout', {
+      const res = await fetch(`${baseUrl}/currentuser/logout`, {
         credentials: 'include',
       });
 
