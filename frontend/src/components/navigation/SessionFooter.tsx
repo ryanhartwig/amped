@@ -13,19 +13,21 @@ import { RoutineDataType } from '../../types/RoutineDataType';
 import { useAddRoutineDataMutation, useDeleteRoutineDataMutation } from '../../api/injections/data/routineDataSlice';
 import { useAddExerciseDataMutation } from '../../api/injections/data/exerciseDataSlice';
 import { useAddSetDataMutation } from '../../api/injections/data/setDataSlice';
+import { useDispatch } from 'react-redux';
+import { setRoutineSummaryId } from '../../store/slices/sessionSlice';
 
 interface SessionFooterProps {
   currentPosition: number,
   routine: RoutineType,
   onNavigate: (dir: 1 | -1) => void,
-  routineTime: number,
   routineData: RoutineDataType,
   setPaused: React.Dispatch<React.SetStateAction<boolean>>,
   paused: boolean,
 }
 
-export const SessionFooter = ({currentPosition, setPaused, paused, routineData, routineTime, onNavigate, routine}: SessionFooterProps) => {
+export const SessionFooter = ({currentPosition, setPaused, paused, routineData, onNavigate, routine}: SessionFooterProps) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { foreground: background } = useAppSelector(s => s.theme);
   const nextExercise = routine.exercises[currentPosition + 1]?.exercise.name || null;
@@ -63,6 +65,7 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
         }))
         
         setOpen(false); 
+        dispatch(setRoutineSummaryId(routineData.id))
         navigate('/home/train');
       } catch(e) {
         if (routineId) {
@@ -73,7 +76,7 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
         setDisabled(false);
       }
     })()
-  }, [addExerciseData, addRoutineData, addSetData, deleteRoutineData, navigate, routineData]);
+  }, [addExerciseData, addRoutineData, addSetData, deleteRoutineData, dispatch, navigate, routineData]);
   
   return (
     <div className='SessionFooter' style={{background}}>
