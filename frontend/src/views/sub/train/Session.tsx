@@ -124,7 +124,6 @@ export const Session = () => {
         setPaused={setPaused} 
         paused={paused} 
         routineData={routineData} 
-        routineTime={routineTime} 
         onNavigate={onNavigate} 
         routine={routine} 
         currentPosition={position} 
