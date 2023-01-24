@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { BsDot } from 'react-icons/bs';
 import { SetFieldType } from '../../types/SetFieldType';
 import { FormatTime } from '../ui/FormatTime';
@@ -35,6 +36,22 @@ export const SetField = ({set, sets}: SetFieldProps) => {
     else return `Set ${normalSets.findIndex(s => s.id === set.id) + 1}`;
   }
 
+  const getDuration = useMemo(() => {
+    let duration = set.duration;
+    const findAddDropSetDuration = (index: number = set.position + 1) => {
+      const current = sets[index];
+      if (!current) return;
+      else if (!current.modifiers.includes('Drop Set')) return;
+
+      duration += current.duration;
+      findAddDropSetDuration(current.position + 1);
+    }
+
+    findAddDropSetDuration();
+    return duration;
+  }, [set.duration, set.position, sets]);
+
+
   return (
     <div className='SetField'>
       <div>
@@ -47,7 +64,7 @@ export const SetField = ({set, sets}: SetFieldProps) => {
       </div>
       <div>
         {failure && <Tag text='Hit Failure' fontSize='0.7em' hollow matchColorText color='#6e2b2b' style={{padding: '2px 6px'}} />}
-        <FormatTime seconds={set.duration} style={{fontSize: '0.9em', opacity: 0.7}} />
+        {setType !== 'Drop Set' && <FormatTime seconds={getDuration} style={{fontSize: '0.9em', opacity: 0.7}} />}
       </div>
     </div>
   )
