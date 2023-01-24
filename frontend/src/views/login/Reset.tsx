@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 import { Input } from '../../components/ui/Input';
 import { LoginButton } from '../../components/ui/LoginButton';
+import { baseUrl } from '../../utility/data/baseUrl';
 import './Reset.css'
 import { Li } from './SignUp';
 
@@ -35,7 +36,7 @@ export const Reset = () => {
     if (!reset_id) navigate('/login')
 
     ;(async () => {
-      const response = await fetch(`https://amped.herokuapp.com/api/credentials/reset/${reset_id}`);
+      const response = await fetch(`${baseUrl}/credentials/reset/${reset_id}`);
       if (response.ok) {
         const data = await response.json();
         setUser_id(data);
@@ -52,14 +53,14 @@ export const Reset = () => {
 
     ;(async () => {
       // Re-verify reset_id and time
-      const resetLink = await fetch(`https://amped.herokuapp.com/api/credentials/reset/${reset_id}`);
+      const resetLink = await fetch(`${baseUrl}/credentials/reset/${reset_id}`);
       if (!resetLink.ok) {
         return setValid(false);
       }
       
       
       try {
-        const response = await fetch('https://amped.herokuapp.com/api/credentials/password', {
+        const response = await fetch(`${baseUrl}/credentials/password`, {
           method: "PUT",
           headers: {
             'Content-Type': 'application/json',

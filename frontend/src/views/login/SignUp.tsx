@@ -7,6 +7,7 @@ import { useCreateNewUserMutation, useDeleteUserMutation } from '../../api/injec
 import { useAddCredentialsMutation, useSignInLocalMutation } from '../../api/injections/user/authSlice';
 import { LoginButton } from '../../components/ui/LoginButton';
 import { IoIosArrowRoundBack } from 'react-icons/io';
+import { baseUrl } from '../../utility/data/baseUrl';
 
 export const Li = ({text, valid, className = ''}: {text: string, valid: boolean, className?: string}) => {
   return (
@@ -76,7 +77,7 @@ export const SignUp = () => {
     ;(async () => {
       setValidating(true);
 
-      const response = await fetch(`https://amped.herokuapp.com/api/credentials/exists/${name}`);
+      const response = await fetch(`${baseUrl}/credentials/exists/${name}`);
       const existing = await response.json();
 
       setValidating(false);
@@ -102,7 +103,7 @@ export const SignUp = () => {
       /* Validate email is unique */
       if (email) {
         try {
-          const response = await fetch(`https://amped.herokuapp.com/api/credentials/email/exists/${email}`);
+          const response = await fetch(`${baseUrl}/credentials/email/exists/${email}`);
           const exists = await response.json();
           
           if (exists) {

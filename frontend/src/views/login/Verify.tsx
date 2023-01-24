@@ -2,6 +2,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { Input } from '../../components/ui/Input';
 import { LoginButton } from '../../components/ui/LoginButton';
+import { baseUrl } from '../../utility/data/baseUrl';
 import { Li } from './SignUp';
 import './Verify.css'
 
@@ -22,7 +23,7 @@ export const Verify = () => {
     setFetching(true);
     setSuccess(false);
     ;(async () => {
-      const response = await fetch(`https://amped.herokuapp.com/api/credentials/verify/${email}`);
+      const response = await fetch(`${baseUrl}/credentials/verify/${email}`);
       if (response.ok) {
         setSuccess(true);
         setFetching(false);
