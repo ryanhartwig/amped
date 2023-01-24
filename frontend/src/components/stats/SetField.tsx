@@ -14,7 +14,7 @@ interface SetFieldProps {
   setSets?: React.Dispatch<React.SetStateAction<SetFieldType[]>>,
 }
 
-export const SetField = ({set, sets, setSets}: SetFieldProps) => {
+export const SetField = ({set, sets, setSets = undefined}: SetFieldProps) => {
 
   const [edit, setEdit] = useState<boolean>(false);
   
@@ -64,7 +64,7 @@ export const SetField = ({set, sets, setSets}: SetFieldProps) => {
 
   return (
     <>
-      <div className={clsx('SetField', {'edit': !!setSets})} onClick={setEdit ? () => setEdit(true) : undefined}>
+      <div className={clsx('SetField', {'edit': !!setSets})} onClick={!setSets ? undefined : () => setEdit(true)}>
         <div>
           <p style={{fontSize: 13, color}}>{getText()}</p>
           <BsDot style={{opacity: 0.2}} />
