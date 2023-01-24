@@ -117,12 +117,11 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
       <Modal onClose={() => setOpen(false)} 
         open={open} 
         closeText='Not yet'
-        onClick={onFinish}
       >
         <Modal.Header>Finish workout?</Modal.Header>
         <div className='SessionFooter-finish'>
           <p style={{fontSize: '0.8em', opacity: 0.6}}>You will not be able to return</p>
-          <PrimaryButton disabled={disabled} icon={'logo'} text='Finish' className='SessionFooter-finish-button' />
+          <PrimaryButton onClick={disabled ? undefined : onFinish} disabled={disabled} icon={'logo'} text='Finish' className='SessionFooter-finish-button' />
         </div>
       </Modal>
     </div>
