@@ -25,7 +25,7 @@ app.set("trust proxy", 1); //
 
 app.use(cors({
   credentials: true,
-  origin: getEnv('https://ampedpro.netlify.app', 'localhost:3000'),
+  origin: getEnv('https://ampedpro.netlify.app', 'http://localhost:3000'),
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,7 +33,7 @@ app.use(session({
   secret: 'sample secret', 
   saveUninitialized: false,
   cookie: {
-    sameSite: 'none',
+    sameSite: getEnv('none', 'lax'),
     maxAge: 1000 * 60 * 60 * 24,
     secure: process.env.NODE_ENV === 'production',
   },
@@ -69,5 +69,5 @@ app.get('/api/test', (_, res, next) => {
 })
 
 app.listen(port, () => {
-  console.log('⚡️', `Server is running. (port: ${port}, base url: amped.herokuapp.com)`);
+  console.log('⚡️', getEnv('Server is running at amped.herokuapp.com', `Server is running at localhost:${port}`));
 });

@@ -16,13 +16,15 @@ const google_1 = __importDefault(require("./passport/google"));
 const twitter_1 = __importDefault(require("./passport/twitter"));
 const local_1 = __importDefault(require("./passport/local"));
 const memorystore_1 = __importDefault(require("memorystore"));
+const baseUrl_1 = require("./baseUrl");
 const MemoryStore = (0, memorystore_1.default)(express_session_1.default);
 const app = (0, express_1.default)();
 const port = process.env.PORT || 8000;
 app.use((0, morgan_1.default)('dev'));
+app.set("trust proxy", 1); // 
 app.use((0, cors_1.default)({
     credentials: true,
-    origin: 'https://ampedpro.netlify.app',
+    origin: (0, baseUrl_1.getEnv)('https://ampedpro.netlify.app', 'http://localhost:3000'),
 }));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
@@ -30,16 +32,17 @@ app.use((0, express_session_1.default)({
     secret: 'sample secret',
     saveUninitialized: false,
     cookie: {
-        sameSite: false,
+        sameSite: (0, baseUrl_1.getEnv)('none', 'lax'),
         maxAge: 1000 * 60 * 60 * 24,
+        secure: process.env.NODE_ENV === 'production',
     },
-    resave: false,
+    resave: true,
     store: new MemoryStore({
         checkPeriod: 86400000 // prune expired entries every 24h
     }),
 }));
 app.use((_, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://ampedpro.netlify.app');
+    res.header('Access-Control-Allow-Origin', (0, baseUrl_1.getEnv)('https://ampedpro.netlify.app', 'http://localhost:3000'));
     res.header('Access-Control-Allow-Credentials', 'true');
     next();
 });
@@ -57,5 +60,5 @@ app.get('/api/test', (_, res, next) => {
     next();
 });
 app.listen(port, () => {
-    console.log('⚡️', `Server is running. (port: ${port}, base url: amped.herokuapp.com)`);
+    console.log('⚡️', (0, baseUrl_1.getEnv)('Server is running at amped.herokuapp.com', `Server is running at localhost:${port}`));
 });
