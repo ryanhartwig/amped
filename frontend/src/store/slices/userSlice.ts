@@ -2,14 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GoalType } from "../../types/GoalType";
 import { ScheduledRoutine } from "../../types/scheduledState";
 
-interface UserState {
+export interface UserState {
   scheduled: ScheduledRoutine[],
   goals: GoalType[],
   weekly_target: number,
   name: string,
   email: string,
   id: string,
-  authenticated: boolean,
 }
 
 const initialState: UserState = {
@@ -19,7 +18,6 @@ const initialState: UserState = {
   name: '',
   email: '',
   id: '',
-  authenticated: false,
 }
 
 export const userReducer = createSlice({
