@@ -65,6 +65,7 @@ export const Completed = () => {
             return <Routine routine={routine}
               key={p.id}
               completed 
+              duration={p.duration}
               start_date={p.start_date}
               onSelect={() => setSummaryData(p)}
             />
