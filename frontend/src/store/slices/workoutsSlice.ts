@@ -8,7 +8,6 @@ interface WorkoutsState {
   exercises: ExerciseType[],
 }
 
-// Will fetch from db when using real data
 const initialState: WorkoutsState = {
   routines: [],
   exercises: [],

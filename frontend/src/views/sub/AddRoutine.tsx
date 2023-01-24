@@ -32,7 +32,6 @@ export const AddRoutine = () => {
 
   const editing: RoutineType | undefined = location.state?.edit;
 
-  
   const { background_alt: background } = useAppSelector(s => s.theme);
   const user_id = useAppSelector(s => s.user.id);
   const routineData = useAppSelector(s => s.workoutData.routineData);
