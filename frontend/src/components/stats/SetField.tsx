@@ -38,6 +38,10 @@ export const SetField = ({set, sets}: SetFieldProps) => {
 
   const getDuration = useMemo(() => {
     let duration = set.duration;
+
+    // Dont trigger recursive function if the current set is a drop set
+    if (setType === 'Drop Set') return duration;
+
     const findAddDropSetDuration = (index: number = set.position + 1) => {
       const current = sets[index];
       if (!current) return;
@@ -49,7 +53,7 @@ export const SetField = ({set, sets}: SetFieldProps) => {
 
     findAddDropSetDuration();
     return duration;
-  }, [set.duration, set.position, sets]);
+  }, [set.duration, set.position, setType, sets]);
 
 
   return (
