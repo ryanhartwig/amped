@@ -1,4 +1,4 @@
-export const getEnv = <T>(production: T, development: T): T => {
+export const getEnv = (production: any, development: any): any => {
   if (process.env.NODE_ENV === 'production') {
     return typeof production === 'function'
       ? production()
@@ -10,4 +10,4 @@ export const getEnv = <T>(production: T, development: T): T => {
   }
 }
 
-export const baseUrl = getEnv<string>('https://amped.herokuapp.com/api', 'http://localhost:8000/api');
+export const baseUrl = getEnv('https://amped.herokuapp.com/api', 'http://localhost:8000/api');

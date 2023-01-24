@@ -13,6 +13,7 @@ import twitter from './passport/twitter';
 import local from './passport/local';
 
 import createMemoryStore from 'memorystore';
+import { getEnv } from './baseUrl';
 const MemoryStore = createMemoryStore(session);
 
 const app = express();
@@ -24,7 +25,7 @@ app.set("trust proxy", 1); //
 
 app.use(cors({
   credentials: true,
-  origin: 'https://ampedpro.netlify.app',
+  origin: getEnv('https://ampedpro.netlify.app', 'localhost:3000'),
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,7 +35,7 @@ app.use(session({
   cookie: {
     sameSite: 'none',
     maxAge: 1000 * 60 * 60 * 24,
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
   },
   resave: true,
   store: new MemoryStore({
@@ -43,7 +44,7 @@ app.use(session({
 }));
 
 app.use((_, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://ampedpro.netlify.app');
+  res.header('Access-Control-Allow-Origin', getEnv('https://ampedpro.netlify.app', 'http://localhost:3000'));
   res.header('Access-Control-Allow-Credentials', 'true');
 
   next();
