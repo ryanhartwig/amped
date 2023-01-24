@@ -45,58 +45,58 @@ export const Home = () => {
     }
   }, [cancel, navigate]);
 
-  const { data: currentUser, isError, isFetching } = useGetCurrentUserQuery(null);
+  // const { data: currentUser, isError, isFetching } = useGetCurrentUserQuery(null);
 
-  const id = useMemo(() => currentUser?.id, [currentUser]);
+  // const id = useMemo(() => currentUser?.id, [currentUser]);
 
-  const { data: user } = useGetUserByIdQuery(id, { skip: !id });
-  const { data: routines = [] } = useGetRoutinesQuery(id, { skip: !id }) as { data: RoutineType[] };
-  const { data: exercises = [] } = useGetExercisesQuery(id, { skip: !id }) as { data: ExerciseType[] };
-  const { data: relations = [] } = useGetRoutineExercisesQuery(id, { skip: !id }) as { data: DB_RoutineExercise[] };
-  const { data: goals = [] } = useGetGoalsQuery(id, { skip: !id }) as { data: GoalType[] };
-  const { data: routineData = [] } = useGetRoutineDataQuery(id, { skip: !id }) as { data: RoutineDataType[] };
+  // const { data: user } = useGetUserByIdQuery(id, { skip: !id });
+  // const { data: routines = [] } = useGetRoutinesQuery(id, { skip: !id }) as { data: RoutineType[] };
+  // const { data: exercises = [] } = useGetExercisesQuery(id, { skip: !id }) as { data: ExerciseType[] };
+  // const { data: relations = [] } = useGetRoutineExercisesQuery(id, { skip: !id }) as { data: DB_RoutineExercise[] };
+  // const { data: goals = [] } = useGetGoalsQuery(id, { skip: !id }) as { data: GoalType[] };
+  // const { data: routineData = [] } = useGetRoutineDataQuery(id, { skip: !id }) as { data: RoutineDataType[] };
 
-  useEffect(() => {
-    if (!isError || isFetching) return;
+  // useEffect(() => {
+  //   if (!isError || isFetching) return;
 
-    dispatch(setUser());
-    // navigate('/login');
-  }, [dispatch, isError, isFetching, navigate])
+  //   dispatch(setUser());
+  //   // navigate('/login');
+  // }, [dispatch, isError, isFetching, navigate])
 
-  // Update user state 
-  useEffect(() => {
-    dispatch(setUser(user))
-  }, [dispatch, user]);
+  // // Update user state 
+  // useEffect(() => {
+  //   dispatch(setUser(user))
+  // }, [dispatch, user]);
 
-  // Initialize goals state
-  useEffect(() => {
-    dispatch(setGoals(goals));
-  }, [dispatch, goals]);
+  // // Initialize goals state
+  // useEffect(() => {
+  //   dispatch(setGoals(goals));
+  // }, [dispatch, goals]);
   
-  // Initialize routines state
-  useEffect(() => {
-    let updated: RoutineType[] = routines;
-    if (relations.length && routines.length && exercises.length) {
-      updated = updated.map((r): RoutineType => ({
-        ...r,
-        exercises: relations.filter(rtex => rtex.routine_id === r.id).map(rtex => ({
-          ...rtex,
-          exercise: exercises.find(e => e.id === rtex.exercise_id)!,
-        }))
-      }))
-    }
-    dispatch(setRoutines(updated));
-  }, [dispatch, exercises, relations, routines]);
+  // // Initialize routines state
+  // useEffect(() => {
+  //   let updated: RoutineType[] = routines;
+  //   if (relations.length && routines.length && exercises.length) {
+  //     updated = updated.map((r): RoutineType => ({
+  //       ...r,
+  //       exercises: relations.filter(rtex => rtex.routine_id === r.id).map(rtex => ({
+  //         ...rtex,
+  //         exercise: exercises.find(e => e.id === rtex.exercise_id)!,
+  //       }))
+  //     }))
+  //   }
+  //   dispatch(setRoutines(updated));
+  // }, [dispatch, exercises, relations, routines]);
 
-  // Initialize exercises state
-  useEffect(() => {
-    dispatch(setExercises(exercises));
-  }, [dispatch, exercises]);
+  // // Initialize exercises state
+  // useEffect(() => {
+  //   dispatch(setExercises(exercises));
+  // }, [dispatch, exercises]);
 
-  // Initialize routineData state
-  useEffect(() => {
-    dispatch(setRoutineData(routineData))
-  }, [dispatch, routineData]);
+  // // Initialize routineData state
+  // useEffect(() => {
+  //   dispatch(setRoutineData(routineData))
+  // }, [dispatch, routineData]);
 
   return (
     <div className='Home' style={{background}}>
