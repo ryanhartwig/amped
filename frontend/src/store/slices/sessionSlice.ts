@@ -12,6 +12,7 @@ export interface SessionState {
   routineSummaryId?: string,
 }
 
+
 const initialState: SessionState = {
   selectedRoutineId: '',
   session_id: '',
@@ -23,7 +24,7 @@ const initialState: SessionState = {
 
 export const sessionReducer = createSlice({
   name: 'session',
-  initialState: initialState,
+  initialState,
   reducers: {
     setSelectedRoutine: (state, action: PayloadAction<string>) => {
       state.selectedRoutineId = action.payload;
