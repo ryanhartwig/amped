@@ -3,9 +3,20 @@
   border-bottom: 1px solid transparent;
   height: 40px;
 
+  padding: 0 2px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  transition: background-color 0.2s;
+}
+
+.SetField.edit {
+  cursor: pointer;
+}
+.SetField.edit:hover {
+  background: rgba(87, 87, 87, 0.142);
 }
 
 .SetField p {
