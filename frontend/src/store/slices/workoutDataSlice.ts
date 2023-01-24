@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RoutineDataType } from "../../types/RoutineDataType";
+import { sampleRoutineData } from "../../utility/data/sampleRoutineData";
 import { RootState } from "../store";
 
 
@@ -9,7 +10,7 @@ interface WorkoutDataState {
 
 // Will fetch from db when using real data
 const initialState: WorkoutDataState = {
-  routineData: [],
+  routineData: sampleRoutineData,
 }
 
 export const workoutDataReducer = createSlice({
