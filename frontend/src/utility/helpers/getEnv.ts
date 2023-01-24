@@ -6,8 +6,7 @@
  * @param development function result or value to be returned when node_env !== production
  * @returns respective function result or provided value for the node_env
  */
-
-export const getEnv = <P,D>(production: P, development: D)=> {
+export const getEnv = <T>(production: T, development: T): T => {
   if (process.env.NODE_ENV === 'production') {
     return typeof production === 'function'
       ? production()
