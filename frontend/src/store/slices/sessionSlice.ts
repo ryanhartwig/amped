@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import uuid from "react-uuid";
 import { ExerciseDataType } from "../../types/ExerciseDataType";
-import { sampleSessionData } from "../../utility/data/sampleSession";
 
 export interface SessionState {
   selectedRoutineId: string,
@@ -24,7 +23,7 @@ const initialState: SessionState = {
 
 export const sessionReducer = createSlice({
   name: 'session',
-  initialState: sampleSessionData,
+  initialState: initialState,
   reducers: {
     setSelectedRoutine: (state, action: PayloadAction<string>) => {
       state.selectedRoutineId = action.payload;

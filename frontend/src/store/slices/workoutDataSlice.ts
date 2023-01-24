@@ -14,7 +14,7 @@ const initialState: WorkoutDataState = {
 
 export const workoutDataReducer = createSlice({
   name: 'workoutData',
-  initialState: initialState,
+  initialState,
   reducers: {
     addEditRoutineData: (state, action: PayloadAction<RoutineDataType>) => {
       const index = state.routineData.findIndex(d => d.id === action.payload.id);
