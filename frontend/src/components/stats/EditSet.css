@@ -1,0 +1,17 @@
+.EditSet {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+
+  width: 95vw;
+  max-width: 400px;
+  height: fit-content;
+
+}
+.EditSet-actions {
+  margin: 12px 0;
+  width: 90%;
+  max-width: 280px;
+}

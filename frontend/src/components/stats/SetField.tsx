@@ -1,16 +1,23 @@
-import { useMemo } from 'react';
+import clsx from 'clsx';
+import React, { useMemo, useState } from 'react';
 import { BsDot } from 'react-icons/bs';
 import { SetFieldType } from '../../types/SetFieldType';
 import { FormatTime } from '../ui/FormatTime';
+import { Modal } from '../ui/Modal';
 import { Tag } from '../ui/Tag';
+import { EditSet } from './EditSet';
 import './SetField.css';
 
 interface SetFieldProps {
   set: SetFieldType,
   sets: SetFieldType[],
+  setSets?: React.Dispatch<React.SetStateAction<SetFieldType[]>>,
 }
 
-export const SetField = ({set, sets}: SetFieldProps) => {
+export const SetField = ({set, sets, setSets}: SetFieldProps) => {
+
+  const [edit, setEdit] = useState<boolean>(false);
+  
   const setType = set.modifiers.includes('Drop Set')
     ? 'Drop Set'
     : set.modifiers.includes('Warmup')
@@ -55,21 +62,26 @@ export const SetField = ({set, sets}: SetFieldProps) => {
     return duration;
   }, [set.duration, set.position, setType, sets]);
 
-
   return (
-    <div className='SetField'>
-      <div>
-        <p style={{fontSize: 13, color}}>{getText()}</p>
-        <BsDot style={{opacity: 0.2}} />
-        <p style={{fontSize: 25}}>{set.weight}</p>
-        <p style={{fontSize: 11, opacity: 0.4}}>lbs</p>
-        <p style={{fontSize: 25, marginLeft: 8}}>{set.count}</p>
-        <p style={{fontSize: 11, opacity: 0.4}}>reps</p>
+    <>
+      <div className={clsx('SetField', {'edit': !!setSets})} onClick={setEdit ? () => setEdit(true) : undefined}>
+        <div>
+          <p style={{fontSize: 13, color}}>{getText()}</p>
+          <BsDot style={{opacity: 0.2}} />
+          <p style={{fontSize: 25}}>{set.weight}</p>
+          <p style={{fontSize: 11, opacity: 0.4}}>lbs</p>
+          <p style={{fontSize: 25, marginLeft: 8}}>{set.count}</p>
+          <p style={{fontSize: 11, opacity: 0.4}}>reps</p>
+        </div>
+        <div>
+          {failure && <Tag text='Hit Failure' fontSize='0.7em' hollow matchColorText color='#6e2b2b' style={{padding: '2px 6px'}} />}
+          {setType !== 'Drop Set' && <FormatTime seconds={getDuration} style={{fontSize: '0.9em', opacity: 0.7}} />}
+        </div>
       </div>
-      <div>
-        {failure && <Tag text='Hit Failure' fontSize='0.7em' hollow matchColorText color='#6e2b2b' style={{padding: '2px 6px'}} />}
-        {setType !== 'Drop Set' && <FormatTime seconds={getDuration} style={{fontSize: '0.9em', opacity: 0.7}} />}
-      </div>
-    </div>
+      <Modal open={edit} onClose={() => setEdit(false)} closeText="Cancel">
+        <Modal.Header>Edit Set</Modal.Header>
+        <EditSet set={set} sets={sets} setSets={setSets!} setEdit={setEdit} />
+      </Modal>
+    </>
   )
 }

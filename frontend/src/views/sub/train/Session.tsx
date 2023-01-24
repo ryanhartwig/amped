@@ -113,7 +113,7 @@ export const Session = () => {
           {/* Setlist & Add Set Area */}
           <div className='Session-content-inner'>
             <div className='Session-content-sets hidescrollbar' ref={setsRef}>
-              {sets.map(s => <SetField key={s.id} set={s} sets={sets} />)}
+              {sets.map(s => <SetField setSets={setSets} key={s.id} set={s} sets={sets} />)}
             </div>
             <AddSet onAddSet={onAddSet} setTime={setTime} setSetTime={setSetTime} exercise_data_id={currentExerciseData.id} />
           </div>
