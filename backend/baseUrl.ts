@@ -10,4 +10,4 @@ export const getEnv = (production: any, development: any): any => {
   }
 }
 
-export const baseUrl = getEnv('https://amped.herokuapp.com/api', 'http://localhost:8000/api');
+export const baseUrl = getEnv('https://amped.herokuapp.com/api', 'http://192.168.2.27:8000/api');

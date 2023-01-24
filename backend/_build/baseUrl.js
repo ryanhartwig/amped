@@ -14,4 +14,4 @@ const getEnv = (production, development) => {
     }
 };
 exports.getEnv = getEnv;
-exports.baseUrl = (0, exports.getEnv)('https://amped.herokuapp.com/api', 'http://localhost:8000/api');
+exports.baseUrl = (0, exports.getEnv)('https://amped.herokuapp.com/api', 'http://192.168.2.27:8000/api');
