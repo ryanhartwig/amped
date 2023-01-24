@@ -16,7 +16,7 @@ const initialState: WorkoutsState = {
 
 export const workoutsReducer = createSlice({
   name: 'workouts',
-  initialState: initialState,
+  initialState,
   reducers: {
     addWorkout: (state, action: PayloadAction<RoutineType | ExerciseType>) => {
       if (action.payload.type === 'Exercise') state.exercises.push(action.payload);
