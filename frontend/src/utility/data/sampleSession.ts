@@ -6,6 +6,7 @@ export const sampleSessionData: SessionState = {
   routine_id: 'Abs',
   currentPosition: 1,
   sessionStartDate: 1672783106540,
+  exercises: [],
   exerciseData: [
     {
       duration: 1250,

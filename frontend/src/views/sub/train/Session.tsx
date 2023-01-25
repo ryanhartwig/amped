@@ -23,11 +23,15 @@ export const Session = () => {
   const setsRef = useRef<HTMLDivElement>(undefined!);
   
   const { background } = useAppSelector(s => s.theme);
-  const routineId = useAppSelector(s => s.session.selectedRoutineId);
-  const routine = useAppSelector(s => s.workouts.routines).find(r => r.id === routineId)!;
   const position = useAppSelector(s => s.session.currentPosition);
-  const exercise = useMemo<RoutineExercise>(() => routine.exercises[position], [position, routine.exercises]);
   const prevExerciseData = useAppSelector(s => s.session.exerciseData.find(e => e.exercise_position === position));
+
+  const routineId = useAppSelector(s => s.session.selectedRoutineId);
+  const routine = useAppSelector(s => s.workouts.routines).find(r => r.id === routineId);
+  const routineExercises = useAppSelector(s => s.session.exercises);
+
+  const exercise = useMemo<RoutineExercise>(() => routineExercises[position], [position, routineExercises]);
+
   const session = useAppSelector(s => s.session);
   const user_id = useAppSelector(s => s.user.id);
 
@@ -61,7 +65,7 @@ export const Session = () => {
 
   const onNavigate = useCallback((dir: 1 | -1) => {
     dispatch(addEditExerciseData(currentExerciseData));
-    if (position + dir === routine.exercises.length) return; 
+    if (position + dir === routineExercises.length) return; 
 
     dispatch(setPosition(position + dir));
 
@@ -69,7 +73,7 @@ export const Session = () => {
     setId(uuid());
     setSets([]);
     setSetTime(0);
-  }, [dispatch, currentExerciseData, position, routine.exercises.length]);
+  }, [currentExerciseData, dispatch, position, routineExercises.length]);
 
   const onAddSet = useCallback((set: SetFieldType) => {
     setSets(p => [...p, set].map((s, i) => ({...s, id: uuid(), position: i})) as SetFieldType[]);
@@ -90,7 +94,7 @@ export const Session = () => {
   
   return (
     <div className='Session' style={{background}}> 
-      <SessionHeader paused={paused} time={routineTime} setTime={setRoutineTime} routineTitle={routine.name} />
+      <SessionHeader paused={paused} time={routineTime} setTime={setRoutineTime} routineTitle={routine?.name || 'Anonymous'} />
       
       {paused 
     ? <div className='Session-paused'>
@@ -104,7 +108,7 @@ export const Session = () => {
           modalContent={<p style={{whiteSpace: 'pre-wrap'}}>{exercise.exercise.notes}</p>}
         >
           <InfoBorder.HeaderLeft>
-            <p className='Session-info'>{position + 1} <span className='Session-of'>of</span> {routine.exercises.length}</p>
+            <p className='Session-info'>{position + 1} <span className='Session-of'>of</span> {routineExercises.length}</p>
           </InfoBorder.HeaderLeft>
           <InfoBorder.HeaderRight>
             <Timer className={'Session-info timer'} time={exerciseTime} setTime={setExerciseTime} />
@@ -125,7 +129,7 @@ export const Session = () => {
         paused={paused} 
         routineData={routineData} 
         onNavigate={onNavigate} 
-        exercises={routine.exercises} 
+        exercises={routineExercises} 
         currentPosition={position} 
       />
     </div>
