@@ -68,12 +68,11 @@ export const Session = () => {
     if (position + dir === routineExercises.length) return; 
 
     dispatch(setPosition(position + dir));
-
     setExerciseTime(0);
     setId(uuid());
     setSets([]);
     setSetTime(0);
-  }, [currentExerciseData, dispatch, position, routineExercises.length]);
+  }, [currentExerciseData, dispatch, position, routineExercises]);
 
   const onAddSet = useCallback((set: SetFieldType) => {
     setSets(p => [...p, set].map((s, i) => ({...s, id: uuid(), position: i})) as SetFieldType[]);
@@ -129,9 +128,9 @@ export const Session = () => {
         paused={paused} 
         routineData={routineData} 
         onNavigate={onNavigate} 
-        exercises={routineExercises} 
         currentPosition={position} 
         anonymous={!routine}
+        currentExerciseData={currentExerciseData}
       />
     </div>
   )

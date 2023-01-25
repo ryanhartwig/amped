@@ -55,11 +55,11 @@ export const Train = () => {
       dispatch(initializeSession());
       dispatch(setRoutineExercises([{
         exercise: selected,
-        exercise_id: selected.id,
+        exercise_id: '',
         id: '',
         position: 0,
         routine_id: '',
-        user_id: 'admin',
+        user_id: '',
       }]));
       navigate('/session');
     } else {

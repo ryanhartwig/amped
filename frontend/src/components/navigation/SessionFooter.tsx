@@ -5,8 +5,8 @@ import { IoIosFlash } from 'react-icons/io';
 import { ReactIconButton } from '../ui/ReactIconButton';
 import { InfoBorder } from '../ui/InfoBorder';
 import { useNavigate } from 'react-router-dom';
-import { RoutineExercise, RoutineType } from '../../types/RoutineType';
-import React, { useCallback, useState } from 'react';
+import { RoutineType } from '../../types/RoutineType';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { PrimaryButton } from '../ui/PrimaryButton';
 import { RoutineDataType } from '../../types/RoutineDataType';
@@ -14,25 +14,29 @@ import { useAddRoutineDataMutation, useDeleteRoutineDataMutation } from '../../a
 import { useAddExerciseDataMutation } from '../../api/injections/data/exerciseDataSlice';
 import { useAddSetDataMutation } from '../../api/injections/data/setDataSlice';
 import { useDispatch } from 'react-redux';
-import { setRoutineSummaryId } from '../../store/slices/sessionSlice';
+import { addRoutineExercise, setRoutineSummaryId } from '../../store/slices/sessionSlice';
 import { ExerciseType } from '../../types/ExerciseType';
 import { Search } from '../search/Search';
+import { ExerciseDataType } from '../../types/ExerciseDataType';
 
 interface SessionFooterProps {
   currentPosition: number,
-  exercises: RoutineExercise[],
   onNavigate: (dir: 1 | -1) => void,
   routineData: RoutineDataType,
   setPaused: React.Dispatch<React.SetStateAction<boolean>>,
   paused: boolean,
   anonymous?: boolean,
+  currentExerciseData: ExerciseDataType,
 }
 
-export const SessionFooter = ({currentPosition, setPaused, paused, routineData, onNavigate, exercises, anonymous = false}: SessionFooterProps) => {
+export const SessionFooter = ({currentPosition, currentExerciseData, setPaused, paused, routineData, onNavigate, anonymous = false}: SessionFooterProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const position = useAppSelector(s => s.session.currentPosition);
   const { foreground: background } = useAppSelector(s => s.theme);
+  const exercises = useAppSelector(s => s.session.exercises);
+
   const nextExercise = exercises[currentPosition + 1]?.exercise.name || null;
   const prevExercise = exercises[currentPosition - 1]?.exercise.name || null;
 
@@ -47,7 +51,7 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
 
   const [disabled, setDisabled] = useState<boolean>(false);
 
-  const [select, setSelect] = useState<boolean>(false);
+  const [selecting, setSelecting] = useState<boolean>(false);
   const [selected, setSelected] = useState<RoutineType | ExerciseType>()
 
   const onFinish = useCallback(() => {
@@ -85,10 +89,37 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
       }
     })()
   }, [addExerciseData, addRoutineData, addSetData, deleteRoutineData, dispatch, navigate, routineData]);
-
+  
+  // Navigate forward after updating redux store with exercise data in custom sessions
+  const allowAdvance = useRef<boolean>(false);
+  useEffect(() => {
+    if (exercises.length > position && allowAdvance.current) {
+      onNavigate(1);
+      setSelecting(false);
+      allowAdvance.current = false;
+      setDisabled(false);
+    }
+  }, [exercises.length, onNavigate, position, selected]);
+  
+  // On continuing custom session (selecting exercise)
   const onContinue = useCallback(() => {
+    if (!selected || selected.type === 'Routine') return;
 
-  }, []);
+    dispatch(addRoutineExercise({
+      exercise: selected,
+      exercise_id: '',
+      id: '',
+      position: exercises.length,
+      routine_id: '',
+      user_id: '',
+    }));
+    setSelected(undefined);
+    onNavigate(1);
+    setDisabled(true);
+    setTimeout(() => {
+      allowAdvance.current = true;
+    }, 1);
+  }, [dispatch, exercises.length, onNavigate, selected]);
   
   return (
     <div className='SessionFooter' style={{background}}>
@@ -120,22 +151,22 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
                 nextExercise 
                   ? () => onNavigate(1)
                   : anonymous 
-                    ? () => setSelect(true)
+                    ? () => setSelecting(true)
                     : () => {
                       onNavigate(1);
                       setOpen(true);
                     }
               }
             >
-              <p>{nextExercise || anonymous ? 'Select / Finish' : 'Summary'}</p>
+              <p>{nextExercise || (anonymous ? 'Select / Finish' : 'Summary')}</p>
             </div>
           </InfoBorder>}
         </div>
       </div>
 
       {/* Select next exercise or finish */}
-      <Modal onClose={() => setSelect(false)} 
-        open={select} 
+      <Modal onClose={() => setSelecting(false)} 
+        open={selecting} 
         closeText='Cancel'
       >
         <div className='SessionFooter-select'>
@@ -145,7 +176,7 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
           <div style={{flexShrink: 0, flexGrow: 0}}>
             <PrimaryButton altColor onClick={onContinue} style={{marginTop: 8}} text={selected ? 'Continue' : 'Select an exercise'} disabled={!selected} />
             <p style={{fontSize: '0.8em', opacity: 0.6, margin: '7px 0'}}>or</p>
-            <PrimaryButton onClick={() => setSubOpen(true)} style={{marginBottom: 10}} text={'Finish Workout'}/>
+            <PrimaryButton onClick={() => setSubOpen(true)} style={{marginBottom: 10}} text={'Finish Workout'} disabled={disabled}/>
           </div>
         </div>
         <Modal onClose={() => setSubOpen(false)} 
