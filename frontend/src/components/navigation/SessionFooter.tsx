@@ -142,9 +142,9 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
             <Search selected={selected} setSelected={setSelected} tab='Exercises' />
           </div>
           <div style={{flexShrink: 0, flexGrow: 0}}>
-            <PrimaryButton onClick={onContinue} style={{marginTop: 8}} text={selected ? 'Continue' : 'Select an exercise'} disabled={!selected} />
+            <PrimaryButton  altColor onClick={onContinue} style={{marginTop: 8}} text={selected ? 'Continue' : 'Select an exercise'} disabled={!selected} />
             <p style={{fontSize: '0.8em', opacity: 0.6, margin: '7px 0'}}>or</p>
-            <PrimaryButton altColor icon={'logo'} onClick={() => setSubOpen(true)} style={{marginBottom: 10}} text={'Finish Workout'}/>
+            <PrimaryButton  onClick={() => setSubOpen(true)} style={{marginBottom: 10}} text={'Finish Workout'}/>
           </div>
         </div>
         <Modal onClose={() => setSubOpen(false)} 
