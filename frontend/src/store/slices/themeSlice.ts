@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface Tags {
-  strength: string,
-  hypertrophy: string,
-  power: string,
-  speed: string,
-  endurance: string,
+  Strength: string,
+  Hypertrophy: string,
+  Power: string,
+  Speed: string,
+  Endurance: string,
 }
 export interface ThemeState {
   background: string,
@@ -27,11 +27,11 @@ export const initialState: ThemeState = {
   buttonPrimary: '#1C476F',
   buttonSecondary: '#0C2E4E',
   tags: {
-    strength: '#3c2828',
-    hypertrophy: '#3c3c28',
-    power: '#3c3428',
-    speed: '#3c2831',
-    endurance: '#28393c',
+    Strength: '#3c2828',
+    Hypertrophy: '#3c3c28',
+    Power: '#3c3428',
+    Speed: '#3c2831',
+    Endurance: '#28393c',
   }
 }
 
