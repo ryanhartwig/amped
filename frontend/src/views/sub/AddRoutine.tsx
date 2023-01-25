@@ -24,6 +24,7 @@ import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
 import { useAddNewRoutineMutation, useEditRoutineMutation, useDeleteRoutineMutation } from '../../api/injections/workouts/routinesSlice';
 import { DB_RoutineExercise, useAddRoutineExerciseMutation, useDeleteRoutineExerciseMutation } from '../../api/injections/workouts/relationsSlice';
 import { useEditRoutineDataMutation } from '../../api/injections/data/routineDataSlice';
+import { LoginButton } from '../../components/ui/LoginButton';
 
 
 export const AddRoutine = () => {
@@ -46,6 +47,9 @@ export const AddRoutine = () => {
   const [duration, setDuration] = useState<string>(editing?.est_duration?.toString() || '');
   const [intensity, setIntensity] = useState<Intensity>(editing?.intensity || 0);
   const [selectExerciseOpen, setSelectExerciseOpen] = useState<boolean>(false);
+
+  const [editScheduled, setEditScheduled] = useState<boolean>(false);
+  const [days, setDays] = useState(new Set<string>());
 
   // Array of selected exercises (contains duplicates)
   const [exercises, setExercises] = useState<RoutineExercise[]>(editing?.exercises || []);
@@ -285,6 +289,8 @@ export const AddRoutine = () => {
             <p onClick={onSelectExercises}>Select exercises</p>
           </div>
         </div>
+        
+        <LoginButton style={{margin: '5px auto'}} onClick={() => setEditScheduled(true)} className='AddExercise-goal' text='Select Training Days'></LoginButton>
 
         <div className='AddRoutine-save'>
           <PrimaryButton icon={AiOutlineCheckCircle} disabled={!routine.exercises.length} style={{minWidth: 0}} text='Save' onClick={onSaveRoutine} />
@@ -294,8 +300,30 @@ export const AddRoutine = () => {
             <p style={{marginTop: 5}}>Delete Routine</p>
           </div>
         }
-        </div>        
+        </div>    
       </form>
+      
+      <Modal open={editScheduled} onClose={() => setEditScheduled(false)} closeText='Close'>
+        <Modal.Header>Schedule this Routine</Modal.Header>
+        <div className='AddExercise-select'>
+          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+            .map(day => 
+              <LoginButton key={day} 
+                className='AddExercise-option' 
+                text={day} 
+                style={{opacity: days.has(day) ? 1 : 0.5}} 
+                onClick={() => setDays(p => {
+                  const dup = new Set(p);
+                  dup.has(day)
+                    ? dup.delete(day)
+                    : dup.add(day);
+                  return dup;
+                })} 
+              />
+            )
+          }
+        </div>
+      </Modal>
       
       <Modal closeText='Cancel'
         open={selectExerciseOpen} 
