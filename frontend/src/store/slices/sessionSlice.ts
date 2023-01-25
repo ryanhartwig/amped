@@ -59,10 +59,13 @@ export const sessionReducer = createSlice({
     },
     setRoutineExercises: (state, action: PayloadAction<RoutineExercise[]>) => {
       state.exercises = action.payload;
+    },
+    addRoutineExercise: (state, action: PayloadAction<RoutineExercise>) => {
+      state.exercises.push(action.payload);
     }
   }
 });
 
-export const { setSelectedRoutine, setRoutineSummaryId, setPosition, initializeSession, clearSession, addEditExerciseData, setRoutineExercises} = sessionReducer.actions;
+export const { setSelectedRoutine, setRoutineSummaryId, setPosition, initializeSession, clearSession, addEditExerciseData, setRoutineExercises, addRoutineExercise} = sessionReducer.actions;
 
 export default sessionReducer.reducer;
