@@ -125,7 +125,7 @@ export const Session = () => {
         paused={paused} 
         routineData={routineData} 
         onNavigate={onNavigate} 
-        routine={routine} 
+        exercises={routine.exercises} 
         currentPosition={position} 
       />
     </div>

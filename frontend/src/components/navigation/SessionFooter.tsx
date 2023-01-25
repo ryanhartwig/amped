@@ -5,7 +5,7 @@ import { IoIosFlash } from 'react-icons/io';
 import { ReactIconButton } from '../ui/ReactIconButton';
 import { InfoBorder } from '../ui/InfoBorder';
 import { useNavigate } from 'react-router-dom';
-import { RoutineType } from '../../types/RoutineType';
+import { RoutineExercise } from '../../types/RoutineType';
 import React, { useCallback, useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { PrimaryButton } from '../ui/PrimaryButton';
@@ -18,20 +18,21 @@ import { setRoutineSummaryId } from '../../store/slices/sessionSlice';
 
 interface SessionFooterProps {
   currentPosition: number,
-  routine: RoutineType,
+  exercises: RoutineExercise[],
   onNavigate: (dir: 1 | -1) => void,
   routineData: RoutineDataType,
   setPaused: React.Dispatch<React.SetStateAction<boolean>>,
   paused: boolean,
+  anonymous?: boolean,
 }
 
-export const SessionFooter = ({currentPosition, setPaused, paused, routineData, onNavigate, routine}: SessionFooterProps) => {
+export const SessionFooter = ({currentPosition, setPaused, paused, routineData, onNavigate, exercises, anonymous = false}: SessionFooterProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { foreground: background } = useAppSelector(s => s.theme);
-  const nextExercise = routine.exercises[currentPosition + 1]?.exercise.name || null;
-  const prevExercise = routine.exercises[currentPosition - 1]?.exercise.name || null;
+  const nextExercise = exercises[currentPosition + 1]?.exercise.name || null;
+  const prevExercise = exercises[currentPosition - 1]?.exercise.name || null;
 
   const [open, setOpen] = useState<boolean>(false);
 
