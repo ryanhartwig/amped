@@ -20,7 +20,7 @@ exercise.get('/:performed_routine_id', (req, res) => __awaiter(void 0, void 0, v
     const { performed_routine_id } = req.params;
     if (!performed_routine_id)
         return res.status(400).json('No performed exercise id provided');
-    const response = yield db_1.default.query('select * from performed_exercise where performed_routine_id = $1', [performed_routine_id]);
+    const response = yield db_1.default.query('select * from performed_exercise where performed_routine_id = $1 order by exercise_position', [performed_routine_id]);
     res.status(200).json(response.rows);
 }));
 /* Add exercise data */
