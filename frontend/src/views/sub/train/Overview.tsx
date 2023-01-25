@@ -7,7 +7,7 @@ import { Exercise } from '../../../components/Exercise';
 import { InfoBorder } from '../../../components/ui/InfoBorder';
 import { Modal } from '../../../components/ui/Modal';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { initializeSession } from '../../../store/slices/sessionSlice';
+import { initializeSession, setRoutineExercises } from '../../../store/slices/sessionSlice';
 import { RoutineType } from '../../../types/RoutineType';
 import { useAppSelector } from '../../../utility/helpers/hooks';
 import './Overview.css';
@@ -40,9 +40,12 @@ export const Overview = ({inSession}: OverviewProps) => {
   }, [navigate, selectedRoutine]);
 
   const onStartSession = useCallback(() => {
+    if (!routine) return;
+    
     dispatch(initializeSession());
+    dispatch(setRoutineExercises(routine.exercises))
     navigate('/session')
-  }, [dispatch, navigate]);
+  }, [dispatch, navigate, routine]);
 
   return (
     <div className='Overview'>

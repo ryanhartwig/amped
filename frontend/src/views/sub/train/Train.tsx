@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import uuid from 'react-uuid';
 import { Routine } from '../../../components/Routine';
 import { Search } from '../../../components/search/Search';
 import { WorkoutSummary } from '../../../components/stats/WorkoutSummary';
 import { Modal } from '../../../components/ui/Modal';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { setSelectedRoutine, setRoutineSummaryId, initializeSession } from '../../../store/slices/sessionSlice';
+import { setSelectedRoutine, setRoutineSummaryId, initializeSession, setRoutineExercises } from '../../../store/slices/sessionSlice';
 import { selectCompletedToday } from '../../../store/slices/workoutDataSlice';
 import { ExerciseType } from '../../../types/ExerciseType';
 import { RoutineDataType } from '../../../types/RoutineDataType';
@@ -53,6 +54,14 @@ export const Train = () => {
     if (selected.type === 'Exercise') {
       dispatch(setSelectedRoutine(null));
       dispatch(initializeSession());
+      dispatch(setRoutineExercises([{
+        exercise: selected,
+        exercise_id: selected.id,
+        id: '',
+        position: 0,
+        routine_id: '',
+        user_id: 'admin',
+      }]));
       navigate('/session');
     } else {
       dispatch(setSelectedRoutine(selected.id));
