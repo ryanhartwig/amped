@@ -5,7 +5,7 @@ import { IoIosFlash } from 'react-icons/io';
 import { ReactIconButton } from '../ui/ReactIconButton';
 import { InfoBorder } from '../ui/InfoBorder';
 import { useNavigate } from 'react-router-dom';
-import { RoutineExercise } from '../../types/RoutineType';
+import { RoutineExercise, RoutineType } from '../../types/RoutineType';
 import React, { useCallback, useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { PrimaryButton } from '../ui/PrimaryButton';
@@ -15,6 +15,8 @@ import { useAddExerciseDataMutation } from '../../api/injections/data/exerciseDa
 import { useAddSetDataMutation } from '../../api/injections/data/setDataSlice';
 import { useDispatch } from 'react-redux';
 import { setRoutineSummaryId } from '../../store/slices/sessionSlice';
+import { ExerciseType } from '../../types/ExerciseType';
+import { Search } from '../search/Search';
 
 interface SessionFooterProps {
   currentPosition: number,
@@ -35,6 +37,7 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
   const prevExercise = exercises[currentPosition - 1]?.exercise.name || null;
 
   const [open, setOpen] = useState<boolean>(false);
+  const [subOpen, setSubOpen] = useState<boolean>(false);
 
   const [addRoutineData] = useAddRoutineDataMutation();
   const [deleteRoutineData] = useDeleteRoutineDataMutation();
@@ -43,6 +46,9 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
   const [addSetData] = useAddSetDataMutation();
 
   const [disabled, setDisabled] = useState<boolean>(false);
+
+  const [select, setSelect] = useState<boolean>(false);
+  const [selected, setSelected] = useState<RoutineType | ExerciseType>()
 
   const onFinish = useCallback(() => {
     ;(async () => {
@@ -66,6 +72,7 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
         }))
         
         setOpen(false); 
+        setSubOpen(false);
         dispatch(setRoutineSummaryId(routineData.id))
         navigate('/home/train');
       } catch(e) {
@@ -78,6 +85,10 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
       }
     })()
   }, [addExerciseData, addRoutineData, addSetData, deleteRoutineData, dispatch, navigate, routineData]);
+
+  const onContinue = useCallback(() => {
+
+  }, []);
   
   return (
     <div className='SessionFooter' style={{background}}>
@@ -105,29 +116,60 @@ export const SessionFooter = ({currentPosition, setPaused, paused, routineData, 
           <InfoBorder isButton background={background} style={{borderRadius: '7px', borderColor: 'rgba(255,255,255,0.2'}}>
             <InfoBorder.HeaderRight><p className='SessionFooter-nav-text'>Next</p></InfoBorder.HeaderRight>
             <div className='SessionFooter-button-text' 
-              onClick={ nextExercise 
-                ? () => onNavigate(1)
-                : () => {
-                  onNavigate(1);
-                  setOpen(true);
-                }}
+              onClick={ 
+                anonymous ? () => setSelect(true)
+                : nextExercise 
+                  ? () => onNavigate(1)
+                  : () => {
+                    onNavigate(1);
+                    setOpen(true);
+                  }
+              }
             >
-              <p>{nextExercise || 'Summary'}</p>
+              <p>{anonymous ? 'Select / Finish' : nextExercise || 'Summary'}</p>
             </div>
           </InfoBorder>}
         </div>
       </div>
 
-      <Modal onClose={() => setOpen(false)} 
-        open={open} 
-        closeText='Not yet'
+      {/* Select next exercise or finish */}
+      <Modal onClose={() => setSelect(false)} 
+        open={select} 
+        closeText='Cancel'
       >
-        <Modal.Header>Finish workout?</Modal.Header>
-        <div className='SessionFooter-finish'>
-          <p style={{fontSize: '0.8em', opacity: 0.6}}>You will not be able to return</p>
-          <PrimaryButton onClick={disabled ? undefined : onFinish} disabled={disabled} icon={'logo'} text='Finish' className='SessionFooter-finish-button' />
+        <div className='SessionFooter-select'>
+          <div className='Train-routines-search'>
+            <Search selected={selected} setSelected={setSelected} tab='Exercises' />
+          </div>
+          <div style={{flexShrink: 0, flexGrow: 0}}>
+            <PrimaryButton onClick={onContinue} style={{marginTop: 8}} text={selected ? 'Continue' : 'Select an exercise'} disabled={!selected} />
+            <p style={{fontSize: '0.8em', opacity: 0.6, margin: '7px 0'}}>or</p>
+            <PrimaryButton altColor icon={'logo'} onClick={() => setSubOpen(true)} style={{marginBottom: 10}} text={'Finish Workout'}/>
+          </div>
         </div>
+        <Modal onClose={() => setSubOpen(false)} 
+          open={subOpen} 
+          closeText='Not yet'
+        >
+          <Modal.Header>Finish workout?</Modal.Header>
+          <div className='SessionFooter-finish'>
+            <p style={{fontSize: '0.8em', opacity: 0.6}}>You will not be able to return</p>
+            <PrimaryButton onClick={disabled ? undefined : onFinish} disabled={disabled} icon={'logo'} text='Finish' className='SessionFooter-finish-button' />
+          </div>
+        </Modal>
       </Modal>
+
+      {/* Confirm finish */}
+      <Modal onClose={() => setOpen(false)} 
+          open={open} 
+          closeText='Not yet'
+        >
+          <Modal.Header>Finish workout?</Modal.Header>
+          <div className='SessionFooter-finish'>
+            <p style={{fontSize: '0.8em', opacity: 0.6}}>You will not be able to return</p>
+            <PrimaryButton onClick={disabled ? undefined : onFinish} disabled={disabled} icon={'logo'} text='Finish' className='SessionFooter-finish-button' />
+          </div>
+        </Modal>
     </div>
   )
 }

@@ -14,7 +14,14 @@
   width: 100%;
 }
 
-
+/* Select next exercise or finish */
+.SessionFooter-select {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
 
 /* prev / next */
 .SessionFooter-nav-button {
