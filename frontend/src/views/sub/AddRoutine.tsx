@@ -229,10 +229,10 @@ export const AddRoutine = () => {
             placeholder='Approximate duration' 
             onChange={(e) => {
               if (!e.target.value.length) return setDuration('');
+              if (e.target.value.split('').some(n => isNaN(Number(n)))) return;
               const num = Number(e.target.value);
               setDuration('' + Math.max(Math.min(num, 999), 1));
             }}
-            type='number'
             mini/>
           {duration && <p className='AddRoutine-min' style={{left: 12 + (duration.length * 10)}}>minutes</p>}
         </div>
