@@ -14,6 +14,7 @@ export const apiSlice = createApi({
     'RoutineData',
     'ExerciseData',
     'SetData',
+    'Scheduled'
   ],
   endpoints: builder => ({
     getAuth: builder.query({

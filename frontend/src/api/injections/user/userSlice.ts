@@ -10,7 +10,7 @@ export interface DB_User {
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     createNewUser: builder.mutation({
-      query: ({id, name, email, weekly_target}: DB_User) => ({
+      query: ({id, name, email}: DB_User) => ({
         url: '/user/new',
         method: 'POST', 
         headers: {
@@ -32,7 +32,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       // All requests will invalidate this query, thus every request will require the user to exist
       providesTags: [
         "ExerciseData", "Exercises", "Goals", "RoutineData", "Routines",
-        "RtEx", "SetData", "User",
+        "RtEx", "SetData", "User", "Scheduled"
       ],
     }),
     getUserById: builder.query({

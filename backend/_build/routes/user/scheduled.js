@@ -40,25 +40,6 @@ scheduled.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function*
         return res.status(500).json('Could not create scheduled routine');
     res.status(201).json(response.rows[0]);
 }));
-scheduled.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    if (!id)
-        return res.status(400).json('Missing id url parameter');
-    const existing = yield db_1.default.query('select * from scheduled where id = $1', [id]);
-    const patch = req.body;
-    const { user_id, routine_id, day } = Object.assign(Object.assign({}, existing.rows[0]), patch);
-    const response = yield db_1.default.query(`
-    update scheduled set
-      user_id = $2,
-      routine_id = $3,
-      day = $4
-    where id = $1
-    returning *
-  `, [id, user_id, routine_id, day]);
-    if (!response.rowCount)
-        return res.status(500).json('Could not update goal');
-    res.status(200).json(response.rows[0]);
-}));
 scheduled.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     if (!id)

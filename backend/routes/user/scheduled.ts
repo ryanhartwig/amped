@@ -34,31 +34,6 @@ scheduled.post('/new', async (req, res) => {
   res.status(201).json(response.rows[0]);
 });
 
-scheduled.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  if (!id) return res.status(400).json('Missing id url parameter');
-
-  const existing = await db.query('select * from scheduled where id = $1', [id]) as QueryResult<Scheduled>;
-  const patch = req.body as Partial<Scheduled>;
-
-  const { user_id, routine_id, day }: Scheduled = {
-    ...existing.rows[0],
-    ...patch
-  }
-
-  const response = await db.query(`
-    update scheduled set
-      user_id = $2,
-      routine_id = $3,
-      day = $4
-    where id = $1
-    returning *
-  `, [id, user_id, routine_id, day]);
-
-  if (!response.rowCount) return res.status(500).json('Could not update goal');
-  res.status(200).json(response.rows[0]);
-});
-
 scheduled.delete('/:id', async (req, res) => {
   const { id } = req.params;
 
