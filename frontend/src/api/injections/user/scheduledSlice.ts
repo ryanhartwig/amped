@@ -1,16 +1,10 @@
+import { ScheduledRoutine } from "../../../types/scheduledState";
 import { apiSlice } from "../../apiSlice";
-
-interface DB_Scheduled {
-  id: string,
-  user_id: string,
-  routine_id: string,
-  day: string,
-}
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    setSchedule: builder.mutation({
-      query: (schedule: DB_Scheduled) => ({
+    addSchedule: builder.mutation({
+      query: (schedule: ScheduledRoutine) => ({
         url: '/user/scheduled/new',
         method: 'POST',
         headers: {
@@ -39,6 +33,6 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetScheduledQuery,
-  useSetScheduleMutation,
+  useAddScheduleMutation,
   useDeleteScheduleMutation,
 } = extendedApiSlice;

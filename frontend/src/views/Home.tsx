@@ -17,12 +17,14 @@ import { DB_RoutineExercise, useGetRoutineExercisesQuery } from '../api/injectio
 import { ExerciseType } from '../types/ExerciseType';
 import { useGetGoalsQuery } from '../api/injections/user/goalsSlice';
 import { GoalType } from '../types/GoalType';
-import { setGoals, setUser } from '../store/slices/userSlice';
+import { setGoals, setScheduled, setUser } from '../store/slices/userSlice';
 import { useGetCurrentUserQuery, useGetUserByIdQuery } from '../api/injections/user/userSlice';
 import { useGetRoutineDataQuery } from '../api/injections/data/routineDataSlice';
 import { RoutineDataType } from '../types/RoutineDataType';
 import { setRoutineData } from '../store/slices/workoutDataSlice';
 import { useAppSelector } from '../utility/helpers/hooks';
+import { useGetScheduledQuery } from '../api/injections/user/scheduledSlice';
+import { ScheduledRoutine } from '../types/scheduledState';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -55,6 +57,7 @@ export const Home = () => {
   const { data: relations = [] } = useGetRoutineExercisesQuery(id, { skip: !id }) as { data: DB_RoutineExercise[] };
   const { data: goals = [] } = useGetGoalsQuery(id, { skip: !id }) as { data: GoalType[] };
   const { data: routineData = [] } = useGetRoutineDataQuery(id, { skip: !id }) as { data: RoutineDataType[] };
+  const { data: scheduled = [] } = useGetScheduledQuery(id, { skip: !id }) as { data: ScheduledRoutine[] };
 
   useEffect(() => {
     if (!isError || isFetching) return;
@@ -97,6 +100,11 @@ export const Home = () => {
   useEffect(() => {
     dispatch(setRoutineData(routineData))
   }, [dispatch, routineData]);
+
+  // Initialize scheduled state
+  useEffect(() => {
+    dispatch(setScheduled(scheduled));
+  }, [dispatch, scheduled]);
 
   return (
     <div className='Home' style={{background}}>
