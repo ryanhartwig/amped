@@ -8,10 +8,10 @@ interface LoginButtonProps extends React.DetailedHTMLProps<React.HTMLAttributes<
 }
 
 export const LoginButton = React.forwardRef((props: LoginButtonProps, ref?: React.ForwardedRef<HTMLDivElement>) => {
-  const { className, children, disabled, text, ...rest } = props;
+  const { className = '', children, disabled, text, ...rest } = props;
 
   return (
-    <div {...rest} ref={ref} className={clsx('LoginButton', {className: !!className}, {'disabled': disabled})}>
+    <div {...rest} ref={ref} className={clsx('LoginButton', className, {'disabled': disabled})}>
       
 
       <div className='LoginButton-logo'>
