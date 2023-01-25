@@ -14,7 +14,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 8px 5px;
+  padding: 0px 5px;
   margin: 0 auto;
 }
 
@@ -28,7 +28,7 @@
   max-height: calc(100% - 110px);
   position: relative;
 
-  padding: 9px;
+  padding: 4px;
 }
 .AddRoutine-form input {
   margin-bottom: 8px;
@@ -188,7 +188,7 @@
 
 /* Save routine */
 .AddRoutine-save {
-  margin-top: 10px;
+  margin-top: 5px;
   display: flex;
 }
 
