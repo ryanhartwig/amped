@@ -9,7 +9,7 @@ routine.get('/:user_id', async (req, res) => {
   const { user_id } = req.params;
 
   if (!user_id) return res.status(400).json('No performed routine id provided');
-  const response = await db.query('select * from performed_routine where user_id = $1', [user_id]);
+  const response = await db.query('select * from performed_routine where user_id = $1 order by start_date desc', [user_id]);
 
   res.status(200).json(response.rows);
 });
