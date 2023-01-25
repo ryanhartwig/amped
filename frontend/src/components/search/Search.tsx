@@ -30,7 +30,7 @@ export const Search = ({tab, onSaveSelect, setSelected, selected}: SearchProps) 
   const [query, setQuery] = useState<string>(location.state?.name || '');
   const [activeTags, setActiveTags] = useState<Set<string>>(new Set());
   const [userTags, setUserTags] = useState<Set<string>>(new Set());
-  const [appTags] = useState<Set<string>>(new Set(['strength', 'hypertrophy', 'power', 'speed', 'endurance', 'other']));
+  const [appTags] = useState<Set<string>>(new Set(['Strength', 'Hypertrophy', 'Power', 'Speed', 'Endurance', 'Other']));
 
   const routines = [...useAppSelector(s => s.workouts.routines)].sort(r => r.favourited ? -1 : 1);
   const exercises = [...useAppSelector(s => s.workouts.exercises)].sort(e => e.favourited ? -1 : 1);
