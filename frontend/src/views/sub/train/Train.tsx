@@ -6,7 +6,7 @@ import { Search } from '../../../components/search/Search';
 import { WorkoutSummary } from '../../../components/stats/WorkoutSummary';
 import { Modal } from '../../../components/ui/Modal';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
-import { setPosition, setSelectedRoutine, setRoutineSummaryId } from '../../../store/slices/sessionSlice';
+import { setSelectedRoutine, setRoutineSummaryId, initializeSession } from '../../../store/slices/sessionSlice';
 import { selectCompletedToday } from '../../../store/slices/workoutDataSlice';
 import { ExerciseType } from '../../../types/ExerciseType';
 import { RoutineDataType } from '../../../types/RoutineDataType';
@@ -30,11 +30,14 @@ export const Train = () => {
   const allCompletedToday = useAppSelector(selectCompletedToday);
   const scheduledCompleted = allCompletedToday.filter(r => scheduledIds.includes(r.routine_id || ''));
 
-
-  const [open, setOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<RoutineType | ExerciseType>();
-  const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
+  const [selectRoutine, setSelectRoutine] = useState<boolean>(false);
   const [selectExercise, setSelectExercise] = useState<boolean>(false);
+
+  // Picked routine or exercise
+  const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
+
+  // Selected exercise or routine (will trigger navigation when given a value)
+  const [selected, setSelected] = useState<RoutineType | ExerciseType>();
 
   const routineDataId = useAppSelector(s => s.session.routineSummaryId);
   const routineData = useAppSelector(s => s.workoutData.routineData);
@@ -42,17 +45,23 @@ export const Train = () => {
 
   useEffect(() => {
     setHighlighted(undefined);
-  }, [open]);
+  }, [selectRoutine, selectExercise]);
 
   useEffect(() => {
-    if (!selected || selected.type !== 'Routine') return;
-    dispatch(setSelectedRoutine(selected.id));
-    dispatch(setPosition(0));
-    navigate('/home/train/overview')
+    if (!selected) return;
+
+    if (selected.type === 'Exercise') {
+      dispatch(setSelectedRoutine(null));
+      dispatch(initializeSession());
+      navigate('/session');
+    } else {
+      dispatch(setSelectedRoutine(selected.id));
+      navigate('/home/train/overview')
+    }
   }, [dispatch, navigate, selected])
 
   const onContinue = useCallback(() => {
-    setOpen(false);
+    setSelectRoutine(false);
     setSelected(highlighted)
   }, [highlighted]);
 
@@ -83,13 +92,13 @@ export const Train = () => {
         </div>}
         
         <div>
-          <PrimaryButton ref={triggerRef} onClick={() => setOpen(true)}  text='Select routine' style={{height: '50px', }} icon={'logo'} />
-          <PrimaryButton text='Start a custom session' altColor style={{height: '50px', marginBottom: 40, marginTop: 20}} icon={'logo'} />
+          <PrimaryButton ref={triggerRef} onClick={() => setSelectRoutine(true)}  text='Select routine' style={{height: '50px', }} icon={'logo'} />
+          <PrimaryButton onClick={() => setSelectExercise(true)} text='Start a custom session' altColor style={{height: '50px', marginBottom: 40, marginTop: 20}} icon={'logo'} />
         </div>
       </div>
 
       {/* Select routine to start (normal session) */}
-      <Modal closeText='Close' onClose={() => setOpen(false)} open={open}>
+      <Modal closeText='Close' onClose={() => setSelectRoutine(false)} open={selectRoutine}>
         <Modal.Header>Select a routine to start</Modal.Header>
         <div className='Train-routines-search'>
           <Search selected={highlighted} setSelected={setHighlighted} tab='Routines' />
@@ -98,8 +107,15 @@ export const Train = () => {
       </Modal>
 
       {/* Select exercise to start (custom session) */}
-      <Modal closeText='Cancel' onClose={() => {}} open={false}>
-
+      <Modal closeText='Cancel' 
+        onClose={() => setSelectExercise(false)} 
+        open={selectExercise}
+      >
+        <Modal.Header>Select an exercise to begin</Modal.Header>
+        <div className='Train-routines-search'>
+          <Search selected={highlighted} setSelected={setHighlighted} tab='Exercises' />
+        </div>
+        <PrimaryButton onClick={onContinue} style={{marginTop: 8}} text={highlighted ? 'Continue' : 'Select an exercise'} disabled={!highlighted} />
       </Modal>
 
       {/* Workout summary when finishing */}

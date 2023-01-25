@@ -26,7 +26,7 @@ export const sessionReducer = createSlice({
   name: 'session',
   initialState,
   reducers: {
-    setSelectedRoutine: (state, action: PayloadAction<string>) => {
+    setSelectedRoutine: (state, action: PayloadAction<string | null>) => {
       state.selectedRoutineId = action.payload;
     },
     setPosition: (state, action: PayloadAction<number>) => {
