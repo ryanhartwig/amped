@@ -199,11 +199,11 @@
   flex-direction: column;
   text-align: center;
 
-  cursor: poitner;
+  cursor: pointer;
   
   font-size: 12px;
   margin-right: 20px;
-  margin-left: 20px;
+  margin-left: 10px;
   padding: 0 5px;
   border-radius: 10000px;
   height: 100%;
