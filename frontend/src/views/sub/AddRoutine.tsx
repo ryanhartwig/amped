@@ -182,7 +182,7 @@ export const AddRoutine = () => {
     }
 
     editing ? edit() : add();
-  }, [addNewRoutine, addNewRoutineExercise, addScheduled, days, deleteRoutine, deleteRoutineExercise, editRoutine, editing, navigate, prevState, routine, routineExerciseDeltas, routineName, user_id]);
+  }, [addNewRoutine, addNewRoutineExercise, addScheduled, days, deleteRoutine, deleteRoutineExercise, deleteScheduled, editRoutine, editing, navigate, prevState, routine, routineExerciseDeltas, routineName, user_id]);
 
 
   // On add exercises
