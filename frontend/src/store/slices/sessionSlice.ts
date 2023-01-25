@@ -3,9 +3,9 @@ import uuid from "react-uuid";
 import { ExerciseDataType } from "../../types/ExerciseDataType";
 
 export interface SessionState {
-  selectedRoutineId: string,
+  selectedRoutineId: string | null,
   session_id: string,
-  routine_id: string,
+  routine_id: string | null,
   currentPosition: number,
   sessionStartDate: number,
   exerciseData: ExerciseDataType[],
@@ -14,9 +14,9 @@ export interface SessionState {
 
 
 const initialState: SessionState = {
-  selectedRoutineId: '',
+  selectedRoutineId: null,
   session_id: '',
-  routine_id: '',
+  routine_id: null,
   currentPosition: 0,
   sessionStartDate: 0,
   exerciseData: [],
