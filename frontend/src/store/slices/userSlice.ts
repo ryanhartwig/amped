@@ -46,10 +46,13 @@ export const userReducer = createSlice({
         ...state,
         ...action.payload,
       }
+    },
+    setScheduled: (state, action: PayloadAction<ScheduledRoutine[]>) => {
+      state.scheduled = action.payload;
     }
   }
 });
 
-export const { addEditGoal, setWeeklyTarget, deleteGoal, setGoals, setUser } = userReducer.actions;
+export const { addEditGoal, setWeeklyTarget, deleteGoal, setScheduled, setGoals, setUser } = userReducer.actions;
 
 export default userReducer.reducer;

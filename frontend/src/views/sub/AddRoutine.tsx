@@ -7,7 +7,7 @@ import { VscFlame } from 'react-icons/vsc';
 
 import { Routine } from '../../components/Routine';
 import { useAppSelector } from '../../utility/helpers/hooks';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { Input } from '../../components/ui/Input';
 import { Tag } from '../../components/ui/Tag';
 import { RoutineExercise, RoutineType } from '../../types/RoutineType';
@@ -25,6 +25,8 @@ import { useAddNewRoutineMutation, useEditRoutineMutation, useDeleteRoutineMutat
 import { DB_RoutineExercise, useAddRoutineExerciseMutation, useDeleteRoutineExerciseMutation } from '../../api/injections/workouts/relationsSlice';
 import { useEditRoutineDataMutation } from '../../api/injections/data/routineDataSlice';
 import { LoginButton } from '../../components/ui/LoginButton';
+import { useAddScheduleMutation, useDeleteScheduleMutation } from '../../api/injections/user/scheduledSlice';
+import { ScheduledRoutine } from '../../types/scheduledState';
 
 
 export const AddRoutine = () => {
@@ -49,7 +51,20 @@ export const AddRoutine = () => {
   const [selectExerciseOpen, setSelectExerciseOpen] = useState<boolean>(false);
 
   const [editScheduled, setEditScheduled] = useState<boolean>(false);
-  const [days, setDays] = useState(new Set<string>());
+
+  const existingDays = useAppSelector(s => s.user.scheduled).filter(s => s.routine_id === editing?.id);
+  const prevDays = useRef(new Set(existingDays.map(s => [s.day[0].toUpperCase(), ...s.day.split('').slice(1)].join(''))));
+  const prevState = useMemo(() => {
+    const map = new Map<string, ScheduledRoutine | null>();
+    ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].forEach(day => {
+      let existing = existingDays.find(sr => sr.day === day);
+      map.set(day, existing || null)
+    });
+
+    return map;
+  }, [existingDays]);
+
+  const [days, setDays] = useState(new Set<string>(prevDays.current));
 
   // Array of selected exercises (contains duplicates)
   const [exercises, setExercises] = useState<RoutineExercise[]>(editing?.exercises || []);
@@ -68,6 +83,10 @@ export const AddRoutine = () => {
     exercises,
   }), [duration, editing?.id, exercises, favourited, intensity, routineName, tags, user_id]);
 
+  // Scheduled
+  const [addScheduled] = useAddScheduleMutation();
+  const [deleteScheduled] = useDeleteScheduleMutation();
+  
   // Routine
   const [addNewRoutine] = useAddNewRoutineMutation();
   const [editRoutine] = useEditRoutineMutation();
@@ -76,6 +95,9 @@ export const AddRoutine = () => {
   // Exercises belonging to routine
   const [addNewRoutineExercise] = useAddRoutineExerciseMutation();
   const [deleteRoutineExercise] = useDeleteRoutineExerciseMutation();
+
+  // Routine Data
+  const [editRoutineData] = useEditRoutineDataMutation();
 
   // Add / removal of routine's exercise in edit mode, queues fetches to be made when saving (posts / deletes)
   const routineExerciseDeltas = useMemo<Map<string, DB_RoutineExercise | string>>(() => new Map(), []);  
@@ -90,6 +112,31 @@ export const AddRoutine = () => {
               return deleteRoutineExercise(d).unwrap();
             } else return addNewRoutineExercise(d).unwrap();
           }))
+        await Promise.all(Array.from(prevState).map(async ([day, val]) => {
+          let capitalized = [day[0].toUpperCase(), day.slice(1)].join('');
+
+          let current = days.has(capitalized);
+
+          // Return if there is no diff
+          if (!!current === !!val) return Promise.resolve(); 
+
+          else {
+            // Delete the existing schedule
+            if (!current && val) {
+              return await deleteScheduled(val.id);
+            } 
+            // Add a new schedule
+            else {
+              return await addScheduled({
+                day,
+                id: uuid(),
+                routine_id: routine.id,
+                user_id
+              })
+            }
+          }
+        }));
+          
         navigate('/home/routines', { state: {}});
         routineExerciseDeltas.clear();
       } catch(e) {
@@ -102,7 +149,7 @@ export const AddRoutine = () => {
       try {
         await addNewRoutine(routine).unwrap();
         await Promise.allSettled(routine.exercises
-          .map((e, i) => addNewRoutineExercise({
+          .map((e) => addNewRoutineExercise({
             id: uuid(),
             routine_id: routine.id,
             user_id,
@@ -113,6 +160,12 @@ export const AddRoutine = () => {
             if (r.status === 'fulfilled') added.push((r.value as DB_RoutineExercise).id)
             else throw new Error('An exercise was not added');
           }))
+        await Promise.all(Array.from(days).map(async (day) => await addScheduled({
+          day,
+          id: uuid(),
+          routine_id: routine.id,
+          user_id,
+        })));
 
         navigate('/home/routines', { state: { name: routineName || 'Routine Name' }})
       } catch(e) {
@@ -125,12 +178,11 @@ export const AddRoutine = () => {
         // Delete routine if exists
         try { await deleteRoutine(routine.id);
         } catch(_) {} // 404 no routine exists
-        
       }
     }
 
     editing ? edit() : add();
-  }, [addNewRoutine, addNewRoutineExercise, deleteRoutine, deleteRoutineExercise, routineExerciseDeltas, editRoutine, editing, navigate, routine, routineName, user_id]);
+  }, [addNewRoutine, addNewRoutineExercise, addScheduled, days, deleteRoutine, deleteRoutineExercise, editRoutine, editing, navigate, prevState, routine, routineExerciseDeltas, routineName, user_id]);
 
 
   // On add exercises
@@ -187,7 +239,6 @@ export const AddRoutine = () => {
   }, []);
   
 
-  const [editRoutineData] = useEditRoutineDataMutation();
   const onRemoveRoutine = useCallback(() => {
     const remove = async () => {
       const performed = routineData.filter(d => d.routine_id === routine.id);
@@ -314,9 +365,14 @@ export const AddRoutine = () => {
                 style={{opacity: days.has(day) ? 1 : 0.5}} 
                 onClick={() => setDays(p => {
                   const dup = new Set(p);
-                  dup.has(day)
-                    ? dup.delete(day)
-                    : dup.add(day);
+
+                  if (dup.has(day)) {
+                    dup.delete(day);
+                  } else {
+                    dup.add(day);
+                  }
+                  
+                  
                   return dup;
                 })} 
               />
