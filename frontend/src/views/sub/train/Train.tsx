@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import uuid from 'react-uuid';
 import { Routine } from '../../../components/Routine';
 import { Search } from '../../../components/search/Search';
 import { WorkoutSummary } from '../../../components/stats/WorkoutSummary';
