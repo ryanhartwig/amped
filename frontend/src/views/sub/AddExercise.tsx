@@ -4,20 +4,23 @@ import './AddExercise.css';
 import { IoReturnDownBackSharp } from 'react-icons/io5';
 import { AiOutlineClose, AiOutlineDelete, AiOutlineCheckCircle } from 'react-icons/ai';
 import { VscFlame } from 'react-icons/vsc';
+import { BsChevronCompactDown } from 'react-icons/bs';
+import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
 
+import uuid from 'react-uuid';
+import clsx from 'clsx';
 import { useAppSelector } from '../../utility/helpers/hooks';
 import { useCallback, useMemo, useState } from 'react';
 import { Input } from '../../components/ui/Input';
 import { Tag } from '../../components/ui/Tag';
-import uuid from 'react-uuid';
-import clsx from 'clsx';
 import { Intensity } from '../../types';
 import { ExerciseType } from '../../types/ExerciseType';
 import { Exercise } from '../../components/Exercise';
 import { PrimaryButton } from '../../components/ui/PrimaryButton';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
 import { useAddNewExerciseMutation, useDeleteExerciseMutation, useEditExerciseMutation } from '../../api/injections/workouts/exercisesSlice';
+import { LoginButton } from '../../components/ui/LoginButton';
+import { Modal } from '../../components/ui/Modal';
 
 export const AddExercise = () => {
   const navigate = useNavigate();
@@ -128,18 +131,6 @@ export const AddExercise = () => {
             {favourited ? <IoIosFlash size={20}/> : <IoIosFlashOff size={20} style={{color: 'grey'}} />}
           </div>
         </div>
-        
-        <div className='AddExercise-goal'>
-          <select id="exercise-goal" value={goal} onChange={(e) => setGoal(e.target.value)}>
-            <option value="Select exercise goal" disabled>Select exercise goal</option>
-            <option value="strength">Strength</option>
-            <option value="hypertrophy">Hypertrophy</option>
-            <option value="power">Power</option>
-            <option value="speed">Speed</option>
-            <option value="endurance">Endurance</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
 
         <div className='AddExercise-addtag-wrapper'>
           <Input style={{paddingRight: '60%'}} 
@@ -184,26 +175,11 @@ export const AddExercise = () => {
             style={{background}}
           />
         </div>
+        <LoginButton className='AddExercise-goal' text='Select Exercise Goal'></LoginButton>
 
         {/* Fill space (maintains flex-start positioning with save at bottom) */}
         <div className='AddExercise-fill'>
         </div>
-        
-
-        {/* Select photos for exercise demonstration, etc (to be implemented) */}
-        {/* <div className='AddExercise-media'>
-          <PrimaryButton 
-            text='Add media' 
-            style={{
-              height: '100%', 
-              background: 'none', 
-              border: '1px solid grey',
-              width: '50%',
-            }} 
-            iconSize={13}
-            fontSize={15}
-          />
-        </div> */}
 
         <div className='AddExercise-save'>
           <PrimaryButton icon={AiOutlineCheckCircle} style={{minWidth: 0}} text='Save' onClick={onSaveExercise} />
@@ -216,6 +192,9 @@ export const AddExercise = () => {
         </div>        
       </form>
 
+      <Modal open={false} onClose={() => {}}>
+
+      </Modal>
     </div>
   )
 }
