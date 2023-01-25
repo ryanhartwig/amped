@@ -130,7 +130,6 @@ export const Session = () => {
         onNavigate={onNavigate} 
         currentPosition={position} 
         anonymous={!routine}
-        currentExerciseData={currentExerciseData}
       />
     </div>
   )

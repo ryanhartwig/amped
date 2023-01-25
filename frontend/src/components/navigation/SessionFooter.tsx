@@ -17,7 +17,6 @@ import { useDispatch } from 'react-redux';
 import { addRoutineExercise, setRoutineSummaryId } from '../../store/slices/sessionSlice';
 import { ExerciseType } from '../../types/ExerciseType';
 import { Search } from '../search/Search';
-import { ExerciseDataType } from '../../types/ExerciseDataType';
 
 interface SessionFooterProps {
   currentPosition: number,
@@ -26,10 +25,9 @@ interface SessionFooterProps {
   setPaused: React.Dispatch<React.SetStateAction<boolean>>,
   paused: boolean,
   anonymous?: boolean,
-  currentExerciseData: ExerciseDataType,
 }
 
-export const SessionFooter = ({currentPosition, currentExerciseData, setPaused, paused, routineData, onNavigate, anonymous = false}: SessionFooterProps) => {
+export const SessionFooter = ({currentPosition, setPaused, paused, routineData, onNavigate, anonymous = false}: SessionFooterProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -151,7 +149,10 @@ export const SessionFooter = ({currentPosition, currentExerciseData, setPaused, 
                 nextExercise 
                   ? () => onNavigate(1)
                   : anonymous 
-                    ? () => setSelecting(true)
+                    ? () => {
+                      onNavigate(1);
+                      setSelecting(true);
+                    }
                     : () => {
                       onNavigate(1);
                       setOpen(true);
@@ -173,10 +174,10 @@ export const SessionFooter = ({currentPosition, currentExerciseData, setPaused, 
           <div className='Train-routines-search'>
             <Search selected={selected} setSelected={setSelected} tab='Exercises' />
           </div>
-          <div style={{flexShrink: 0, flexGrow: 0}}>
-            <PrimaryButton altColor onClick={onContinue} style={{marginTop: 8}} text={selected ? 'Continue' : 'Select an exercise'} disabled={!selected} />
+          <div style={{flexShrink: 0, flexGrow: 0, width: '100%'}}>
+            <PrimaryButton altColor onClick={onContinue} style={{marginTop: 8, width: '90%', maxWidth: 320, minWidth: 0}} text={selected ? 'Continue' : 'Select an exercise'} disabled={!selected} />
             <p style={{fontSize: '0.8em', opacity: 0.6, margin: '7px 0'}}>or</p>
-            <PrimaryButton onClick={() => setSubOpen(true)} style={{marginBottom: 10}} text={'Finish Workout'} disabled={disabled}/>
+            <PrimaryButton onClick={() => setSubOpen(true)} style={{marginBottom: 10, width: '90%', maxWidth: 320, minWidth: 0}} text={'Finish Workout'} disabled={disabled}/>
           </div>
         </div>
         <Modal onClose={() => setSubOpen(false)} 

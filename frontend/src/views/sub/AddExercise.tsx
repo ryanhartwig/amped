@@ -199,7 +199,7 @@ export const AddExercise = () => {
         <div className='AddExercise-select'>
           {['Strength', 'Hypertrophy', 'Power', 'Speed', 'Endurance', 'Other']
             .map(g => 
-              <LoginButton className='AddExercise-option' text={g} style={{opacity: goal === g ? 1 : 0.5}} onClick={() => setGoal(g)} />
+              <LoginButton key={g} className='AddExercise-option' text={g} style={{opacity: goal === g ? 1 : 0.5}} onClick={() => setGoal(g)} />
             )
           }
         </div>
