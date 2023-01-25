@@ -8,7 +8,7 @@ import { InfoBorder } from '../../../components/ui/InfoBorder';
 import { Modal } from '../../../components/ui/Modal';
 import { PrimaryButton } from '../../../components/ui/PrimaryButton';
 import { initializeSession, setRoutineExercises } from '../../../store/slices/sessionSlice';
-import { RoutineType } from '../../../types/RoutineType';
+import { RoutineExercise, RoutineType } from '../../../types/RoutineType';
 import { useAppSelector } from '../../../utility/helpers/hooks';
 import './Overview.css';
 
@@ -20,6 +20,8 @@ export const Overview = ({inSession}: OverviewProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const sessionExercises = useAppSelector(s => s.session.exercises);
+
   const selectedRoutineId = useAppSelector(s => s.session.selectedRoutineId);
   const selectedRoutine = useAppSelector(s => s.workouts.routines).find(r => r.id === selectedRoutineId);
   const { background_alt, background } = useAppSelector(s => s.theme);
@@ -28,16 +30,23 @@ export const Overview = ({inSession}: OverviewProps) => {
   const [intensity, setIntensity] = useState<true[]>([]);
   const [quitPrompt, setQuitPrompt] = useState<boolean>(false);
 
+  const [exercises, setExercises] = useState<RoutineExercise[]>();
+
   const currentPosition = useAppSelector(s => s.session.currentPosition);
 
   useEffect(() => {
-    if (!selectedRoutine) {
+    if (!selectedRoutine && !inSession) {
       navigate('/home/train');
       return;
     };
-    setRoutine(selectedRoutine);
-    setIntensity(Array(selectedRoutine.intensity).fill(true));
-  }, [navigate, selectedRoutine]);
+    if (selectedRoutine) {
+      setRoutine(selectedRoutine);
+      setExercises(selectedRoutine.exercises);
+      setIntensity(Array(selectedRoutine.intensity).fill(true));
+    } else {
+      setExercises(sessionExercises);
+    }
+  }, [inSession, navigate, selectedRoutine, sessionExercises]);
 
   const onStartSession = useCallback(() => {
     if (!routine) return;
@@ -49,13 +58,13 @@ export const Overview = ({inSession}: OverviewProps) => {
 
   return (
     <div className='Overview'>
-      {routine && <div className='Overview-routine'>
-        <InfoBorder background={background} title={routine?.name} >
+      {exercises && <div className='Overview-routine'>
+        <InfoBorder background={background} title={routine?.name || 'Anonymous Session'} >
           <InfoBorder.HeaderLeft>
-            <p className='Overview-info'>{routine.est_duration} min</p>
+            {routine && <p className='Overview-info'>{routine.est_duration} min</p>}
           </InfoBorder.HeaderLeft>
           <InfoBorder.HeaderRight>
-            <p className='Overview-info'>{routine.exercises.length} exercises</p>
+            <p className='Overview-info'>{exercises.length} exercise{exercises.length > 1 && 's'}</p>
           </InfoBorder.HeaderRight>
           <InfoBorder.FooterLeft>
             <div className='Overview-info' style={{color: 'rgb(107, 77, 59)'}}>
@@ -65,9 +74,9 @@ export const Overview = ({inSession}: OverviewProps) => {
 
           <div className='Overview-content'>
             <div className='Overview-exercises hidescrollbar' style={{background: background_alt}}>
-              {routine.exercises.map((e, i) => <Exercise key={`${e.id}`} selected={inSession && currentPosition === i ? e.exercise : undefined} exercise={e.exercise} />)}
+              {exercises.map((e, i) => <Exercise key={`${e.exercise.id}-${e.position}`} selected={inSession && currentPosition === i ? e.exercise : undefined} exercise={e.exercise} />)}
             </div>
-            {routine.prev_notes && <div className='Overview-lastnotes'>
+            {routine?.prev_notes && <div className='Overview-lastnotes'>
               <p>Last session's notes</p>
               <div className='Overview-textarea' style={{background: background_alt}}>
                 <p className='Overview-text'>{routine.prev_notes}</p>
