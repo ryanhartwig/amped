@@ -4,7 +4,6 @@ import './AddExercise.css';
 import { IoReturnDownBackSharp } from 'react-icons/io5';
 import { AiOutlineClose, AiOutlineDelete, AiOutlineCheckCircle } from 'react-icons/ai';
 import { VscFlame } from 'react-icons/vsc';
-import { BsChevronCompactDown } from 'react-icons/bs';
 import { IoIosFlash, IoIosFlashOff } from 'react-icons/io';
 
 import uuid from 'react-uuid';
@@ -40,7 +39,8 @@ export const AddExercise = () => {
   const [favourited, setFavourited ] = useState<boolean>(editing?.favourited || false);
   const [intensity, setIntensity] = useState<Intensity>(editing?.intensity || 0);
   const [notes, setNotes] = useState<string>(editing?.notes || '');
-  const [goal, setGoal] = useState<string>(editing?.exercise_goal || 'Select exercise goal');
+  const [goal, setGoal] = useState<string>(editing?.exercise_goal || 'Other');
+  const [editGoal, setEditGoal] = useState<boolean>(false);
 
   const exercise = useMemo<ExerciseType>(() => ({
     name: exerciseName || 'Exercise name',
@@ -49,7 +49,7 @@ export const AddExercise = () => {
     type: 'Exercise',
     id: editing?.id || uuid(),
     notes: notes?.length ? notes : null,
-    exercise_goal: goal === 'Select exercise goal' ? 'Other' : goal,
+    exercise_goal: goal,
     muscle_targets: Array.from(target),
     favourited,
   }), [editing?.id, exerciseName, favourited, goal, intensity, notes, target, user_id]);
@@ -175,7 +175,9 @@ export const AddExercise = () => {
             style={{background}}
           />
         </div>
-        <LoginButton className='AddExercise-goal' text='Select Exercise Goal'></LoginButton>
+
+        {/* Exercise Goal */}
+        <LoginButton onClick={() => setEditGoal(true)} className='AddExercise-goal' text='Select Exercise Goal'></LoginButton>
 
         {/* Fill space (maintains flex-start positioning with save at bottom) */}
         <div className='AddExercise-fill'>
@@ -192,8 +194,15 @@ export const AddExercise = () => {
         </div>        
       </form>
 
-      <Modal open={false} onClose={() => {}}>
-
+      <Modal open={editGoal} onClose={() => setEditGoal(false)} closeText='Close'>
+        <Modal.Header>Select Training Goal</Modal.Header>
+        <div className='AddExercise-select'>
+          {['Strength', 'Hypertrophy', 'Power', 'Speed', 'Endurance', 'Other']
+            .map(g => 
+              <LoginButton className='AddExercise-option' text={g} style={{opacity: goal === g ? 1 : 0.5}} onClick={() => setGoal(g)} />
+            )
+          }
+        </div>
       </Modal>
     </div>
   )
