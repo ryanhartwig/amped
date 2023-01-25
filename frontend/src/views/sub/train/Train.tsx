@@ -34,6 +34,7 @@ export const Train = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<RoutineType | ExerciseType>();
   const [highlighted, setHighlighted] = useState<RoutineType | ExerciseType>();
+  const [selectExercise, setSelectExercise] = useState<boolean>(false);
 
   const routineDataId = useAppSelector(s => s.session.routineSummaryId);
   const routineData = useAppSelector(s => s.workoutData.routineData);
@@ -80,12 +81,14 @@ export const Train = () => {
           <p>or</p>
           <hr></hr>
         </div>}
-        <div >
-          <PrimaryButton ref={triggerRef} onClick={() => setOpen(true)}  text='Select routine' style={{height: '50px', marginBottom: 60}} icon={'logo'} />
+        
+        <div>
+          <PrimaryButton ref={triggerRef} onClick={() => setOpen(true)}  text='Select routine' style={{height: '50px', }} icon={'logo'} />
+          <PrimaryButton text='Start a custom session' altColor style={{height: '50px', marginBottom: 40, marginTop: 20}} icon={'logo'} />
         </div>
-        {/* <PrimaryButton text='Start a custom session' altColor style={{height: '50px'}} icon={'logo'} /> */}
       </div>
 
+      {/* Select routine to start (normal session) */}
       <Modal closeText='Close' onClose={() => setOpen(false)} open={open}>
         <Modal.Header>Select a routine to start</Modal.Header>
         <div className='Train-routines-search'>
@@ -94,6 +97,12 @@ export const Train = () => {
         <PrimaryButton onClick={onContinue} style={{marginTop: 8}} text={highlighted ? 'Continue' : 'Select a routine'} disabled={!highlighted} />
       </Modal>
 
+      {/* Select exercise to start (custom session) */}
+      <Modal closeText='Cancel' onClose={() => {}} open={false}>
+
+      </Modal>
+
+      {/* Workout summary when finishing */}
       <Modal onClose={() => dispatch(setRoutineSummaryId(undefined))} open={!!summaryData} closeText='Close' >
         <Modal.Header>Summary</Modal.Header>
         {summaryData && <WorkoutSummary routineData={summaryData} onClose={() => dispatch(setRoutineSummaryId(undefined))} />}

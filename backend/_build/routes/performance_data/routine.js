@@ -20,7 +20,7 @@ routine.get('/:user_id', (req, res) => __awaiter(void 0, void 0, void 0, functio
     const { user_id } = req.params;
     if (!user_id)
         return res.status(400).json('No performed routine id provided');
-    const response = yield db_1.default.query('select * from performed_routine where user_id = $1', [user_id]);
+    const response = yield db_1.default.query('select * from performed_routine where user_id = $1 order by start_date desc', [user_id]);
     res.status(200).json(response.rows);
 }));
 /* Add routine data */
