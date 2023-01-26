@@ -62,8 +62,9 @@
   padding: 3px 7px;
 }
 .Exercise-goal p {
-  font-size: 10px;
-  font-weight: 100;
+  font-size: 10px !important;
+  font-weight: 100 !important;
+  margin: 0 !important;
 }
 
 .Exercise-position {
