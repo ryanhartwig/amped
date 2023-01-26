@@ -341,11 +341,7 @@ export const AddRoutine = () => {
           </div>
         </div>
         
-        <LoginButton style={{margin: '10px auto'}} 
-          onClick={() => setEditScheduled(true)} 
-          className='AddExercise-goal' 
-          text='Select Training Days'
-        ></LoginButton>
+        <LoginButton style={{margin: '5px auto'}} onClick={() => setEditScheduled(true)} className='AddExercise-goal' text='Select Training Days'></LoginButton>
 
         <div className='AddRoutine-save'>
           <PrimaryButton icon={AiOutlineCheckCircle} disabled={!routine.exercises.length} style={{minWidth: 0}} text='Save' onClick={onSaveRoutine} />
