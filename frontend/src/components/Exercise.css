@@ -1,8 +1,7 @@
 .Exercise {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 
-  flex-direction: column;
   position: relative;
   white-space: nowrap;
   cursor: pointer;
@@ -11,8 +10,7 @@
   flex-grow: 0;
 
   width: calc(100% - 10px);
-  height: fit-content;
-  min-height: 40px;
+  height: 42px;
   
   flex-shrink: 0;
 
@@ -44,9 +42,11 @@
 .Exercise-targets {
   display: flex;
   overflow-x: auto;
+  align-items: center;
 
   position: relative;
-  left: -5px;
+  left: 5px;
+  bottom: 2px;
 }
 
 .Exercise.adding {

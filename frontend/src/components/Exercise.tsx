@@ -57,7 +57,7 @@ export const Exercise = ({exercise, query, activeTags, onSelect = undefined, sel
         </div>
         <div className='Exercise-targets hidescrollbar'>
           {exercise.muscle_targets.map(t => 
-            <Tag key={`${exercise.id}-${t}`} text={t} style={{height: '19px', marginLeft: '5px'}} fontSize='10px' />
+            <Tag key={`${exercise.id}-${t}`} text={t} style={{height: '18px', marginLeft: '5px', backgroundColor: '#422522'}} fontSize='10px' />
           )}
         </div>
 
