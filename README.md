@@ -47,12 +47,12 @@
 ## About The Project
 
 <div display="flex">
-  <img height='350px' src="./screenshots/screenshot.png" alt="Reddit mini screenshot" />
-  <img height='350px' src="./screenshots/screenshot_dash.png" alt="Reddit mini screenshot" />
-  <img height='350px' src="./screenshots/screenshot_profile.png" alt="Reddit mini screenshot" />
-  <img height='350px' src="./screenshots/screenshot_session.png" alt="Reddit mini screenshot" />
-  <img height='350px' src="./screenshots/screenshot_summary.png" alt="Reddit mini screenshot" />
-  <img height='350px' src="./screenshots/screenshot_completed.png" alt="Reddit mini screenshot" />
+  <img height='350px' src="./screenshots/screenshot.png" alt="Amped login screenshot" />
+  <img height='350px' src="./screenshots/screenshot_dash.png" alt="Amped dashboard screenshot" />
+  <img height='350px' src="./screenshots/screenshot_profile.png" alt="Amped profile screenshot" />
+  <img height='350px' src="./screenshots/screenshot_session.png" alt="Amped session screenshot" />
+  <img height='350px' src="./screenshots/screenshot_summary.png" alt="Amped summary screenshot" />
+  <img height='350px' src="./screenshots/screenshot_completed.png" alt="Amped completed workouts screenshot" />
 </div>
 
 
